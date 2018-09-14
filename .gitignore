@@ -1,0 +1,6 @@
+.vscode/
+.idea/
+public/
+node_modules/
+functions/lib/
+.firebase*
