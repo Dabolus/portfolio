@@ -1,5 +1,9 @@
 {
   "name": "gg-portfolio-functions",
+  "version": "1.0.0",
+  "description": "My portfolio functions",
+  "author": "Giorgio Garasto <giorgio@garasto.it>",
+  "license": "MIT",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
