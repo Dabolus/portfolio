@@ -10,10 +10,26 @@ const pages: { [key: string]: string } = {
 };
 const dataPromise = fetch('/data').then((res) => res.json());
 
+const smoothScroll = (val?: number) => {
+  const scrollingElement = document.scrollingElement || document.documentElement;
+  const y = typeof val === 'undefined' ? scrollingElement.scrollHeight : val;
+  scrollingElement.scroll({
+    behavior: 'smooth',
+    left: 0,
+    top: y,
+  });
+};
+
 window.addEventListener('load', () => {
   const main: HTMLElement = document.querySelector('main');
   const pageTitle: HTMLElement = document.getElementById('page-title');
   const fragments: NodeListOf<HTMLElement> = document.querySelectorAll('#page-container > div');
+  // Set up scrolling to the right position when navigating with tabs for accessibility
+  document.getElementById('since-2004-link')
+    .addEventListener('focus', () => smoothScroll(0));
+  document.querySelectorAll('#menu > a')
+    .forEach((link) => link
+      .addEventListener('focus', () => smoothScroll()));
   const age = document.getElementById('age');
   const dob = new Date('1997-09-01T23:20').getTime();
 
@@ -52,6 +68,7 @@ window.addEventListener('load', () => {
       main.className = '';
       setTimeout(() => main.hidden = true, 600);
     } else {
+      smoothScroll();
       main.hidden = false;
       setTimeout(() => {
         pageTitle.textContent = pages[path];
