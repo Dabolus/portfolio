@@ -98,7 +98,7 @@ p {
   grid-gap: 1rem;
 
   @media (orientation: landscape) {
-    grid: 'a b' 'c d';
+    grid: 'a b' calc(50% - .5rem) 'c d' calc(50% - .5rem) / calc(50% - .5rem) calc(50% - .5rem);
   }
 
   a {
