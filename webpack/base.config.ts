@@ -1,3 +1,4 @@
+/* tslint:disable */
 // TODO: discover why we need these
 /// <reference types="../typings/script-ext-html-webpack-plugin" />
 /// <reference types="../typings/workbox-webpack-plugin" />

@@ -1,3 +1,4 @@
+/* tslint:disable */
 // TODO: discover why we need these
 /// <reference types="../typings/webpack-merge" />
 
