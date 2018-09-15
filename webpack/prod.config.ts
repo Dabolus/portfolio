@@ -27,7 +27,7 @@ const config: webpack.Configuration = smartMerge({
       new OptimizeCssAssetsPlugin(),
     ],
     splitChunks: {
-      chunks: 'all',
+      // TODO: chunks: 'all' (requires some config tweaks)
       name: false,
     },
   },
