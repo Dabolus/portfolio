@@ -8,7 +8,8 @@
     "serve": "ts-node ./node_modules/.bin/webpack-serve --config webpack/dev.config.ts",
     "build": "webpack --config webpack/prod.config.ts",
     "check": "gts check",
-    "fix": "gts fix"
+    "fix": "gts fix",
+    "deploy": "firebase deploy"
   },
   "repository": "https://github.com/Dabolus/portfolio.git",
   "author": "Giorgio Garasto <giorgio@garasto.it>",
