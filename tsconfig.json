@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "strictNullChecks": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "sourceMap": true,
+    "target": "es5",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true
+  },
+  "include": [
+    "typings/**/*.d.ts",
+    "webpack/**/*.ts",
+    "src/**/*.ts"
+  ]
+}
