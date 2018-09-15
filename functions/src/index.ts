@@ -1,8 +1,18 @@
 import * as functions from 'firebase-functions';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+export const api = functions.https.onRequest((req, res) => {
+  // TODO: get this data in real time (LinkedIn/GitHub API or whatever)
+  res.json({
+    name: 'Giorgio Garasto',
+    bio: 'Google certified Mobile Web Specialist, passionate developer and graphic designer.',
+    propic: 'https://media.licdn.com/dms/image/C4E03AQGkrxqCNNmdbg/profile-displayphoto-shrink_100_100/0?e=1542240000&v=beta&t=NlIaxqvL0tSD71bBQfpsQ39stpvqXqzyCRFpKsW2FTM',
+    summary: 'I put my hands on HTML for the first time when I was seven years old to help my father, and I\'ve never stopped playing with it since then. The passion for web developing influenced both my work and study choices, and brought me to gain a scholarship from Google and Udacity that gave me the chance to obtain the Mobile Web Specialist certification. At work I gained a vast experience in front end development by means of frameworks such as Angular and React, as well as using native technologies, like Web Components and Service Workers. On the back end side, I mainly use Node.js and Go.\n\nOutside the working world, I like devoting myself to music. I love playing guitar and singing, but I do dabble also with piano and drums.',
+    job: {
+      title: 'Software Engineer',
+      company: {
+        name: 'MOLO17 SRL',
+        size: '11-50'
+      }
+    },
+  });
+});

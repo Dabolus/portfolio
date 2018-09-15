@@ -8,7 +8,7 @@ const pages: { [key: string]: string } = {
   'home': 'Home',
   'works': 'Works',
 };
-const dataPromise = fetch('/data').then((res) => res.json());
+const dataPromise = fetch('/api').then((res) => res.json());
 
 const smoothScroll = (val?: number) => {
   const scrollingElement = document.scrollingElement || document.documentElement;
