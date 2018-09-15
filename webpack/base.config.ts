@@ -24,7 +24,7 @@ const config: webpack.Configuration = {
     globalObject: 'self',
   },
   resolve: {
-    extensions: ['.ts', '.js', '.scss', '.css'],
+    extensions: ['.ts', '.js', '.scss', '.css', '.ejs'],
     alias: {
       '~': './src',
     },
