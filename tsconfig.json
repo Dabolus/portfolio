@@ -1,11 +1,12 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "baseUrl": ".",
     "lib": [
       "esnext",
       "dom"
     ],
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitReturns": true,
