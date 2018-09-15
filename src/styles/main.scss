@@ -1,0 +1,243 @@
+@import './theme';
+
+a {
+  color: $theme-accent;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+}
+
+body.blocked {
+  overflow: hidden;
+}
+
+[hidden] {
+  display: none;
+}
+
+hr {
+  width: calc(100% - 6rem);
+  border: 0;
+  padding: .025rem;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, .12);
+}
+
+section, nav, #page-container {
+  padding: 1rem;
+}
+
+p {
+  text-align: justify;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  font-weight: 400;
+}
+
+#i-am {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin-bottom: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: $theme-content-background;
+  z-index: 1;
+  box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14), 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12), 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2);
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin: .6rem 0;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: .2rem 0;
+  }
+
+  #strings {
+    position: fixed;
+    top: -9999rem;
+  }
+
+  #typed {
+    display: inline-block;
+    width: 20.25rem;
+    text-align: left;
+  }
+
+  #scroll-down {
+    position: absolute;
+    left: calc(50% - 1.5rem);
+    bottom: 1rem;
+    width: 3rem;
+    height: 3rem;
+    will-change: transform;
+    animation: 1s up-down infinite alternate ease-in-out;
+  }
+}
+
+#menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: grid;
+  grid: 'a' 'b' 'c' 'd';
+  grid-gap: 1rem;
+
+  @media (orientation: landscape) {
+    grid: 'a b' 'c d';
+  }
+
+  a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: .25rem;
+    text-decoration: none;
+    color: $theme-color;
+    background: $theme-content-background;
+    box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset, 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset, 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
+    will-change: box-shadow;
+    transition: .3s box-shadow;
+
+    p {
+      text-align: center;
+      will-change: transform;
+      transition: .3s transform;
+      transition-delay: .9s;
+    }
+
+    svg {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      max-width: 30%;
+      max-height: 50%;
+      transform: translateX(-50%);
+      fill: transparent;
+      stroke-width: .3px;
+      will-change: stroke-dashoffset;
+      transition: 1s stroke-dashoffset linear;
+      transition-delay: 0s;
+    }
+
+    &#about-me svg {
+      stroke: $theme-blue;
+      stroke-dasharray: 135.098876953125px;
+      stroke-dashoffset: 135.098876953125px;
+    }
+
+    &#works svg {
+      stroke: $theme-green;
+      stroke-dasharray: 208.56814575195312px;
+      stroke-dashoffset: 208.56814575195312px;
+    }
+
+    &#certifications svg {
+      stroke: $theme-yellow;
+      stroke-dasharray: 156.8944091796875px;
+      stroke-dashoffset: 156.8944091796875px;
+    }
+
+    &#contacts svg {
+      stroke: $theme-pink;
+      stroke-dasharray: 126.3226547241211px;
+      stroke-dashoffset: 126.3226547241211px;
+    }
+
+    &:hover, &:focus {
+      box-shadow: none;
+
+      p {
+        transition-delay: 0s;
+        transform: translateY(-3.4rem);
+      }
+
+      svg {
+        transition-delay: .1s !important;
+        stroke-dashoffset: 0 !important;
+      }
+    }
+  }
+}
+
+main {
+  position: fixed;
+  top: 0;
+  left: 100vw;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  will-change: transform;
+  transition: .6s transform;
+  background: $theme-content-background;
+  z-index: 2;
+  box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset, 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset, 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
+
+  &.active {
+    transform: translateX(-100vw);
+  }
+
+  #header {
+    display: flex;
+    align-items: center;
+    padding: .25rem;
+    height: 3.5rem;
+
+    a {
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      flex: 0 0 auto;
+    }
+
+    #page-title {
+      flex: 1 1 auto;
+      margin: 0 .25rem;
+      font-size: 1.25rem;
+    }
+  }
+
+  #page-container {
+    width: 100%;
+    height: calc(100vh - 3.55rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    p {
+      font-weight: 200;
+    }
+
+    > div {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
+
+@keyframes up-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(.5rem);
+  }
+}
