@@ -23,13 +23,16 @@ const smoothScroll = (val?: number) => {
 window.addEventListener('load', () => {
   const main: HTMLElement = document.querySelector('main');
   const pageTitle: HTMLElement = document.getElementById('page-title');
-  const fragments: NodeListOf<HTMLElement> = document.querySelectorAll('#page-container > div');
+  const fragments: NodeListOf<HTMLElement> = document.querySelectorAll('#page-container > .page');
+  const menuLinks: NodeListOf<HTMLElement> = document.querySelectorAll('#menu > a');
+  const since2004Link: HTMLElement = document.getElementById('since-2004-link');
+  const homeLinks: HTMLElement[] = [...Array.prototype.slice.call(menuLinks), since2004Link];
+  const homeSections: NodeListOf<HTMLElement> = document.querySelectorAll('#i-am, #menu');
   // Set up scrolling to the right position when navigating with tabs for accessibility
-  document.getElementById('since-2004-link')
+  since2004Link
     .addEventListener('focus', () => smoothScroll(0));
-  document.querySelectorAll('#menu > a')
-    .forEach((link) => link
-      .addEventListener('focus', () => smoothScroll()));
+  menuLinks.forEach((link) =>
+    link.addEventListener('focus', () => smoothScroll()));
   const age = document.getElementById('age');
   const dob = new Date('1997-09-01T23:20').getTime();
 
@@ -56,6 +59,7 @@ window.addEventListener('load', () => {
     typeSpeed: 90,
   });
 
+  let oldPath: string;
   installRouter(({ pathname }) => {
     let path = pathname.substring(1);
     if (!path || !Object.keys(pages).includes(path)) {
@@ -66,6 +70,15 @@ window.addEventListener('load', () => {
     if (path === 'home') {
       document.body.className = '';
       main.className = '';
+      homeLinks.forEach((link) =>
+        link.setAttribute('tabindex', '0'));
+      homeSections.forEach((section) =>
+        section.hidden = false);
+      const oldElement: HTMLElement =
+        document.querySelector(`#page-container > .page[data-page="${oldPath}"`);
+      if (oldElement) {
+        oldElement.focus();
+      }
       setTimeout(() => main.hidden = true, 600);
     } else {
       smoothScroll();
@@ -76,7 +89,15 @@ window.addEventListener('load', () => {
           fragment.className = fragment.dataset.page === path ? 'page active' : 'page');
         document.body.className = 'blocked';
         main.className = 'active';
+        pageTitle.focus();
       }, 50);
+      setTimeout(() => {
+        homeLinks.forEach((link) =>
+          link.setAttribute('tabindex', '-1'));
+        homeSections.forEach((section) =>
+          section.hidden = true);
+      }, 650);
     }
+    oldPath = path;
   });
 });
