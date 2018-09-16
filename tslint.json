@@ -111,7 +111,11 @@
     "trailing-comma": {
       "severity": "warning"
     },
-    "no-unused-expression": false
+    "no-unused-expression": false,
+    "max-line-length": [
+      true,
+      100
+    ]
   },
   "defaultSeverity": "error"
 }
