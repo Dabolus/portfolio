@@ -5,4 +5,15 @@
     display: inline-block;
     width: 6.5rem;
   }
+
+  #propic {
+    width: 6rem;
+    height: 8rem;
+    object-fit: cover;
+    float: right;
+    border: .5rem solid $theme-white;
+    box-shadow: 0 0 .05rem rgba($theme-black, .5);
+    margin: 1rem;
+    transform: rotateZ(-5deg);
+  }
 }
