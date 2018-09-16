@@ -13,7 +13,13 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "webpack/**",
+      "typings/**",
+      "**/src/**",
+      "README.md",
+      "LICENSE",
+      "**/ts*.json"
     ],
     "rewrites": [
       {
