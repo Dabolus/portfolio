@@ -72,7 +72,8 @@ window.addEventListener('load', () => {
       main.hidden = false;
       setTimeout(() => {
         pageTitle.textContent = pages[path];
-        fragments.forEach((fragment) => fragment.className = fragment.dataset.page === path ? 'active' : '');
+        fragments.forEach((fragment) =>
+          fragment.className = fragment.dataset.page === path ? 'page active' : 'page');
         document.body.className = 'blocked';
         main.className = 'active';
       }, 50);
