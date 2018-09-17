@@ -35,10 +35,23 @@ window.addEventListener('load', () => {
   const age = document.getElementById('age');
   const dob = new Date('1997-09-01T23:20').getTime();
 
-  requestAnimationFrame(function updateAge() {
-    requestAnimationFrame(updateAge);
+  let animationFrameId: number;
+  const updateAge = () => {
+    animationFrameId = undefined;
     age.textContent = ((Date.now() - dob) / 31556952000).toFixed(9);
-  });
+    startAgeAnimation();
+  };
+  const startAgeAnimation = () => {
+    if (!animationFrameId) {
+      animationFrameId = requestAnimationFrame(updateAge);
+    }
+  };
+  const stopAgeAnimation = () => {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = undefined;
+    }
+  };
 
   dataPromise.then((data) => {
     document.getElementById('my-summary').innerHTML = data.summary;
@@ -78,6 +91,7 @@ window.addEventListener('load', () => {
       if (oldElement) {
         oldElement.focus();
       }
+      stopAgeAnimation();
       setTimeout(() => main.hidden = true, 600);
     } else {
       document.title = `Giorgio Garasto - ${pages[path]}`;
@@ -96,6 +110,9 @@ window.addEventListener('load', () => {
           link.setAttribute('tabindex', '-1'));
         homeSections.forEach((section) =>
           section.setAttribute('aria-hidden', 'true'));
+        if (path === 'about-me') {
+          startAgeAnimation();
+        }
       }, 650);
     }
     oldPath = path;
