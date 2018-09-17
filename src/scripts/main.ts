@@ -5,7 +5,6 @@ const pages: { [key: string]: string } = {
   'about-me': 'About me',
   'certifications': 'Certifications',
   'contacts': 'Contacts',
-  'home': 'Home',
   'works': 'Works',
 };
 const dataPromise = fetch('/api').then((res) => res.json());
@@ -62,12 +61,12 @@ window.addEventListener('load', () => {
   let oldPath: string;
   installRouter(({ pathname }) => {
     let path = pathname.substring(1);
-    if (!path || !Object.keys(pages).includes(path)) {
-      window.history.replaceState({}, '', '/home');
-      path = 'home';
+    if (path !== '' && !Object.keys(pages).includes(path)) {
+      window.history.replaceState({}, '', '/');
+      path = '';
     }
-    document.title = `Giorgio Garasto - ${pages[path]}`;
-    if (path === 'home') {
+    if (path === '') {
+      document.title = 'Giorgio Garasto';
       document.body.className = '';
       main.className = '';
       homeLinks.forEach((link) =>
@@ -81,6 +80,7 @@ window.addEventListener('load', () => {
       }
       setTimeout(() => main.hidden = true, 600);
     } else {
+      document.title = `Giorgio Garasto - ${pages[path]}`;
       smoothScroll();
       main.hidden = false;
       setTimeout(() => {
