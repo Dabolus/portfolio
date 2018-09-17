@@ -73,7 +73,7 @@ window.addEventListener('load', () => {
       homeLinks.forEach((link) =>
         link.setAttribute('tabindex', '0'));
       homeSections.forEach((section) =>
-        section.hidden = false);
+        section.removeAttribute('aria-hidden'));
       const oldElement: HTMLElement =
         document.querySelector(`#page-container > .page[data-page="${oldPath}"`);
       if (oldElement) {
@@ -95,7 +95,7 @@ window.addEventListener('load', () => {
         homeLinks.forEach((link) =>
           link.setAttribute('tabindex', '-1'));
         homeSections.forEach((section) =>
-          section.hidden = true);
+          section.setAttribute('aria-hidden', 'true'));
       }, 650);
     }
     oldPath = path;

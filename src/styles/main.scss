@@ -13,8 +13,14 @@ body.blocked {
   overflow: hidden;
 }
 
+// Yeah, I know I shouldn't use important,
+// but in this case it is REALLY important
 [hidden] {
-  display: none;
+  display: none !important;
+}
+
+[aria-hidden='true'] {
+  visibility: hidden !important;
 }
 
 hr {
