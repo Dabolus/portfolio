@@ -61,7 +61,7 @@ const config: webpack.Configuration = {
       // Assets
       {
         from: resolve(__dirname, '../src/assets'),
-        to: 'assets',
+        to: '.',
       },
     ]),
     new MiniCssExtractPlugin({
