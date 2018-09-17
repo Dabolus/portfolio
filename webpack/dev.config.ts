@@ -56,7 +56,7 @@ const config: webpack.Configuration = smartMerge({
   plugins: [
     new HtmlPlugin({
       inject: 'head',
-      template: '!!ejs-compiled-loader!./src/index.ejs',
+      template: '!!@piuccio/ejs-compiled-loader!./src/index.ejs',
       showErrors: true,
     }),
   ],
