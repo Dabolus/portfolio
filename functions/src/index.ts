@@ -1,6 +1,10 @@
 import * as functions from 'firebase-functions';
+import * as express from 'express';
+import * as rendertron from 'rendertron-middleware';
 
-export const api = functions.https.onRequest((req, res) => {
+const expressApp = express();
+
+expressApp.get('/api', (req, res) => {
   // TODO: get this data in real time (LinkedIn/GitHub API or whatever)
   res.json({
     name: 'Giorgio Garasto',
@@ -10,8 +14,18 @@ export const api = functions.https.onRequest((req, res) => {
       title: 'Software Engineer',
       company: {
         name: 'MOLO17 SRL',
-        size: '11-50'
-      }
+        size: '11-50',
+      },
     },
   });
 });
+
+expressApp.use((req, res, next) => {
+  req.headers['Host'] = 'giorgio.garasto.it';
+  return rendertron.makeMiddleware({
+    proxyUrl: 'https://render-tron.appspot.com/render',
+    injectShadyDom: true,
+  })(req, res, next);
+});
+
+export const app = functions.https.onRequest(expressApp);
