@@ -1,6 +1,6 @@
 .vscode/
 .idea/
-public/
+build/
 node_modules/
 functions/lib/
 .firebase*

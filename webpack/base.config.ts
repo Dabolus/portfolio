@@ -19,7 +19,7 @@ const config: webpack.Configuration = {
   output: {
     filename: 'scripts/[name].js',
     chunkFilename: 'scripts/[id].js',
-    path: resolve(__dirname, '../public'),
+    path: resolve(__dirname, '../build', process.env.BUILD_NAME || 'default'),
     pathinfo: false,
     crossOriginLoading: 'anonymous',
     globalObject: 'self',
@@ -41,6 +41,7 @@ const config: webpack.Configuration = {
           options: {
             presets: [
               ['@babel/env', {
+                loose: true,
                 useBuiltIns: 'usage',
               }],
               '@babel/typescript',

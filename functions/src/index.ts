@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as express from 'express';
+import * as prpl from 'prpl-server';
 import * as rendertron from 'rendertron-middleware';
-import * as history from 'connect-history-api-fallback';
 
 const expressApp = express();
 const rendertronMiddleware = rendertron.makeMiddleware({
@@ -25,11 +25,19 @@ expressApp.get('/api', (req, res) => {
   });
 });
 
-expressApp.use(history());
-
 expressApp.use((req, res, next) => {
   req.headers['Host'] = 'giorgio.garasto.it';
   return rendertronMiddleware(req, res, next);
 });
+
+expressApp.get('/*', prpl.makeHandler('./build', {
+  entrypoint: 'index.html',
+  builds: [{
+    name: 'es6',
+    browserCapabilities: ['es2015'],
+  }, {
+    name: 'es5',
+  }],
+}));
 
 export const app = functions.https.onRequest(expressApp);

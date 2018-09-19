@@ -58,6 +58,7 @@ const config: webpack.Configuration = smartMerge({
       inject: 'head',
       template: '!!@piuccio/ejs-compiled-loader!./src/index.ejs',
       showErrors: true,
+      buildName: process.env.BUILD_NAME || 'default',
     }),
   ],
 });

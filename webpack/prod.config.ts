@@ -1,10 +1,12 @@
 /* tslint:disable */
 // TODO: discover why we need these
 /// <reference types="../typings/webpack-merge" />
+/// <reference types="../typings/terser" />
+/// <reference types="../typings/terser-webpack-plugin" />
 
 import { resolve } from 'path';
-import { minify } from 'uglify-es';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import { minify } from 'terser';
+import TerserPlugin from 'terser-webpack-plugin';
 import { loader as miniCssExtractLoader } from 'mini-css-extract-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import HtmlPlugin from 'html-webpack-plugin';
@@ -19,7 +21,7 @@ const config: webpack.Configuration = smartMerge({
   mode: 'production',
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
         extractComments: true,
@@ -66,7 +68,7 @@ const config: webpack.Configuration = smartMerge({
     ],
   },
   plugins: [
-    new CleanPlugin(['public'], { root: resolve(__dirname, '..') }),
+    new CleanPlugin([`build/${process.env.BUILD_NAME || 'default'}`], { root: resolve(__dirname, '..') }),
     new HtmlPlugin({
       minify: {
         collapseWhitespace: true,
@@ -83,6 +85,7 @@ const config: webpack.Configuration = smartMerge({
       hash: true,
       inject: 'head',
       template: '!!@piuccio/ejs-compiled-loader!./src/index.ejs',
+      buildName: process.env.BUILD_NAME || 'default',
     }),
   ],
 });

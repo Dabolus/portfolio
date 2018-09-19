@@ -8,7 +8,7 @@ import history from 'connect-history-api-fallback';
 import convert from 'koa-connect';
 
 const config = {
-  content: resolve(__dirname, '../public'),
+  content: resolve(__dirname, '../build', process.env.BUILD_NAME || 'default'),
   hot: true,
   port: 8888,
   dev: {
