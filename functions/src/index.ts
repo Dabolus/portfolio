@@ -1,8 +1,13 @@
 import * as functions from 'firebase-functions';
 import * as express from 'express';
 import * as rendertron from 'rendertron-middleware';
+import * as history from 'connect-history-api-fallback';
 
 const expressApp = express();
+const rendertronMiddleware = rendertron.makeMiddleware({
+  proxyUrl: 'https://render-tron.appspot.com/render',
+  injectShadyDom: true,
+});
 
 expressApp.get('/api', (req, res) => {
   // TODO: get this data in real time (LinkedIn/GitHub API or whatever)
@@ -20,12 +25,11 @@ expressApp.get('/api', (req, res) => {
   });
 });
 
+expressApp.use(history());
+
 expressApp.use((req, res, next) => {
   req.headers['Host'] = 'giorgio.garasto.it';
-  return rendertron.makeMiddleware({
-    proxyUrl: 'https://render-tron.appspot.com/render',
-    injectShadyDom: true,
-  })(req, res, next);
+  return rendertronMiddleware(req, res, next);
 });
 
 export const app = functions.https.onRequest(expressApp);
