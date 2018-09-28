@@ -19,7 +19,7 @@ const config: webpack.Configuration = {
   output: {
     filename: 'scripts/[name].js',
     chunkFilename: 'scripts/[id].js',
-    path: resolve(__dirname, '../build', process.env.BUILD_NAME || 'default'),
+    path: resolve(__dirname, '../build', process.env.BUILD_NAME || ''),
     pathinfo: false,
     crossOriginLoading: 'anonymous',
     globalObject: 'self',

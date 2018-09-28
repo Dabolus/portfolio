@@ -68,7 +68,7 @@ const config: webpack.Configuration = smartMerge({
     ],
   },
   plugins: [
-    new CleanPlugin([`build/${process.env.BUILD_NAME || 'default'}`], { root: resolve(__dirname, '..') }),
+    new CleanPlugin([`build/${process.env.BUILD_NAME || ''}`], { root: resolve(__dirname, '..') }),
     new HtmlPlugin({
       minify: {
         collapseWhitespace: true,
@@ -85,7 +85,7 @@ const config: webpack.Configuration = smartMerge({
       hash: true,
       inject: 'head',
       template: '!!@piuccio/ejs-compiled-loader!./src/index.ejs',
-      buildName: process.env.BUILD_NAME || 'default',
+      buildName: process.env.BUILD_NAME,
     }),
   ],
 });
