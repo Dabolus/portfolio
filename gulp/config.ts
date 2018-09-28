@@ -1,22 +1,13 @@
 /* tslint:disable:no-implicit-dependencies */
-import { exec as cbExec } from 'child_process';
+import { exec } from 'child_process';
 import del from 'del';
-import { dest, series, parallel, src, task } from 'gulp';
+import { dest, parallel, series, src, task } from 'gulp';
 
-const exec = (cmd: string): Promise<string> =>
-  new Promise((resolve, reject) => cbExec(cmd, (err, out) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(out);
-    }
-  }));
+task('build:es5', (cb) =>
+  exec('BUILD_NAME="es5" BROWSERSLIST="ie > 9" npm run build', cb));
 
-task('build:es5', () =>
-  exec('BUILD_NAME="es5" BROWSERSLIST="ie > 9" npm run build'));
-
-task('build:es6', () =>
-  exec('BUILD_NAME="es6" BROWSERSLIST="edge > 12" npm run build'));
+task('build:es6', (cb) =>
+  exec('BUILD_NAME="es6" BROWSERSLIST="edge > 12" npm run build', cb));
 
 task('build', parallel('build:es5', 'build:es6'));
 
