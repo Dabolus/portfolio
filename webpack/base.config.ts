@@ -75,7 +75,7 @@ const config: webpack.Configuration = {
     new InjectManifestPlugin({
       swSrc: resolve(__dirname, '../src/sw.js'),
       swDest: './sw.js',
-      exclude: [/images\/icons/, /\.LICENSE$/],
+      exclude: [/hot-update/, /images\/icons/, /browserconfig\.xml/, /robots\.txt/, /\.LICENSE$/],
     }),
   ],
 };

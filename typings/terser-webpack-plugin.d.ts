@@ -1,11 +1,13 @@
 declare module 'terser-webpack-plugin' {
-  export interface TerserPluginConfiguration {
+  import webpack from 'webpack';
+
+  export interface ITerserPluginConfiguration {
     cache: boolean;
     parallel: boolean;
     extractComments: boolean;
   }
 
-  export default class TerserPlugin {
-    constructor(config: TerserPluginConfiguration);
+  export default class TerserPlugin extends webpack.Plugin {
+    constructor(config: ITerserPluginConfiguration);
   }
 }

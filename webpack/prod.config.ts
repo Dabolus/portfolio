@@ -1,6 +1,5 @@
 /* tslint:disable */
 // TODO: discover why we need these
-/// <reference types="../typings/webpack-merge" />
 /// <reference types="../typings/terser" />
 /// <reference types="../typings/terser-webpack-plugin" />
 
@@ -20,6 +19,15 @@ const config: webpack.Configuration = smartMerge({
 })(baseConfig, {
   mode: 'production',
   optimization: {
+    splitChunks: {
+      name: false,
+      cacheGroups: {
+        vendor: {
+          test: /node_modules/,
+          chunks: 'all',
+        },
+      },
+    },
     minimizer: [
       new TerserPlugin({
         cache: true,
@@ -28,19 +36,13 @@ const config: webpack.Configuration = smartMerge({
       }),
       new OptimizeCssAssetsPlugin(),
     ],
-    splitChunks: {
-      // TODO: chunks: 'all' (requires some config tweaks)
-      name: false,
-    },
   },
   module: {
     rules: [
       {
         test: /styles\/.*\.s?[ac]ss$/,
         use: [
-          {
-            loader: miniCssExtractLoader,
-          },
+          miniCssExtractLoader,
           {
             loader: 'css-loader',
             options: {

@@ -1,19 +1,18 @@
 /* tslint:disable */
 // TODO: discover why we need these
-/// <reference types="../typings/webpack-merge" />
+/// <reference types="../typings/webpack-shell-plugin" />
 
 import HtmlPlugin from 'html-webpack-plugin';
 import { smartStrategy as smartMerge } from 'webpack-merge';
 import baseConfig from './base.config';
-import devServerConfig from './dev-server.config';
 import webpack from 'webpack';
+import ShellPlugin from 'webpack-shell-plugin';
 
 const config: webpack.Configuration = smartMerge({
   plugins: 'prepend',
 })(baseConfig, {
   mode: 'development',
-  devtool: 'inline-source-map',
-  serve: devServerConfig,
+  devtool: 'eval-source-map',
   optimization: {
     removeAvailableModules: false,
     removeEmptyChunks: false,
@@ -59,6 +58,9 @@ const config: webpack.Configuration = smartMerge({
       template: '!!@piuccio/ejs-compiled-loader!./src/index.ejs',
       showErrors: true,
       buildName: process.env.BUILD_NAME,
+    }),
+    new ShellPlugin({
+      onBuildEnd: ['firebase serve'],
     }),
   ],
 });
