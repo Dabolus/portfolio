@@ -65,9 +65,17 @@ p {
   }
 
   h2 {
-    font-size: 1.5rem;
+    display: flex;
+    font-size: 1.4rem;
     font-weight: 300;
     margin: .2rem 0;
+    height: 2.4rem;
+    align-items: center;
+  }
+
+  #google-g {
+    width: 1.4rem;
+    height: 1.4rem;
   }
 
   #strings {
@@ -76,9 +84,10 @@ p {
   }
 
   #typed {
-    display: inline-block;
+    display: inline-flex;
     width: 20.25rem;
     text-align: left;
+    align-items: center;
   }
 
   #scroll-down {
