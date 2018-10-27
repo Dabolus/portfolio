@@ -1,9 +1,11 @@
-<script>
-  // Load and register pre-caching Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () =>
-      navigator.serviceWorker.register('sw.js', {
-        scope: '/',
-      }));
-  }
-</script>
+<% if (htmlWebpackPlugin.options.buildName !== 'es5') { %>
+  <script>
+    // Load and register pre-caching Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () =>
+        navigator.serviceWorker.register('sw.js', {
+          scope: '/',
+        }));
+    }
+  </script>
+<% } %>
