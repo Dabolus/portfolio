@@ -59,7 +59,7 @@ task('build', series(
 
 task('firebase', () => {
   // These are the files needed by PRPL Server, that are going to be moved to the functions folder
-  const filesToMove = 'build/**/index.html';
+  const filesToMove = ['build/polymer.json', 'build/**/index.html'];
   // Delete the build folder inside the functions folder
   return del('functions/build')
     .then(() =>

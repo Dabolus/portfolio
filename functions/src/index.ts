@@ -30,14 +30,6 @@ expressApp.use((req, res, next) => {
   return rendertronMiddleware(req, res, next);
 });
 
-expressApp.get('/*', prpl.makeHandler('./build', {
-  entrypoint: 'index.html',
-  builds: [{
-    name: 'es6',
-    browserCapabilities: ['es2015'],
-  }, {
-    name: 'es5',
-  }],
-}));
+expressApp.get('/*', prpl.makeHandler(require('../build/polymer.json')));
 
 export const app = functions.https.onRequest(expressApp);
