@@ -6,7 +6,7 @@
     ],
     "module": "commonjs",
     "noImplicitReturns": true,
-    "outDir": "lib",
+    "outDir": ".",
     "sourceMap": true,
     "target": "es6",
     "allowSyntheticDefaultImports": true
@@ -14,5 +14,8 @@
   "compileOnSave": true,
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
