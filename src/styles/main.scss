@@ -65,11 +65,14 @@ p {
   }
 
   h2 {
-    display: flex;
     font-size: 1.4rem;
     font-weight: 300;
     margin: .2rem 0;
     height: 2.4rem;
+  }
+
+  #phrases {
+    display: flex;
     align-items: center;
   }
 
