@@ -19,15 +19,6 @@ const config: webpack.Configuration = smartMerge({
 })(baseConfig, {
   mode: 'production',
   optimization: {
-    splitChunks: {
-      name: false,
-      cacheGroups: {
-        vendor: {
-          test: /node_modules/,
-          chunks: 'all',
-        },
-      },
-    },
     minimizer: [
       new TerserPlugin({
         cache: true,
