@@ -95,7 +95,7 @@ window.addEventListener('load', () => {
       stopAgeAnimation();
       setTimeout(() => main.hidden = true, 600);
     } else {
-      document.title = `Giorgio Garasto - ${pages[path]}`;
+      document.title = `${pages[path]} - Giorgio Garasto`;
       smoothScroll();
       main.hidden = false;
       setTimeout(() => {
