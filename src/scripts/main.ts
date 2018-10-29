@@ -1,4 +1,4 @@
-import { installRouter } from 'pwa-helpers/router';
+import { installRouter, updateMetadata } from 'pwa-helpers';
 import Typed from 'typed.js';
 
 const pages: { [key: string]: string } = {
@@ -80,6 +80,12 @@ window.addEventListener('load', () => {
       path = '';
     }
     if (path === '') {
+      updateMetadata({
+        description:
+          'Hi! I\'m Giorgio, a Software Engineer trying to make the web a better place since 2004.',
+        image: 'images/propic.jpg',
+        title: 'Giorgio Garasto',
+      });
       document.title = 'Giorgio Garasto';
       document.body.className = '';
       main.className = '';
@@ -95,7 +101,14 @@ window.addEventListener('load', () => {
       stopAgeAnimation();
       setTimeout(() => main.hidden = true, 600);
     } else {
-      document.title = `${pages[path]} - Giorgio Garasto`;
+      updateMetadata({
+        // TODO: write a per-page description
+        description:
+          'Hi! I\'m Giorgio, a Software Engineer trying to make the web a better place since 2004.',
+        // TODO: maybe also an image
+        image: 'images/propic.jpg',
+        title: `${pages[path]} - Giorgio Garasto`,
+      });
       smoothScroll();
       main.hidden = false;
       setTimeout(() => {
