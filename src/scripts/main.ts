@@ -27,6 +27,7 @@ window.addEventListener('load', () => {
   const since2004Link: HTMLElement = document.getElementById('since-2004-link');
   const homeLinks: HTMLElement[] = [...Array.prototype.slice.call(menuLinks), since2004Link];
   const homeSections: NodeListOf<HTMLElement> = document.querySelectorAll('#i-am, #menu');
+  const backLink: HTMLAnchorElement = document.querySelector('#back-link');
   // Set up scrolling to the right position when navigating with tabs for accessibility
   since2004Link
     .addEventListener('focus', () => smoothScroll(0));
@@ -103,7 +104,7 @@ window.addEventListener('load', () => {
           fragment.className = fragment.dataset.page === path ? 'page active' : 'page');
         document.body.className = 'blocked';
         main.className = 'active';
-        pageTitle.focus();
+        backLink.focus();
       }, 50);
       setTimeout(() => {
         homeLinks.forEach((link) =>
