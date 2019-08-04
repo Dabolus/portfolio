@@ -2,25 +2,24 @@
 // TODO: discover why we need these
 /// <reference types="../typings/gulp-stylelint" />
 /// <reference types="../typings/gulp-htmllint" />
+/// <reference types="../typings/gulp-eslint" />
 
 import del from 'del';
 import { writeFile } from 'fs';
 import { dest, parallel, series, src, task } from 'gulp';
 import htmllint from 'gulp-htmllint';
 import stylelint from 'gulp-stylelint';
-import tslint from 'gulp-tslint';
+import eslint from 'gulp-eslint';
 import { resolve as resolvePath } from 'path';
 import { ConfigHelper } from './helpers';
 
 /* LINTING TASKS */
 task('lint:scripts', () =>
   src('src/**/*.ts')
-    .pipe(tslint({
-      formatter: 'verbose',
-    }))
-    .pipe(tslint.report({
-      summarizeFailureOutput: true,
-    })));
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError()),
+);
 
 task('lint:styles', () =>
   src('src/**/*.s[ac]ss')

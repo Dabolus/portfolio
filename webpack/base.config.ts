@@ -1,5 +1,3 @@
-/* tslint:disable */
-// TODO: discover why we need these
 /// <reference types="../typings/script-ext-html-webpack-plugin" />
 /// <reference types="../typings/workbox-webpack-plugin" />
 
@@ -40,17 +38,25 @@ const config: webpack.Configuration = {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/env', {
-                loose: true,
-                useBuiltIns: 'usage',
-              }],
+              [
+                '@babel/env',
+                {
+                  loose: true,
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                  modules: false,
+                },
+              ],
               '@babel/typescript',
             ],
             plugins: [
-              ['@babel/transform-runtime', {
-                corejs: 2,
-                sourceType: 'unambiguous',
-              }],
+              [
+                '@babel/transform-runtime',
+                {
+                  corejs: 3,
+                  sourceType: 'unambiguous',
+                },
+              ],
             ],
           },
         },

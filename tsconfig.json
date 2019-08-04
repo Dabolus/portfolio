@@ -7,14 +7,12 @@
     "strictNullChecks": false,
     "allowJs": true,
     "checkJs": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "lib": [
       "dom",
       "esnext"
     ],
-    "target": "es6"
+    "target": "esnext"
   },
   "include": [
     "typings/**/*.d.ts",

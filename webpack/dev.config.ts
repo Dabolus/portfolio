@@ -1,5 +1,3 @@
-/* tslint:disable */
-// TODO: discover why we need these
 /// <reference types="../typings/webpack-shell-plugin" />
 
 import HtmlPlugin from 'html-webpack-plugin';
