@@ -3,6 +3,8 @@ import ejs from './plugins/ejs.plugin';
 import workbox from './plugins/workbox.plugin';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
+import serve from 'rollup-plugin-serve';
+import livereload from 'rollup-plugin-livereload';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -53,6 +55,11 @@ export default {
           globDirectory: 'dist',
         },
       }),
-    ] : [],
+    ] : [
+      serve('dist'),
+      livereload({
+        watch: 'dist',
+      })
+    ],
   ],
 };
