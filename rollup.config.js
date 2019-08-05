@@ -1,7 +1,8 @@
+import { resolve } from 'path';
 import ejs from './plugins/ejs.plugin';
-import workbox from 'rollup-plugin-workbox-build';
+import workbox from './plugins/workbox.plugin';
 import babel from 'rollup-plugin-babel';
-import { terser } from "rollup-plugin-terser";
+import { terser } from 'rollup-plugin-terser';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -48,7 +49,7 @@ export default {
       workbox({
         mode: 'generateSW',
         options: {
-          swDest: 'dist/sw.js',
+          swDest: resolve('dist', 'sw.js'),
           globDirectory: 'dist',
         },
       }),
