@@ -1,5 +1,7 @@
 import ejs from './plugins/ejs.plugin';
 import workbox from 'rollup-plugin-workbox-build';
+import babel from 'rollup-plugin-babel';
+import { terser } from "rollup-plugin-terser";
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -10,6 +12,10 @@ export default {
     format: 'iife',
   },
   plugins: [
+    babel({
+      exclude: 'node_modules',
+      extensions: ['.ts', '.js'],
+    }),
     ejs({
       template: 'src/index.ejs',
       target: 'dist/index.html',
@@ -38,6 +44,7 @@ export default {
       } : {},
     }),
     ...isProd ? [
+      terser(),
       workbox({
         mode: 'generateSW',
         options: {
