@@ -1,20 +1,22 @@
+/* eslint-disable no-console */
+
 import { generateSW, injectManifest } from 'workbox-build';
 
 /**
  * @enum  {function}  Workbox build mode
  */
 const WORKBOX_MODE = {
-	generateSW,
-	injectManifest,
+  generateSW,
+  injectManifest,
 };
 
 /** @type {RenderCallback} */
 const report = ({ swDest, count, size }) => {
-	let message = `Service worker: ${swDest}`;
-	message += `\nFiles pre-cached: ${count}`;
-	message += `\nCache size: ${size}`;
+  let message = `Service worker: ${swDest}`;
+  message += `\nFiles pre-cached: ${count}`;
+  message += `\nCache size: ${size}`;
 
-	console.log(message);
+  console.log(message);
 };
 
 /**
@@ -28,28 +30,27 @@ const report = ({ swDest, count, size }) => {
  * @return {Object}
  */
 export default function workbox({
-	options = {},
-	render = report,
-	mode = 'generateSW',
+  options = {},
+  render = report,
+  mode = 'generateSW',
 }) {
-	if (!(mode in WORKBOX_MODE))
-		throw new Error(`Unsupported workbox mode: "${mode}"`);
+  if (!(mode in WORKBOX_MODE))
+    throw new Error(`Unsupported workbox mode: "${mode}"`);
 
-	const build = WORKBOX_MODE[mode];
+  const build = WORKBOX_MODE[mode];
 
-	const doRender = ({ count, size }) => {
-		render({ swDest: options.swDest, count, size });
-	};
+  const doRender = ({ count, size }) => {
+    render({ swDest: options.swDest, count, size });
+  };
 
-	return {
-		name: 'workbox-build',
+  return {
+    name: 'workbox-build',
 
-		writeBundle(bundle) {
-			return build(options)
-				.then(doRender)
-				.catch(console.error);
-		},
-	};
+    writeBundle: () =>
+      build(options)
+        .then(doRender)
+        .catch(console.error),
+  };
 }
 
 /** @typedef {'generateSW'|'injectManifest'} WorkboxBuildMode */

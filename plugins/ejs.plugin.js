@@ -19,7 +19,13 @@ export function getEntryPoints(bundleInfo = {}) {
  * @return {Object} The rollup code object.
  */
 export default function htmlTemplate(options = {}) {
-  const { template, target, data = {}, compilerOptions, htmlMinifierOptions } = options;
+  const {
+    template,
+    target,
+    data = {},
+    compilerOptions,
+    htmlMinifierOptions,
+  } = options;
   return {
     name: 'ejs',
 
@@ -29,7 +35,7 @@ export default function htmlTemplate(options = {}) {
 
       if (!target && !template)
         throw new Error(
-          '[rollup-plugin-ejs] You did not provide a template or target!'
+          '[rollup-plugin-ejs] You did not provide a template or target!',
         );
 
       // Get the target file name.

@@ -25,41 +25,45 @@ export default {
       compilerOptions: {
         client: false,
       },
-      ...isProd ? {
-        htmlMinifierOptions: {
-          minifyCSS: {
-            level: {
-              2: {
-                all: true,
+      ...(isProd
+        ? {
+            htmlMinifierOptions: {
+              minifyCSS: {
+                level: {
+                  2: {
+                    all: true,
+                  },
+                },
               },
+              minifyJS: true,
+              collapseWhitespace: true,
+              collapseBooleanAttributes: true,
+              collapseInlineTagWhitespace: true,
+              removeOptionalTags: true,
+              removeTagWhitespace: true,
+              sortAttributes: true,
+              sortClassName: true,
+              removeRedundantAttributes: true,
             },
-          },
-          minifyJS: true,
-          collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          collapseInlineTagWhitespace: true,
-          removeOptionalTags: true,
-          removeTagWhitespace: true,
-          sortAttributes: true,
-          sortClassName: true,
-          removeRedundantAttributes: true,
-        },
-      } : {},
+          }
+        : {}),
     }),
-    ...isProd ? [
-      terser(),
-      workbox({
-        mode: 'generateSW',
-        options: {
-          swDest: resolve('dist', 'sw.js'),
-          globDirectory: 'dist',
-        },
-      }),
-    ] : [
-      serve('dist'),
-      livereload({
-        watch: 'dist',
-      })
-    ],
+    ...(isProd
+      ? [
+          terser(),
+          workbox({
+            mode: 'generateSW',
+            options: {
+              swDest: resolve('dist', 'sw.js'),
+              globDirectory: 'dist',
+            },
+          }),
+        ]
+      : [
+          serve('dist'),
+          livereload({
+            watch: 'dist',
+          }),
+        ]),
   ],
 };
