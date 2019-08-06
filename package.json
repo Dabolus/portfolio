@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "rollup -c rollup.config.js -w",
-    "build": "NODE_ENV=production rollup -c rollup.config.js"
+    "build": "NODE_ENV=production rollup -c rollup.config.js",
+    "lint": "eslint '**/*.{ts,js}'",
+    "format": "prettier --write '**/*.{ts,js}'"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.5.5",
