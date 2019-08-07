@@ -1,10 +1,10 @@
 @import './variables';
 
 html {
-  --theme-color: $theme-color;
-  --theme-accent: $theme-accent;
-  --theme-default-background: $theme-default-background;
-  --theme-content-background: $theme-content-background;
+  --theme-color: #{$theme-color};
+  --theme-accent: #{$theme-accent};
+  --theme-default-background: #{$theme-default-background};
+  --theme-content-background: #{$theme-content-background};
 }
 
 a {
