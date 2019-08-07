@@ -1,5 +1,6 @@
 import { resolve as resolvePath } from 'path';
 import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
 import ejs from './plugins/ejs.plugin';
 import sass from './plugins/sass.plugin';
 import workbox from './plugins/workbox.plugin';
@@ -20,6 +21,7 @@ export default {
     resolve({
       extensions: ['.ts', '.js', '.mjs', '.scss', '.ejs'],
     }),
+    commonjs(),
     babel({
       exclude: 'node_modules/**',
       extensions: ['.ts', '.js', '.mjs'],
