@@ -1,5 +1,3 @@
-@import './theme';
-
 .page[data-page="about-me"] {
   #age {
     display: inline-block;
@@ -11,8 +9,8 @@
     height: 8rem;
     object-fit: cover;
     float: right;
-    border: .5rem solid $theme-white;
-    box-shadow: 0 0 .05rem rgba($theme-black, .5);
+    border: .5rem solid var(--theme-white);
+    box-shadow: 0 0 .05rem rgba(var(--theme-black), .5);
     margin: 1rem;
     transform: rotateZ(-5deg);
   }

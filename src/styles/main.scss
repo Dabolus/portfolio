@@ -1,2 +1,54 @@
+@import './variables';
+
+html {
+  --theme-color: $theme-color;
+  --theme-accent: $theme-accent;
+  --theme-default-background: $theme-default-background;
+  --theme-content-background: $theme-content-background;
+}
+
+a {
+  color: var(--theme-accent);
+  text-decoration: none;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+}
+
+body.blocked {
+  overflow: hidden;
+}
+
+// Yeah, I know I shouldn't use important,
+// but in this case it is REALLY important
+[hidden] {
+  display: none !important;
+}
+
+[aria-hidden='true'] {
+  visibility: hidden !important;
+}
+
+hr {
+  width: calc(100% - 6rem);
+  border: 0;
+  padding: .025rem;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, .12);
+}
+
+section, nav, #page-container {
+  padding: 1rem;
+}
+
+p {
+  text-align: justify;
+  margin: 0 auto;
+  padding: 1rem 0;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
 @import './home';
 @import './about-me';

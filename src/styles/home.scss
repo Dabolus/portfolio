@@ -1,48 +1,3 @@
-@import './theme';
-
-a {
-  color: $theme-accent;
-  text-decoration: none;
-
-  &:hover, &:focus {
-    text-decoration: underline;
-  }
-}
-
-body.blocked {
-  overflow: hidden;
-}
-
-// Yeah, I know I shouldn't use important,
-// but in this case it is REALLY important
-[hidden] {
-  display: none !important;
-}
-
-[aria-hidden='true'] {
-  visibility: hidden !important;
-}
-
-hr {
-  width: calc(100% - 6rem);
-  border: 0;
-  padding: .025rem;
-  margin: 0 auto;
-  background-color: rgba(0, 0, 0, .12);
-}
-
-section, nav, #page-container {
-  padding: 1rem;
-}
-
-p {
-  text-align: justify;
-  margin: 0 auto;
-  padding: 1rem 0;
-  font-weight: 400;
-  font-size: 1.1rem;
-}
-
 #i-am {
   position: relative;
   width: 100vw;
@@ -54,7 +9,7 @@ p {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: $theme-content-background;
+  background: var(--theme-content-background);
   z-index: 1;
   box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14), 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12), 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2);
 
@@ -127,8 +82,8 @@ p {
     cursor: pointer;
     border-radius: .25rem;
     text-decoration: none;
-    color: $theme-color;
-    background: $theme-content-background;
+    color: var(--theme-color);
+    background: var(--theme-content-background);
     box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset, 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset, 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
     will-change: box-shadow;
     transition: .3s box-shadow;
@@ -155,25 +110,25 @@ p {
     }
 
     &#about-me svg {
-      stroke: $theme-blue;
+      stroke: var(--theme-blue);
       stroke-dasharray: 135.098876953125px;
       stroke-dashoffset: 135.098876953125px;
     }
 
     &#works svg {
-      stroke: $theme-green;
+      stroke: var(--theme-green);
       stroke-dasharray: 208.56814575195312px;
       stroke-dashoffset: 208.56814575195312px;
     }
 
     &#certifications svg {
-      stroke: $theme-yellow;
+      stroke: var(--theme-yellow);
       stroke-dasharray: 156.8944091796875px;
       stroke-dashoffset: 156.8944091796875px;
     }
 
     &#contacts svg {
-      stroke: $theme-pink;
+      stroke: var(--theme-pink);
       stroke-dasharray: 126.3226547241211px;
       stroke-dashoffset: 126.3226547241211px;
     }
@@ -203,7 +158,7 @@ main {
   overflow: hidden;
   will-change: transform;
   transition: .6s transform;
-  background: $theme-content-background;
+  background: var(--theme-content-background);
   z-index: 2;
   box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset, 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset, 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
 
