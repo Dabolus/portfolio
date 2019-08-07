@@ -8,6 +8,7 @@ import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
+import copy from 'rollup-plugin-copy';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -18,6 +19,14 @@ export default {
     format: 'iife',
   },
   plugins: [
+    copy({
+      targets: [
+        {
+          src: 'src/assets/*',
+          dest: 'dist',
+        },
+      ],
+    }),
     resolve({
       extensions: ['.ts', '.js', '.mjs', '.scss', '.ejs'],
     }),
