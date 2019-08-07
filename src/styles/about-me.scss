@@ -1,4 +1,4 @@
-.page[data-page="about-me"] {
+.page[data-page='about-me'] {
   #age {
     display: inline-block;
     width: 6.85rem;
@@ -9,8 +9,8 @@
     height: 8rem;
     object-fit: cover;
     float: right;
-    border: .5rem solid var(--theme-white);
-    box-shadow: 0 0 .05rem rgba(var(--theme-black), .5);
+    border: 0.5rem solid var(--theme-white);
+    box-shadow: 0 0 0.05rem rgba(var(--theme-black), 0.5);
     margin: 1rem;
     transform: rotateZ(-5deg);
   }

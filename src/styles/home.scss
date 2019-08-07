@@ -11,18 +11,20 @@
   text-align: center;
   background: var(--theme-content-background);
   z-index: 1;
-  box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14), 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12), 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14),
+    0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12),
+    0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2);
 
   h1 {
     font-size: 3rem;
     font-weight: 600;
-    margin: .6rem 0;
+    margin: 0.6rem 0;
   }
 
   h2 {
     font-size: 1.4rem;
     font-weight: 300;
-    margin: .2rem 0;
+    margin: 0.2rem 0;
     height: 2.4rem;
   }
 
@@ -71,7 +73,9 @@
   grid-gap: 1rem;
 
   @media (orientation: landscape) {
-    grid: 'a b' calc(50% - .5rem) 'c d' calc(50% - .5rem) / calc(50% - .5rem) calc(50% - .5rem);
+    grid: 'a b' calc(50% - 0.5rem) 'c d' calc(50% - 0.5rem) / calc(50% - 0.5rem) calc(
+        50% - 0.5rem
+      );
   }
 
   a {
@@ -80,19 +84,21 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     text-decoration: none;
     color: var(--theme-color);
     background: var(--theme-content-background);
-    box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset, 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset, 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset,
+      0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset,
+      0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
     will-change: box-shadow;
-    transition: .3s box-shadow;
+    transition: 0.3s box-shadow;
 
     p {
       text-align: center;
       will-change: transform;
-      transition: .3s transform;
-      transition-delay: .9s;
+      transition: 0.3s transform;
+      transition-delay: 0.9s;
     }
 
     svg {
@@ -103,7 +109,7 @@
       max-height: 50%;
       transform: translateX(-50%);
       fill: transparent;
-      stroke-width: .3px;
+      stroke-width: 0.3px;
       will-change: stroke-dashoffset;
       transition: 1s stroke-dashoffset linear;
       transition-delay: 0s;
@@ -133,7 +139,8 @@
       stroke-dashoffset: 126.3226547241211px;
     }
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       box-shadow: none;
 
       p {
@@ -142,7 +149,7 @@
       }
 
       svg {
-        transition-delay: .1s !important;
+        transition-delay: 0.1s !important;
         stroke-dashoffset: 0 !important;
       }
     }
@@ -157,10 +164,12 @@ main {
   height: 100vh;
   overflow: hidden;
   will-change: transform;
-  transition: .6s transform;
+  transition: 0.6s transform;
   background: var(--theme-content-background);
   z-index: 2;
-  box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset, 0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset, 0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
+  box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset,
+    0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset,
+    0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
 
   &.active {
     transform: translateX(-100vw);
@@ -169,7 +178,7 @@ main {
   #header {
     display: flex;
     align-items: center;
-    padding: .25rem;
+    padding: 0.25rem;
     height: 3.5rem;
 
     a {
@@ -181,7 +190,7 @@ main {
 
     #page-title {
       flex: 1 1 auto;
-      margin: 0 .25rem;
+      margin: 0 0.25rem;
       font-size: 1.25rem;
     }
   }
@@ -213,6 +222,6 @@ main {
     transform: translateY(0);
   }
   to {
-    transform: translateY(.5rem);
+    transform: translateY(0.5rem);
   }
 }
