@@ -4,14 +4,14 @@
     "source": "functions"
   },
   "hosting": {
-    "predeploy": "yarn build",
+    "predeploy": "npm run build",
     "public": "dist",
     "ignore": [
       "firebase.json",
       "package.json",
       "rollup.config.js",
       "tsconfig.json",
-      "yarn.lock",
+      "package-lock.json",
       "**/.*",
       "**/node_modules/**",
       "src/**",

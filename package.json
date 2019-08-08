@@ -7,7 +7,8 @@
     "start:frontend": "rollup -c rollup.config.js -w",
     "start:firebase": "npm --prefix functions run build && firebase serve",
     "lint": "eslint '**/*.{ts,js}'",
-    "format": "prettier --write '**/*.{ts,js,scss}'"
+    "format": "prettier --write '**/*.{ts,js,scss}'",
+    "postinstall": "npm --prefix functions install"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.5.5",
