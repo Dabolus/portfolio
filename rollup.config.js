@@ -6,8 +6,6 @@ import sass from './plugins/sass.plugin';
 import workbox from './plugins/workbox.plugin';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
-import serve from 'rollup-plugin-serve';
-import livereload from 'rollup-plugin-livereload';
 import copy from 'rollup-plugin-copy';
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -79,11 +77,6 @@ export default {
             },
           }),
         ]
-      : [
-          serve('dist'),
-          livereload({
-            watch: 'dist',
-          }),
-        ]),
+      : []),
   ],
 };
