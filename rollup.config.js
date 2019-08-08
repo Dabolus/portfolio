@@ -7,6 +7,7 @@ import workbox from './plugins/workbox.plugin';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy';
+import { minify } from 'terser';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -39,6 +40,7 @@ export default {
       compilerOptions: {
         client: false,
       },
+      data: { isProd },
       ...(isProd
         ? {
             htmlMinifierOptions: {
@@ -49,7 +51,7 @@ export default {
                   },
                 },
               },
-              minifyJS: true,
+              minifyJS: input => minify(input).code,
               collapseWhitespace: true,
               collapseBooleanAttributes: true,
               collapseInlineTagWhitespace: true,
