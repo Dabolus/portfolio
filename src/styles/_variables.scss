@@ -1,5 +1,7 @@
 $theme-black: #000;
-$theme-gray: #f0f0f0;
+$theme-darker-gray: #212121;
+$theme-dark-gray: #303030;
+$theme-light-gray: #f0f0f0;
 $theme-white: #fff;
 $theme-red: #dd2c00;
 $theme-green: #2e7d32;
@@ -8,7 +10,12 @@ $theme-pink: #d81b60;
 $theme-purple: #6a1b9a;
 $theme-yellow: #f9a825;
 
-$theme-color: $theme-black;
-$theme-accent: $theme-red;
-$theme-default-background: $theme-gray;
-$theme-content-background: $theme-white;
+$light-theme-color: $theme-black;
+$light-theme-accent: $theme-red;
+$light-theme-default-background: $theme-light-gray;
+$light-theme-content-background: $theme-white;
+
+$dark-theme-color: $theme-white;
+$dark-theme-accent: $theme-red;
+$dark-theme-default-background: $theme-darker-gray;
+$dark-theme-content-background: $theme-dark-gray;
