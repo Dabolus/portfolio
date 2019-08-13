@@ -1,4 +1,4 @@
-import Typed from 'typed.js';
+import Typed from 'typed.js/src/typed';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Configure typing animation
