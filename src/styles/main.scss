@@ -46,9 +46,9 @@ hr {
   background-color: rgba(0, 0, 0, 0.12);
 }
 
-section,
+#home > div,
 nav,
-#page-container {
+.content {
   padding: 1rem;
 }
 
@@ -61,4 +61,5 @@ p {
 }
 
 @import './home';
-@import './about-me';
+
+// @import './about-me';
