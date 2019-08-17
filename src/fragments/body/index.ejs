@@ -1,5 +1,15 @@
 <body>
-  <%- include i-am -%>
-  <%- include nav-menu -%>
-  <%- include main -%>
+  <noscript>
+    <b>Warning: without JavaScript, this website will not work!</b>
+    <style>
+      #strings {
+        position: initial !important;
+        top: initial !important;
+      }
+    </style>
+  </noscript>
+  <main>
+    <%- include home -%>
+    <%- include sections/about-me -%>
+  </main>
 </body>

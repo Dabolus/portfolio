@@ -1,0 +1,47 @@
+<section id="home">
+  <div>
+    <h1>Hi! I'm Giorgio.</h1>
+    <h2 id="phrases">A&nbsp;<span id="typed"></span></h2>
+    <div id="strings">
+      <h2>Software Engineer</h2>
+      <h2>Developer Advocate</h2>
+      <h2><img src="images/google-g.svg" id="google-g" alt="Google" title="Google"><span>&nbsp;Certified Mobile Web Specialist</span></h2>
+      <h2>Graphic Designer (sort of)</h2>
+      <h2>Musician in free time</h2>
+    </div>
+    <h2 id="since-2004">trying to make the web a better place&nbsp;<a
+              id="since-2004-link"
+              href="https://translate.google.com/translate?js=n&sl=it&tl=en&u=https://web.archive.org/web/20101103024916/http://www.w3schools.it:80/"
+              target="since-2004"
+              rel="nofollow">since&nbsp;2004</a>.</h2>
+    <svg id="scroll-down" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"/>
+    </svg>
+  </div>
+  <nav id="menu">
+    <% [{
+      id: 'about-me',
+      title: 'About me',
+      icon: 'M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z',
+    }, {
+      id: 'works',
+      title: 'Works',
+      icon: 'M22,9V7H20V5A2,2 0 0,0 18,3H4A2,2 0 0,0 2,5V19A2,2 0 0,0 4,21H18A2,2 0 0,0 20,19V17H22V15H20V13H22V11H20V9H22M18,19H4V5H18V19M6,13H11V17H6V13M12,7H16V10H12V7M6,7H11V12H6V7M12,11H16V17H12V11Z',
+    }, {
+      id: 'certifications',
+      title: 'Certifications',
+      icon: 'M4,3C2.89,3 2,3.89 2,5V15A2,2 0 0,0 4,17H12V22L15,19L18,22V17H20A2,2 0 0,0 22,15V8L22,6V5A2,2 0 0,0 20,3H16V3H4M12,5L15,7L18,5V8.5L21,10L18,11.5V15L15,13L12,15V11.5L9,10L12,8.5V5M4,5H9V7H4V5M4,9H7V11H4V9M4,13H9V15H4V13Z',
+    }, {
+      id: 'contacts',
+      title: 'Contacts',
+      icon: 'M9,11.75A1.25,1.25 0 0,0 7.75,13A1.25,1.25 0 0,0 9,14.25A1.25,1.25 0 0,0 10.25,13A1.25,1.25 0 0,0 9,11.75M15,11.75A1.25,1.25 0 0,0 13.75,13A1.25,1.25 0 0,0 15,14.25A1.25,1.25 0 0,0 16.25,13A1.25,1.25 0 0,0 15,11.75M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,11.71 4,11.42 4.05,11.14C6.41,10.09 8.28,8.16 9.26,5.77C11.07,8.33 14.05,10 17.42,10C18.2,10 18.95,9.91 19.67,9.74C19.88,10.45 20,11.21 20,12C20,16.41 16.41,20 12,20Z',
+    }].forEach(function (section) { %>
+    <a href="/<%= section.id %>" id="<%= section.id %>">
+      <p><%= section.title %></p>
+      <svg viewBox="0 0 24 24">
+        <path d="<%= section.icon %>"/>
+      </svg>
+    </a>
+    <% }) %>
+  </nav>
+</section>
