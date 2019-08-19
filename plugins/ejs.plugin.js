@@ -16,7 +16,10 @@ export default function ejs(options = {}) {
     name: 'ejs',
 
     async generateBundle(outputOptions) {
-      const targetDir = outputOptions.dir || path.dirname(outputOptions.file);
+      const targetDir =
+        (target && path.dirname(target)) ||
+        outputOptions.dir ||
+        path.dirname(outputOptions.file);
 
       if (!target && !template)
         throw new Error(
