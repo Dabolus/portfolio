@@ -40,8 +40,6 @@ export const configureRouting = () => {
     updateMetadata({
       title: title ? `${title} - Giorgio Garasto` : 'Giorgio Garasto',
       description,
-      image: 'images/propic.jpg',
-      imageAlt: 'Giorgio Garasto',
     });
   });
 };
