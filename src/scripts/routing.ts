@@ -10,7 +10,7 @@ const pages: {
     description:
       "Hi! I'm Giorgio, a Software Engineer trying to make the web a better place since 2004.",
   },
-  'about-me': {
+  about: {
     title: 'About me',
     description: '',
   },
