@@ -28,13 +28,18 @@ app.get('/:page?', async ({ params: { page = 'home' } }, res) => {
   const index = await indexPromise;
   res.send(
     index.replace(/{{(.+)}}/g, (_, match) => {
-      return match === 'page'
-        ? page === 'home'
-          ? 'hidden'
-          : ''
-        : page === match
-        ? ''
-        : 'hidden';
+      switch (match) {
+        case 'page':
+          return page === 'home' ? 'hidden' : '';
+        case 'age':
+          return (
+            (Date.now() - 873148830000) / // 1st Sep 1997 at 23:20:30
+            31556926000
+          ) // 1 year (365 days, 5 hours, 48 minutes and 46 seconds)
+            .toFixed(9);
+        default:
+          return page === match ? '' : 'hidden';
+      }
     }),
   );
 });
