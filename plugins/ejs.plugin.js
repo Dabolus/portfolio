@@ -27,11 +27,7 @@ export default function ejs(options = {}) {
         );
 
       // Get the target file name.
-      const targetName = path.basename(target || template);
-
-      // Add the file suffix if it isn't there.
-      const targetFile =
-        targetName.indexOf('.html') < 0 ? `${targetName}.html` : targetName;
+      const targetFile = path.basename(target || template);
 
       // Read the file
       const buffer = await fs.readFile(template);

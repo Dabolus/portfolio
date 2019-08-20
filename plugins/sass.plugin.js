@@ -22,11 +22,7 @@ export default function sass(options = {}) {
         );
 
       // Get the target file name.
-      const targetName = path.basename(target || entrypoint);
-
-      // Add the file suffix if it isn't there.
-      const targetFile =
-        targetName.indexOf('.css') < 0 ? `${targetName}.css` : targetName;
+      const targetFile = path.basename(target || entrypoint);
 
       const file = path.resolve(entrypoint);
 
