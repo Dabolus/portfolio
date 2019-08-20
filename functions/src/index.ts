@@ -14,6 +14,34 @@ const projectsCollection = db.collection('projects');
 
 const app = express();
 
+const pages: {
+  [key: string]: {
+    title?: string;
+    description: string;
+  };
+} = {
+  home: {
+    description:
+      "Hi! I'm Giorgio, a Software Engineer trying to make the web a better place since 2004.",
+  },
+  about: {
+    title: 'About me',
+    description: '',
+  },
+  certifications: {
+    title: 'Certifications',
+    description: '',
+  },
+  contacts: {
+    title: 'Contacts',
+    description: '',
+  },
+  projects: {
+    title: 'Projects',
+    description: '',
+  },
+};
+
 app.get('/api/projects', async (_, res) => {
   const projects = await projectsCollection.get();
   res.json(
@@ -29,6 +57,16 @@ app.get('/:page?', async ({ params: { page = 'home' } }, res) => {
   res.send(
     index.replace(/{{(.+)}}/g, (_, match) => {
       switch (match) {
+        case 'title':
+          return pages[page].title
+            ? `${pages[page].title} - Giorgio Garasto`
+            : 'Giorgio Garasto';
+        case 'description':
+          return pages[page].description;
+        case 'url':
+          return `https://giorgio.garasto.it${
+            page === 'home' ? '' : `/${page}`
+          }`;
         case 'page':
           return page === 'home' ? 'hidden' : '';
         case 'age':
