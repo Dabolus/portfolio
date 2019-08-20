@@ -22,8 +22,8 @@ const pages: {
     title: 'Contacts',
     description: '',
   },
-  works: {
-    title: 'Works',
+  projects: {
+    title: 'Projects',
     description: '',
   },
 };
