@@ -36,7 +36,7 @@ export default {
     }),
     ejs({
       template: 'src/index.ejs',
-      target: 'functions/index.html',
+      target: 'functions/index.hbs',
       compilerOptions: {
         client: false,
       },

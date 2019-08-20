@@ -1,5 +1,5 @@
 node_modules/
 dist/
 functions/lib/
-functions/index.html
+functions/index.hbs
 .firebase*

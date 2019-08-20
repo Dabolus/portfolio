@@ -5,7 +5,7 @@ import path from 'path';
 import express from 'express';
 
 const indexPromise = fs
-  .readFile(path.resolve(__dirname, '../index.html'))
+  .readFile(path.resolve(__dirname, '../index.hbs'))
   .then(file => file.toString());
 
 admin.initializeApp(functions.config().firebase);
