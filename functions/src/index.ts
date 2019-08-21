@@ -55,7 +55,7 @@ app.get('/api/projects', async (_, res) => {
 app.get('/:page?', async ({ params: { page = 'home' } }, res) => {
   const index = await indexPromise;
   res.send(
-    index.replace(/{{(.+)}}/g, (_, match) => {
+    index.replace(/{{(.+?)}}/g, (_, match) => {
       switch (match) {
         case 'title':
           return pages[page].title
