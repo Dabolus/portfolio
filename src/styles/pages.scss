@@ -1,3 +1,5 @@
+@import './variables';
+
 #page {
   position: fixed;
   top: 0;
@@ -9,9 +11,9 @@
   transition: 0.6s transform;
   background: var(--theme-content-background);
   z-index: 2;
-  box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset,
-    0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset,
-    0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
+  box-shadow: 0 0.06rem 0.065rem 0 rgba($theme-black, 0.14) inset,
+    0 0.003rem 0.15rem 0 rgba($theme-black, 0.12) inset,
+    0 0.09rem 0.0035rem -0.065rem rgba($theme-black, 0.2) inset;
 
   &[hidden] {
     transform: translateX(100vw);
@@ -54,3 +56,5 @@
     }
   }
 }
+
+@import './pages/about';
