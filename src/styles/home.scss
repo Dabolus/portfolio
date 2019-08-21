@@ -15,13 +15,13 @@
     box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14),
       0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12),
       0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2);
-  
+
     > h1 {
       font-size: 2.8rem;
       font-weight: 600;
       margin: 0.6rem 0;
     }
-  
+
     > h2 {
       font-size: 1.3rem;
       font-weight: 300;
@@ -71,9 +71,9 @@
     grid-gap: 1rem;
 
     @media (orientation: landscape) {
-      grid: 'a b' calc(50% - 0.5rem) 'c d' calc(50% - 0.5rem) / calc(50% - 0.5rem) calc(
-          50% - 0.5rem
-        );
+      grid:
+        'a b' calc(50% - 0.5rem) 'c d' calc(50% - 0.5rem) / calc(50% - 0.5rem)
+        calc(50% - 0.5rem);
     }
 
     > a {
@@ -119,7 +119,7 @@
         stroke-dashoffset: 135.098876953125px;
       }
 
-      &#works svg {
+      &#projects svg {
         stroke: $theme-green;
         stroke-dasharray: 208.56814575195312px;
         stroke-dashoffset: 208.56814575195312px;
