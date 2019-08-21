@@ -69,6 +69,8 @@ app.get('/:page?', async ({ params: { page = 'home' } }, res) => {
           }`;
         case 'page':
           return page === 'home' ? 'hidden' : '';
+        case 'pageTitle':
+          return pages[page].title || '';
         case 'age':
           return (
             (Date.now() - 873148830000) / // 1st Sep 1997 at 23:20:30
