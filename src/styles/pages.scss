@@ -1,8 +1,56 @@
-.page {
+#page {
   position: fixed;
   top: 0;
   left: 0;
-  transform: translateX(100vw);
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
+  will-change: transform;
+  transition: 0.6s transform;
+  background: var(--theme-content-background);
+  z-index: 2;
+  box-shadow: 0 0.06rem 0.065rem 0 rgba(0, 0, 0, 0.14) inset,
+    0 0.003rem 0.15rem 0 rgba(0, 0, 0, 0.12) inset,
+    0 0.09rem 0.0035rem -0.065rem rgba(0, 0, 0, 0.2) inset;
+
+  &[hidden] {
+    transform: translateX(100vw);
+  }
+
+  > #header {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+    height: 3.5rem;
+
+    > #back {
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      flex: 0 0 auto;
+    }
+
+    > #title {
+      flex: 1 1 auto;
+      margin: 0 0.25rem;
+      font-size: 1.25rem;
+    }
+  }
+
+  .content {
+    width: 100%;
+    height: calc(100vh - 3.55rem);
+    margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    p {
+      font-weight: 200;
+    }
+
+    > .content-boundaries {
+      max-width: 24rem;
+      margin: 0 auto;
+    }
+  }
 }
