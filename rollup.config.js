@@ -76,6 +76,33 @@ export default {
             options: {
               swDest: resolvePath('dist', 'sw.js'),
               globDirectory: 'dist',
+              globPatterns: [
+                '**/*.{js,png,jpg,webp,svg,html,css,woff2,webmanifest}',
+              ],
+              templatedURLs: {
+                '/': 'functions/index.hbs',
+              },
+              navigateFallback: '/',
+              runtimeCaching: [
+                {
+                  method: 'GET',
+                  urlPattern: /api/,
+                  handler: 'StaleWhileRevalidate',
+                  options: {
+                    backgroundSync: {
+                      name: 'api-sync-queue',
+                      options: {
+                        maxRetentionTime: 3600,
+                      },
+                    },
+                    cacheableResponse: {
+                      statuses: [0, 200],
+                    },
+                    cacheName: 'api-cache',
+                  },
+                },
+              ],
+              offlineGoogleAnalytics: true,
             },
           }),
         ]
