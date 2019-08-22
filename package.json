@@ -3,7 +3,7 @@
   "author": "Giorgio Garasto <giorgio@garasto.it>",
   "license": "MIT",
   "scripts": {
-    "start": "run-p start:frontend start:firebase",
+    "start": "cross-env NODE_ENV=development run-p start:frontend start:firebase",
     "start:frontend": "rollup -c rollup.config.js -w",
     "start:firebase": "npm --prefix functions run build && firebase serve",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
