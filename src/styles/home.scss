@@ -114,25 +114,25 @@
       }
 
       &#about svg {
-        stroke: $theme-blue;
+        stroke: var(--theme-blue);
         stroke-dasharray: 135.098876953125px;
         stroke-dashoffset: 135.098876953125px;
       }
 
       &#projects svg {
-        stroke: $theme-green;
+        stroke: var(--theme-green);
         stroke-dasharray: 208.56814575195312px;
         stroke-dashoffset: 208.56814575195312px;
       }
 
       &#certifications svg {
-        stroke: $theme-yellow;
+        stroke: var(--theme-yellow);
         stroke-dasharray: 156.8944091796875px;
         stroke-dashoffset: 156.8944091796875px;
       }
 
       &#contacts svg {
-        stroke: $theme-pink;
+        stroke: var(--theme-pink);
         stroke-dasharray: 126.3226547241211px;
         stroke-dashoffset: 126.3226547241211px;
       }
