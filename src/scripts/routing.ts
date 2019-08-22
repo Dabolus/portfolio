@@ -12,19 +12,20 @@ const pages: {
   },
   about: {
     title: 'About me',
-    description: '',
+    description: 'Curious about who I am? Get to know me and what I do.',
   },
   certifications: {
     title: 'Certifications',
-    description: '',
+    description: 'Check out my certifications and awards.',
   },
   contacts: {
     title: 'Contacts',
-    description: '',
+    description:
+      'Interested in what I do and/or have some questions? Contact me!',
   },
   projects: {
     title: 'Projects',
-    description: '',
+    description: 'Check out the list of the projects I built and maintain.',
   },
 };
 
