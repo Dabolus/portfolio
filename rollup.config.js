@@ -74,10 +74,14 @@ export default {
           workbox({
             mode: 'generateSW',
             options: {
+              cacheId: 'gg',
               swDest: resolvePath('dist', 'sw.js'),
               globDirectory: 'dist',
               globPatterns: [
-                '**/*.{js,png,jpg,webp,svg,html,css,woff2,webmanifest}',
+                '**/*.{css,woff2}',
+                '**/main.js',
+                '**/google-g.svg',
+                '**/propic.jpg',
               ],
               templatedURLs: {
                 '/': 'functions/index.hbs',
