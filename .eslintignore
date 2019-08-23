@@ -1,7 +1,0 @@
-.vscode/
-.idea/
-build/
-node_modules/
-functions/**/*.js
-functions/**/*.js.map
-.firebase*
