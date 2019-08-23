@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+- 10
+branches:
+  only:
+  - master
+cache:
+  directories:
+  - node_modules
+  - functions/node_modules
+before_install:
+  - npm i -g npm
+script:
+- npm run build
+deploy:
+  skip_cleanup: true
+  provider: firebase
+  edge: true
+  token:
+    secure: T7S5vCxYqOEGCMM8fhs7mduda2fZ4qMkv2FHYGdAh3nN4Wea4XojS1CL6QFem9xdW/KJtEj9Tl6XB7f/LBxUjLj389m4sG11kB5qAZh3nZZY7n8+KD7cE/8pyS3lHcJwyw0ZcD71twFkDN6q8ZIpAlMJNSmlVxiiUY4PUX/htPJy4ukw66z/ThKSXAvfk1K/Oz5uDbN7eKF9681uRAlw9Gy5UU+oAWIz4xwhIJqtYMQ04OG34bbCLgNFrTyzgthZ9XSBpCuvQB8f9Z4XMG1PtIgp6Ulgcr2MftkjeCSJjEPlB4Q2V38/pFTKHVMVcO/+79qWvoHIH1V5sgpdlaF9cwX5N57FboGh2J/Qf6CFjoN9+mseONswpQRdgUL5UfhJyCxbyIgu3S/NqXvCoyxTHPv29vD0EjmaawRNDkji9LEUyG1ngqhwq61fgpm60cDr5WTxmuUIVHXA8kFLT8e8+kaZS5h0bUdKLbsQb3N5YEH18s42FPbzDenZAv1sakwN+MfXs3CNVv4RQalDlGTRIOFfXFMKQuhWrCE8S9wdZF8DdMMRuhMPhqRuaeeRyett0k0aVyGfGKg6dKPESehc+qOG+IVUDfRdPXY+lnMHka+YsE39gpj1JlhdqUhQlfg3SsBZ5exvOB/QHmLo7+RUd/A/b7yJwE/weArWf2mSprA=
+  project: giorgio-garasto

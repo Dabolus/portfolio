@@ -1,0 +1,76 @@
+@import './variables';
+
+html {
+  --theme-color: #{$light-theme-color};
+  --theme-accent: #{$light-theme-accent};
+  --theme-default-background: #{$light-theme-default-background};
+  --theme-content-background: #{$light-theme-content-background};
+  --theme-red: #{$light-theme-red};
+  --theme-green: #{$light-theme-green};
+  --theme-blue: #{$light-theme-blue};
+  --theme-pink: #{$light-theme-pink};
+  --theme-purple: #{$light-theme-purple};
+  --theme-yellow: #{$light-theme-yellow};
+
+  @media (light-level: dim), (prefers-color-scheme: dark) {
+    --theme-color: #{$dark-theme-color};
+    --theme-accent: #{$dark-theme-accent};
+    --theme-default-background: #{$dark-theme-default-background};
+    --theme-content-background: #{$dark-theme-content-background};
+    --theme-red: #{$dark-theme-red};
+    --theme-green: #{$dark-theme-green};
+    --theme-blue: #{$dark-theme-blue};
+    --theme-pink: #{$dark-theme-pink};
+    --theme-purple: #{$dark-theme-purple};
+    --theme-yellow: #{$dark-theme-yellow};
+  }
+}
+
+a {
+  color: var(--theme-accent);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+body.blocked {
+  overflow: hidden;
+}
+
+// Yeah, I know I shouldn't use important,
+// but in this case it is REALLY important
+[hidden] {
+  display: none !important;
+}
+
+[aria-hidden='true'] {
+  visibility: hidden !important;
+}
+
+hr {
+  width: calc(100% - 6rem);
+  border: 0;
+  padding: 0.025rem;
+  margin: 0 auto;
+  background-color: rgba($theme-black, 0.12);
+}
+
+#home > div,
+nav,
+.content {
+  padding: 1rem;
+}
+
+p {
+  text-align: justify;
+  margin: 0 auto;
+  padding: 1rem 0;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
+@import './home';
+@import './pages';
