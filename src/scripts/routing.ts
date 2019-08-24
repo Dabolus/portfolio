@@ -53,6 +53,11 @@ export const configureRouting = () => {
       description,
     });
 
+    gtag('config', 'UA-86330876-7', {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      page_title: title || 'Home',
+    });
+
     if (path === 'home') {
       home.hidden = false;
       page.hidden = true;
