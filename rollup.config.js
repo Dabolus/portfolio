@@ -68,48 +68,44 @@ export default {
       entrypoint: 'src/styles/main.scss',
       target: 'dist/styles.css',
     }),
-    ...(isProd
-      ? [
-          terser(),
-          workbox({
-            mode: 'generateSW',
+    ...(isProd ? [terser()] : []),
+    workbox({
+      mode: 'generateSW',
+      options: {
+        cacheId: 'gg',
+        swDest: resolvePath('dist', 'sw.js'),
+        globDirectory: 'dist',
+        globPatterns: [
+          '**/*.{css,woff2}',
+          '**/main.js',
+          '**/google-g.svg',
+          '**/propic.jpg',
+        ],
+        templatedURLs: {
+          '/': 'functions/index.hbs',
+        },
+        navigateFallback: '/',
+        runtimeCaching: [
+          {
+            method: 'GET',
+            urlPattern: /api/,
+            handler: 'StaleWhileRevalidate',
             options: {
-              cacheId: 'gg',
-              swDest: resolvePath('dist', 'sw.js'),
-              globDirectory: 'dist',
-              globPatterns: [
-                '**/*.{css,woff2}',
-                '**/main.js',
-                '**/google-g.svg',
-                '**/propic.jpg',
-              ],
-              templatedURLs: {
-                '/': 'functions/index.hbs',
-              },
-              navigateFallback: '/',
-              runtimeCaching: [
-                {
-                  method: 'GET',
-                  urlPattern: /api/,
-                  handler: 'StaleWhileRevalidate',
-                  options: {
-                    backgroundSync: {
-                      name: 'api-sync-queue',
-                      options: {
-                        maxRetentionTime: 3600,
-                      },
-                    },
-                    cacheableResponse: {
-                      statuses: [0, 200],
-                    },
-                    cacheName: 'api-cache',
-                  },
+              backgroundSync: {
+                name: 'api-sync-queue',
+                options: {
+                  maxRetentionTime: 3600,
                 },
-              ],
-              offlineGoogleAnalytics: true,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+              cacheName: 'api-cache',
             },
-          }),
-        ]
-      : []),
+          },
+        ],
+        offlineGoogleAnalytics: true,
+      },
+    }),
   ],
 };
