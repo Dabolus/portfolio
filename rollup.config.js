@@ -85,6 +85,9 @@ export default {
           '/': 'functions/index.hbs',
         },
         navigateFallback: '/',
+        navigateFallbackBlacklist: [
+          /api/,
+        ],
         runtimeCaching: [
           {
             method: 'GET',
