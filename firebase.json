@@ -20,8 +20,12 @@
     ],
     "rewrites": [
       {
+        "source": "/api/projects",
+        "function": "getProjects"
+      },
+      {
         "source": "**",
-        "function": "api"
+        "function": "ssr"
       }
     ],
     "headers": [
