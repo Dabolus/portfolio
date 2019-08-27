@@ -12,11 +12,23 @@ import { minify } from 'terser';
 const isProd = process.env.NODE_ENV === 'production';
 
 export default {
-  input: 'src/scripts/main.ts',
-  output: {
-    file: 'dist/main.js',
-    format: 'iife',
+  input: {
+    main: 'src/scripts/main.ts',
+    'pages/about': 'src/scripts/pages/about.ts',
+    'pages/certifications': 'src/scripts/pages/certifications.ts',
+    'pages/contacts': 'src/scripts/pages/contacts.ts',
+    'pages/projects': 'src/scripts/pages/projects.ts',
   },
+  output: [
+    {
+      dir: 'dist/module',
+      format: 'esm',
+    },
+    {
+      dir: 'dist/nomodule',
+      format: 'system',
+    },
+  ],
   plugins: [
     copy({
       targets: [
@@ -24,6 +36,10 @@ export default {
           src: 'src/assets/*',
           dest: 'dist',
         },
+        {
+          src: `node_modules/systemjs/dist/s${isProd ? '.min' : ''}.js`,
+          dest: 'dist',
+        }
       ],
     }),
     resolve({
@@ -85,9 +101,7 @@ export default {
           '/': 'functions/index.hbs',
         },
         navigateFallback: '/',
-        navigateFallbackBlacklist: [
-          /api/,
-        ],
+        navigateFallbackBlacklist: [/api/],
         runtimeCaching: [
           {
             method: 'GET',

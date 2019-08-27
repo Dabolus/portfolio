@@ -47,6 +47,7 @@ export const configureRouting = () => {
       window.history.replaceState({}, '', '/');
       path = 'home';
     }
+
     const { title, description } = pages[path];
     updateMetadata({
       title: title ? `${title} - Giorgio Garasto` : 'Giorgio Garasto',
@@ -66,6 +67,8 @@ export const configureRouting = () => {
       certifications.hidden = true;
       contacts.hidden = true;
     } else {
+      import(`./pages/${path}.js`).then(({ configure }) => configure());
+
       pageTitle.textContent = title;
       home.hidden = true;
       page.hidden = false;

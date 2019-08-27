@@ -1,4 +1,15 @@
 <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-86330876-7"></script>
-<script defer src="main.js"></script>
+<script defer>
+  import('./module/main.js');
+  window.supportsDynamicImport = true;
+</script>
+<script defer>
+  if (!window.supportsDynamicImport) {
+    const systemJsLoaderTag = document.createElement('script');
+    systemJsLoaderTag.src = 's<%= isProd ? '.min' : '' %>.js';
+    systemJsLoaderTag.addEventListener('load', () => System.import('./nomodule/main.js'));
+    document.head.appendChild(systemJsLoaderTag);
+  }
+</script>
 <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="styles.css"></noscript>
