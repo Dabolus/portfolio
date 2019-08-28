@@ -39,7 +39,7 @@ export default {
         {
           src: `node_modules/systemjs/dist/s${isProd ? '.min' : ''}.js`,
           dest: 'dist',
-        }
+        },
       ],
     }),
     resolve({
