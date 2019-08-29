@@ -27,6 +27,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@types/gtag.js": "0.0.3",
+    "@types/lozad": "^1.9.0",
     "@types/typed.js": "^2.0.9",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
