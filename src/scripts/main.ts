@@ -14,6 +14,12 @@ const smoothScroll = (val?: number) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('{{jsDir}}/sw.js', {
+      scope: '/',
+    });
+  }
+
   configureTypingAnimation();
   configureRouting();
 

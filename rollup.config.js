@@ -7,11 +7,12 @@ import workbox from './plugins/workbox.plugin';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy';
+import replace from 'rollup-plugin-replace';
 import { minify } from 'terser';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-export default {
+const config = (main = true) => ({
   input: {
     main: 'src/scripts/main.ts',
     'pages/about': 'src/scripts/pages/about.ts',
@@ -19,28 +20,30 @@ export default {
     'pages/contacts': 'src/scripts/pages/contacts.ts',
     'pages/projects': 'src/scripts/pages/projects.ts',
   },
-  output: [
-    {
-      dir: 'dist/module',
-      format: 'esm',
-    },
-    {
-      dir: 'dist/nomodule',
-      format: 'system',
-    },
-  ],
+  output: main
+    ? {
+        dir: 'dist/module',
+        format: 'esm',
+      }
+    : {
+        dir: 'dist/nomodule',
+        format: 'system',
+      },
   plugins: [
     copy({
-      targets: [
-        {
-          src: 'src/assets/*',
-          dest: 'dist',
-        },
-        {
-          src: `node_modules/systemjs/dist/s${isProd ? '.min' : ''}.js`,
-          dest: 'dist',
-        },
-      ],
+      targets: main
+        ? [
+            {
+              src: 'src/assets/*',
+              dest: 'dist',
+            },
+          ]
+        : [
+            {
+              src: `node_modules/systemjs/dist/s${isProd ? '.min' : ''}.js`,
+              dest: 'dist/nomodule',
+            },
+          ],
     }),
     resolve({
       extensions: ['.ts', '.js', '.mjs', '.scss', '.ejs'],
@@ -50,6 +53,11 @@ export default {
       exclude: 'node_modules/**',
       extensions: ['.ts', '.js', '.mjs'],
       runtimeHelpers: true,
+    }),
+    replace({
+      exclude: 'node_modules/**',
+      delimiters: ['', ''],
+      '{{jsDir}}': main ? 'module' : 'nomodule',
     }),
     ejs({
       template: 'src/index.ejs',
@@ -81,28 +89,30 @@ export default {
           }
         : {}),
     }),
-    sass({
-      entrypoint: 'src/styles/main.scss',
-      target: 'dist/styles.css',
-    }),
+    ...(main
+      ? [
+          sass({
+            entrypoint: 'src/styles/main.scss',
+            target: 'dist/styles.css',
+          }),
+        ]
+      : []),
     ...(isProd ? [terser()] : []),
     workbox({
       mode: 'generateSW',
       options: {
         cacheId: 'gg',
-        swDest: resolvePath('dist', 'sw.js'),
-        globDirectory: 'dist',
+        swDest: resolvePath('dist', main ? 'module' : 'nomodule', 'sw.js'),
+        globDirectory: `dist/${main ? 'module' : 'nomodule'}`,
         globPatterns: [
-          '**/*.{css,woff2}',
-          '**/main.js',
-          '**/google-g.svg',
-          '**/propic.jpg',
+          '../**/*.{css,woff2}',
+          `../**/${main ? 'module' : 'nomodule'}/**/*.js`,
+          '../**/google-g.svg',
+          '../**/propic.jpg',
         ],
         templatedURLs: {
           '/': 'functions/index.hbs',
         },
-        navigateFallback: '/',
-        navigateFallbackBlacklist: [/api/],
         runtimeCaching: [
           {
             method: 'GET',
@@ -126,4 +136,6 @@ export default {
       },
     }),
   ],
-};
+});
+
+export default [config(true), config(false)];
