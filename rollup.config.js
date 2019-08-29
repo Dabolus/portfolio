@@ -113,6 +113,8 @@ const config = (main = true) => ({
         templatedURLs: {
           '/': 'functions/index.hbs',
         },
+        navigateFallback: '/',
+        navigateFallbackBlacklist: [/api/],
         runtimeCaching: [
           {
             method: 'GET',
