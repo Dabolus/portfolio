@@ -13,7 +13,7 @@ const smoothScroll = (val?: number) => {
   });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+const start = () => {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('{{jsDir}}/sw.js', {
       scope: '/',
@@ -30,4 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document
     .querySelectorAll<HTMLAnchorElement>('#menu > a')
     .forEach(link => link.addEventListener('focus', () => smoothScroll()));
-});
+};
+
+if (
+  document.readyState === 'complete' ||
+  document.readyState === 'interactive'
+) {
+  start();
+} else {
+  document.addEventListener('DOMContentLoaded', start);
+}
