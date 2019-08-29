@@ -11,4 +11,13 @@ module.exports = {
     ],
     '@babel/typescript',
   ],
+  plugins: [
+    [
+      '@babel/transform-runtime',
+      {
+        corejs: 3,
+        sourceType: 'unambiguous',
+      },
+    ],
+  ],
 };

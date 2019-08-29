@@ -49,6 +49,7 @@ export default {
     babel({
       exclude: 'node_modules/**',
       extensions: ['.ts', '.js', '.mjs'],
+      runtimeHelpers: true,
     }),
     ejs({
       template: 'src/index.ejs',
