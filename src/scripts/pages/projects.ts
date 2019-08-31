@@ -1,33 +1,72 @@
 import lozad from 'lozad';
 
+interface ProjectIcon {
+  jpg: string;
+  webp: string;
+  placeholder: string;
+}
+
 interface Project {
   readonly id: string;
   readonly name: string;
   readonly description: string;
-  readonly icon: string;
+  readonly icon: ProjectIcon;
   readonly link: string;
   readonly source: string;
   readonly technologies: readonly string[];
-  readonly thumbnail: string;
 }
+
+const supportsWebp = () =>
+  new Promise(resolve => {
+    const img = document.createElement('img');
+    img.addEventListener('load', () => {
+      if (img.width > 0 && img.height > 0) {
+        return resolve(true);
+      }
+      resolve(false);
+    });
+    img.addEventListener('error', () => resolve(false));
+    img.src =
+      'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACyAgCdASoCAAEALmk0mk0iIiIiIgBoSygABc6zbAAA/v56QAAAAA==';
+  });
+
+const getProjects = async () => {
+  const res = await fetch('api/projects');
+  const projects: readonly Project[] = await res.json();
+  return projects;
+};
 
 export const configure = async () => {
   const projectsContainer = document.querySelector<HTMLDivElement>('#projects');
 
-  const res = await fetch('api/projects');
-  const projects: readonly Project[] = await res.json();
+  const [useWebp, projects] = await Promise.all([
+    supportsWebp(),
+    getProjects(),
+  ]);
 
   projectsContainer.innerHTML = projects.reduce(
-    (projectsHtml, project) => `
+    (
+      projectsHtml,
+      {
+        name,
+        description,
+        link,
+        source,
+        technologies,
+        icon: { webp, jpg, placeholder },
+      },
+    ) => `
     ${projectsHtml}
     <div class="project">
-      <img class="lozad" src="${project.thumbnail}" data-src="${project.icon}">
-      <h3>${project.name}</h3>
-      <p>${project.description}</p>
-      ${project.link ? `<a href="${project.link}"></a>` : ''}
-      ${project.source ? `<a href="${project.source}"></a>` : ''}
+      <img class="lozad" src="${placeholder}" data-src="${
+      useWebp ? webp : jpg
+    }" alt="${name}" title="${name}">
+      <h3>${name}</h3>
+      <p>${description}</p>
+      ${link ? `<a href="${link}"></a>` : ''}
+      ${source ? `<a href="${source}"></a>` : ''}
       <ul>
-        ${project.technologies.reduce(
+        ${technologies.reduce(
           (technologiesHtml, technology) => `
           ${technologiesHtml}
           <li>${technology}</li>
