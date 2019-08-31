@@ -13,7 +13,9 @@ export const getProjects = functions.https.onRequest(async (_, res) => {
       projectsCollection || admin.firestore().collection('projects');
   }
 
-  const projects = await projectsCollection.get();
+  const projects = await projectsCollection
+    .where('published', '==', true)
+    .get();
 
   res.json(
     projects.docs.map(snapshot => ({
