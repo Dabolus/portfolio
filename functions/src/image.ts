@@ -133,12 +133,17 @@ export const processProjectImage = functions.storage
     ]);
 
     process.stdout.write('Saving icon URL and thumbnail to Firestore...\n');
-    await projectsCollection.doc(projectId).set({
-      icon: {
-        jpg: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects%2F${projectId}.jpg?alt=media`,
-        webp: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects%2F${projectId}.webp?alt=media`,
-        placeholder,
+    await projectsCollection.doc(projectId).set(
+      {
+        icon: {
+          jpg: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects%2F${projectId}.jpg?alt=media`,
+          webp: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects%2F${projectId}.webp?alt=media`,
+          placeholder,
+        },
       },
-    });
+      {
+        merge: true,
+      },
+    );
     process.stdout.write('Done!\n');
   });
