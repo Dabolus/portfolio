@@ -1,13 +1,20 @@
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
+import { CollectionReference } from '@google-cloud/firestore';
 
-admin.initializeApp(functions.config().firebase);
-
-const db = admin.firestore();
-const projectsCollection = db.collection('projects');
+let projectsCollection: CollectionReference;
 
 export const getProjects = functions.https.onRequest(async (_, res) => {
+  if (!projectsCollection) {
+    try {
+      admin.initializeApp(functions.config().firebase);
+    } catch {}
+    projectsCollection =
+      projectsCollection || admin.firestore().collection('projects');
+  }
+
   const projects = await projectsCollection.get();
+
   res.json(
     projects.docs.map(snapshot => ({
       id: snapshot.id,
