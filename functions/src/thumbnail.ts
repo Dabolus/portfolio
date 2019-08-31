@@ -63,18 +63,18 @@ export const generateThumbnail = functions.storage
     contentType = '',
   }) => {
     if (!name || !contentType) {
-      process.stdout.write('Missing name or content type, ignoring file.');
+      process.stdout.write('Missing name or content type, ignoring file.\n');
       return;
     }
 
     // We expect the file name to be the same as the ID of our project ID on Firestore
     const match = name.match(/^projects\/([a-zA-Z\d-]+)/);
     if (!match) {
-      process.stdout.write('Uploaded image is not a project image, ignoring it.');
+      process.stdout.write('Uploaded image is not a project image, ignoring it.\n');
       return;
     }
     const [, projectId] = match;
-    process.stdout.write(`Generating thumbnail for project '${projectId}'...`);
+    process.stdout.write(`Generating thumbnail for project '${projectId}'...\n`);
 
     if (!bucket || !projectsCollection) {
       try {
@@ -84,13 +84,13 @@ export const generateThumbnail = functions.storage
       projectsCollection = admin.firestore().collection('projects');
     }
 
-    process.stdout.write('Downloading image...');
+    process.stdout.write('Downloading image...\n');
     const [buffer] = await bucket.file(name).download();
-    process.stdout.write('Scaling image...');
+    process.stdout.write('Scaling image...\n');
     const scaledBuffer = await sharp(buffer)
       .resize(thumbnailWidth, thumbnailHeight)
       .toBuffer();
-    process.stdout.write('Detecting primitive SVG shapes on image...');
+    process.stdout.write('Detecting primitive SVG shapes on image...\n');
     const model = await primitive({
       input: `data:${contentType};base64,${scaledBuffer.toString(
         'base64',
@@ -99,15 +99,15 @@ export const generateThumbnail = functions.storage
       shapeType: 'random',
     });
     const svg = model.toSVG();
-    process.stdout.write('Optimizing generated SVG...');
+    process.stdout.write('Optimizing generated SVG...\n');
     const optimizedSVG = await optimize(svg);
-    process.stdout.write('Postprocessing optimized SVG...');
+    process.stdout.write('Postprocessing optimized SVG...\n');
     const postprocessedSVG = postProcess(optimizedSVG);
 
-    process.stdout.write('Saving icon URL and thumbnail to Firestore...');
+    process.stdout.write('Saving icon URL and thumbnail to Firestore...\n');
     await projectsCollection.doc(projectId).set({
       icon: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects/${name}?alt=media`,
       placeholder: postprocessedSVG,
     });
-    process.stdout.write('Done!');
+    process.stdout.write('Done!\n');
   });
