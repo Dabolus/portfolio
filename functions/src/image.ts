@@ -1,14 +1,14 @@
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import sharp from 'sharp';
+import sharp, { Sharp } from 'sharp';
 import primitive from 'primitive';
 import SVGO from 'svgo';
 import toSafeDataURI from 'mini-svg-data-uri';
 import { Bucket } from '@google-cloud/storage';
 import { CollectionReference } from '@google-cloud/firestore';
 
-const thumbnailWidth = 256;
-const thumbnailHeight = 256;
+const placeholderWidth = 256;
+const placeholderHeight = 256;
 
 let bucket: Bucket;
 let projectsCollection: CollectionReference;
@@ -51,30 +51,69 @@ const postProcess = (svg: string): string => {
   const filter = `<filter id="${blurFilterId}"><feGaussianBlur stdDeviation="${blurStdDev}"/></filter>`;
   const finalSVG = newSVG.replace(
     /(<svg)(.*?)(>)/,
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${thumbnailWidth} ${thumbnailHeight}">${filter}`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${placeholderWidth} ${placeholderHeight}">${filter}`,
   );
   return toSafeDataURI(finalSVG);
 };
 
-export const generateThumbnail = functions.storage
+const generateWebp = async (
+  sharpInstance: Sharp,
+  name: string,
+  bucket: Bucket,
+) => {
+  process.stdout.write('Generating webp image...\n');
+  const webpBuffer = await sharpInstance
+    .webp({
+      alphaQuality: 0,
+      quality: 100,
+    })
+    .toBuffer();
+  await bucket.file(`projects/${name}.webp`).save(webpBuffer, {
+    contentType: 'image/webp',
+  });
+};
+
+const generatePlaceholder = async (
+  sharpInstance: Sharp,
+  contentType: string,
+) => {
+  process.stdout.write('Scaling image...\n');
+  const scaledBuffer = await sharpInstance
+    .resize(placeholderWidth, placeholderHeight)
+    .toBuffer();
+  process.stdout.write('Detecting primitive SVG shapes on image...\n');
+  const model = await primitive({
+    input: `data:${contentType};base64,${scaledBuffer.toString('base64')}`,
+    numSteps: 8,
+    shapeType: 'random',
+  });
+  const svg = model.toSVG();
+  process.stdout.write('Optimizing generated SVG...\n');
+  const optimizedSVG = await optimize(svg);
+  process.stdout.write('Postprocessing optimized SVG...\n');
+  return postProcess(optimizedSVG);
+};
+
+export const processProjectImage = functions.storage
   .object()
-  .onFinalize(async ({
-    name = '',
-    contentType = '',
-  }) => {
+  .onFinalize(async ({ name = '', contentType = '' }) => {
     if (!name || !contentType) {
       process.stdout.write('Missing name or content type, ignoring file.\n');
       return;
     }
 
     // We expect the file name to be the same as the ID of our project ID on Firestore
-    const match = name.match(/^projects\/([a-zA-Z\d-]+)/);
+    const match = name.match(/^projects\/([a-zA-Z\d-]+)\.jpg$/);
     if (!match) {
-      process.stdout.write('Uploaded image is not a project image, ignoring it.\n');
+      process.stdout.write(
+        'Uploaded image is not a project image, ignoring it.\n',
+      );
       return;
     }
     const [, projectId] = match;
-    process.stdout.write(`Generating thumbnail for project '${projectId}'...\n`);
+    process.stdout.write(
+      `Generating thumbnail for project '${projectId}'...\n`,
+    );
 
     if (!bucket || !projectsCollection) {
       try {
@@ -86,28 +125,20 @@ export const generateThumbnail = functions.storage
 
     process.stdout.write('Downloading image...\n');
     const [buffer] = await bucket.file(name).download();
-    process.stdout.write('Scaling image...\n');
-    const scaledBuffer = await sharp(buffer)
-      .resize(thumbnailWidth, thumbnailHeight)
-      .toBuffer();
-    process.stdout.write('Detecting primitive SVG shapes on image...\n');
-    const model = await primitive({
-      input: `data:${contentType};base64,${scaledBuffer.toString(
-        'base64',
-      )}`,
-      numSteps: 8,
-      shapeType: 'random',
-    });
-    const svg = model.toSVG();
-    process.stdout.write('Optimizing generated SVG...\n');
-    const optimizedSVG = await optimize(svg);
-    process.stdout.write('Postprocessing optimized SVG...\n');
-    const postprocessedSVG = postProcess(optimizedSVG);
+    const firstSharpInstance = sharp(buffer);
+    const secondSharpInstance = firstSharpInstance.clone();
+    const [placeholder] = await Promise.all([
+      generatePlaceholder(secondSharpInstance, contentType),
+      generateWebp(firstSharpInstance, projectId, bucket),
+    ]);
 
     process.stdout.write('Saving icon URL and thumbnail to Firestore...\n');
     await projectsCollection.doc(projectId).set({
-      icon: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects/${name}?alt=media`,
-      placeholder: postprocessedSVG,
+      icon: {
+        jpg: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects%2F${projectId}.jpg?alt=media`,
+        webp: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects%2F${projectId}.webp?alt=media`,
+        placeholder,
+      },
     });
     process.stdout.write('Done!\n');
   });
