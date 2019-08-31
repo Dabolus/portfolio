@@ -6,12 +6,15 @@
     "start": "cross-env NODE_ENV=development run-p start:frontend start:firebase",
     "start:frontend": "rollup -c rollup.config.js -w",
     "start:firebase": "npm --prefix functions run build && firebase serve",
-    "build": "run-p build:frontend build:functions",
-    "build:frontend": "cross-env NODE_ENV=production rollup -c rollup.config.js",
-    "build:functions": "cross-env NODE_ENV=production npm --prefix functions run build",
+    "build": "npm run clean && run-p build:frontend build:functions",
+    "build:frontend": "npm run clean:frontend && cross-env NODE_ENV=production rollup -c rollup.config.js",
+    "build:functions": "npm run clean:functions && cross-env NODE_ENV=production npm --prefix functions run build",
     "lint": "eslint '**/*.{ts,js}'",
     "format": "prettier --write '**/*.{ts,js,scss}'",
     "postinstall": "npm --prefix functions install",
+    "clean": "run-p clean:frontend clean:functions",
+    "clean:frontend": "rm -rf dist/",
+    "clean:functions": "rm -rf functions/lib/",
     "deploy": "firebase deploy"
   },
   "dependencies": {
