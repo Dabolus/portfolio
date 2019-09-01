@@ -1,4 +1,5 @@
 import lozad from 'lozad';
+import { supportsWebp } from '../utils';
 
 interface ProjectIcon {
   jpg: string;
@@ -16,20 +17,6 @@ interface Project {
   readonly technologies: readonly string[];
 }
 
-const supportsWebp = () =>
-  new Promise(resolve => {
-    const img = document.createElement('img');
-    img.addEventListener('load', () => {
-      if (img.width > 0 && img.height > 0) {
-        return resolve(true);
-      }
-      resolve(false);
-    });
-    img.addEventListener('error', () => resolve(false));
-    img.src =
-      'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACyAgCdASoCAAEALmk0mk0iIiIiIgBoSygABc6zbAAA/v56QAAAAA==';
-  });
-
 const getProjects = async () => {
   const res = await fetch('api/projects');
   const projects: readonly Project[] = await res.json();
@@ -39,10 +26,7 @@ const getProjects = async () => {
 export const configure = async () => {
   const projectsContainer = document.querySelector<HTMLDivElement>('#projects');
 
-  const [useWebp, projects] = await Promise.all([
-    supportsWebp(),
-    getProjects(),
-  ]);
+  const [useWebp, projects] = await Promise.all([supportsWebp, getProjects()]);
 
   projectsContainer.innerHTML = projects.reduce(
     (
