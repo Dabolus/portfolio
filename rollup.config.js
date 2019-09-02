@@ -57,6 +57,7 @@ const config = (main = true) => ({
     replace({
       exclude: 'node_modules/**',
       delimiters: ['', ''],
+      'process.env.ENABLE_DEV_SW': !!(isProd || process.env.ENABLE_DEV_SW),
       '{{jsDir}}': main ? 'module' : 'nomodule',
     }),
     ejs({
@@ -98,45 +99,53 @@ const config = (main = true) => ({
         ]
       : []),
     ...(isProd ? [terser()] : []),
-    workbox({
-      mode: 'generateSW',
-      options: {
-        cacheId: 'gg',
-        swDest: resolvePath('dist', main ? 'module' : 'nomodule', 'sw.js'),
-        globDirectory: `dist/${main ? 'module' : 'nomodule'}`,
-        globPatterns: [
-          '../**/*.{css,woff2}',
-          `../**/${main ? 'module' : 'nomodule'}/**/*.js`,
-          '../**/google-g.svg',
-          '../**/propic.jpg',
-        ],
-        templatedURLs: {
-          '/': 'functions/index.hbs',
-        },
-        navigateFallback: '/',
-        navigateFallbackBlacklist: [/api/],
-        runtimeCaching: [
-          {
-            method: 'GET',
-            urlPattern: /api/,
-            handler: 'StaleWhileRevalidate',
+    ...(isProd || process.env.ENABLE_DEV_SW
+      ? [
+          workbox({
+            mode: 'generateSW',
             options: {
-              backgroundSync: {
-                name: 'api-sync-queue',
-                options: {
-                  maxRetentionTime: 3600,
+              cacheId: 'gg',
+              swDest: resolvePath(
+                'dist',
+                main ? 'module' : 'nomodule',
+                'sw.js',
+              ),
+              globDirectory: `dist/${main ? 'module' : 'nomodule'}`,
+              globPatterns: [
+                '../**/*.{css,woff2}',
+                `../**/${main ? 'module' : 'nomodule'}/**/*.js`,
+                '../**/google-g.svg',
+                '../**/propic.jpg',
+              ],
+              templatedURLs: {
+                '/': 'functions/index.hbs',
+              },
+              navigateFallback: '/',
+              navigateFallbackBlacklist: [/api/],
+              runtimeCaching: [
+                {
+                  method: 'GET',
+                  urlPattern: /api/,
+                  handler: 'StaleWhileRevalidate',
+                  options: {
+                    backgroundSync: {
+                      name: 'api-sync-queue',
+                      options: {
+                        maxRetentionTime: 3600,
+                      },
+                    },
+                    cacheableResponse: {
+                      statuses: [0, 200],
+                    },
+                    cacheName: 'api-cache',
+                  },
                 },
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-              cacheName: 'api-cache',
+              ],
+              offlineGoogleAnalytics: true,
             },
-          },
-        ],
-        offlineGoogleAnalytics: true,
-      },
-    }),
+          }),
+        ]
+      : []),
   ],
 });
 

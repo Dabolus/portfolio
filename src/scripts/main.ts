@@ -14,7 +14,7 @@ const smoothScroll = (val?: number) => {
 };
 
 const start = () => {
-  if ('serviceWorker' in navigator) {
+  if (process.env.ENABLE_DEV_SW && 'serviceWorker' in navigator) {
     navigator.serviceWorker.register('{{jsDir}}/sw.js', {
       scope: '/',
     });
