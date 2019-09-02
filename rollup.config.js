@@ -80,7 +80,6 @@ const config = (main = true) => ({
               minifyJS: input => minify(input).code,
               collapseWhitespace: true,
               collapseBooleanAttributes: true,
-              collapseInlineTagWhitespace: true,
               removeOptionalTags: true,
               removeTagWhitespace: true,
               sortAttributes: true,
