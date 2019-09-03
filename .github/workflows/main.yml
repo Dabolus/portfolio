@@ -22,8 +22,8 @@ jobs:
         FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
     - name: Audit and report
       run: |
-        # Run Xvfb
-        /usr/bin/Xvfb :99 -screen 0 1024x768x24
+        # Run Xvfb in a separate screen
+        screen -S xvfb -dm "/usr/bin/Xvfb :99 -screen 0 1024x768x24"
         export CHROME_PATH="$(pwd)/chrome-linux/chrome"
         # Deprecated, but the download script needs it
         export LIGHTHOUSE_CHROMIUM_PATH="$CHROME_PATH"
@@ -33,8 +33,8 @@ jobs:
         sh -e /etc/init.d/xvfb start
         sleep 3 # wait for xvfb to boot
         node scripts/lighthouse-reporter
-        # Kill Xvfb
-        killall Xvfb
+        # Kill Xvfb screen
+        screen -S xvfb -X quit
       env:
         REPORTER_BASE_URL: ${{ secrets.REPORTER_BASE_URL }}
         REPORTER_BOT_TOKEN: ${{ secrets.REPORTER_BOT_TOKEN }}
