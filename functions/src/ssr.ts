@@ -33,6 +33,10 @@ const pages: {
     title: 'Projects',
     description: 'Check out the list of the projects I built and maintain.',
   },
+  skills: {
+    title: 'Skills',
+    description: 'Want to know what I am good at? Check it out here.',
+  },
 };
 
 export const ssr = functions.https.onRequest(async ({ path = '/' }, res) => {

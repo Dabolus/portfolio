@@ -19,6 +19,7 @@ const config = (main = true) => ({
     'pages/certifications': 'src/scripts/pages/certifications.ts',
     'pages/contacts': 'src/scripts/pages/contacts.ts',
     'pages/projects': 'src/scripts/pages/projects.ts',
+    'pages/skills': 'src/scripts/pages/skills.ts',
   },
   output: main
     ? {

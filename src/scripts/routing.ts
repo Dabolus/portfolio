@@ -28,6 +28,10 @@ export const configureRouting = () => {
       title: 'Projects',
       description: 'Check out the list of the projects I built and maintain.',
     },
+    skills: {
+      title: 'Skills',
+      description: 'Want to know what I am good at? Check it out here.',
+    },
   };
 
   const home = document.querySelector<HTMLElement>('#home');
@@ -39,6 +43,7 @@ export const configureRouting = () => {
     '#certifications',
   );
   const contacts = document.querySelector<HTMLDivElement>('#contacts');
+  const skills = document.querySelector<HTMLDivElement>('#skills');
 
   // Configure routing
   installRouter(({ pathname }) => {
@@ -66,6 +71,7 @@ export const configureRouting = () => {
       projects.hidden = true;
       certifications.hidden = true;
       contacts.hidden = true;
+      skills.hidden = true;
     } else {
       import(`./pages/${path}.js`).then(({ configure }) => configure());
 
@@ -76,6 +82,7 @@ export const configureRouting = () => {
       projects.hidden = path !== 'projects';
       certifications.hidden = path !== 'certifications';
       contacts.hidden = path !== 'contacts';
+      skills.hidden = path !== 'skills';
     }
   });
 };
