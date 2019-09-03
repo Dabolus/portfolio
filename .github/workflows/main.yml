@@ -20,3 +20,10 @@ jobs:
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
+    - name: Audit and report
+      run: node scripts/lighthouse-reporter
+      env:
+        REPORTER_BASE_URL: ${{ secrets.REPORTER_BASE_URL }}
+        REPORTER_BOT_TOKEN: ${{ secrets.REPORTER_BOT_TOKEN }}
+        REPORTER_CHAT_ID: ${{ secrets.REPORTER_CHAT_ID }}
+        REPORTER_PROJECT_NAME: ${{ secrets.REPORTER_PROJECT_NAME }}
