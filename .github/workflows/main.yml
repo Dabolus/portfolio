@@ -31,7 +31,6 @@ jobs:
         sh -e /etc/init.d/xvfb start
         sleep 3 # wait for xvfb to boot
         node scripts/lighthouse-reporter
-      run: 
       env:
         REPORTER_BASE_URL: ${{ secrets.REPORTER_BASE_URL }}
         REPORTER_BOT_TOKEN: ${{ secrets.REPORTER_BOT_TOKEN }}
