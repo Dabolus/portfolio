@@ -21,7 +21,17 @@ jobs:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
     - name: Audit and report
-      run: node scripts/lighthouse-reporter
+      run: |
+        export CHROME_PATH="$(pwd)/chrome-linux/chrome"
+        # Deprecated, but the download script needs it
+        export LIGHTHOUSE_CHROMIUM_PATH="$CHROME_PATH"
+        export DISPLAY=:99.0
+        # Download chrome
+        curl https://raw.githubusercontent.com/GoogleChrome/chrome-launcher/v0.10.4/scripts/download-chrome.sh | bash
+        sh -e /etc/init.d/xvfb start
+        sleep 3 # wait for xvfb to boot
+        node scripts/lighthouse-reporter
+      run: 
       env:
         REPORTER_BASE_URL: ${{ secrets.REPORTER_BASE_URL }}
         REPORTER_BOT_TOKEN: ${{ secrets.REPORTER_BOT_TOKEN }}
