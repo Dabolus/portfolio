@@ -22,6 +22,10 @@ jobs:
         FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
     - name: Audit and report
       run: |
+        # Install Xvfb
+        apt update -y
+        apt install -y xvfb
+        rm -rf /var/lib/apt/lists/* /var/cache/apt/*
         export CHROME_PATH="$(pwd)/chrome-linux/chrome"
         # Deprecated, but the download script needs it
         export LIGHTHOUSE_CHROMIUM_PATH="$CHROME_PATH"
