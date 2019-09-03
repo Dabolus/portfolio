@@ -45,11 +45,11 @@
       title: 'Blog',
       icon: 'M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z',
       link: 'https://giorgio.garasto.blog',
-    }].forEach((section) => { %>
-    <a href="<%= section.link || '/' + section.id %>" <%- section.link ? 'rel="external" target="' + section.id + '-link"' : ''%> id="<%= section.id %>-link">
-      <p><%= section.title %></p>
+    }].forEach(({ id, title, icon, link }) => { %>
+    <a href="<%= link || '/' + id %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
+      <p><%= title %></p>
       <svg viewBox="0 0 24 24">
-        <path d="<%= section.icon %>"/>
+        <path d="<%= icon %>"/>
       </svg>
     </a>
     <% }) %>
