@@ -23,8 +23,8 @@ jobs:
     - name: Audit and report
       run: |
         # Install Xvfb
-        apt update -y
-        apt install -y xvfb
+        sudo apt-get update -y
+        sudo apt-get install -y xvfb
         rm -rf /var/lib/apt/lists/* /var/cache/apt/*
         export CHROME_PATH="$(pwd)/chrome-linux/chrome"
         # Deprecated, but the download script needs it
