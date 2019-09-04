@@ -2,41 +2,41 @@ name: Build, deploy and audit
 on:
   push:
     branches:
-    - master
+      - master
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@master
-    - name: Use Node.js 10
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10
-    - name: Install deps
-      run: npm ci
-    - name: Build and deploy to Firebase
-      uses: Dabolus/deploy-firebase@master
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
-    - name: Audit and report
-      run: |
-        # Run Xvfb in a separate screen
-        sudo screen -S xvfb -dm "/usr/bin/Xvfb :99 -screen 0 1024x768x24"
-        export CHROME_PATH="$(pwd)/chrome-linux/chrome"
-        # Deprecated, but the download script needs it
-        export LIGHTHOUSE_CHROMIUM_PATH="$CHROME_PATH"
-        export DISPLAY=:99.0
-        # Download chrome
-        curl https://raw.githubusercontent.com/GoogleChrome/chrome-launcher/v0.10.4/scripts/download-chrome.sh | bash
-        sh -e /etc/init.d/xvfb start
-        sleep 3 # wait for xvfb to boot
-        node scripts/lighthouse-reporter
-        # Kill Xvfb screen
-        sudo screen -S xvfb -X quit
-      env:
-        REPORTER_BASE_URL: ${{ secrets.REPORTER_BASE_URL }}
-        REPORTER_BOT_TOKEN: ${{ secrets.REPORTER_BOT_TOKEN }}
-        REPORTER_CHAT_ID: ${{ secrets.REPORTER_CHAT_ID }}
-        REPORTER_PROJECT_NAME: ${{ secrets.REPORTER_PROJECT_NAME }}
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: Use Node.js 10
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - name: Install deps
+        run: npm ci
+      - name: Build and deploy to Firebase
+        uses: Dabolus/deploy-firebase@master
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
+      - name: Audit and report
+        run: |
+          # Run Xvfb in a separate screen
+          sudo screen -S xvfb -dm "/usr/bin/Xvfb :99 -screen 0 1024x768x24"
+          export CHROME_PATH="$(pwd)/chrome-linux/chrome"
+          # Deprecated, but the download script needs it
+          export LIGHTHOUSE_CHROMIUM_PATH="$CHROME_PATH"
+          export DISPLAY=:99.0
+          # Download chrome
+          curl https://raw.githubusercontent.com/GoogleChrome/chrome-launcher/v0.10.4/scripts/download-chrome.sh | bash
+          sh -e /etc/init.d/xvfb start
+          sleep 3 # wait for xvfb to boot
+          node scripts/lighthouse-reporter
+          # Kill Xvfb screen
+          sudo screen -S xvfb -X quit
+        env:
+          REPORTER_BASE_URL: ${{ secrets.REPORTER_BASE_URL }}
+          REPORTER_BOT_TOKEN: ${{ secrets.REPORTER_BOT_TOKEN }}
+          REPORTER_CHAT_ID: ${{ secrets.REPORTER_CHAT_ID }}
+          REPORTER_PROJECT_NAME: ${{ secrets.REPORTER_PROJECT_NAME }}
