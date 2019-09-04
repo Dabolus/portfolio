@@ -1,17 +1,7 @@
 import { configureTypingAnimation } from './typing-animation';
 import { configureRouting } from './routing';
 import { stopAnimation, startAnimation } from './animation';
-
-const smoothScroll = (val?: number) => {
-  const scrollingElement =
-    document.scrollingElement || document.documentElement;
-  const y = typeof val === 'undefined' ? scrollingElement.scrollHeight : val;
-  scrollingElement.scroll({
-    behavior: 'smooth',
-    left: 0,
-    top: y,
-  });
-};
+import { scroll } from './utils';
 
 const start = () => {
   if (process.env.ENABLE_DEV_SW && 'serviceWorker' in navigator) {
@@ -26,10 +16,10 @@ const start = () => {
   // Set up scrolling to the right position when navigating with tabs for accessibility
   document
     .querySelector<HTMLAnchorElement>('#since-2004-link')
-    .addEventListener('focus', () => smoothScroll(0));
+    .addEventListener('focus', () => scroll({ val: 0 }));
   document
     .querySelectorAll<HTMLAnchorElement>('#menu > a')
-    .forEach(link => link.addEventListener('focus', () => smoothScroll()));
+    .forEach(link => link.addEventListener('focus', () => scroll()));
 };
 
 if (
