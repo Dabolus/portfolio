@@ -47,7 +47,9 @@ const audit = async (chrome, url) => {
 
 const auditAll = async () => {
   process.stdout.write('Starting Chrome...\n');
-  const chrome = await chromeLauncher.launch();
+  const chrome = await chromeLauncher.launch({
+    chromeFlags: ['--headless'],
+  });
 
   const results = await configs.reduce(
     async (reportPromise, { url, title }) => {
