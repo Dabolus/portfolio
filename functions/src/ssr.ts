@@ -57,7 +57,9 @@ export const ssr = functions.https.onRequest(async ({ path = '/' }, res) => {
             page === 'home' ? '' : `/${page}`
           }`;
         case 'page':
-          return page === 'home' ? 'hidden' : '';
+          return page === 'home' ? 'aria-hidden="true"' : '';
+        case 'home':
+          return page !== 'home' ? 'aria-hidden="true"' : '';
         case 'pageTitle':
           return pages[page].title || '';
         case 'age':

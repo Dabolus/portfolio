@@ -8,7 +8,7 @@
   height: 100vh;
   overflow: hidden;
   will-change: transform;
-  transition: 0.6s transform;
+  transition: 0.3s transform;
   background: var(--theme-content-background);
   z-index: 2;
   box-shadow: 0 0.06rem 0.065rem 0 rgba($theme-black, 0.14) inset,
@@ -54,6 +54,10 @@
       max-width: 24rem;
       margin: 0 auto;
     }
+  }
+
+  &.closed {
+    transform: translateX(100vw);
   }
 }
 
