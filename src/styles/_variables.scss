@@ -1,7 +1,9 @@
 $theme-black: #000;
 $theme-darker-gray: #212121;
 $theme-dark-gray: #303030;
+$theme-gray: #424242;
 $theme-light-gray: #f0f0f0;
+$theme-lighter-gray: #fafafa;
 $theme-white: #fff;
 
 $light-theme-red: #d32f2f;
@@ -15,7 +17,8 @@ $light-theme-brown: #8d6e63;
 $light-theme-color: $theme-black;
 $light-theme-accent: $light-theme-red;
 $light-theme-default-background: $theme-light-gray;
-$light-theme-content-background: $theme-white;
+$light-theme-content-background: $theme-lighter-gray;
+$light-theme-card-background: $theme-white;
 
 $dark-theme-red: #ff6659;
 $dark-theme-green: #4caf50;
@@ -29,3 +32,4 @@ $dark-theme-color: $theme-white;
 $dark-theme-accent: $dark-theme-red;
 $dark-theme-default-background: $theme-darker-gray;
 $dark-theme-content-background: $theme-dark-gray;
+$dark-theme-card-background: $theme-gray;

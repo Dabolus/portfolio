@@ -5,6 +5,7 @@ html {
   --theme-accent: #{$light-theme-accent};
   --theme-default-background: #{$light-theme-default-background};
   --theme-content-background: #{$light-theme-content-background};
+  --theme-card-background: #{$light-theme-card-background};
   --theme-red: #{$light-theme-red};
   --theme-green: #{$light-theme-green};
   --theme-teal: #{$light-theme-teal};
@@ -19,6 +20,7 @@ html {
     --theme-accent: #{$dark-theme-accent};
     --theme-default-background: #{$dark-theme-default-background};
     --theme-content-background: #{$dark-theme-content-background};
+    --theme-card-background: #{$dark-theme-card-background};
     --theme-red: #{$dark-theme-red};
     --theme-green: #{$dark-theme-green};
     --theme-teal: #{$dark-theme-teal};
