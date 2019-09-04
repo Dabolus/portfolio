@@ -78,12 +78,17 @@ const sendTelegramMessage = async content => {
 };
 
 auditAll()
-  .then(sendTelegramMessage)
+  .then(report => {
+    process.stdout.write('Sending report to Telegram...\n');
+    return sendTelegramMessage(report);
+  })
   .then(() => {
-    console.log('Report successfully sent to Telegram.');
+    process.stdout.write('Report successfully sent to Telegram.\n');
     process.exit(0);
   })
   .catch(({ message }) => {
-    console.error(`Error while generating Lighthouse report!\n\n${message}`);
+    process.stderr.write(
+      `Error while generating Lighthouse report!\n\n${message}\n`,
+    );
     process.exit(1);
   });
