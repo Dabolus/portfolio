@@ -1,4 +1,7 @@
-<script defer src="https://www.googletagmanager.com/gtag/js?id=UA-86330876-7"></script>
+<script
+  defer
+  src="https://www.googletagmanager.com/gtag/js?id=UA-86330876-7"
+></script>
 <script defer>
   import('./module/main.js');
   window.supportsDynamicImport = true;
@@ -7,7 +10,7 @@
   if (!window.supportsDynamicImport) {
     const systemJsLoaderTag = document.createElement('script');
     systemJsLoaderTag.src = 's<%= isProd ? '.min' : '' %>.js';
-    systemJsLoaderTag.addEventListener('load', () => System.import('./nomodule/main.js'));
+    systemJsLoaderTag.addEventListener('load', () => System.import('./nomodule/main.js'), { once: true });
     document.head.appendChild(systemJsLoaderTag);
   }
 </script>

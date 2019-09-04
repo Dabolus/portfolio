@@ -28,5 +28,5 @@ if (
 ) {
   start();
 } else {
-  document.addEventListener('DOMContentLoaded', start);
+  document.addEventListener('DOMContentLoaded', start, { once: true });
 }
