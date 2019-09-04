@@ -74,7 +74,7 @@
     height: 100%;
     z-index: 0;
     display: grid;
-    grid-gap: 1rem;
+    gap: 1rem;
     grid: repeat(6, 1fr) / 1fr;
 
     @media (min-width: 26.25rem) {
