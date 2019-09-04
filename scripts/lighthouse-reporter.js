@@ -46,11 +46,13 @@ const audit = async (chrome, url) => {
 };
 
 const auditAll = async () => {
+  process.stdout.write('Starting Chrome...\n');
   const chrome = await chromeLauncher.launch();
 
   const results = await configs.reduce(
     async (reportPromise, { url, title }) => {
       const report = await reportPromise;
+      process.stdout.write(`Auditing ${title} (${baseUrl}${url})...\n`);
       const result = await audit(chrome, `${baseUrl}${url}`);
       return `${report}\n*${title}:*\n${Object.values(result).reduce(
         (currentReport, { title: auditTitle, score }) =>
