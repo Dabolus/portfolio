@@ -62,7 +62,7 @@ const auditAll = async () => {
         '',
       )}`;
     },
-    Promise.resolve(`*Lighthouse report for ${projectName}:*\n`),
+    Promise.resolve(`*🗼 Lighthouse report for ${projectName}:*\n`),
   );
 
   await chrome.kill();
