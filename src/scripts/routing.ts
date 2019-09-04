@@ -81,6 +81,7 @@ export const configureRouting = () => {
 
     if (path === 'home') {
       unhide(pages.home.ref);
+      document.body.classList.remove('blocked');
       if (previousPath && previousPath !== 'home') {
         scroll({ smooth: false });
       }
@@ -110,12 +111,14 @@ export const configureRouting = () => {
           'transitionend',
           () => {
             hide(pages.home.ref);
+            document.body.classList.add('blocked');
           },
           { once: true },
         );
         page.classList.remove('closed');
       } else {
         hide(pages.home.ref);
+        document.body.classList.add('blocked');
       }
     }
 

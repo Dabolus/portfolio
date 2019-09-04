@@ -56,10 +56,12 @@ export const ssr = functions.https.onRequest(async ({ path = '/' }, res) => {
           return `https://giorgio.garasto.it${
             page === 'home' ? '' : `/${page}`
           }`;
+        case 'body':
+          return page === 'home' ? '' : 'class="blocked"';
         case 'page':
           return page === 'home' ? 'aria-hidden="true"' : '';
         case 'home':
-          return page !== 'home' ? 'aria-hidden="true"' : '';
+          return page === 'home' ? '' : 'aria-hidden="true"';
         case 'pageTitle':
           return pages[page].title || '';
         case 'age':
