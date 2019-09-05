@@ -25,10 +25,12 @@ const config = (main = true) => ({
     ? {
         dir: 'dist/module',
         format: 'esm',
+        chunkFileNames: '[name].js',
       }
     : {
         dir: 'dist/nomodule',
         format: 'system',
+        chunkFileNames: '[name].js',
       },
   plugins: [
     copy({
