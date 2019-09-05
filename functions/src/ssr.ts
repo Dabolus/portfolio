@@ -43,6 +43,12 @@ export const ssr = functions.https.onRequest(async ({ path = '/' }, res) => {
   const page = path.slice(1) || 'home';
   const index = await indexPromise;
 
+  res.setHeader('Strict-Transport-Security', 'max-age=31556926');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  res.setHeader(
+    'Content-Security-Policy',
+    "script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; default-src 'self'",
+  );
   res.send(
     index.replace(/{{(.+?)}}/g, (_, match) => {
       switch (match) {
