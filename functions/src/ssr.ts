@@ -64,6 +64,8 @@ export const ssr = functions.https.onRequest(async ({ path = '/' }, res) => {
           return page === 'home' ? '' : 'aria-hidden="true"';
         case 'pageTitle':
           return pages[page].title || '';
+        case 'path':
+          return page;
         case 'age':
           return (
             (Date.now() - 873148830000) / // 1st Sep 1997 at 23:20:30

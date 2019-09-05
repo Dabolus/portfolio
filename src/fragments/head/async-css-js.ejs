@@ -3,11 +3,25 @@
   src="https://www.googletagmanager.com/gtag/js?id=UA-86330876-7"
 ></script>
 <script defer>
+  window.preload = (href) => {
+    const link = document.createElement('link');
+    link.setAttribute('rel', 'preload');
+    link.setAttribute('href', href);
+    link.setAttribute('as', 'script');
+    link.setAttribute('crossorigin', '');
+    document.head.appendChild(link);
+  };
+</script>
+<script defer>
   import('./module/main.js');
   window.supportsDynamicImport = true;
+  window.preload('module/utils.js', 'script');
+  window.preload('module/pages/{{path}}.js', 'script');
 </script>
 <script defer>
   if (!window.supportsDynamicImport) {
+    window.preload('nomodule/utils.js', 'script');
+    window.preload('nomodule/pages/{{path}}.js', 'script');
     const systemJsLoaderTag = document.createElement('script');
     systemJsLoaderTag.src = 's<%= isProd ? '.min' : '' %>.js';
     systemJsLoaderTag.addEventListener('load', () => System.import('./nomodule/main.js'), { once: true });
@@ -16,3 +30,4 @@
 </script>
 <link rel="preload" href="styles.css" as="style">
 <noscript><link rel="stylesheet" href="styles.css"></noscript>
+<link rel="preconnect" href="https://www.google-analytics.com">
