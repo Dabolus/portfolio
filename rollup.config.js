@@ -15,6 +15,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const config = (main = true) => ({
   input: {
     main: 'src/scripts/main.ts',
+    'pages/home': 'src/scripts/pages/home.ts',
     'pages/about': 'src/scripts/pages/about.ts',
     'pages/certifications': 'src/scripts/pages/certifications.ts',
     'pages/contacts': 'src/scripts/pages/contacts.ts',

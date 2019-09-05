@@ -67,6 +67,7 @@ export const configureRouting = () => {
     if (path === previousPath) {
       return;
     }
+    import(`./pages/${path}.js`).then(({ configure }) => configure());
 
     const { title, description } = pages[path];
     updateMetadata({
@@ -98,8 +99,6 @@ export const configureRouting = () => {
       );
       page.classList.add('closed');
     } else {
-      import(`./pages/${path}.js`).then(({ configure }) => configure());
-
       unhide(page);
       pageTitle.textContent = title;
       pages[path].ref.hidden = false;
