@@ -119,6 +119,7 @@ const config = (main = true) => ({
                 `../**/${main ? 'module' : 'nomodule'}/**/*.js`,
                 '../**/google-g.svg',
                 '../**/propic.jpg',
+                '../**/propic.webp',
               ],
               templatedURLs: {
                 '/': 'functions/index.hbs',
