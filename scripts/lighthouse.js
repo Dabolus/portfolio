@@ -39,7 +39,7 @@ const auditPage = async (chrome, url) => {
   return categories;
 };
 
-export const audit = async () => {
+module.exports = async () => {
   process.stdout.write('Starting Chrome...\n');
   const chrome = await chromeLauncher.launch({
     chromeFlags: ['--headless'],

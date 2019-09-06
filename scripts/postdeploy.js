@@ -1,6 +1,6 @@
-const { purgeCache } = require('./cloudflare');
-const { audit } = require('./lighthouse');
-const { sendMessage } = require('./telegram');
+const purgeCache = require('./cloudflare');
+const audit = require('./lighthouse');
+const sendMessage = require('./telegram');
 
 const postdeploy = async () => {
   try {

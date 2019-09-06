@@ -6,7 +6,7 @@ const {
 
 const cf = cloudflare({ token });
 
-export const purgeCache = () =>
+module.exports = () =>
   cf.zones.purgeCache(zoneId, {
     purge_everything: true,
   });
