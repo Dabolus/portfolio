@@ -144,6 +144,23 @@ const config = (main = true) => ({
                     cacheName: 'api-cache',
                   },
                 },
+                {
+                  method: 'GET',
+                  urlPattern: /firebasestorage\.googleapis\.com/,
+                  handler: 'StaleWhileRevalidate',
+                  options: {
+                    backgroundSync: {
+                      name: 'dynamic-assets-sync-queue',
+                      options: {
+                        maxRetentionTime: 3600,
+                      },
+                    },
+                    cacheableResponse: {
+                      statuses: [0, 200],
+                    },
+                    cacheName: 'dynamic-assets-cache',
+                  },
+                },
               ],
               offlineGoogleAnalytics: true,
             },
