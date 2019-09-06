@@ -20,7 +20,7 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
-      - name: Audit and report
+      - name: Purge cache, audit and report
         run: |
           # Set Chrome path so that chrome-launcher can find it
           export CHROME_PATH="$(pwd)/chrome-linux/chrome"
@@ -28,10 +28,12 @@ jobs:
           export LIGHTHOUSE_CHROMIUM_PATH="$CHROME_PATH"
           # Download chrome
           curl https://raw.githubusercontent.com/GoogleChrome/chrome-launcher/v0.10.4/scripts/download-chrome.sh | bash
-          # Run the reporter script
-          node scripts/lighthouse-reporter
+          # Run the postdeploy script
+          node scripts/postdeploy
         env:
           REPORTER_BASE_URL: ${{ secrets.REPORTER_BASE_URL }}
           REPORTER_BOT_TOKEN: ${{ secrets.REPORTER_BOT_TOKEN }}
           REPORTER_CHAT_ID: ${{ secrets.REPORTER_CHAT_ID }}
           REPORTER_PROJECT_NAME: ${{ secrets.REPORTER_PROJECT_NAME }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
