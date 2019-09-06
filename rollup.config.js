@@ -108,6 +108,8 @@ const config = (main = true) => ({
             mode: 'generateSW',
             options: {
               cacheId: 'gg',
+              skipWaiting: true,
+              clientsClaim: true,
               swDest: resolvePath(
                 'dist',
                 main ? 'module' : 'nomodule',
