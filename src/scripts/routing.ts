@@ -15,6 +15,7 @@ export const configureRouting = () => {
       title?: string;
       description: string;
       ref: HTMLElement;
+      configured?: boolean;
     };
   } = {
     home: {
@@ -67,7 +68,10 @@ export const configureRouting = () => {
     if (path === previousPath) {
       return;
     }
-    import(`./pages/${path}.js`).then(({ configure }) => configure());
+    if (!pages[path].configured) {
+      pages[path].configured = true;
+      import(`./pages/${path}.js`).then(({ configure }) => configure());
+    }
 
     const { title, description } = pages[path];
     updateMetadata({
