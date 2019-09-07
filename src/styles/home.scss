@@ -20,6 +20,10 @@
       font-size: 3rem;
       font-weight: 600;
       margin: 2.6rem 0 0.6rem 0;
+
+      @media (min-width: 47.5rem) {
+        font-size: 3.6rem;
+      }
     }
 
     > h2 {
