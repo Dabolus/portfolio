@@ -60,7 +60,7 @@ export const configureRouting = () => {
 
   // Configure routing
   installRouter(({ pathname }) => {
-    let path = (pathname.substring(1) || 'home') as Page;
+    let path = (pathname.slice(1) || 'home') as Page;
     if (!Object.keys(pages).includes(path)) {
       window.history.replaceState({}, '', '/');
       path = 'home';
