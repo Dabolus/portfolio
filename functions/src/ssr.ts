@@ -51,7 +51,7 @@ export const ssr = functions.https.onRequest(async ({ path = '/' }, res) => {
   res.setHeader('Referrer-Policy', 'no-referrer');
   res.setHeader(
     'Content-Security-Policy',
-    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' 'unsafe-inline' data: https://firebasestorage.googleapis.com https://www.google-analytics.com; default-src 'self'",
+    "script-src 'self' 'unsafe-inline' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' 'unsafe-inline' data: https://firebasestorage.googleapis.com https://www.google-analytics.com; default-src 'self'",
   );
   res.send(
     index.replace(/{{(.+?)}}/g, (_, match) => {
