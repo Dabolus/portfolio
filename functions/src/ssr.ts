@@ -41,6 +41,10 @@ const pages: {
 
 export const ssr = functions.https.onRequest(async ({ path = '/' }, res) => {
   const page = path.slice(1) || 'home';
+  if (!Object.keys(pages).includes(page)) {
+    return res.redirect('/');
+  }
+
   const index = await indexPromise;
 
   res.setHeader('Strict-Transport-Security', 'max-age=31556926');
