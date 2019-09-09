@@ -45,7 +45,7 @@ const computePie = (
   label.setAttributeNS(null, 'text-anchor', 'middle');
   label.setAttributeNS(null, 'dominant-baseline', 'middle');
   label.setAttributeNS(null, 'fill', 'var(--theme-color)');
-  label.setAttributeNS(null, 'font-size', '45%');
+  label.setAttributeNS(null, 'font-size', '7px');
 
   const langName = document.createElementNS(
     'http://www.w3.org/2000/svg',
