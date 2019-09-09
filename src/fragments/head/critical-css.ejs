@@ -37,14 +37,64 @@
     box-sizing: border-box;
   }
 
+  html {
+    --theme-red: #d32f2f;
+    --theme-green: #087f23;
+    --theme-teal: #00796b;
+    --theme-blue: #1976d2;
+    --theme-pink: #d81b60;
+    --theme-purple: #ab47bc;
+    --theme-yellow: #bc5100;
+    --theme-brown: #8d6e63;
+    --theme-color: #000;
+    --theme-accent: var(--theme-red);
+    --theme-default-background: #f0f0f0;
+    --theme-content-background: #fafafa;
+    --theme-card-background: #fff;
+
+    will-change: opacity;
+    opacity: 0;
+    transition: 0.3s opacity;
+  }
+
+  @media (light-level: dim), (prefers-color-scheme: dark) {
+    html {
+      --theme-red: #ff6659;
+      --theme-green: #4caf50;
+      --theme-teal: #48a999;
+      --theme-blue: #63a4ff;
+      --theme-pink: #ff5c8d;
+      --theme-purple: #df78ef;
+      --theme-yellow: #ffeb3b;
+      --theme-brown: #be9c91;
+      --theme-color: #fff;
+      --theme-accent: var(--theme-red);
+      --theme-default-background: #212121;
+      --theme-content-background: #303030;
+      --theme-card-background: #424242;
+    }
+  }
+
+  body.blocked {
+    overflow: hidden;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  [aria-hidden='true'] {
+    visibility: hidden !important;
+  }
+
   html,
   body {
     width: 100%;
     min-height: 100%;
     padding: 0;
     margin: 0;
-    color: var(--theme-color, #000);
-    background: var(--theme-default-background, #f0f0f0);
+    color: var(--theme-color);
+    background: var(--theme-default-background);
     font-family: 'Jost*', 'Roboto', Helvetica, Arial, sans-serif,
       'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     line-height: 1.5;
