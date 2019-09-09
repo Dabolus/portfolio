@@ -1,3 +1,8 @@
+interface SkillsData {
+  total: number;
+  languages: readonly PieData[];
+}
+
 interface PieData {
   name: string;
   size: number;
@@ -103,6 +108,14 @@ const computePie = (
   return svg;
 };
 
-export const configure = () => {
-  console.log('test');
+const getSkills = async () => {
+  const res = await fetch('api/skills');
+  const skills: SkillsData = await res.json();
+  return skills;
+};
+
+export const configure = async () => {
+  const { languages, total } = await getSkills();
+  const pie = computePie(languages, total);
+  document.querySelector('#os-langs').appendChild(pie);
 };
