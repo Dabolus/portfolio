@@ -25,6 +25,10 @@
         "function": "getProjects"
       },
       {
+        "source": "/api/skills",
+        "function": "getSkills"
+      },
+      {
         "source": "**",
         "function": "ssr"
       }
