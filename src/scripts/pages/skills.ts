@@ -17,7 +17,7 @@ const prettifySize = (bytes: number) => {
     finalVal /= 1024;
     unitIndex++;
   }
-  return `~${Math.round(finalVal)}${measurementUnits[unitIndex]}`;
+  return `≈${Math.round(finalVal)}${measurementUnits[unitIndex]}`;
 };
 
 const computePie = (
