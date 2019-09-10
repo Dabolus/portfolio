@@ -157,7 +157,15 @@ const getSkills = async () => {
 };
 
 export const configure = async () => {
-  const { languages, total } = await getSkills();
-  const pie = computePie(languages, total);
-  document.querySelector('#os-langs').appendChild(pie);
+  const {
+    skills,
+    bytes: { languages, total },
+  } = await getSkills();
+
+  const confidentLangsLineChart = computeLineChart(skills.coding);
+  const mostUsedLangsPie = computePie(languages, total);
+  document
+    .querySelector('#most-confident-langs')
+    .appendChild(confidentLangsLineChart);
+  document.querySelector('#most-used-langs').appendChild(mostUsedLangsPie);
 };
