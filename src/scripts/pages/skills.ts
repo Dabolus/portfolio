@@ -1,11 +1,24 @@
 interface SkillsData {
-  total: number;
-  languages: readonly PieData[];
+  skills: {
+    coding: readonly LineData[];
+    music: readonly LineData[];
+    soft: readonly LineData[];
+  };
+  bytes: {
+    total: number;
+    languages: readonly PieData[];
+  };
 }
 
 interface PieData {
   name: string;
   size: number;
+  color?: string;
+}
+
+interface LineData {
+  name: string;
+  score: number;
   color?: string;
 }
 
@@ -104,6 +117,24 @@ const computePie = (
 
   svg.appendChild(midCircle);
   svg.appendChild(label);
+
+  return svg;
+};
+
+const computeLineChart = (data: readonly LineData[], size = 100) => {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttributeNS(null, 'viewBox', `0 0 ${size} ${data.length * 7 - 2}`);
+
+  data.forEach(({ name, score, color }, index) => {
+    const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    bar.setAttributeNS(null, 'fill', color || 'var(--theme-card-background)');
+    bar.setAttributeNS(null, 'width', `${(size / 3) * 2}`);
+    bar.setAttributeNS(null, 'height', '5');
+    bar.setAttributeNS(null, 'x', `${size / 3}`);
+    bar.setAttributeNS(null, 'y', `${index * 7}`);
+    bar.setAttributeNS(null, 'transform', `scaleX(${score})`);
+    svg.appendChild(bar);
+  });
 
   return svg;
 };
