@@ -1,8 +1,32 @@
+import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
+import { CollectionReference } from '@google-cloud/firestore';
 
-// TODO: get also some "how I feel about that language" data from Firestore
-export const getSkills = functions.https.onRequest(async (_, res) => {
+let skillsCollection: CollectionReference;
+
+const getFirebaseData = async () => {
+  if (!skillsCollection) {
+    try {
+      admin.initializeApp(functions.config().firebase);
+    } catch {}
+    skillsCollection =
+      skillsCollection || admin.firestore().collection('skills');
+  }
+  const { docs } = await skillsCollection.get();
+
+  return docs.reduce(
+    (skills, skillsSection) => ({
+      ...skills,
+      [skillsSection.id]: Object.entries(skillsSection.data()).map(
+        ([name, score]) => ({ name, score }),
+      ),
+    }),
+    {},
+  );
+};
+
+const getGithubData = async () => {
   const request = await fetch('https://api.github.com/graphql', {
     method: 'POST',
     headers: {
@@ -56,7 +80,7 @@ export const getSkills = functions.https.onRequest(async (_, res) => {
     { total: 0, languages: {} },
   );
 
-  res.json({
+  return {
     total,
     languages: Object.entries(languages).reduce(
       (languageArr: any, [name, { color, size }]: [string, any]) => {
@@ -79,5 +103,15 @@ export const getSkills = functions.https.onRequest(async (_, res) => {
       },
       [],
     ),
-  });
+  };
+};
+
+// TODO: get also some "how I feel about that language" data from Firestore
+export const getSkills = functions.https.onRequest(async (_, res) => {
+  const [skills, bytes] = await Promise.all([
+    getFirebaseData(),
+    getGithubData(),
+  ]);
+
+  res.json({ skills, bytes });
 });
