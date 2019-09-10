@@ -126,13 +126,24 @@ const computeLineChart = (data: readonly LineData[], size = 100) => {
   svg.setAttributeNS(null, 'viewBox', `0 0 ${size} ${data.length * 7 - 2}`);
 
   data.forEach(({ name, score, color }, index) => {
+    const label = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'text',
+    );
+    label.setAttributeNS(null, 'x', '0');
+    label.setAttributeNS(null, 'y', `${index * 7 + 2.5}`);
+    label.setAttributeNS(null, 'dominant-baseline', 'middle');
+    label.setAttributeNS(null, 'fill', 'var(--theme-color)');
+    label.setAttributeNS(null, 'font-size', '5px');
+    label.textContent = name;
+    svg.appendChild(label);
+
     const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
     bar.setAttributeNS(null, 'fill', color || 'var(--theme-card-background)');
-    bar.setAttributeNS(null, 'width', `${(size / 3) * 2}`);
+    bar.setAttributeNS(null, 'width', `${(size / 3) * 2 * score}`);
     bar.setAttributeNS(null, 'height', '5');
     bar.setAttributeNS(null, 'x', `${size / 3}`);
     bar.setAttributeNS(null, 'y', `${index * 7}`);
-    bar.setAttributeNS(null, 'transform', `scaleX(${score})`);
     svg.appendChild(bar);
   });
 
