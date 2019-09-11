@@ -1,7 +1,5 @@
-import { configureTypingAnimation } from '../typing-animation';
+import Typed from 'typed.js/src/typed';
 import { scroll } from '../utils';
-
-configureTypingAnimation();
 
 // Set up scrolling to the right position when navigating with tabs for accessibility
 document
@@ -10,3 +8,29 @@ document
 document
   .querySelectorAll<HTMLAnchorElement>('#menu > a')
   .forEach(link => link.addEventListener('focus', () => scroll()));
+
+let typed: Typed;
+
+export const onPageLoad = () => {
+  if (!typed) {
+    // Configure typing animation
+    typed = new Typed('#typed', {
+      backDelay: 2000,
+      backSpeed: 30,
+      loop: true,
+      showCursor: false,
+      smartBackspace: false,
+      startDelay: 0,
+      stringsElement: '#strings',
+      typeSpeed: 90,
+    });
+  } else {
+    typed.start();
+  }
+};
+
+export const onPageUnload = () => {
+  if (typed) {
+    typed.stop();
+  }
+};
