@@ -11,7 +11,7 @@
   window.GoogleAnalyticsObject = 'ga';
   window.ga = (...args) => ga.q.push(args);
   ga.q = [];
-  ga.l = 1 * new Date();
+  ga.l = Date.now();
   ga('create', 'UA-86330876-7', 'auto');
 </script>
 <script defer src="https://www.google-analytics.com/analytics.js"></script>
