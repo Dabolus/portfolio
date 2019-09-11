@@ -23,7 +23,7 @@ const getProjects = async () => {
   return projects;
 };
 
-export const configure = async () => {
+const configure = async () => {
   const projectsContainer = document.querySelector<HTMLDivElement>('#projects');
 
   const [useWebp, projects] = await Promise.all([supportsWebp, getProjects()]);
@@ -91,3 +91,5 @@ export const configure = async () => {
   const observer = lozad();
   observer.observe();
 };
+
+configure();

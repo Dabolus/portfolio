@@ -2,6 +2,11 @@ import { installRouter, updateMetadata } from 'pwa-helpers';
 import { scroll } from './utils';
 
 export const configureRouting = () => {
+  interface PageModule {
+    onPageLoad?: () => void;
+    onPageUnload?: () => void;
+  }
+
   type Page =
     | 'home'
     | 'about'
@@ -16,6 +21,7 @@ export const configureRouting = () => {
       description: string;
       ref: HTMLElement;
       configured?: boolean;
+      module?: Promise<PageModule>;
     };
   } = {
     home: {
@@ -68,9 +74,19 @@ export const configureRouting = () => {
     if (path === previousPath) {
       return;
     }
-    if (!pages[path].configured) {
+    if (!pages[path].module) {
+      pages[path].module = import(`./pages/${path}.js`);
+    }
+    pages[path].module.then(async ({ onPageLoad }) => {
       pages[path].configured = true;
-      import(`./pages/${path}.js`).then(({ configure }) => configure());
+      if (onPageLoad) {
+        await onPageLoad();
+      }
+    });
+    if (previousPath && pages[previousPath].module) {
+      pages[previousPath].module.then(
+        ({ onPageUnload }) => onPageUnload && onPageUnload(),
+      );
     }
 
     const { title, description } = pages[path];

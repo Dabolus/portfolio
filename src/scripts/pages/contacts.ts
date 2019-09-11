@@ -1,3 +1,1 @@
-export const configure = () => {
-  console.log('test');
-};
+console.log('test');
