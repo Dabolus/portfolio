@@ -111,11 +111,18 @@
       will-change: box-shadow;
       transition: 0.3s box-shadow;
 
-      > p {
+      > span {
         text-align: center;
+        font-size: 1.2rem;
         will-change: transform;
         transition: 0.3s transform;
         transition-delay: 0.9s;
+
+        > svg {
+          width: 24px;
+          height: 24px;
+          color: var(--theme-accent);
+        }
       }
 
       > svg {
@@ -172,7 +179,7 @@
       &:focus {
         box-shadow: none;
 
-        > p {
+        > span {
           transition-delay: 0s;
           transform: translateY(-3rem);
         }
