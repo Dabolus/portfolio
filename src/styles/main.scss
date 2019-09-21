@@ -19,7 +19,7 @@ hr {
   border: 0;
   padding: 0.025rem;
   margin: 0 auto;
-  background-color: rgba($theme-black, 0.12);
+  background-color: var(--theme-separator);
 }
 
 #home > div,
