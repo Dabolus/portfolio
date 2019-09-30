@@ -25,6 +25,10 @@
         "function": "getProjects"
       },
       {
+        "source": "/api/certifications",
+        "function": "getCertifications"
+      },
+      {
         "source": "/api/skills",
         "function": "getSkills"
       },
