@@ -37,4 +37,9 @@
       </a>
     <% }) %>
   </nav>
+  <% pages.forEach(({ id, link }) => { %>
+    <% if (link) { %>
+      <portal src="<%= link %>" id="<%= id %>-link-portal" aria-hidden="true" class="closed"></portal>
+    <% } %>
+  <% }) %>
 </section>

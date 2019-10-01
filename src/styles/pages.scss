@@ -1,5 +1,6 @@
 @import './variables';
 
+portal,
 #page {
   position: fixed;
   top: 0;
@@ -9,11 +10,18 @@
   overflow: hidden;
   will-change: transform;
   transition: 0.3s transform;
-  background: var(--theme-content-background);
   z-index: 2;
   box-shadow: 0 0.06rem 0.065rem 0 rgba($theme-black, 0.14) inset,
     0 0.003rem 0.15rem 0 rgba($theme-black, 0.12) inset,
     0 0.09rem 0.0035rem -0.065rem rgba($theme-black, 0.2) inset;
+
+  &.closed {
+    transform: translateX(100vw);
+  }
+}
+
+#page {
+  background: var(--theme-content-background);
 
   &[hidden] {
     transform: translateX(100vw);
@@ -54,10 +62,6 @@
       max-width: 28rem;
       margin: 0 auto;
     }
-  }
-
-  &.closed {
-    transform: translateX(100vw);
   }
 }
 
