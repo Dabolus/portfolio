@@ -2,6 +2,7 @@ import lozad from 'lozad';
 import { supportsWebp } from '../utils';
 
 interface ProjectIcon {
+  svg?: string;
   jpg: string;
   webp: string;
   placeholder: string;
@@ -38,15 +39,14 @@ const configure = async () => {
         link,
         source,
         technologies,
-        icon: { webp, jpg, placeholder },
+        icon: { svg, webp, jpg, placeholder },
       },
     ) => `
     ${projectsHtml}
     <div class="projects-container">
       <div class="project">
-        <img class="lozad" src="${placeholder}" data-src="${
-      useWebp ? webp : jpg
-    }" alt="${name}" title="${name}">
+        <img class="lozad" src="${placeholder}" data-src="${svg ||
+      (useWebp ? webp : jpg)}" alt="${name}" title="${name}">
         <div>
           <div>
             <h3>${name}</h3>
