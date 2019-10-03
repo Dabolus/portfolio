@@ -6,14 +6,73 @@
     width: 7.55rem;
   }
 
-  #propic {
-    width: 6rem;
-    height: 8rem;
-    object-fit: cover;
+  #propic-container {
+    position: relative;
+    width: 7rem;
+    height: 8.5rem;
     float: right;
-    border: 0.5rem solid $theme-white;
-    box-shadow: 0 0 0.05rem rgba($theme-black, 0.5);
     margin: 1rem;
-    transform: rotateZ(-5deg);
+
+    > #propic {
+      top: 0;
+      left: 0;
+      width: 7rem;
+      height: 8.5rem;
+      transform-origin: center 0.4rem;
+      transform: rotate(-1deg);
+      will-change: transform;
+      animation: 3s propic-swing ease-in-out;
+      box-shadow: 0 0 0.05rem rgba($theme-black, 0.5);
+
+      img#me-vintage {
+        position: absolute;
+        top: 0.6rem;
+        left: 0.4rem;
+        width: calc(100% - 0.8rem);
+        height: calc(100% - 0.8rem);
+        object-fit: cover;
+      }
+
+      img#polaroid-frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    > img#pin {
+      position: absolute;
+      top: -1.2rem;
+      left: 2rem;
+      width: 1.5rem;
+    }
+  }
+}
+
+@keyframes propic-swing {
+  0% {
+    transform: rotate(12deg);
+  }
+
+  20% {
+    transform: rotate(-12deg);
+  }
+
+  40% {
+    transform: rotate(4deg);
+  }
+
+  60% {
+    transform: rotate(-4deg);
+  }
+
+  80% {
+    transform: rotate(1deg);
+  }
+
+  100% {
+    transform: rotate(-1deg);
   }
 }
