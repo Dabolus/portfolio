@@ -2,10 +2,10 @@ import lozad from 'lozad';
 import { supportsWebp } from '../utils';
 
 interface ProjectIcon {
-  svg?: string;
-  jpg: string;
-  webp: string;
-  placeholder: string;
+  readonly svg?: string;
+  readonly jpg: string;
+  readonly webp: string;
+  readonly placeholder: string;
 }
 
 interface Project {
@@ -14,14 +14,14 @@ interface Project {
   readonly description: string;
   readonly icon: ProjectIcon;
   readonly link: string;
-  readonly source: string;
+  readonly source?: string;
   readonly technologies: readonly string[];
+  readonly published?: boolean;
 }
 
-const getProjects = async () => {
+const getProjects = async (): Promise<readonly Project[]> => {
   const res = await fetch('api/projects');
-  const projects: readonly Project[] = await res.json();
-  return projects;
+  return res.json();
 };
 
 const configure = async () => {
