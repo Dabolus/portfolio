@@ -181,7 +181,11 @@
 
         > span {
           transition-delay: 0s;
-          transform: translateY(-3rem);
+          transform: translateY(-1.5rem);
+
+          @media (min-width: 26.25rem) {
+            transform: translateY(-3rem);
+          }
         }
 
         > svg {
