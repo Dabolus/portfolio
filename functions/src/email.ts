@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import nodemailer from 'nodemailer';
 import { stringify } from 'querystring';
+import marked from 'marked';
 
 const { to, ...mailConfig } = functions.config().mail;
 const mailTransport = nodemailer.createTransport(mailConfig);
@@ -62,6 +63,19 @@ const validateBody = ({
   }
 };
 
+const sanitize = (str: string) =>
+  str.replace(
+    /[&"'<>]/g,
+    char =>
+      ({
+        '&': '&amp;',
+        '"': '&quot;',
+        "'": '&apos;',
+        '<': '&lt;',
+        '>': '&gt;',
+      }[char as '&' | '"' | "'" | '<' | '>']),
+  );
+
 export const sendEmail = functions.https.onRequest(
   async (
     {
@@ -99,14 +113,15 @@ export const sendEmail = functions.https.onRequest(
       }
 
       await mailTransport.sendMail({
-        from: `${name.replace(/\\(.)/gm, '$1')} <${email}>`,
+        from: `${sanitize(name)} <${email}>`,
         to,
         replyTo: email,
-        subject: `${subject.replace(/\\(.)/gm, '$1')}`,
-        text: message.replace(/\\(.)/gm, '$1'),
+        subject: sanitize(subject),
+        text: sanitize(message),
+        html: marked(sanitize(message)),
       });
     } catch {
-      res.status(400).json({ error: EmailError.UNEXPECTED_ERROR });
+      res.status(500).json({ error: EmailError.UNEXPECTED_ERROR });
       return;
     }
 
