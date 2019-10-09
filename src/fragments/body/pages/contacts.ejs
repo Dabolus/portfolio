@@ -1,5 +1,9 @@
 <div class="content" id="contacts" {{contacts}}>
-  <div class="loading-container">
-    <div class="loading"></div>
-  </div>
+  <form id="contact-form">
+    <input placeholder="Name" name="name">
+    <input type="email" placeholder="Email" name="email">
+    <input placeholder="Subject" name="subject">
+    <textarea placeholder="Message" name="message"></textarea>
+    <button class="g-recaptcha" data-sitekey="6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH" data-callback="__recaptchaCallback">Submit</button>
+  </form>
 </div>
