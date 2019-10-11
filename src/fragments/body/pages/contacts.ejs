@@ -1,9 +1,35 @@
 <div class="content" id="contacts" {{contacts}}>
-  <form id="contact-form">
-    <input placeholder="Name" name="name">
-    <input type="email" placeholder="Email" name="email">
-    <input placeholder="Subject" name="subject">
-    <textarea placeholder="Message" name="message"></textarea>
-    <button class="g-recaptcha" data-sitekey="6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH" data-theme="dark" data-callback="__recaptchaCallback">Submit</button>
-  </form>
+  <div class="content-boundaries">
+    <form id="contact-form">
+      <svg id="letter-zip" viewBox="0 0 100 45">
+        <path fill="var(--theme-default-background)" filter="url(#t)" d="M0,10 l45,31 q5,4 10,0 l45,-31 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" />
+      </svg>
+      <div id="letter-content">
+        <input placeholder="Name" name="name">
+        <input type="email" placeholder="Email" name="email">
+        <input placeholder="Subject" name="subject">
+        <textarea placeholder="Message" name="message"></textarea>
+        <button class="g-recaptcha" data-sitekey="6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH" data-theme="dark" data-callback="__recaptchaCallback">Submit</button>
+      </div>
+      <svg id="letter" viewBox="0 0 100 80">
+        <defs>
+          <filter id="s">
+            <feOffset result="o" in="SourceAlpha" dx="0" dy="-.5" />
+            <feGaussianBlur result="b" in="o" stdDeviation=".3" />
+            <feColorMatrix result="a" in="b" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .2 0"/>
+            <feBlend in="SourceGraphic" in2="a" mode="normal" />
+          </filter>
+          <filter id="t">
+            <feOffset result="o" in="SourceAlpha" dx="0" dy=".5" />
+            <feGaussianBlur result="b" in="o" stdDeviation=".3" />
+            <feColorMatrix result="a" in="b" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .2 0"/>
+            <feBlend in="SourceGraphic" in2="a" mode="normal" />
+          </filter>
+        </defs>
+        <path fill="var(--theme-default-background)" d="M0,5 l50,35 l50,-35 l0,70 q0,5 -5,5 l-90,0 q-5,0 -5,-5 Z" />
+        <!-- <path fill="var(--theme-default-background)" filter="url(#s)" d="M0,10 l50,35 l50,-35 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" /> -->
+        <path fill="var(--theme-default-background)" filter="url(#s)" d="M0,70 l45,-31 q5,-4 10,0 l45,31 l0,5 q0,5 -5,5 l-90,0 q-5,0 -5,-5 Z" />
+      </svg>
+    </form>
+  </div>
 </div>
