@@ -11,35 +11,84 @@
       will-change: transform;
       transform-origin: top center;
       transform: rotateX(-180deg);
+      pointer-events: none;
     }
 
     > #letter-content {
       font-family: 'Mansalva';
       position: absolute;
-      padding: 1.5rem;
+      padding: 1rem 1.5rem;
       top: 12.4rem;
       left: 0;
       width: 100%;
       height: 21.2rem;
       background: var(--theme-card-background);
-      border-top-left-radius: 7.8rem 1.6rem;
-      border-top-right-radius: 0.6rem 12.8rem;
+      border-bottom-left-radius: 6.6rem 0.9rem;
+      border-bottom-right-radius: 0.7rem 7.3rem;
+      border-top-left-radius: 4.5rem 0.9rem;
+      border-top-right-radius: 0.4rem 7.3rem;
       will-change: transform;
       transform-origin: top center;
-      transform: translateY(-6rem);
+      transform: translateY(-12rem);
+      font-size: 0.9rem;
 
       input,
       textarea {
         color: var(--theme-color);
         font-family: 'Mansalva';
-        font-size: 1rem;
+        font-size: 0.9rem;
         background: none;
         outline: none;
         resize: none;
         border: none;
         border-bottom: 0.05rem solid var(--theme-color);
-        border-bottom-left-radius: 0.9rem 16rem;
-        border-bottom-right-radius: 16rem 0.9rem;
+        border-left: 0.05rem solid var(--theme-card-background);
+        margin-left: -0.05rem;
+        border-bottom-left-radius: 0.5rem 9.1rem;
+        border-bottom-right-radius: 8rem 0.5rem;
+      }
+
+      .full-width-input {
+        display: flex;
+
+        > input {
+          flex: 1 1 auto;
+        }
+      }
+
+      #hi {
+        margin-bottom: 0.9rem;
+      }
+
+      #sincerely {
+        margin-top: 0.9rem;
+      }
+
+      textarea[name='message'] {
+        width: 100%;
+        height: 4em;
+      }
+
+      input[name='name'] {
+        width: 14em;
+      }
+
+      button {
+        outline: none;
+        border: 0.05rem solid var(--theme-color);
+        color: var(--theme-color);
+        background: var(--theme-card-background);
+        border-bottom-left-radius: 0.5rem 8rem;
+        border-bottom-right-radius: 0.7rem 7.3rem;
+        border-top-left-radius: 1rem 4.5rem;
+        border-top-right-radius: 3.6rem 1.1rem;
+        padding: 0.5rem;
+        font-size: 1rem;
+        font-family: 'Mansalva';
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
 
@@ -49,6 +98,7 @@
       left: 0;
       width: 100%;
       margin-bottom: 1rem;
+      pointer-events: none;
     }
   }
 }

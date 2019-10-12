@@ -5,15 +5,12 @@
         <path fill="var(--theme-default-background)" filter="url(#t)" d="M0,10 l45,31 q5,4 10,0 l45,-31 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" />
       </svg>
       <div id="letter-content">
-        <div>Hi Giorgio,</div>
-        <div>
-          I'm writing 
-          to you to talk about <input name="subject">
-        </div>
-        <div>Sincerely,</div>
-        <input name="name">
-        <input type="email" name="email">
-        <textarea name="message"></textarea>
+        <div id="hi">Hi Giorgio,</div>
+        <div class="full-width-input">I'm writing to you to talk about&nbsp;<input name="subject" placeholder="subject" title="Subject"></div>
+        <textarea name="message" placeholder="Message" title="Message"></textarea>
+        <div class="full-width-input">You can contact me back at&nbsp;<input type="email" name="email" placeholder="email" title="Email"></div>
+        <div id="sincerely">Sincerely,</div>
+        <input name="name" placeholder="Name" title="Name">
         <button class="g-recaptcha" data-sitekey="6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH" data-theme="dark" data-callback="__recaptchaCallback">Submit</button>
       </div>
       <svg id="letter" viewBox="0 0 100 80">
