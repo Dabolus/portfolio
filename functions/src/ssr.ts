@@ -47,6 +47,7 @@ export const ssr = functions.https.onRequest(async ({ path = '/' }, res) => {
 
   const index = await indexPromise;
 
+  res.setHeader('Set-Cookie', 'HttpOnly; Secure; SameSite=Strict');
   res.setHeader('Strict-Transport-Security', 'max-age=31556926');
   res.setHeader('Referrer-Policy', 'no-referrer');
   res.setHeader(
