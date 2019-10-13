@@ -119,6 +119,7 @@ const config = (main = true) => ({
                 level: {
                   2: {
                     all: true,
+                    removeUnusedAtRules: false,
                   },
                 },
               },
