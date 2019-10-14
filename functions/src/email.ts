@@ -3,9 +3,26 @@ import fetch from 'node-fetch';
 import nodemailer from 'nodemailer';
 import { stringify } from 'querystring';
 import marked from 'marked';
+import { RuntimeConfig } from './models';
 
-const { to, ...mailConfig } = functions.config().mail;
-const mailTransport = nodemailer.createTransport(mailConfig);
+const {
+  to,
+  host,
+  port,
+  secure,
+  auth: { user, id: serviceClient, secret: privateKey },
+} = (functions.config() as RuntimeConfig).mail;
+const mailTransport = nodemailer.createTransport({
+  host,
+  port,
+  secure,
+  auth: {
+    type: 'OAuth2',
+    user,
+    serviceClient,
+    privateKey,
+  },
+});
 
 enum EmailError {
   INVALID_NAME = 'INVALID_NAME',
