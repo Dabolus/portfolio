@@ -10,8 +10,9 @@ const {
   host,
   port,
   secure,
-  auth: { user, id: serviceClient, secret: privateKey },
+  auth: { user, id: clientId, secret: clientSecret, token: accessToken },
 } = (functions.config() as RuntimeConfig).mail;
+
 const mailTransport = nodemailer.createTransport({
   host,
   port,
@@ -19,8 +20,9 @@ const mailTransport = nodemailer.createTransport({
   auth: {
     type: 'OAuth2',
     user,
-    serviceClient,
-    privateKey,
+    clientId,
+    clientSecret,
+    accessToken,
   },
 });
 

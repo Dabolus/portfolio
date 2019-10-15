@@ -14,6 +14,7 @@ export interface RuntimeConfig {
       readonly user: string;
       readonly id: string;
       readonly secret: string;
+      readonly token: string;
     };
   };
 }

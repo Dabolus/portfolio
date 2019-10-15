@@ -13,7 +13,8 @@
     "auth": {
       "user": "",
       "id": "",
-      "secret": ""
+      "secret": "",
+      "token": ""
     }
   }
 }
