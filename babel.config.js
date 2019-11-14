@@ -1,22 +1,20 @@
 module.exports = {
   presets: [
     [
-      '@babel/env',
+      '@babel/modules',
       {
         loose: true,
-        useBuiltIns: 'usage',
-        corejs: 3,
-        modules: false,
       },
     ],
     '@babel/typescript',
   ],
   plugins: [
+    '@babel/syntax-dynamic-import',
     [
       '@babel/transform-runtime',
       {
         corejs: 3,
-        sourceType: 'unambiguous',
+        useESModules: true,
       },
     ],
   ],

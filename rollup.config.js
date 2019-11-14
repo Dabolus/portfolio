@@ -143,7 +143,14 @@ const config = (main = true) => ({
           }),
         ]
       : []),
-    ...(isProd ? [terser()] : []),
+    ...(isProd
+      ? [
+          terser({
+            ecma: 8,
+            safari10: true,
+          }),
+        ]
+      : []),
     ...(isProd || process.env.ENABLE_DEV_SW
       ? [
           workbox({
