@@ -87,7 +87,7 @@ const computePie = (
       aCalc <= 90
         ? L * Math.sin(aRad)
         : L * Math.sin(((180 - aCalc) * Math.PI) / 180);
-    const y = Math.sqrt(z * z - x * x);
+    const y = Math.sqrt(Math.max(0, z * z - x * x));
     const Y = y;
     const [X, arcSweep] = a <= 180 ? [L + x, 0] : [L - x, 1];
 
