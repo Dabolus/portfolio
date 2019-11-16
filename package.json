@@ -19,8 +19,6 @@
     "deploy": "firebase deploy"
   },
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.5.5",
-    "core-js": "^3.2.1",
     "pwa-helpers": "^0.9.1",
     "systemjs": "^6.0.0",
     "typed.js": "^2.0.10"
@@ -28,7 +26,6 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-modules": "^0.1.0",
     "@babel/preset-typescript": "^7.3.3",
     "@types/google.analytics": "0.0.40",

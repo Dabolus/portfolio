@@ -8,14 +8,5 @@ module.exports = {
     ],
     '@babel/typescript',
   ],
-  plugins: [
-    '@babel/syntax-dynamic-import',
-    [
-      '@babel/transform-runtime',
-      {
-        corejs: 3,
-        useESModules: true,
-      },
-    ],
-  ],
+  plugins: ['@babel/syntax-dynamic-import'],
 };
