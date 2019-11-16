@@ -1,10 +1,8 @@
-import lozad from 'lozad';
-import { supportsWebp } from '../utils';
-
 interface ProjectIcon {
   readonly svg?: string;
-  readonly jpg: string;
-  readonly webp: string;
+  readonly jpg?: string;
+  readonly png?: string;
+  readonly webp?: string;
   readonly placeholder: string;
 }
 
@@ -27,7 +25,7 @@ const getProjects = async (): Promise<readonly Project[]> => {
 const configure = async () => {
   const projectsContainer = document.querySelector<HTMLDivElement>('#projects');
 
-  const [useWebp, projects] = await Promise.all([supportsWebp, getProjects()]);
+  const projects = await getProjects();
 
   projectsContainer.innerHTML = projects.reduce(
     (
@@ -45,8 +43,14 @@ const configure = async () => {
     ${projectsHtml}
     <div class="projects-container">
       <div class="project">
-        <img class="lozad" src="${placeholder}" data-src="${svg ||
-      (useWebp ? webp : jpg)}" alt="${name}" title="${name}">
+        <picture>
+          ${svg ? `<source srcset="${svg}" type="image/svg+xml">` : ''}
+          ${webp ? `<source srcset="${webp}" type="image/webp">` : ''}
+          ${jpg ? `<source srcset="${jpg}" type="image/jpeg">` : ''}
+          <img style="background-image: url(&quot;${placeholder}&quot;);" src="${jpg ||
+      webp ||
+      svg}" alt="${name}" title="${name}" loading="lazy" lazyload>
+        </picture>
         <div>
           <div>
             <h3>${name}</h3>
@@ -87,9 +91,6 @@ const configure = async () => {
   `,
     '',
   );
-
-  const observer = lozad();
-  observer.observe();
 };
 
 configure();

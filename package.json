@@ -21,7 +21,6 @@
   "dependencies": {
     "@babel/runtime-corejs3": "^7.5.5",
     "core-js": "^3.2.1",
-    "lozad": "^1.9.0",
     "pwa-helpers": "^0.9.1",
     "systemjs": "^6.0.0",
     "typed.js": "^2.0.10"
@@ -33,7 +32,6 @@
     "@babel/preset-modules": "^0.1.0",
     "@babel/preset-typescript": "^7.3.3",
     "@types/google.analytics": "0.0.40",
-    "@types/lozad": "^1.9.0",
     "@types/typed.js": "^2.0.9",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
     "@typescript-eslint/parser": "^2.1.0",
