@@ -167,3 +167,5 @@ export const configure = async () => {
   ).innerHTML = confidentLangsLineChart;
   document.querySelector('#most-used-langs').appendChild(mostUsedLangsPie);
 };
+
+configure();
