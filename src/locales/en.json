@@ -1,0 +1,48 @@
+{
+  "lang": "en",
+  "baseTitle": "Giorgio Garasto",
+  "pages": [
+    {
+      "id": "home",
+      "description": "Hi! I'm Giorgio, a Software Engineer trying to make the web a better place since 2004.",
+      "greeting": "Hi! I'm Giorgio.",
+      "phrases": {
+        "prefix": "A&nbsp;",
+        "strings": [
+          "Software Engineer",
+          "<img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\"><span>&nbsp;Certified Mobile Web Specialist</span>",
+          "Cloud Technician",
+          "Developer Advocate",
+          "Graphic Designer (sort of)",
+          "Musician in free time"
+        ]
+      },
+      "aim": "trying to make the web a better place&nbsp;<a id=\"since-2004-link\" rel=\"external\" href=\"https://translate.google.com/translate?js=n&sl=it&tl=en&u=https://web.archive.org/web/20101103024916/http://www.w3schools.it:80/\" target=\"since-2004\" rel=\"nofollow\">since&nbsp;2004</a>."
+    },
+    {
+      "id": "about",
+      "title": "About me",
+      "description": "Curious about who I am? Get to know me and what I do."
+    },
+    {
+      "id": "certifications",
+      "title": "Certifications",
+      "description": "Check out my certifications and awards."
+    },
+    {
+      "id": "contacts",
+      "title": "Contacts",
+      "description": "Interested in what I do and/or have some questions? Contact me!"
+    },
+    {
+      "id": "projects",
+      "title": "Projects",
+      "description": "Check out the list of the projects I built and maintain."
+    },
+    {
+      "id": "skills",
+      "title": "Skills",
+      "description": "Want to know what I am good at? Check it out here."
+    }
+  ]
+}
