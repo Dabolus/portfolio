@@ -27,7 +27,7 @@
     window.preload('nomodule/utils.js', 'script');
     window.preload('nomodule/pages/{{path}}.js', 'script');
     const systemJsLoaderTag = document.createElement('script');
-    systemJsLoaderTag.src = 's<%= isProd ? '.min' : '' %>.js';
+    systemJsLoaderTag.src = 's<%= production ? '.min' : '' %>.js';
     systemJsLoaderTag.addEventListener('load', () => System.import('./nomodule/main.js'), { once: true });
     document.head.appendChild(systemJsLoaderTag);
   }

@@ -21,7 +21,7 @@
     </svg>
   </div>
   <nav id="menu">
-    <% pages.forEach(({ id, title, icon, link }) => { %>
+    <% data.pages.forEach(({ id, title, icon, link }) => { %>
       <a href="<%= link || '/' + id %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
         <span>
           <%= title %>
@@ -37,7 +37,7 @@
       </a>
     <% }) %>
   </nav>
-  <% pages.forEach(({ id, link }) => { %>
+  <% data.pages.forEach(({ id, link }) => { %>
     <% if (link) { %>
       <portal src="<%= link %>" id="<%= id %>-link-portal" aria-hidden="true" class="closed"></portal>
     <% } %>

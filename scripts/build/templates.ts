@@ -9,41 +9,51 @@ const templatePromise = fs
   .readFile(templatePath)
   .then(buffer => buffer.toString('utf8'));
 
-export async function buildTemplate(outputPath: string, data: any) {
+export interface Options {
+  readonly data: any;
+  readonly production: boolean;
+}
+
+export async function buildTemplate(
+  outputPath: string,
+  { data, production }: Options,
+) {
   const template = await templatePromise;
   const renderedTemplate = renderTemplate(
     template,
     {
       ...data,
-      isProd: true,
+      production,
     },
     {
       filename: templatePath,
       client: false,
     },
   );
-  const minifiedTemplate = minifyTemplate(renderedTemplate, {
-    minifyCSS: {
-      level: {
-        2: {
-          all: true,
-          removeUnusedAtRules: false,
+  const finalTemplate = production
+    ? minifyTemplate(renderedTemplate, {
+        minifyCSS: {
+          level: {
+            2: {
+              all: true,
+              removeUnusedAtRules: false,
+            },
+          },
         },
-      },
-    },
-    minifyJS: (input: string) => minifyScript(input).code!,
-    collapseWhitespace: true,
-    collapseBooleanAttributes: true,
-    removeOptionalTags: true,
-    removeTagWhitespace: true,
-    removeComments: true,
-    sortAttributes: true,
-    sortClassName: true,
-    removeRedundantAttributes: true,
-  });
+        minifyJS: (input: string) => minifyScript(input).code!,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeOptionalTags: true,
+        removeTagWhitespace: true,
+        removeComments: true,
+        sortAttributes: true,
+        sortClassName: true,
+        removeRedundantAttributes: true,
+      })
+    : renderedTemplate;
 
   const outputDir = path.dirname(outputPath);
 
   await fs.mkdir(outputDir, { recursive: true });
-  await fs.writeFile(outputPath, minifiedTemplate);
+  await fs.writeFile(outputPath, finalTemplate);
 }
