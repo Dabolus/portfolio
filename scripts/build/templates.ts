@@ -15,7 +15,7 @@ export interface Options {
 }
 
 export async function buildTemplate(
-  outputPath: string,
+  outputDir: string,
   { data, production }: Options,
 ) {
   const template = await templatePromise;
@@ -52,7 +52,7 @@ export async function buildTemplate(
       })
     : renderedTemplate;
 
-  const outputDir = path.dirname(outputPath);
+  const outputPath = path.join(outputDir, 'index.html');
 
   await fs.mkdir(outputDir, { recursive: true });
   await fs.writeFile(outputPath, finalTemplate);

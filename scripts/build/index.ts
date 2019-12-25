@@ -25,7 +25,7 @@ const build = async () => {
 
   await Promise.all([
     ...localesData.map(data =>
-      buildTemplate(path.resolve(outputPath, `${data.locale}.html`), {
+      buildTemplate(path.resolve(outputPath, data.locale), {
         data,
         production: process.env.NODE_ENV === 'production',
       }),
