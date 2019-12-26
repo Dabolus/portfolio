@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { buildTemplate } from './templates';
+import { buildScripts } from './scripts';
 
 const outputPath = path.resolve(__dirname, '../../dist');
 const localesPath = path.resolve(__dirname, '../../src/locales');
@@ -22,14 +23,16 @@ const getLocalesData = async () => {
 
 const build = async () => {
   const localesData = await getLocalesData();
+  const production = process.env.NODE_ENV === 'production';
 
   await Promise.all([
     ...localesData.map(data =>
       buildTemplate(path.resolve(outputPath, data.locale), {
         data,
-        production: process.env.NODE_ENV === 'production',
+        production,
       }),
     ),
+    buildScripts(outputPath, { production, data: {} }),
   ]);
 };
 

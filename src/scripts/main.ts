@@ -2,7 +2,7 @@ import { configureRouting } from './routing';
 
 const start = () => {
   if (process.env.ENABLE_DEV_SW && 'serviceWorker' in navigator) {
-    navigator.serviceWorker.register('{{jsDir}}/sw.js', {
+    navigator.serviceWorker.register(`${process.env.JS_DIR}/sw.js`, {
       scope: '/',
     });
   }
