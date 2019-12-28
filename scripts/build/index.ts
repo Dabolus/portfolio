@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { buildTemplate } from './templates';
 import { buildScripts } from './scripts';
+import { buildStyles } from './styles';
 
 const outputPath = path.resolve(__dirname, '../../dist');
 const localesPath = path.resolve(__dirname, '../../src/locales');
@@ -33,6 +34,7 @@ const build = async () => {
       }),
     ),
     buildScripts(outputPath, { production, data: {} }),
+    buildStyles(outputPath, { data: {} }),
   ]);
 };
 
