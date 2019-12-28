@@ -43,11 +43,14 @@ const generateSassVariables = (data: Data): string =>
 const injectData = (filePath: string, data: Data): string =>
   `${generateSassVariables(data)}\n@import '${filePath}';`;
 
-export interface Options {
+export interface BuildStylesOptions {
   readonly data: Data;
 }
 
-export async function buildStyles(outputDir: string, { data }: Options) {
+export async function buildStyles(
+  outputDir: string,
+  { data }: BuildStylesOptions,
+) {
   const { css: postprocessedStyles } = await postcssInstance.process(
     injectData('./main.scss', data),
     {

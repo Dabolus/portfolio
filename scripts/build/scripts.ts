@@ -7,6 +7,7 @@ import rollupBabel from 'rollup-plugin-babel';
 import copy from 'rollup-plugin-copy';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
+import { Data } from './models';
 
 const scriptsPath = path.resolve(__dirname, '../../src/scripts');
 
@@ -113,14 +114,14 @@ const createBundle = async (
   });
 };
 
-export interface Options {
-  readonly data: any;
+export interface BuildScriptsOptions {
+  readonly data: Data;
   readonly production: boolean;
 }
 
 export async function buildScripts(
   outputPath: string,
-  { production }: Options,
+  { production }: BuildScriptsOptions,
 ) {
   await Promise.all([
     createBundle(outputPath, { production, modules: true }),

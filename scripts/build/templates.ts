@@ -3,20 +3,21 @@ import path from 'path';
 import { render as renderTemplate } from 'ejs';
 import { minify as minifyTemplate } from 'html-minifier';
 import { minify as minifyScript } from 'terser';
+import { Data } from './models';
 
 const templatePath = path.resolve(__dirname, '../../src/index.ejs');
 const templatePromise = fs
   .readFile(templatePath)
   .then(buffer => buffer.toString('utf8'));
 
-export interface Options {
-  readonly data: any;
+export interface BuildTemplateOptions {
+  readonly data: Data;
   readonly production: boolean;
 }
 
 export async function buildTemplate(
   outputDir: string,
-  { data, production }: Options,
+  { data, production }: BuildTemplateOptions,
 ) {
   const template = await templatePromise;
   const renderedTemplate = renderTemplate(
