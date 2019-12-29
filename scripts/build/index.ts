@@ -4,6 +4,7 @@ import { buildTemplate } from './templates';
 import { buildScripts } from './scripts';
 import { buildStyles } from './styles';
 import { generateServiceWorkers } from './sw';
+import { copyAssets } from './assets';
 
 const outputPath = path.resolve(__dirname, '../../dist');
 const localesPath = path.resolve(__dirname, '../../src/locales');
@@ -36,6 +37,16 @@ const build = async () => {
     ),
     buildScripts(outputPath, { production, data: {} }),
     buildStyles(outputPath, { data: {} }),
+    copyAssets([
+      {
+        from: 'src/assets/*',
+        to: 'dist',
+      },
+      {
+        from: `node_modules/systemjs/dist/s${production ? '.min' : ''}.js`,
+        to: 'dist/nomodule',
+      },
+    ]),
   ]);
   await generateServiceWorkers(outputPath);
 };
