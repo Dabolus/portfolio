@@ -6,6 +6,7 @@
   "hosting": {
     "predeploy": "npm run build:frontend",
     "public": "dist",
+    "cleanUrls": true,
     "ignore": [
       "firebase.json",
       "package.json",
