@@ -5,10 +5,10 @@
 
   <%- include icons -%>
 
-  <title>{{title}}</title>
+  <title><%= title ? `${title} - ${baseTitle}` : baseTitle %></title>
   <meta name="description" content="{{description}}">
 
-  <meta property="og:title" content="{{title}}">
+  <meta property="og:title" content="<%= title ? `${title} - ${baseTitle}` : baseTitle %>">
   <meta property="og:description" content="{{description}}">
   <meta property="og:image" content="images/propic.jpg">
   <meta property="og:image:alt" content="Giorgio Garasto">
