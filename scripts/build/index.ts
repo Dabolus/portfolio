@@ -3,6 +3,7 @@ import path from 'path';
 import { buildTemplate } from './templates';
 import { buildScripts } from './scripts';
 import { buildStyles } from './styles';
+import { generateServiceWorkers } from './sw';
 
 const outputPath = path.resolve(__dirname, '../../dist');
 const localesPath = path.resolve(__dirname, '../../src/locales');
@@ -36,6 +37,7 @@ const build = async () => {
     buildScripts(outputPath, { production, data: {} }),
     buildStyles(outputPath, { data: {} }),
   ]);
+  await generateServiceWorkers(outputPath);
 };
 
 build();
