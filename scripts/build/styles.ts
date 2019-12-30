@@ -21,7 +21,7 @@ const toSassVariable = (val: unknown): string => {
   }
 
   if (Array.isArray(val)) {
-    return `(${val})`;
+    return `(${val.map(elem => toSassVariable(elem)).join(', ')})`;
   }
 
   return `${Object.entries(val).reduce(
