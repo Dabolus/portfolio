@@ -4,6 +4,7 @@
   "pages": [
     {
       "id": "home",
+      "title": null,
       "description": "Hi! I'm Giorgio, a Software Engineer trying to make the web a better place since 2004.",
       "greeting": "Hi! I'm Giorgio.",
       "phrases": {
