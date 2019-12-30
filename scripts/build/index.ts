@@ -5,6 +5,7 @@ import { buildScripts } from './scripts';
 import { buildStyles } from './styles';
 import { generateServiceWorkers } from './sw';
 import { copyAssets } from './assets';
+import { buildSitemap } from './sitemap';
 import { Data, LocaleDataModule, Locale } from './models';
 
 const outputPath = path.resolve(__dirname, '../../dist');
@@ -42,6 +43,19 @@ const build = async () => {
     ),
     buildScripts(outputPath, { production, data: defaultData }),
     buildStyles(outputPath, { data: defaultData }),
+    buildSitemap(outputPath, {
+      data: localesData,
+      priorities: [
+        'home',
+        'about',
+        'projects',
+        'certifications',
+        'contacts',
+        'skills',
+        'blog',
+      ],
+      defaultLocale,
+    }),
     copyAssets([
       {
         from: 'src/assets/*',
