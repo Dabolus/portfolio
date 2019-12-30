@@ -3,7 +3,7 @@ import path from 'path';
 import { render as renderTemplate } from 'ejs';
 import { minify as minifyTemplate } from 'html-minifier';
 import { minify as minifyScript } from 'terser';
-import { Data } from './models';
+import { Data, PageData } from './models';
 
 const templatePath = path.resolve(__dirname, '../../src/index.ejs');
 const templatePromise = fs
@@ -15,22 +15,21 @@ export interface BuildTemplateOptions {
   readonly production: boolean;
 }
 
-export async function buildTemplate(
+export interface CompileTemplateOptions {
+  readonly pageData: PageData;
+  readonly production: boolean;
+}
+
+const compileTemplate = async (
   outputDir: string,
-  { data, production }: BuildTemplateOptions,
-) {
+  { pageData, production }: CompileTemplateOptions,
+) => {
   const template = await templatePromise;
-  const renderedTemplate = renderTemplate(
-    template,
-    {
-      ...data,
-      production,
-    },
-    {
-      filename: templatePath,
-      client: false,
-    },
-  );
+  const renderedTemplate = await renderTemplate(template, pageData, {
+    filename: templatePath,
+    client: false,
+    async: true,
+  });
   const finalTemplate = production
     ? minifyTemplate(renderedTemplate, {
         minifyCSS: {
@@ -53,8 +52,34 @@ export async function buildTemplate(
       })
     : renderedTemplate;
 
-  const outputPath = path.join(outputDir, 'index.html');
+  const outputPath = path.join(
+    outputDir,
+    `${pageData.data.page === 'home' ? 'index' : pageData.data.page}.html`,
+  );
 
   await fs.mkdir(outputDir, { recursive: true });
   await fs.writeFile(outputPath, finalTemplate);
+};
+
+export async function buildTemplate(
+  outputDir: string,
+  { data, production }: BuildTemplateOptions,
+) {
+  const pagesData = data.data.pages.map<PageData>(
+    ({ id: page, ...pageData }) => ({
+      locale: data.locale,
+      production,
+      data: {
+        page,
+        ...data.data,
+        ...pageData,
+      },
+    }),
+  );
+
+  await Promise.all(
+    pagesData.map(pageData =>
+      compileTemplate(outputDir, { pageData, production }),
+    ),
+  );
 }

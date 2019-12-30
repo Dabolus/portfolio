@@ -5,17 +5,18 @@ import { buildScripts } from './scripts';
 import { buildStyles } from './styles';
 import { generateServiceWorkers } from './sw';
 import { copyAssets } from './assets';
+import { Data, LocaleDataModule, Locale } from './models';
 
 const outputPath = path.resolve(__dirname, '../../dist');
 const localesPath = path.resolve(__dirname, '../../src/locales');
 
-const getLocalesData = async () => {
+const getLocalesData = async (): Promise<readonly Data[]> => {
   const locales = await fs.readdir(localesPath);
   const localesData = await Promise.all(
     locales.map(async localeFile => {
-      const locale = localeFile.slice(0, 2);
+      const locale = localeFile.slice(0, 2) as Locale;
       const localePath = path.resolve(localesPath, localeFile);
-      const { default: data } = await import(localePath);
+      const { default: data }: LocaleDataModule = await import(localePath);
 
       return { locale, data };
     }),
@@ -25,8 +26,12 @@ const getLocalesData = async () => {
 };
 
 const build = async () => {
+  const defaultLocale = 'en';
   const localesData = await getLocalesData();
   const production = process.env.NODE_ENV === 'production';
+  const defaultData = localesData.find(
+    ({ locale }) => locale === defaultLocale,
+  );
 
   await Promise.all([
     ...localesData.map(data =>
@@ -35,8 +40,8 @@ const build = async () => {
         production,
       }),
     ),
-    buildScripts(outputPath, { production, data: {} }),
-    buildStyles(outputPath, { data: {} }),
+    buildScripts(outputPath, { production, data: defaultData }),
+    buildStyles(outputPath, { data: defaultData }),
     copyAssets([
       {
         from: 'src/assets/*',
