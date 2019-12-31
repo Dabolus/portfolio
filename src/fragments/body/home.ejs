@@ -22,7 +22,7 @@
   </div>
   <nav id="menu">
     <% data.pages.forEach(({ id, title, icon, link }) => { %>
-      <a href="<%= link || '/' + id %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
+      <a href="<%= link || `/${locale}/${id}` %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
         <span>
           <%= title %>
           <% if (link) { %>
