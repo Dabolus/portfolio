@@ -1,4 +1,4 @@
-<div class="content" id="contacts" {{contacts}}>
+<div class="content" id="contacts" <%- data.page === 'contacts' ? '' : 'hidden' %>>
   <div class="content-boundaries">
     <form id="contact-form">
       <svg id="letter-zip" viewBox="0 0 100 45">

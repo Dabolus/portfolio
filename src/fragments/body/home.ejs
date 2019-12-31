@@ -1,4 +1,4 @@
-<section id="home" {{home}}>
+<section id="home" <%- data.page === 'home' ? '' : 'aria-hidden="true"' %>>
   <div>
     <h1>Hi! I'm Giorgio.</h1>
     <h2 id="phrases">A&nbsp;<span id="typed"></span></h2>

@@ -15,7 +15,8 @@ export interface BaseData {
 export interface PageData {
   readonly locale: Locale;
   readonly production: boolean;
-  readonly data: BaseData & Omit<Page, 'id'> & { readonly page: string };
+  readonly data: BaseData &
+    Omit<Page, 'id'> & { readonly page: string; readonly age: string };
 }
 
 export interface LocaleData extends BaseData {
