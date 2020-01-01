@@ -22,6 +22,8 @@
   </div>
   <nav id="menu">
     <% data.pages.forEach(({ id, title, icon, link }) => { %>
+      <% if (id === 'home') { return; } %>
+
       <a href="<%= link || `/${locale}/${id}` %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
         <span>
           <%= title %>
@@ -38,8 +40,7 @@
     <% }) %>
   </nav>
   <% data.pages.forEach(({ id, link }) => { %>
-    <% if (link) { %>
-      <portal src="<%= link %>" id="<%= id %>-link-portal" aria-hidden="true" class="closed"></portal>
-    <% } %>
+    <% if (!link) { return; } %>
+    <portal src="<%= link %>" id="<%= id %>-link-portal" aria-hidden="true" class="closed"></portal>
   <% }) %>
 </section>
