@@ -36,10 +36,6 @@
       {
         "source": "/api/email",
         "function": "sendEmail"
-      },
-      {
-        "source": "**",
-        "function": "ssr"
       }
     ],
     "headers": [
