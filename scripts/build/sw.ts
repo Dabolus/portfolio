@@ -3,7 +3,7 @@ import { generateSW } from 'workbox-build';
 
 const generateServiceWorker = async (
   outputPath: string,
-  { modules }: { modules: boolean },
+  { modules, defaultLocale }: { modules: boolean; defaultLocale: string },
 ) => {
   const globDirectory = path.join(outputPath, modules ? 'module' : 'nomodule');
 
@@ -14,15 +14,13 @@ const generateServiceWorker = async (
     swDest: path.join(globDirectory, 'sw.js'),
     globDirectory,
     globPatterns: [
+      `../${defaultLocale}/index.html`,
       '../styles.css',
       '../fonts/*.woff2',
       '../images/*.{svg,jpg,webp}',
-      `../${modules ? 'module' : 'nomodule'}/**/*.js`,
+      './**/*.js',
     ],
-    templatedURLs: {
-      '/': ['../../functions/index.hbs'],
-    },
-    navigateFallback: '/',
+    navigateFallback: `/${defaultLocale}/`,
     navigateFallbackBlacklist: [/api/],
     runtimeCaching: [
       {
@@ -64,9 +62,12 @@ const generateServiceWorker = async (
   });
 };
 
-export async function generateServiceWorkers(outputPath: string) {
+export async function generateServiceWorkers(
+  outputPath: string,
+  defaultLocale: string,
+) {
   await Promise.all([
-    generateServiceWorker(outputPath, { modules: true }),
-    generateServiceWorker(outputPath, { modules: false }),
+    generateServiceWorker(outputPath, { modules: true, defaultLocale }),
+    generateServiceWorker(outputPath, { modules: false, defaultLocale }),
   ]);
 }

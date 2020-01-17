@@ -67,7 +67,7 @@ const build = async () => {
       },
     ]),
   ]);
-  await generateServiceWorkers(outputPath);
+  await generateServiceWorkers(outputPath, defaultLocale);
 };
 
 build();
