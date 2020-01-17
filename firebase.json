@@ -10,13 +10,11 @@
     "ignore": [
       "firebase.json",
       "package.json",
-      "rollup.config.js",
       "tsconfig.json",
       "package-lock.json",
       "**/.*",
       "**/node_modules/**",
       "src/**",
-      "plugins/**",
       "scripts/**",
       "functions/**"
     ],
