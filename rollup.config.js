@@ -175,7 +175,7 @@ const config = (main = true) => ({
                 '/': ['../../functions/index.hbs'],
               },
               navigateFallback: '/',
-              navigateFallbackBlacklist: [/api/],
+              navigateFallbackDenylist: [/api/],
               runtimeCaching: [
                 {
                   method: 'GET',
