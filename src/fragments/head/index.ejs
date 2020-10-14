@@ -3,7 +3,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="/">
 
-  <%- include icons -%>
+  <%- include('icons') %>
 
   <title><%= data.title ? `${data.title} - ${data.baseTitle}` : data.baseTitle %></title>
   <meta name="description" content="<%= data.description %>">
@@ -18,7 +18,7 @@
   <meta name="twitter:creator" content="@Dabolus">
   <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Person","url":"<%= data.baseUrl %>","image":"<%= data.baseUrl %>/images/propic.jpg","name":"Dabolus","givenName":"Giorgio","familyName":"Garasto","gender":{"@type":"GenderType","name":"Male"},"email":"giorgio@garasto.it","nationality":{"@type":"Country","name":"IT"},"description":"Giorgio Garasto - also known as Dabolus - is an italian Software Engineer and Graphic Designer specialized in web development. He is mainly known for his very first published project, the Clash Royale Card Maker.","sameAs":["https://www.facebook.com/giorgio.garasto","https://twitter.com/Dabolus","https://www.linkedin.com/in/giorgiogarasto","https://github.com/Dabolus"]}]</script>
 
-  <%- include async-css-js -%>
-  <%- include critical-css -%>
-  <%- include critical-js -%>
+  <%- include('async-css-js') %>
+  <%- include('critical-css') %>
+  <%- include('critical-js') %>
 </head>
