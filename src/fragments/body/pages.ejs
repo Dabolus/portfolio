@@ -8,9 +8,9 @@
     <h2 id="title"><%= data.title || '' %></h2>
   </div>
   <hr>
-  <%- include('pages/about') %>
-  <%- include('pages/projects') %>
-  <%- include('pages/certifications') %>
-  <%- include('pages/contacts') %>
-  <%- include('pages/skills') %>
+  <%- await include('pages/about') %>
+  <%- await include('pages/projects') %>
+  <%- await include('pages/certifications') %>
+  <%- await include('pages/contacts') %>
+  <%- await include('pages/skills') %>
 </section>
