@@ -14,7 +14,7 @@ const localesPath = path.resolve(__dirname, '../../src/locales');
 const getLocalesData = async (): Promise<readonly Data[]> => {
   const locales = await fs.readdir(localesPath);
   const localesData = await Promise.all(
-    locales.map(async localeFile => {
+    locales.map(async (localeFile) => {
       const locale = localeFile.slice(0, 2) as Locale;
       const localePath = path.resolve(localesPath, localeFile);
       const { default: data }: LocaleDataModule = await import(localePath);
@@ -35,14 +35,14 @@ const build = async () => {
   );
 
   await Promise.all([
-    ...localesData.map(data =>
+    ...localesData.map((data) =>
       buildTemplate(path.resolve(outputPath, data.locale), {
         data,
         production,
       }),
     ),
     buildScripts(outputPath, { production, data: defaultData }),
-    buildStyles(outputPath, { data: defaultData }),
+    buildStyles(outputPath, { data: {} }),
     buildSitemap(outputPath, {
       data: localesData,
       priorities: [

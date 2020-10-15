@@ -69,7 +69,7 @@ const compileTemplate = async (
 export async function buildTemplate(
   outputDir: string,
   { data, production }: BuildTemplateOptions,
-) {
+): Promise<void> {
   const dob = 873148830000; // 1st Sep 1997 at 23:20:30
   const yearLength = 31556926000; // 1 year (365 days, 5 hours, 48 minutes, and 46 seconds)
   const age = ((Date.now() - dob) / yearLength).toFixed(9);

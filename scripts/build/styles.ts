@@ -6,7 +6,6 @@ import postcssSass from '@csstools/postcss-sass';
 import postcssPresetEnv from 'postcss-preset-env';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
-import { Data } from './models';
 
 const postcssInstance = postcss([
   postcssSass(),
@@ -21,7 +20,7 @@ const toSassVariable = (val: unknown): string => {
   }
 
   if (Array.isArray(val)) {
-    return `(${val.map(elem => toSassVariable(elem)).join(', ')})`;
+    return `(${val.map((elem) => toSassVariable(elem)).join(', ')})`;
   }
 
   return `${Object.entries(val).reduce(
@@ -33,24 +32,24 @@ const toSassVariable = (val: unknown): string => {
   )})`;
 };
 
-const generateSassVariables = (data: Data): string =>
+const generateSassVariables = (data: Record<string, unknown>): string =>
   Object.entries(data).reduce(
     (variables, [key, value]) =>
       `${variables}\n$${key}: ${toSassVariable(value)};\n`,
     '',
   );
 
-const injectData = (filePath: string, data: Data): string =>
+const injectData = (filePath: string, data: Record<string, unknown>): string =>
   `${generateSassVariables(data)}\n@import '${filePath}';`;
 
 export interface BuildStylesOptions {
-  readonly data: Data;
+  readonly data: Record<string, unknown>;
 }
 
 export async function buildStyles(
   outputDir: string,
   { data }: BuildStylesOptions,
-) {
+): Promise<void> {
   const { css: postprocessedStyles } = await postcssInstance.process(
     injectData('./main.scss', data),
     {
