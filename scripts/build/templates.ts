@@ -2,13 +2,18 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { render as renderTemplate } from 'ejs';
 import { minify as minifyTemplate } from 'html-minifier';
-import { minify as minifyScript } from 'terser';
+import type { MinifyOutput } from 'terser';
+import syncRpc from 'sync-rpc';
 import { Data, PageData } from './models';
+
+const minifyScript: (code: string) => MinifyOutput = syncRpc(
+  path.resolve(__dirname, '../helpers/minify.js'),
+);
 
 const templatePath = path.resolve(__dirname, '../../src/index.ejs');
 const templatePromise = fs
   .readFile(templatePath)
-  .then(buffer => buffer.toString('utf8'));
+  .then((buffer) => buffer.toString('utf8'));
 
 export interface BuildTemplateOptions {
   readonly data: Data;
@@ -40,7 +45,7 @@ const compileTemplate = async (
             },
           },
         },
-        minifyJS: (input: string) => minifyScript(input).code!,
+        minifyJS: (input: string) => minifyScript(input).code,
         collapseWhitespace: true,
         collapseBooleanAttributes: true,
         removeOptionalTags: true,
@@ -83,7 +88,7 @@ export async function buildTemplate(
   );
 
   await Promise.all(
-    pagesData.map(pageData =>
+    pagesData.map((pageData) =>
       compileTemplate(outputDir, { pageData, production }),
     ),
   );
