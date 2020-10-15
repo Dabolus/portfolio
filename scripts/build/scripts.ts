@@ -29,7 +29,6 @@ const createBundle = async (
   { production, modules }: { production: boolean; modules: boolean },
 ) => {
   const rollupBuild = await rollup({
-    experimentalOptimizeChunks: production,
     input: {
       main: path.join(scriptsPath, 'main.ts'),
       'pages/home': path.join(scriptsPath, 'pages/home.ts'),
@@ -73,7 +72,7 @@ const createBundle = async (
               output: {
                 comments: false,
               },
-              ecma: 8,
+              ecma: 2017,
               compress: {
                 keep_fargs: false,
                 passes: 3,
@@ -122,7 +121,7 @@ export interface BuildScriptsOptions {
 export async function buildScripts(
   outputPath: string,
   { production }: BuildScriptsOptions,
-) {
+): Promise<void> {
   await Promise.all([
     createBundle(outputPath, { production, modules: true }),
     createBundle(outputPath, { production, modules: false }),
