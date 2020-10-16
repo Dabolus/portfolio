@@ -20,14 +20,14 @@
   import('./module/main.js');
   window.supportsDynamicImport = true;
   window.preload('module/utils.js', 'script');
-  window.preload('module/pages/{{path}}.js', 'script');
+  window.preload('module/pages/<%= data.page %>.js', 'script');
 </script>
 <script defer>
   if (!window.supportsDynamicImport) {
     window.preload('nomodule/utils.js', 'script');
-    window.preload('nomodule/pages/{{path}}.js', 'script');
+    window.preload('nomodule/pages/<%= data.page %>.js', 'script');
     const systemJsLoaderTag = document.createElement('script');
-    systemJsLoaderTag.src = 's<%= isProd ? '.min' : '' %>.js';
+    systemJsLoaderTag.src = 's<%= production ? '.min' : '' %>.js';
     systemJsLoaderTag.addEventListener('load', () => System.import('./nomodule/main.js'), { once: true });
     document.head.appendChild(systemJsLoaderTag);
   }

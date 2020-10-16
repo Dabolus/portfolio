@@ -1,28 +1,22 @@
-<section id="home" {{home}}>
+<section id="home" <%- data.page === 'home' ? '' : 'aria-hidden="true"' %>>
   <div>
-    <h1>Hi! I'm Giorgio.</h1>
-    <h2 id="phrases">A&nbsp;<span id="typed"></span></h2>
+    <h1><%= data.pages.home.greeting %></h1>
+    <h2 id="phrases"><%- data.pages.home.phrases.prefix %><span id="typed"></span></h2>
     <div id="strings">
-      <h2>Software Engineer</h2>
-      <h2><img src="images/google-g.svg" id="google-g" alt="Google" title="Google"><span>&nbsp;Certified Mobile Web Specialist</span></h2>
-      <h2>Cloud Technician</h2>
-      <h2>Developer Advocate</h2>
-      <h2>Graphic Designer (sort of)</h2>
-      <h2>Musician in free time</h2>
+      <% data.pages.home.phrases.strings.forEach(str => { %>
+        <h2><%- str %></h2>
+      <% }) %>
     </div>
-    <h2 id="since-2004">trying to make the web a better place&nbsp;<a
-              id="since-2004-link"
-              rel="external"
-              href="https://translate.google.com/translate?js=n&sl=it&tl=en&u=https://web.archive.org/web/20101103024916/http://www.w3schools.it:80/"
-              target="since-2004"
-              rel="nofollow">since&nbsp;2004</a>.</h2>
+    <h2 id="since-2004"><%- data.pages.home.aim %></h2>
     <svg id="scroll-down" viewBox="0 0 24 24">
       <path fill="currentColor" d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"/>
     </svg>
   </div>
   <nav id="menu">
-    <% pages.forEach(({ id, title, icon, link }) => { %>
-      <a href="<%= link || '/' + id %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
+    <% Object.entries(data.pages).forEach(([id, { title, icon, link }]) => { %>
+      <% if (id === 'home') { return; } %>
+
+      <a href="<%= link || `/${locale}/${id}` %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
         <span>
           <%= title %>
           <% if (link) { %>
@@ -37,9 +31,8 @@
       </a>
     <% }) %>
   </nav>
-  <% pages.forEach(({ id, link }) => { %>
-    <% if (link) { %>
-      <portal src="<%= link %>" id="<%= id %>-link-portal" aria-hidden="true" class="closed"></portal>
-    <% } %>
+  <% Object.entries(data.pages).forEach(([id, { link }]) => { %>
+    <% if (!link) { return; } %>
+    <portal src="<%= link %>" id="<%= id %>-link-portal" aria-hidden="true" class="closed"></portal>
   <% }) %>
 </section>

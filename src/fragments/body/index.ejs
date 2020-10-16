@@ -1,4 +1,4 @@
-<body {{body}}>
+<body <%- data.page === 'home' ? '' : 'class="blocked"' %>>
   <noscript>
     <style>
       #strings {
@@ -8,7 +8,7 @@
     </style>
   </noscript>
   <main>
-    <%- include home -%>
-    <%- include pages -%>
+    <%- await include('home') %>
+    <%- await include('pages') %>
   </main>
 </body>

@@ -2,7 +2,8 @@ import { startAnimation, stopAnimation } from '../animation';
 
 // Configure age animation
 const age = document.getElementById('age');
-const dob = 873148830000; // 1st Sep 1997 at 23:20:30
+const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
+const yearLength = 31556926000; // 1 year (365 days, 5 hours, 48 minutes, and 46 seconds)
 
 const updateAge = () => {
   stopAnimation('age');
@@ -10,8 +11,14 @@ const updateAge = () => {
   // Interesting links and papers:
   // - https://pumas.jpl.nasa.gov/files/04_21_97_1.pdf
   // - https://www.grc.nasa.gov/WWW/k-12/Numbers/Math/Mathematical_Thinking/calendar_calculations.htm
-  age.textContent = ((Date.now() - dob) / 31556926000) // 1 year (365 days, 5 hours, 48 minutes and 46 seconds)
-    .toFixed(9);
+  age.textContent = ((Date.now() - dateOfBirth) / yearLength).toLocaleString(
+    'en', // TODO: use current locale
+    {
+      minimumFractionDigits: 9,
+      maximumFractionDigits: 9,
+    },
+  );
+
   startAnimation('age', updateAge);
 };
 
