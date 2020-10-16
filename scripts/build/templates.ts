@@ -74,8 +74,8 @@ export async function buildTemplate(
   const yearLength = 31556926000; // 1 year (365 days, 5 hours, 48 minutes, and 46 seconds)
   const age = ((Date.now() - dob) / yearLength).toFixed(9);
 
-  const pagesData = data.data.pages.map<PageData>(
-    ({ id: page, ...pageData }) => ({
+  const pagesData = Object.entries(data.data.pages).map<PageData>(
+    ([page, pageData]) => ({
       locale: data.locale,
       production,
       data: {

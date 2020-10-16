@@ -1,7 +1,6 @@
 export type Locale = 'en';
 
 export interface Page {
-  readonly id: string;
   readonly title?: string;
   readonly description: string;
   readonly [key: string]: unknown;
@@ -20,7 +19,7 @@ export interface PageData {
 }
 
 export interface LocaleData extends BaseData {
-  readonly pages: readonly Page[];
+  readonly pages: Record<string, Page>;
 }
 
 export interface LocaleDataModule {
