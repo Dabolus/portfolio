@@ -20,7 +20,7 @@ const generateServiceWorker = async (
       '../images/*.{svg,jpg,webp}',
       './**/*.js',
     ],
-    navigateFallback: `/${defaultLocale}/`,
+    navigateFallback: `/${defaultLocale}/index.html`,
     navigateFallbackDenylist: [/api/],
     runtimeCaching: [
       {
