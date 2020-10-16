@@ -17,9 +17,21 @@ const babel = ({ modules }: { modules: boolean }) =>
     extensions: ['.ts', '.js', '.mjs'],
     runtimeHelpers: true,
     presets: [
-      ...(modules
-        ? [['@babel/modules', { loose: true }]]
-        : [['@babel/env', { loose: true, modules: false }]]),
+      [
+        '@babel/env',
+        {
+          loose: true,
+          useBuiltIns: 'usage',
+          corejs: 3,
+          modules: false,
+          ...(modules && {
+            bugfixes: true,
+            targets: {
+              esmodules: true,
+            },
+          }),
+        },
+      ],
       '@babel/typescript',
     ],
   });
