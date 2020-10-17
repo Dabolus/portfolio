@@ -1,7 +1,7 @@
 <section id="home" <%- data.page === 'home' ? '' : 'aria-hidden="true"' %>>
   <div>
     <h1><%= data.pages.home.greeting %></h1>
-    <h2 id="phrases"><%- data.pages.home.phrases.prefix %><span id="typed"></span></h2>
+    <h2 id="phrases"><%= data.pages.home.phrases.prefix %>&nbsp;<span id="typed"></span></h2>
     <div id="strings">
       <% data.pages.home.phrases.strings.forEach(str => { %>
         <h2><%- str %></h2>

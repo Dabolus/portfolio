@@ -8,7 +8,7 @@
       "description": "Hi! I'm Giorgio, a Software Engineer trying to make the web a better place since 2004.",
       "greeting": "Hi! I'm Giorgio.",
       "phrases": {
-        "prefix": "A&nbsp;",
+        "prefix": "A",
         "strings": [
           "Software Engineer",
           "<img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\"><span>&nbsp;Certified Mobile Web Specialist</span>",
