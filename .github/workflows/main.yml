@@ -8,26 +8,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@master
-      - name: Use Node.js 10
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v2
         with:
-          node-version: 10
+          submodules: true
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
       - name: Install deps
-        run: npm ci
-      - name: Build and deploy to Firebase
+        run: yarn install
+      - name: Build
+        run: yarn build
+      - name: Deploy
         uses: Dabolus/deploy-firebase@master
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
-      - name: Purge cache, audit and report
+      - name: Purge cache, audit, and report
         run: |
-          # Set Chrome path so that chrome-launcher can find it
-          export CHROME_PATH="$(pwd)/chrome-linux/chrome"
-          # Deprecated, but the download script needs it
-          export LIGHTHOUSE_CHROMIUM_PATH="$CHROME_PATH"
-          # Download chrome
-          curl https://raw.githubusercontent.com/GoogleChrome/chrome-launcher/v0.10.4/scripts/download-chrome.sh | bash
+          # Install libgbm
+          sudo apt-get -y install libgbm1
+          # Install required libraries
+          yarn add -D -W node-fetch lighthouse puppeteer node-telegram-bot-api
           # Run the postdeploy script
           node scripts/postdeploy
         env:

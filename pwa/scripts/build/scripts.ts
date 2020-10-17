@@ -13,7 +13,7 @@ const scriptsPath = path.resolve(__dirname, '../../src/scripts');
 
 const babel = ({ modules }: { modules: boolean }) =>
   rollupBabel({
-    exclude: 'node_modules/**',
+    exclude: /node_modules/,
     extensions: ['.ts', '.js', '.mjs'],
     runtimeHelpers: true,
     presets: [
@@ -56,8 +56,16 @@ const createBundle = async (
         : [
             copy({
               targets: [
+                // Try to copy systemjs from current node_modules directory
                 {
                   src: `node_modules/systemjs/dist/s${
+                    production ? '.min' : ''
+                  }.js`,
+                  dest: path.join(outputPath, 'nomodule'),
+                },
+                // If it is not there, it is most probably in the workspace root
+                {
+                  src: `../node_modules/systemjs/dist/s${
                     production ? '.min' : ''
                   }.js`,
                   dest: path.join(outputPath, 'nomodule'),
@@ -71,7 +79,7 @@ const createBundle = async (
       commonjs(),
       babel({ modules }),
       replace({
-        exclude: 'node_modules/**',
+        exclude: /node_modules/,
         delimiters: ['', ''],
         'process.env.ENABLE_DEV_SW': `${!!(
           production || process.env.ENABLE_DEV_SW

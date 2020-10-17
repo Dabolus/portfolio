@@ -61,10 +61,6 @@ const build = async () => {
         from: 'src/assets/*',
         to: 'dist',
       },
-      {
-        from: `node_modules/systemjs/dist/s${production ? '.min' : ''}.js`,
-        to: 'dist/nomodule',
-      },
     ]),
   ]);
   await generateServiceWorkers(outputPath, defaultLocale);

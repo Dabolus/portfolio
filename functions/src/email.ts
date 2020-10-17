@@ -10,7 +10,7 @@ const {
   host,
   port,
   secure,
-  auth: { user, id: clientId, secret: clientSecret, token: accessToken },
+  auth: { user, id: serviceClient, secret: privateKey },
 } = (functions.config() as RuntimeConfig).mail;
 
 const mailTransport = nodemailer.createTransport({
@@ -20,9 +20,8 @@ const mailTransport = nodemailer.createTransport({
   auth: {
     type: 'OAuth2',
     user,
-    clientId,
-    clientSecret,
-    accessToken,
+    serviceClient,
+    privateKey,
   },
 });
 
@@ -139,7 +138,8 @@ export const sendEmail = functions.https.onRequest(
         text: sanitize(message),
         html: marked(sanitize(message)),
       });
-    } catch {
+    } catch (error) {
+      console.error(error);
       res.status(500).json({ error: EmailError.UNEXPECTED_ERROR });
       return;
     }

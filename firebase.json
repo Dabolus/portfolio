@@ -1,11 +1,10 @@
 {
   "functions": {
-    "predeploy": "npm run build:functions",
-    "source": "functions"
+    "source": "functions",
+    "runtime": "nodejs10"
   },
   "hosting": {
-    "predeploy": "npm run build:frontend",
-    "public": "dist",
+    "public": "pwa/dist",
     "cleanUrls": true,
     "ignore": [
       "firebase.json",

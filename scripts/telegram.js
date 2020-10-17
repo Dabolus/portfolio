@@ -6,7 +6,7 @@ const {
 
 const bot = new TelegramBot(botToken);
 
-module.exports = content =>
+module.exports = (content) =>
   bot.sendMessage(chatId, content, {
     parse_mode: 'Markdown',
   });

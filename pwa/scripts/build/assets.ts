@@ -9,7 +9,9 @@ export interface CopyTarget {
 
 const basePath = path.resolve(__dirname, '../..');
 
-export async function copyAssets(targets: readonly CopyTarget[]) {
+export async function copyAssets(
+  targets: readonly CopyTarget[],
+): Promise<void> {
   await Promise.all(
     targets.map(async ({ from, to }) => {
       const files = await globby(path.join(basePath, from), {
@@ -20,7 +22,7 @@ export async function copyAssets(targets: readonly CopyTarget[]) {
       const destinationPath = path.join(basePath, to);
 
       await Promise.all(
-        files.map(file =>
+        files.map((file) =>
           fs.copy(file, path.join(destinationPath, path.basename(file))),
         ),
       );
