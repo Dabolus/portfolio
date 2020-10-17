@@ -5,19 +5,21 @@
         <path fill="var(--theme-default-background)" filter="url(#t)" d="M0,10 l45,31 q5,4 10,0 l45,-31 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" />
       </svg>
       <div id="letter-content">
-        <div id="hi">Hi Giorgio,</div>
+        <div id="hi"><%= data.pages.contacts.hi %>,</div>
         <div class="full-width-input">
-          <span>I'm writing to you to talk about&nbsp;</span>
-          <input name="subject" placeholder="subject" title="Subject">
+          <span><%= data.pages.contacts.reason %>&nbsp;</span>
+          <input name="subject" placeholder="<%= data.pages.contacts.subject.toLowerCase() %>" title="<%= data.pages.contacts.subject %>">
         </div>
-        <textarea name="message" placeholder="Message" title="Message"></textarea>
+        <textarea name="message" placeholder="<%= data.pages.contacts.message %>" title="<%= data.pages.contacts.message %>"></textarea>
         <div class="full-width-input">
-          <span>You can contact me back at&nbsp;</span>
-          <input type="email" name="email" placeholder="email" title="Email">
+          <span><%= data.pages.contacts.contactMeBack %>&nbsp;</span>
+          <input type="email" name="email" placeholder="<%= data.pages.contacts.email.toLowerCase() %>" title="<%= data.pages.contacts.email %>">
         </div>
-        <div id="sincerely">Sincerely,</div>
-        <input name="name" placeholder="Name" title="Name">
-        <button class="g-recaptcha" data-sitekey="6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH" data-theme="dark" data-callback="__recaptchaCallback">Submit</button>
+        <div id="sincerely"><%= data.pages.contacts.sincerely %>,</div>
+        <input name="name" placeholder="<%= data.pages.contacts.name %>" title="<%= data.pages.contacts.name %>">
+        <button class="g-recaptcha" data-sitekey="6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH" data-theme="dark" data-callback="__recaptchaCallback">
+          <%= data.pages.contacts.submit %>
+        </button>
       </div>
       <svg id="letter" viewBox="0 0 100 80">
         <defs>
