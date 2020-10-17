@@ -31,7 +31,7 @@ export async function buildSitemap(
       (locs, locale) =>
         `${locs}<xhtml:link rel="alternate" hreflang="${locale}" href="${baseUrl}/${locale}${
           page === 'home' ? '' : `/${page}`
-        }}" />`,
+        }" />`,
       `<loc>${defaultLocalizedBaseUrl}${
         page === 'home' ? '' : `/${page}`
       }</loc><xhtml:link rel="alternate" hreflang="x-default" href="${defaultLocalizedBaseUrl}${
