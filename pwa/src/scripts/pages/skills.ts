@@ -21,6 +21,7 @@ interface LineData {
 }
 
 const skillToColor: Record<string, string> = {
+  // Languages
   TypeScript: '#2b7489',
   JavaScript: '#f1e05a',
   CSS: '#563d7c',
@@ -39,6 +40,25 @@ const skillToColor: Record<string, string> = {
   Java: '#b07219',
   Ruby: '#701516',
   PHP: '#4f5d95',
+
+  // Music
+  Guitar: '#6b4a37',
+  Piano: '#1c110f',
+  Drums: '#873134',
+  Voice: '#e5bace',
+  Ukulele: '#d95030',
+
+  // Soft skills
+  'Positive attitude': '#3b5695',
+  Flexibility: '#1f07ac',
+  Communication: '#51eda1',
+  Teamwork: '#844b1c',
+  Responsibility: '#ae545f',
+  Courtesy: '#4e0572',
+  Integrity: '#f29349',
+  'Interpersonal skills': '#528f0e',
+  'Work ethic': '#de4f8e',
+  Professionalism: '#f47edd',
 };
 
 const prettifySize = (bytes: number) => {
