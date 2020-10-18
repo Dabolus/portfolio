@@ -20,6 +20,27 @@ interface LineData {
   score: number;
 }
 
+const skillToColor: Record<string, string> = {
+  TypeScript: '#2b7489',
+  JavaScript: '#f1e05a',
+  CSS: '#563d7c',
+  SCSS: '#c6538c',
+  HTML: '#e34c26',
+  Less: '#1d365d',
+  Go: '#00add8',
+  Shell: '#89e051',
+  'C++': '#f34b7d',
+  Makefile: '#427819',
+  C: '#555',
+  'C#': '#178600',
+  Python: '#3572a5',
+  Rust: '#dea584',
+  Dockerfile: '#384d54',
+  Java: '#b07219',
+  Ruby: '#701516',
+  PHP: '#4f5d95',
+};
+
 const prettifySize = (bytes: number) => {
   const measurementUnits = ['B', 'kB', 'MB', 'GB'];
   let finalVal = bytes;
@@ -76,7 +97,7 @@ const computePie = (
   langSize.textContent = 'to see its stats.';
   label.appendChild(langSize);
 
-  data.forEach(({ name, size, color }) => {
+  data.forEach(({ name, size }) => {
     const a = 360 * (size / totalSize);
     const aCalc = a > 180 ? 360 - a : a;
     const aRad = (aCalc * Math.PI) / 180;
@@ -96,7 +117,7 @@ const computePie = (
     svgSector.setAttributeNS(
       null,
       'fill',
-      color || 'var(--theme-card-background)',
+      skillToColor[name] || 'var(--theme-card-background)',
     );
     svgSector.setAttributeNS(
       null,
@@ -107,6 +128,10 @@ const computePie = (
     svgSector.addEventListener('mouseenter', () => {
       langName.textContent = name;
       langSize.textContent = prettifySize(size);
+    });
+    svgSector.addEventListener('mouseleave', () => {
+      langName.textContent = 'Tap on a language';
+      langSize.textContent = 'to see its stats.';
     });
     svg.appendChild(svgSector);
 
@@ -122,19 +147,19 @@ const computePie = (
 const computeLineChart = (data: readonly LineData[], size = 100) => `
   <svg viewBox="0 0 ${size} ${data.length * 7 - 2}">
     ${data.reduce(
-      (lineChart, { name, score, color }, index) => `
+      (lineChart, { name, score }, index) => `
         ${lineChart}
         <text
           x="0"
           y="${index * 7 + 2.5}"
           dominant-baseline="middle"
           fill="var(--theme-color)"
-          font-size="5px"
+          font-size="4px"
         >
           ${name}
         </text>
         <rect
-          fill="${color || 'var(--theme-card-background)'}"
+          fill="${skillToColor[name] || 'var(--theme-card-background)'}"
           width="${(size / 3) * 2 * score}"
           height="5"
           x="${size / 3}"
@@ -147,23 +172,42 @@ const computeLineChart = (data: readonly LineData[], size = 100) => `
 `;
 
 const getSkills = async () => {
-  const res = await fetch('api/skills');
+  const res = await fetch(`${process.env.API_URL}/skills`);
   const skills: SkillsData = await res.json();
   return skills;
 };
 
 export const configure = async () => {
+  // TODO: use HTML strings instead of elements as done in other pages
+  const loadingContainer = document.querySelector<HTMLDivElement>(
+    '#skills > .loading-container',
+  );
+  const skillsContainer = document.querySelector<HTMLDivElement>(
+    '#skills > .skills-container',
+  );
+
   const {
     skills,
     bytes: { languages, total },
   } = await getSkills();
 
   const confidentLangsLineChart = computeLineChart(skills.coding);
+  const confidentMusicLineChart = computeLineChart(skills.music);
+  const confidentSoftSkillsLineChart = computeLineChart(skills.soft);
   const mostUsedLangsPie = computePie(languages, total);
   document.querySelector(
     '#most-confident-langs',
   ).innerHTML = confidentLangsLineChart;
   document.querySelector('#most-used-langs').appendChild(mostUsedLangsPie);
+  document.querySelector(
+    '#most-confident-music',
+  ).innerHTML = confidentMusicLineChart;
+  document.querySelector(
+    '#most-confident-soft-skills',
+  ).innerHTML = confidentSoftSkillsLineChart;
+
+  skillsContainer.hidden = false;
+  loadingContainer.hidden = true;
 };
 
 configure();
