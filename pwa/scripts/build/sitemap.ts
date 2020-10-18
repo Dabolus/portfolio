@@ -36,6 +36,8 @@ export async function buildSitemap(
         page === 'home' ? '' : `/${page}`
       }</loc><xhtml:link rel="alternate" hreflang="x-default" href="${defaultLocalizedBaseUrl}${
         page === 'home' ? '' : `/${page}`
+      }" /><xhtml:link rel="alternate" hreflang="en" href="${defaultLocalizedBaseUrl}${
+        page === 'home' ? '' : `/${page}`
       }" />`,
     );
 
