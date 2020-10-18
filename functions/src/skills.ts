@@ -18,9 +18,9 @@ const getFirebaseData = async () => {
   return docs.reduce(
     (skills, skillsSection) => ({
       ...skills,
-      [skillsSection.id]: Object.entries(skillsSection.data()).map(
-        ([name, score]) => ({ name, score }),
-      ),
+      [skillsSection.id]: Object.entries(skillsSection.data())
+        .map(([name, score]) => ({ name, score }))
+        .sort((a, b) => b.score - a.score),
     }),
     {},
   );
