@@ -85,6 +85,9 @@ const createBundle = async (
           production || process.env.ENABLE_DEV_SW
         )}`,
         'process.env.JS_DIR': modules ? "'module'" : "'nomodule'",
+        'process.env.API_URL': production
+          ? "'/api'"
+          : "'http://localhost:5000/api'",
       }),
       ...(production
         ? [
