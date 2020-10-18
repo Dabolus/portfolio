@@ -97,7 +97,7 @@ const computePie = (
   label.setAttributeNS(null, 'text-anchor', 'middle');
   label.setAttributeNS(null, 'dominant-baseline', 'middle');
   label.setAttributeNS(null, 'fill', 'var(--theme-color)');
-  label.setAttributeNS(null, 'font-size', '7px');
+  label.setAttributeNS(null, 'font-size', '6px');
 
   const langName = document.createElementNS(
     'http://www.w3.org/2000/svg',
@@ -105,7 +105,7 @@ const computePie = (
   );
   langName.setAttributeNS(null, 'x', `${size / 2}`);
   langName.setAttributeNS(null, 'dy', `-0.5em`);
-  langName.textContent = 'Tap on a language';
+  langName.textContent = 'Tap or hover a language';
   label.appendChild(langName);
 
   const langSize = document.createElementNS(
@@ -150,7 +150,7 @@ const computePie = (
       langSize.textContent = prettifySize(size);
     });
     svgSector.addEventListener('mouseleave', () => {
-      langName.textContent = 'Tap on a language';
+      langName.textContent = 'Tap or hover a language';
       langSize.textContent = 'to see its stats.';
     });
     svg.appendChild(svgSector);
