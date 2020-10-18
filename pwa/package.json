@@ -8,7 +8,7 @@
     "start": "yarn clean && cross-env NODE_ENV=development ts-node --transpile-only scripts/build && run-p browser-sync watch",
     "build": "yarn clean && cross-env NODE_ENV=production ts-node scripts/build",
     "watch": "cross-env NODE_ENV=development chokidar 'src/**/*' 'scripts/**/*' 'babel.config.js' 'tsconfig.json' -c 'ts-node --transpile-only scripts/build'",
-    "browser-sync": "browser-sync start -s dist -f 'dist/**/*' --no-notify",
+    "browser-sync": "browser-sync start -s dist -f 'dist/**/*' --extensions html --no-notify",
     "clean": "rm -rf dist/",
     "deploy": "firebase deploy"
   },
