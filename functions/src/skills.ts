@@ -41,7 +41,6 @@ const getGithubData = async () => {
                   languages(first: 100) {
                     edges {
                       node {
-                        color
                         name
                       }
                       size

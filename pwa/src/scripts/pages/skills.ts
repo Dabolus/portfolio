@@ -13,13 +13,11 @@ interface SkillsData {
 interface PieData {
   name: string;
   size: number;
-  color?: string;
 }
 
 interface LineData {
   name: string;
   score: number;
-  color?: string;
 }
 
 const prettifySize = (bytes: number) => {
