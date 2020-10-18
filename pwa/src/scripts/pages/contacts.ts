@@ -23,7 +23,7 @@ enum EmailError {
 
 window.__recaptchaCallback = async () => {
   try {
-    const res = await fetch('api/email', {
+    const res = await fetch(`${process.env.API_URL}/email`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

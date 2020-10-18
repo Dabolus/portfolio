@@ -18,7 +18,7 @@ interface Project {
 }
 
 const getProjects = async (): Promise<readonly Project[]> => {
-  const res = await fetch('api/projects');
+  const res = await fetch(`${process.env.API_URL}/projects`);
   return res.json();
 };
 
@@ -47,9 +47,9 @@ const configure = async () => {
           ${svg ? `<source srcset="${svg}" type="image/svg+xml">` : ''}
           ${webp ? `<source srcset="${webp}" type="image/webp">` : ''}
           ${jpg ? `<source srcset="${jpg}" type="image/jpeg">` : ''}
-          <img style="background-image: url(&quot;${placeholder}&quot;);" src="${jpg ||
-      webp ||
-      svg}" alt="${name}" title="${name}" loading="lazy" lazyload>
+          <img style="background-image: url(&quot;${placeholder}&quot;);" src="${
+      jpg || webp || svg
+    }" alt="${name}" title="${name}" loading="lazy" lazyload>
         </picture>
         <div>
           <div>
