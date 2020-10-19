@@ -1,4 +1,5 @@
 import { configureRouting } from './routing';
+import { setupTopBarAnimation } from './animation';
 
 const start = () => {
   if (process.env.ENABLE_DEV_SW && 'serviceWorker' in navigator) {
@@ -7,6 +8,7 @@ const start = () => {
     });
   }
   configureRouting();
+  setupTopBarAnimation();
 };
 
 if (

@@ -14,3 +14,14 @@ export const scroll = ({
     top: y,
   });
 };
+
+export const remToPx = (rem: number): number => {
+  const fontSize = Number(
+    window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue('font-size')
+      .slice(0, -2),
+  );
+
+  return rem * fontSize;
+};

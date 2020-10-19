@@ -26,12 +26,21 @@ portal,
   &[hidden] {
     transform: translateX(100vw);
   }
+}
 
-  > #header {
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.55rem;
+  background: var(--theme-content-background);
+  z-index: 5;
+
+  > div {
     display: flex;
     align-items: center;
     padding: 0.25rem;
-    height: 3.5rem;
 
     > #back {
       display: block;
@@ -46,19 +55,26 @@ portal,
       font-size: 1.25rem;
     }
   }
+}
+
+#content-container {
+  padding-top: 3.55rem;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   .content {
     width: 100%;
-    height: calc(100vh - 3.55rem);
+    min-height: 100%;
     margin: 0 auto;
-    overflow-x: hidden;
-    overflow-y: auto;
+    padding: 1rem;
 
     p {
       font-weight: 200;
     }
 
-    > .content-boundaries {
+    .content-boundaries {
       max-width: 28rem;
       margin: 0 auto;
     }
