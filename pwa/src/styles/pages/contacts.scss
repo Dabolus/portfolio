@@ -1,6 +1,23 @@
 .content#contacts {
   #contact-form {
     position: relative;
+    will-change: transform;
+    transition: 0.9s transform;
+    transition-delay: 0.5s;
+
+    > #sent-stamp {
+      position: absolute;
+      top: 13rem;
+      left: 6rem;
+      width: 6rem;
+      z-index: -1;
+      will-change: transform, opacity;
+      transition: 0.3s transform, 0.3s opacity;
+      transition-delay: 1.4s;
+      opacity: 0;
+      transform: scale(4);
+      transform-origin: 0.5rem 1rem;
+    }
 
     > #letter-zip {
       position: absolute;
@@ -8,10 +25,13 @@
       left: 0;
       width: 100%;
       max-width: 28rem;
-      will-change: transform;
+      pointer-events: none;
+      will-change: transform, z-index;
       transform-origin: top center;
       transform: rotateX(-180deg);
-      pointer-events: none;
+      transition: 1s transform, 0.2s z-index step-end;
+      transition-delay: 0.4s;
+      z-index: 0;
     }
 
     > #letter-content {
@@ -28,10 +48,11 @@
       border-bottom-right-radius: 0.7rem 7.3rem;
       border-top-left-radius: 4.5rem 0.9rem;
       border-top-right-radius: 0.4rem 7.3rem;
+      font-size: 0.9rem;
       will-change: transform;
       transform-origin: top center;
       transform: translateY(-12rem);
-      font-size: 0.9rem;
+      transition: 1s transform;
 
       input,
       textarea {
@@ -113,6 +134,25 @@
       width: 100%;
       margin-bottom: 1rem;
       pointer-events: none;
+    }
+
+    &.sent {
+      transform: translateY(-10rem);
+
+      > #sent-stamp {
+        opacity: 1;
+        transform: scale(1);
+        z-index: 2;
+      }
+
+      > #letter-zip {
+        transform: rotateX(0);
+        z-index: 1;
+      }
+
+      > #letter-content {
+        transform: translateY(0);
+      }
     }
   }
 }

@@ -40,7 +40,7 @@ window.__recaptchaCallback = async () => {
       ),
     });
     if (res.status === 204) {
-      contactForm.remove();
+      contactForm.className = 'sent';
       return;
     }
 
