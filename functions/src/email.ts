@@ -10,7 +10,7 @@ const {
   host,
   port,
   secure,
-  auth: { user, id: serviceClient, secret: privateKey },
+  auth: { user, id: clientId, secret: clientSecret, token: refreshToken },
 } = (functions.config() as RuntimeConfig).mail;
 
 const mailTransport = nodemailer.createTransport({
@@ -20,8 +20,9 @@ const mailTransport = nodemailer.createTransport({
   auth: {
     type: 'OAuth2',
     user,
-    serviceClient,
-    privateKey,
+    clientId,
+    clientSecret,
+    refreshToken,
   },
 });
 
@@ -84,7 +85,7 @@ const validateBody = ({
 const sanitize = (str: string) =>
   str.replace(
     /[&"'<>]/g,
-    char =>
+    (char) =>
       ({
         '&': '&amp;',
         '"': '&quot;',
