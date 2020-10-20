@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=/en">
+    </noscript>
+  </head>
+  <body>
+    <script>
+      var userLanguage = navigator.language.slice(0, 2);
+      location.replace('/' + (['en', 'it'].indexOf(userLanguage) >= 0 ? userLanguage : 'en'))
+    </script>
+  </body>
+</html>
