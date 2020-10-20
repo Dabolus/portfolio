@@ -1,7 +1,7 @@
 <div class="content" id="contacts" <%- data.page === 'contacts' ? '' : 'hidden' %>>
   <div class="content-boundaries">
     <form id="contact-form">
-      <img id="sent-stamp" src="images/sent.svg" alt="">
+      <img id="sent-stamp" src="images/sent.svg" alt="" loading="lazy">
       <svg id="letter-zip" viewBox="0 0 100 45">
         <path fill="var(--theme-default-background)" filter="url(#t)" d="M0,10 l45,31 q5,4 10,0 l45,-31 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" />
       </svg>
@@ -41,6 +41,24 @@
         <!-- <path fill="var(--theme-default-background)" filter="url(#s)" d="M0,10 l50,35 l50,-35 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" /> -->
         <path fill="var(--theme-default-background)" filter="url(#s)" d="M0,70 l45,-31 q5,-4 10,0 l45,31 l0,5 q0,5 -5,5 l-90,0 q-5,0 -5,-5 Z" />
       </svg>
+      <div id="socials">
+        <h6>P.S. you can also contact me on:</h6>
+        <a href="https://www.linkedin.com/in/giorgiogarasto/" title="LinkedIn" rel="external" target="linkedin" class="social">
+          <img src="images/socials/linkedin.svg" alt="LinkedIn" loading="lazy">
+        </a>
+        <a href="https://github.com/Dabolus" title="GitHub" rel="external" target="github" class="social">
+          <img src="images/socials/github.svg" alt="GitHub" loading="lazy">
+        </a>
+        <a href="https://twitter.com/Dabolus" title="Twitter" rel="external" target="twitter" class="social">
+          <img src="images/socials/twitter.svg" alt="Twitter" loading="lazy">
+        </a>
+        <a href="https://www.facebook.com/giorgio.garasto" title="Facebook" rel="external" target="facebook" class="social">
+          <img src="images/socials/facebook.svg" alt="Facebook" loading="lazy">
+        </a>
+        <a href="https://t.me/Dabolus" title="Telegram" rel="external" target="telegram" class="social">
+          <img src="images/socials/telegram.svg" alt="Telegram" loading="lazy">
+        </a>
+      </div>
     </form>
   </div>
 </div>
