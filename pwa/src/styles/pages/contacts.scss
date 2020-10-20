@@ -11,6 +11,7 @@
       top: 13rem;
       left: 6rem;
       width: 6rem;
+      height: 6rem;
       z-index: -1;
       will-change: transform, opacity;
       transition: 0.3s transform, 0.3s opacity;
@@ -140,10 +141,18 @@
 
     > #socials {
       position: absolute;
-      top: 26.5rem;
+      top: 23.5rem;
       left: 0;
       width: 100%;
       text-align: center;
+
+      @media (min-width: 26.25rem) {
+        top: 25rem;
+      }
+
+      @media (min-width: 47.5rem) {
+        top: 26.5rem;
+      }
 
       > a {
         display: inline-block;

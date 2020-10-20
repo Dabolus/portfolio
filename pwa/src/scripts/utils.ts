@@ -25,3 +25,26 @@ export const remToPx = (rem: number): number => {
 
   return rem * fontSize;
 };
+
+const scriptsPromiseCache = new Map<string, Promise<unknown>>();
+
+export const importIIFE = (src: string) => {
+  const cachedScriptPromise = scriptsPromiseCache.get(src);
+
+  if (cachedScriptPromise) {
+    return cachedScriptPromise;
+  }
+
+  const scriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.defer = true;
+    script.addEventListener('load', resolve, { once: true });
+    script.addEventListener('error', reject, { once: true });
+    document.head.appendChild(script);
+  });
+
+  scriptsPromiseCache.set(src, scriptPromise);
+
+  return scriptPromise;
+};

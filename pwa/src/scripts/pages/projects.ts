@@ -49,7 +49,7 @@ const configure = async () => {
           ${jpg ? `<source srcset="${jpg}" type="image/jpeg">` : ''}
           <img style="background-image: url(&quot;${placeholder}&quot;);" src="${
       jpg || webp || svg
-    }" alt="${name}" title="${name}" loading="lazy" lazyload>
+    }" alt="${name}" title="${name}" width="112" height="112" loading="lazy" lazyload>
         </picture>
         <div>
           <div>

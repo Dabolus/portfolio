@@ -1,3 +1,5 @@
+import { importIIFE } from '../utils';
+
 const contactForm = document.querySelector<HTMLFormElement>('#contact-form');
 
 interface FormContent {
@@ -51,6 +53,17 @@ window.__recaptchaCallback = async () => {
   }
 };
 
-const configure = async () => {};
+const configure = async () => {
+  document
+    .querySelector<HTMLFormElement>('#contact-form')
+    .addEventListener(
+      'mouseenter',
+      () => importIIFE('https://www.google.com/recaptcha/api.js'),
+      {
+        once: true,
+        passive: true,
+      },
+    );
+};
 
 configure();

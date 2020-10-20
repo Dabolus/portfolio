@@ -11,7 +11,7 @@
         "prefix": "Un",
         "strings": [
           "Ingegnere del Software",
-          "<span>Mobile Web Specialist certificato&nbsp;</span><img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\">",
+          "<span>Mobile Web Specialist certificato&nbsp;</span><img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\" width=\"21\" height=\"21\">",
           "Tecnico Cloud",
           "Developer Advocate",
           "Grafico (più o meno)",

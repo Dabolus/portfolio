@@ -11,7 +11,7 @@
         "prefix": "A",
         "strings": [
           "Software Engineer",
-          "<img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\"><span>&nbsp;Certified Mobile Web Specialist</span>",
+          "<img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\" width=\"21\" height=\"21\"><span>&nbsp;Certified Mobile Web Specialist</span>",
           "Cloud Technician",
           "Developer Advocate",
           "Graphic Designer (sort of)",
