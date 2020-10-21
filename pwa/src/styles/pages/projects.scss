@@ -68,20 +68,6 @@
 
     > ul {
       flex: 0 0 auto;
-      margin: 0;
-      padding: 0 0.75rem 0.4rem;
-      list-style: none;
-      white-space: nowrap;
-      max-width: 100%;
-      overflow-x: auto;
-
-      > li {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.75rem;
-        background: var(--theme-content-background);
-        border-radius: 0.75rem;
-        display: inline-block;
-      }
     }
   }
 }

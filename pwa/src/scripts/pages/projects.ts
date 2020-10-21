@@ -54,7 +54,7 @@ const configure = async () => {
           </div>
         </div>
         <p>${description}</p>
-        <ul>
+        <ul class="badges">
           ${technologies.reduce(
             (technologiesHtml, technology) => `
             ${technologiesHtml}

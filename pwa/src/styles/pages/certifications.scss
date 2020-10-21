@@ -1,0 +1,42 @@
+.content#certifications {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.certification {
+  background: var(--theme-card-background);
+  width: 16rem;
+  margin: 1rem;
+  color: var(--theme-color);
+  will-change: transform;
+  transition: 0.3s transform;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 16rem;
+    height: 16rem;
+    object-fit: cover;
+  }
+
+  > h3 {
+    text-align: center;
+    margin: 0 0.5rem 0.5rem;
+  }
+
+  @media (min-width: 47.5rem) {
+    width: 10rem;
+
+    img {
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+}
