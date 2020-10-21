@@ -12,6 +12,7 @@ const placeholderHeight = 256;
 
 let bucket: Bucket;
 let projectsCollection: CollectionReference;
+let certificationsCollection: CollectionReference;
 let svgOptimizer: SVGO;
 
 const optimize = async (svg: string): Promise<string> => {
@@ -58,6 +59,7 @@ const postProcess = (svg: string): string => {
 
 const generateWebp = async (
   sharpInstance: Sharp,
+  entity: string,
   name: string,
   bucket: Bucket,
 ) => {
@@ -68,7 +70,7 @@ const generateWebp = async (
       quality: 100,
     })
     .toBuffer();
-  await bucket.file(`projects/${name}.webp`).save(webpBuffer, {
+  await bucket.file(`${entity}/${name}.webp`).save(webpBuffer, {
     contentType: 'image/webp',
   });
 };
@@ -94,7 +96,28 @@ const generatePlaceholder = async (
   return postProcess(optimizedSVG);
 };
 
-export const processProjectImage = functions.storage
+const getCollection = (entity: string) => {
+  switch (entity) {
+    case 'projects':
+      if (!projectsCollection) {
+        projectsCollection = admin.firestore().collection('projects');
+      }
+
+      return projectsCollection;
+    case 'certifications':
+      if (!certificationsCollection) {
+        certificationsCollection = admin
+          .firestore()
+          .collection('certifications');
+      }
+
+      return certificationsCollection;
+    default:
+      throw new Error('Invalid entity');
+  }
+};
+
+export const processImage = functions.storage
   .object()
   .onFinalize(async ({ name = '', contentType = '' }) => {
     if (!name || !contentType) {
@@ -102,26 +125,32 @@ export const processProjectImage = functions.storage
       return;
     }
 
-    // We expect the file name to be the same as the ID of our project ID on Firestore
-    const match = name.match(/^projects\/([a-zA-Z\d-]+)\.jpg$/);
+    // We expect the file name to be the same as the ID of our project/certification ID on Firestore
+    const match = name.match(
+      /^(projects|certifications)\/([a-zA-Z\d-]+)\.jpg$/,
+    );
+
     if (!match) {
       process.stdout.write(
-        'Uploaded image is not a project image, ignoring it.\n',
+        'Uploaded image is not a project or a certification image, ignoring it.\n',
       );
       return;
     }
-    const [, projectId] = match;
+
+    const [, entity, id] = match;
     process.stdout.write(
-      `Generating thumbnail for project '${projectId}'...\n`,
+      `Generating thumbnail for ${entity.slice(0, -1)} '${id}'...\n`,
     );
 
-    if (!bucket || !projectsCollection) {
+    if (!bucket) {
       try {
         admin.initializeApp(functions.config().firebase);
       } catch {}
+
       bucket = admin.storage().bucket();
-      projectsCollection = admin.firestore().collection('projects');
     }
+
+    const collection = getCollection(entity);
 
     process.stdout.write('Downloading image...\n');
     const [buffer] = await bucket.file(name).download();
@@ -129,15 +158,15 @@ export const processProjectImage = functions.storage
     const secondSharpInstance = firstSharpInstance.clone();
     const [placeholder] = await Promise.all([
       generatePlaceholder(secondSharpInstance, contentType),
-      generateWebp(firstSharpInstance, projectId, bucket),
+      generateWebp(firstSharpInstance, entity, id, bucket),
     ]);
 
     process.stdout.write('Saving icon URL and thumbnail to Firestore...\n');
-    await projectsCollection.doc(projectId).set(
+    await collection.doc(id).set(
       {
         icon: {
-          jpg: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects%2F${projectId}.jpg?alt=media`,
-          webp: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/projects%2F${projectId}.webp?alt=media`,
+          jpg: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${entity}%2F${id}.jpg?alt=media`,
+          webp: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${entity}%2F${id}.webp?alt=media`,
           placeholder,
         },
       },
