@@ -2,92 +2,85 @@
   padding: 0;
 }
 
-.projects-container {
+.project {
   width: 100%;
-  display: grid;
-  grid-template-rows: 1fr;
-  gap: 0;
+  height: 7rem;
+  background-color: var(--theme-card-background);
+  border-bottom: 0.12rem solid rgba($theme-black, 0.12);
 
-  > .project {
-    width: 100%;
+  img {
+    width: 7rem;
     height: 7rem;
-    background-color: var(--theme-card-background);
-    border-bottom: 0.12rem solid rgba($theme-black, 0.12);
+    object-fit: cover;
+    float: left;
+  }
 
-    img {
-      width: 7rem;
-      height: 7rem;
-      object-fit: cover;
-      float: left;
-    }
+  > div {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 7rem);
+    height: 7rem;
 
     > div {
-      float: left;
+      flex: 0 0 auto;
+      width: 100%;
+      padding: 0.5rem 0.75rem 0;
       display: flex;
-      flex-direction: column;
-      width: calc(100% - 7rem);
-      height: 7rem;
+      justify-content: space-between;
+
+      > h3 {
+        font-size: 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: 0;
+      }
 
       > div {
-        flex: 0 0 auto;
-        width: 100%;
-        padding: 0.5rem 0.75rem 0;
-        display: flex;
-        justify-content: space-between;
+        width: 2.3rem;
+        height: 1rem;
+        display: inline-block;
+        text-align: right;
 
-        > h3 {
-          font-size: 1rem;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          margin: 0;
-        }
+        > a {
+          text-decoration: none;
 
-        > div {
-          width: 2.3rem;
-          height: 1rem;
-          display: inline-block;
-          text-align: right;
-
-          > a {
-            text-decoration: none;
-
-            &,
-            & svg {
-              width: 1rem;
-              height: 1rem;
-            }
-          }
-
-          &:last-child {
-            margin-left: 0.3rem;
+          &,
+          & svg {
+            width: 1rem;
+            height: 1rem;
           }
         }
-      }
 
-      > p {
-        flex: 1 1 auto;
-        font-size: 0.9rem;
-        padding: 0 0.75rem 0.4rem;
-        margin: 0;
-      }
-
-      > ul {
-        flex: 0 0 auto;
-        margin: 0;
-        padding: 0 0.75rem 0.4rem;
-        list-style: none;
-        white-space: nowrap;
-        max-width: 100%;
-        overflow-x: auto;
-
-        > li {
-          font-size: 0.75rem;
-          padding: 0.25rem 0.75rem;
-          background: var(--theme-content-background);
-          border-radius: 0.75rem;
-          display: inline-block;
+        &:last-child {
+          margin-left: 0.3rem;
         }
+      }
+    }
+
+    > p {
+      flex: 1 1 auto;
+      font-size: 0.9rem;
+      padding: 0 0.75rem 0.4rem;
+      margin: 0;
+    }
+
+    > ul {
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0 0.75rem 0.4rem;
+      list-style: none;
+      white-space: nowrap;
+      max-width: 100%;
+      overflow-x: auto;
+
+      > li {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        background: var(--theme-content-background);
+        border-radius: 0.75rem;
+        display: inline-block;
       }
     }
   }
