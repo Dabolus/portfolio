@@ -16,18 +16,18 @@ document
   .querySelector<HTMLAnchorElement>('#since-2004-link')
   .addEventListener('focus', () => scroll({ val: 0 }));
 document
-  .querySelectorAll<HTMLAnchorElement>('#menu > a:not([rel="external"])')
-  .forEach(link => link.addEventListener('focus', () => scroll()));
+  .querySelectorAll<HTMLAnchorElement>('#menu a:not([rel="external"])')
+  .forEach((link) => link.addEventListener('focus', () => scroll()));
 
 if ('HTMLPortalElement' in window) {
   document
-    .querySelectorAll<HTMLAnchorElement>('#menu > a[rel="external"]')
-    .forEach(externalLink => {
+    .querySelectorAll<HTMLAnchorElement>('#menu a[rel="external"]')
+    .forEach((externalLink) => {
       const portal = document.querySelector<HTMLPortalElement>(
         `portal#${externalLink.id}-portal`,
       );
 
-      externalLink.addEventListener('click', e => {
+      externalLink.addEventListener('click', (e) => {
         e.preventDefault();
         portal.addEventListener('transitionend', () => portal.activate(), {
           once: true,

@@ -56,7 +56,7 @@
       height: 1.3rem;
     }
 
-    > #strings {
+    > #strings-container {
       position: fixed;
       top: -9999rem;
     }
@@ -73,125 +73,139 @@
   }
 
   > #menu {
-    background: var(--theme-default-background);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-    display: grid;
-    gap: 1rem;
-    grid: repeat(6, 1fr) / 1fr;
+    background: var(--theme-default-background);
 
-    @media (min-width: 26.25rem) {
-      grid: repeat(3, 1fr) / repeat(2, 1fr);
-    }
+    > ul {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
 
-    @media (min-width: 47.5rem) {
-      grid: repeat(2, 1fr) / repeat(3, 1fr);
-    }
+      list-style: none;
+      display: grid;
+      gap: 1rem;
+      grid: repeat(6, 1fr) / 1fr;
 
-    @media (min-width: 160rem) {
-      grid: 1fr / repeat(6, 1fr);
-    }
-
-    > a {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border-radius: 0.25rem;
-      text-decoration: none;
-      color: var(--theme-color);
-      background: var(--theme-content-background);
-      box-shadow: 0 0.06rem 0.065rem 0 rgba($theme-black, 0.14) inset,
-        0 0.003rem 0.15rem 0 rgba($theme-black, 0.12) inset,
-        0 0.09rem 0.0035rem -0.065rem rgba($theme-black, 0.2) inset;
-      will-change: box-shadow;
-      transition: 0.3s box-shadow;
-
-      > span {
-        text-align: center;
-        font-size: 1.2rem;
-        will-change: transform;
-        transition: 0.3s transform;
-        transition-delay: 0.9s;
-
-        > svg {
-          width: 24px;
-          height: 24px;
-          color: var(--theme-accent);
-        }
+      @media (min-width: 26.25rem) {
+        grid: repeat(3, 1fr) / repeat(2, 1fr);
       }
 
-      > svg {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        max-width: 30%;
-        max-height: 50%;
-        transform: translateX(-50%);
-        fill: transparent;
-        stroke-width: 0.3px;
-        will-change: stroke-dashoffset;
-        transition: 1s stroke-dashoffset linear;
-        transition-delay: 0s;
+      @media (min-width: 47.5rem) {
+        grid: repeat(2, 1fr) / repeat(3, 1fr);
       }
 
-      &#about-link svg {
-        stroke: var(--theme-blue);
-        stroke-dasharray: 135.098876953125px;
-        stroke-dashoffset: 135.098876953125px;
+      @media (min-width: 160rem) {
+        grid: 1fr / repeat(6, 1fr);
       }
 
-      &#projects-link svg {
-        stroke: var(--theme-green);
-        stroke-dasharray: 208.56814575195312px;
-        stroke-dashoffset: 208.56814575195312px;
-      }
+      > li {
+        > a {
+          width: 100%;
+          height: 100%;
 
-      &#certifications-link svg {
-        stroke: var(--theme-yellow);
-        stroke-dasharray: 156.8944091796875px;
-        stroke-dashoffset: 156.8944091796875px;
-      }
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          border-radius: 0.25rem;
+          text-decoration: none;
+          color: var(--theme-color);
+          background: var(--theme-content-background);
+          box-shadow: 0 0.06rem 0.065rem 0 rgba($theme-black, 0.14) inset,
+            0 0.003rem 0.15rem 0 rgba($theme-black, 0.12) inset,
+            0 0.09rem 0.0035rem -0.065rem rgba($theme-black, 0.2) inset;
+          will-change: box-shadow;
+          transition: 0.3s box-shadow;
 
-      &#contacts-link svg {
-        stroke: var(--theme-brown);
-        stroke-dasharray: 126.3226547241211px;
-        stroke-dashoffset: 126.3226547241211px;
-      }
+          > span {
+            text-align: center;
+            font-size: 1.2rem;
+            will-change: transform;
+            transition: 0.3s transform;
+            transition-delay: 0.9s;
 
-      &#skills-link svg {
-        stroke: var(--theme-pink);
-        stroke-dasharray: 170.42433166503906px;
-        stroke-dashoffset: 170.42433166503906px;
-      }
-
-      &#blog-link svg {
-        stroke: var(--theme-teal);
-        stroke-dasharray: 151.0829620361328;
-        stroke-dashoffset: 151.0829620361328;
-      }
-
-      &:hover,
-      &:focus {
-        box-shadow: none;
-
-        > span {
-          transition-delay: 0s;
-          transform: translateY(-1.5rem);
-
-          @media (min-width: 26.25rem) {
-            transform: translateY(-3rem);
+            > svg {
+              width: 24px;
+              height: 24px;
+              color: var(--theme-accent);
+            }
           }
-        }
 
-        > svg {
-          transition-delay: 0.1s !important;
-          stroke-dashoffset: 0 !important;
+          > svg {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            max-width: 30%;
+            max-height: 50%;
+            transform: translateX(-50%);
+            fill: transparent;
+            stroke-width: 0.3px;
+            will-change: stroke-dashoffset;
+            transition: 1s stroke-dashoffset linear;
+            transition-delay: 0s;
+          }
+
+          &#about-link svg {
+            stroke: var(--theme-blue);
+            stroke-dasharray: 135.098876953125px;
+            stroke-dashoffset: 135.098876953125px;
+          }
+
+          &#projects-link svg {
+            stroke: var(--theme-green);
+            stroke-dasharray: 208.56814575195312px;
+            stroke-dashoffset: 208.56814575195312px;
+          }
+
+          &#certifications-link svg {
+            stroke: var(--theme-yellow);
+            stroke-dasharray: 156.8944091796875px;
+            stroke-dashoffset: 156.8944091796875px;
+          }
+
+          &#contacts-link svg {
+            stroke: var(--theme-brown);
+            stroke-dasharray: 126.3226547241211px;
+            stroke-dashoffset: 126.3226547241211px;
+          }
+
+          &#skills-link svg {
+            stroke: var(--theme-pink);
+            stroke-dasharray: 170.42433166503906px;
+            stroke-dashoffset: 170.42433166503906px;
+          }
+
+          &#blog-link svg {
+            stroke: var(--theme-teal);
+            stroke-dasharray: 151.0829620361328;
+            stroke-dashoffset: 151.0829620361328;
+          }
+
+          &:hover,
+          &:focus {
+            box-shadow: none;
+
+            > span {
+              transition-delay: 0s;
+              transform: translateY(-1.5rem);
+
+              @media (min-width: 26.25rem) {
+                transform: translateY(-3rem);
+              }
+            }
+
+            > svg {
+              transition-delay: 0.1s !important;
+              stroke-dashoffset: 0 !important;
+            }
+          }
         }
       }
     }
