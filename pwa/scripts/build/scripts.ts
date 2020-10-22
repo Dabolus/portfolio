@@ -1,4 +1,5 @@
 /// <reference types="./typings" />
+import { promises as fs } from 'fs';
 import path from 'path';
 import { rollup } from 'rollup';
 import resolve from 'rollup-plugin-node-resolve';
@@ -9,7 +10,39 @@ import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { Data } from './models';
 
+export interface BuildScriptsOptions {
+  readonly data: Data;
+  readonly production: boolean;
+}
+
+export interface BuildScriptsOutputBundle {
+  readonly main: string;
+  readonly utils: string;
+  readonly home: string;
+  readonly about: string;
+  readonly certifications: string;
+  readonly contacts: string;
+  readonly projects: string;
+  readonly skills: string;
+}
+
+export interface BuildScriptsOutput {
+  readonly module: BuildScriptsOutputBundle;
+  readonly nomodule: BuildScriptsOutputBundle;
+}
+
 const scriptsPath = path.resolve(__dirname, '../../src/scripts');
+
+const pathToPageMap: Record<string, keyof BuildScriptsOutputBundle> = {
+  main: 'main',
+  utils: 'utils',
+  'pages/home': 'home',
+  'pages/about': 'about',
+  'pages/certifications': 'certifications',
+  'pages/contacts': 'contacts',
+  'pages/projects': 'projects',
+  'pages/skills': 'skills',
+};
 
 const babel = ({ modules }: { modules: boolean }) =>
   rollupBabel({
@@ -39,7 +72,7 @@ const babel = ({ modules }: { modules: boolean }) =>
 const createBundle = async (
   outputPath: string,
   { production, modules }: { production: boolean; modules: boolean },
-) => {
+): Promise<BuildScriptsOutputBundle> => {
   const rollupBuild = await rollup({
     input: {
       main: path.join(scriptsPath, 'main.ts'),
@@ -88,6 +121,7 @@ const createBundle = async (
         'process.env.API_URL': production
           ? "'/api'"
           : "'http://localhost:5000/api'",
+        'process.env.AAA': '',
       }),
       ...(production
         ? [
@@ -121,9 +155,10 @@ const createBundle = async (
     ],
   });
 
-  await rollupBuild.write({
+  const { output } = await rollupBuild.write({
     esModule: modules,
-    chunkFileNames: '[name].js',
+    entryFileNames: '[name].[hash].js',
+    chunkFileNames: '[name].[hash].js',
     ...(modules
       ? {
           format: 'esm',
@@ -134,19 +169,48 @@ const createBundle = async (
           dir: path.join(outputPath, 'nomodule'),
         }),
   });
-};
 
-export interface BuildScriptsOptions {
-  readonly data: Data;
-  readonly production: boolean;
-}
+  const result = (Object.fromEntries(
+    output
+      .filter(({ name }) => name in pathToPageMap)
+      .map(({ name, fileName }) => [
+        pathToPageMap[name] || name,
+        `${modules ? 'module' : 'nomodule'}/${fileName}`,
+      ]),
+  ) as unknown) as BuildScriptsOutputBundle;
+
+  const mainOutput = await fs.readFile(
+    path.join(outputPath, result.main),
+    'utf8',
+  );
+
+  const replacedOutput = mainOutput.replace(
+    /process\.env\.(\w+)_OUTPUT/g,
+    (_, id) => {
+      const outputPath =
+        result[id.toLowerCase() as keyof BuildScriptsOutputBundle];
+
+      return `'${outputPath.slice(outputPath.lastIndexOf('/') + 1, -3)}'`;
+    },
+  );
+
+  await fs.writeFile(
+    path.join(outputPath, result.main),
+    replacedOutput,
+    'utf8',
+  );
+
+  return result;
+};
 
 export async function buildScripts(
   outputPath: string,
   { production }: BuildScriptsOptions,
-): Promise<void> {
-  await Promise.all([
+): Promise<BuildScriptsOutput> {
+  const [module, nomodule] = await Promise.all([
     createBundle(outputPath, { production, modules: true }),
     createBundle(outputPath, { production, modules: false }),
   ]);
+
+  return { module, nomodule };
 }

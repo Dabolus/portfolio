@@ -16,20 +16,20 @@
 </script>
 <script defer src="https://www.google-analytics.com/analytics.js"></script>
 <script defer>
-  import('./module/main.js');
+  import('./<%= output.scripts.module.main %>');
   window.supportsDynamicImport = true;
-  window.preload('module/utils.js', 'script');
-  window.preload('module/pages/<%= data.page %>.js', 'script');
+  window.preload('<%= output.scripts.module.utils %>', 'script');
+  window.preload('<%= output.scripts.module[data.page] %>', 'script');
 </script>
 <script defer>
   if (!window.supportsDynamicImport) {
-    window.preload('nomodule/utils.js', 'script');
-    window.preload('nomodule/pages/<%= data.page %>.js', 'script');
+    window.preload('<%= output.scripts.nomodule.utils %>', 'script');
+    window.preload('<%= output.scripts.nomodule[data.page] %>', 'script');
     const systemJsLoaderTag = document.createElement('script');
     systemJsLoaderTag.src = 's<%= production ? '.min' : '' %>.js';
-    systemJsLoaderTag.addEventListener('load', () => System.import('./nomodule/main.js'), { once: true });
+    systemJsLoaderTag.addEventListener('load', () => System.import('./<%= output.scripts.nomodule.main %>'), { once: true });
     document.head.appendChild(systemJsLoaderTag);
   }
 </script>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="<%= output.styles.main %>">
 <link rel="preconnect" href="https://www.google-analytics.com">

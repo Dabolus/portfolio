@@ -1,3 +1,6 @@
+import { BuildScriptsOutput } from './scripts';
+import { BuildStylesOutput } from './styles';
+
 export type Locale = 'en';
 
 export interface Page {
@@ -14,6 +17,7 @@ export interface BaseData {
 export interface PageData {
   readonly locale: Locale;
   readonly production: boolean;
+  readonly output: Output;
   readonly data: BaseData &
     Omit<Page, 'id'> & { readonly page: string; readonly age: string };
 }
@@ -29,4 +33,9 @@ export interface LocaleDataModule {
 export interface Data {
   readonly locale: Locale;
   readonly data: LocaleData;
+}
+
+export interface Output {
+  readonly scripts: BuildScriptsOutput;
+  readonly styles: BuildStylesOutput;
 }

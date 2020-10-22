@@ -4,7 +4,7 @@ import { render as renderTemplate } from 'ejs';
 import { minify as minifyTemplate } from 'html-minifier';
 import type { MinifyOutput } from 'terser';
 import syncRpc from 'sync-rpc';
-import { Data, PageData } from './models';
+import { Data, Output, PageData } from './models';
 
 const minifyScript: (code: string) => MinifyOutput = syncRpc(
   path.resolve(__dirname, '../helpers/minify.js'),
@@ -17,6 +17,7 @@ const templatePromise = fs
 
 export interface BuildTemplateOptions {
   readonly data: Data;
+  readonly output: Output;
   readonly production: boolean;
 }
 
@@ -68,7 +69,7 @@ const compileTemplate = async (
 
 export async function buildTemplate(
   outputDir: string,
-  { data, production }: BuildTemplateOptions,
+  { data, output, production }: BuildTemplateOptions,
 ): Promise<void> {
   const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
   const yearLength = 31556926000; // 1 year (365 days, 5 hours, 48 minutes, and 46 seconds)
@@ -84,6 +85,7 @@ export async function buildTemplate(
     ([page, pageData]) => ({
       locale: data.locale,
       production,
+      output,
       data: {
         page,
         age,

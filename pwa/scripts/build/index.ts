@@ -34,13 +34,7 @@ const build = async () => {
     ({ locale }) => locale === defaultLocale,
   );
 
-  await Promise.all([
-    ...localesData.map((data) =>
-      buildTemplate(path.resolve(outputPath, data.locale), {
-        data,
-        production,
-      }),
-    ),
+  const [scripts, styles] = await Promise.all([
     buildScripts(outputPath, { production, data: defaultData }),
     buildStyles(outputPath, { data: {} }),
     buildSitemap(outputPath, {
@@ -63,6 +57,17 @@ const build = async () => {
       },
     ]),
   ]);
+
+  await Promise.all(
+    localesData.map((data) =>
+      buildTemplate(path.resolve(outputPath, data.locale), {
+        data,
+        output: { scripts, styles },
+        production,
+      }),
+    ),
+  );
+
   await generateServiceWorkers(outputPath, defaultLocale);
 };
 

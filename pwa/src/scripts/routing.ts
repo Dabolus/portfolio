@@ -1,6 +1,15 @@
 import { installRouter, updateMetadata } from 'pwa-helpers';
 import { scroll } from './utils';
 
+const pageToPathMap: Record<string, string> = {
+  home: process.env.HOME_OUTPUT,
+  about: process.env.ABOUT_OUTPUT,
+  certifications: process.env.CERTIFICATIONS_OUTPUT,
+  contacts: process.env.CONTACTS_OUTPUT,
+  projects: process.env.PROJECTS_OUTPUT,
+  skills: process.env.SKILLS_OUTPUT,
+};
+
 export const configureRouting = () => {
   interface PageModule {
     onPageLoad?: () => void;
@@ -75,7 +84,7 @@ export const configureRouting = () => {
       return;
     }
     if (!pages[path].module) {
-      pages[path].module = import(`./pages/${path}.js`);
+      pages[path].module = import(`./pages/${pageToPathMap[path]}.js`);
     }
     pages[path].module.then(async ({ onPageLoad }) => {
       pages[path].configured = true;

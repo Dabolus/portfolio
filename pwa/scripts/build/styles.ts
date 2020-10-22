@@ -7,6 +7,12 @@ import postcssPresetEnv from 'postcss-preset-env';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 
+import { hash } from '../helpers/hash';
+
+export interface BuildStylesOutput {
+  readonly main: string;
+}
+
 const postcssInstance = postcss([
   postcssSass(),
   postcssPresetEnv(),
@@ -49,7 +55,7 @@ export interface BuildStylesOptions {
 export async function buildStyles(
   outputDir: string,
   { data }: BuildStylesOptions,
-): Promise<void> {
+): Promise<BuildStylesOutput> {
   const { css: postprocessedStyles } = await postcssInstance.process(
     injectData('./main.scss', data),
     {
@@ -59,8 +65,12 @@ export async function buildStyles(
     },
   );
 
-  const outputPath = path.join(outputDir, 'styles.css');
+  const stylesFile = `main.${hash(postprocessedStyles)}.css`;
+
+  const outputPath = path.join(outputDir, stylesFile);
 
   await fs.mkdir(outputDir, { recursive: true });
   await fs.writeFile(outputPath, postprocessedStyles);
+
+  return { main: stylesFile };
 }
