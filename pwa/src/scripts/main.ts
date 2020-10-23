@@ -1,12 +1,9 @@
+import { registerServiceWorker } from './utils';
 import { configureRouting } from './routing';
 import { setupTopBarAnimation } from './animation';
 
-const start = () => {
-  if (process.env.ENABLE_DEV_SW && 'serviceWorker' in navigator) {
-    navigator.serviceWorker.register(`${process.env.JS_DIR}/sw.js`, {
-      scope: '/',
-    });
-  }
+const start = async () => {
+  registerServiceWorker({ onUpdate: () => window.location.reload() });
   configureRouting();
   setupTopBarAnimation();
 };

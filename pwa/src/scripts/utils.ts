@@ -73,3 +73,34 @@ export const generatePicture = (
 }>
   </picture>
 `;
+
+export interface RegisterServiceWorkerOptions {
+  onUpdate?(): unknown;
+}
+
+export const registerServiceWorker = async ({
+  onUpdate,
+}: RegisterServiceWorkerOptions = {}) => {
+  if (process.env.ENABLE_DEV_SW && 'serviceWorker' in navigator) {
+    const registration = await navigator.serviceWorker.register(
+      `${process.env.JS_DIR}/sw.js`,
+      {
+        scope: '/',
+      },
+    );
+
+    if (registration.waiting) {
+      onUpdate?.();
+    }
+
+    registration.addEventListener('updatefound', () => {
+      const installingWorker = registration.installing;
+
+      installingWorker.addEventListener('statechange', () => {
+        if (navigator.serviceWorker.controller) {
+          onUpdate?.();
+        }
+      });
+    });
+  }
+};
