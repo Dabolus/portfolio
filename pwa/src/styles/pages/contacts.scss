@@ -85,16 +85,28 @@
       }
 
       #hi {
-        margin-bottom: 0.9rem;
+        margin-bottom: 0.6rem;
+
+        @media (min-width: 26.25rem) {
+          margin-bottom: 0.9rem;
+        }
       }
 
       #sincerely {
-        margin-top: 0.9rem;
+        margin-top: 0.6rem;
+
+        @media (min-width: 26.25rem) {
+          margin-top: 0.9rem;
+        }
       }
 
       textarea[name='message'] {
         width: 100%;
-        height: 4em;
+        height: 3em;
+
+        @media (min-width: 26.25rem) {
+          height: 4rem;
+        }
       }
 
       input[name='name'] {
