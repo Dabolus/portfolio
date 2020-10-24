@@ -132,7 +132,14 @@ const start = async () => {
       }, 950),
     );
 
-  bs.init({ server: 'dist', open: false, notify: false });
+  bs.init({
+    server: {
+      baseDir: 'dist',
+      serveStaticOptions: { extensions: ['html'] },
+    },
+    open: false,
+    notify: false,
+  });
 
   chokidar.watch('dist/**/*.css', { cwd }).on(
     'all',
