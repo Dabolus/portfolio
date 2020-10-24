@@ -1,4 +1,4 @@
-/// <reference types="./typings" />
+/// <reference types="../typings" />
 import { promises as fs } from 'fs';
 import path from 'path';
 import postcss from 'postcss';
@@ -49,12 +49,13 @@ const injectData = (filePath: string, data: Record<string, unknown>): string =>
   `${generateSassVariables(data)}\n@import '${filePath}';`;
 
 export interface BuildStylesOptions {
+  readonly production: boolean;
   readonly data: Record<string, unknown>;
 }
 
 export async function buildStyles(
   outputDir: string,
-  { data }: BuildStylesOptions,
+  { production, data }: BuildStylesOptions,
 ): Promise<BuildStylesOutput> {
   const { css: postprocessedStyles } = await postcssInstance.process(
     injectData('./main.scss', data),
@@ -65,7 +66,9 @@ export async function buildStyles(
     },
   );
 
-  const stylesFile = `main.${hash(postprocessedStyles)}.css`;
+  const stylesFile = `main${
+    production ? `.${hash(postprocessedStyles)}` : ''
+  }.css`;
 
   const outputPath = path.join(outputDir, stylesFile);
 

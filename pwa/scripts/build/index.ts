@@ -36,7 +36,7 @@ const build = async () => {
 
   const [scripts, styles] = await Promise.all([
     buildScripts(outputPath, { production, data: defaultData }),
-    buildStyles(outputPath, { data: {} }),
+    buildStyles(outputPath, { production, data: {} }),
     buildSitemap(outputPath, {
       data: localesData,
       priorities: [

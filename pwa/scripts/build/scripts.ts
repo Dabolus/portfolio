@@ -1,4 +1,4 @@
-/// <reference types="./typings" />
+/// <reference types="../typings" />
 import { promises as fs } from 'fs';
 import path from 'path';
 import { rollup } from 'rollup';
@@ -157,8 +157,15 @@ const createBundle = async (
 
   const { output } = await rollupBuild.write({
     esModule: modules,
-    entryFileNames: '[name].[hash].js',
-    chunkFileNames: '[name].[hash].js',
+    ...(production
+      ? {
+          entryFileNames: '[name].[hash].js',
+          chunkFileNames: '[name].[hash].js',
+        }
+      : {
+          entryFileNames: '[name].js',
+          chunkFileNames: '[name].js',
+        }),
     ...(modules
       ? {
           format: 'esm',
