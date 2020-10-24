@@ -4,13 +4,13 @@
 
 .project {
   width: 100%;
-  height: 7rem;
+  height: 7.5rem;
   background-color: var(--theme-card-background);
   border-bottom: 0.12rem solid rgba($theme-black, 0.12);
 
   img {
-    width: 7rem;
-    height: 7rem;
+    width: 7.5rem;
+    height: 7.5rem;
     object-fit: cover;
     float: left;
   }
@@ -19,14 +19,15 @@
     float: left;
     display: flex;
     flex-direction: column;
-    width: calc(100% - 7rem);
-    height: 7rem;
+    width: calc(100% - 7.5rem);
+    height: 7.5rem;
 
     > div {
       flex: 0 0 auto;
       width: 100%;
       padding: 0.5rem 0.75rem 0;
       display: flex;
+      align-items: center;
       justify-content: space-between;
 
       > h3 {
@@ -35,26 +36,48 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         margin: 0;
+        flex: 1 1 auto;
       }
 
       > div {
-        width: 2.3rem;
-        height: 1rem;
+        height: 2rem;
         display: inline-block;
         text-align: right;
+        flex: 0 0 auto;
 
         > a {
           text-decoration: none;
+          margin-left: 0.3rem;
 
           &,
           & svg {
-            width: 1rem;
-            height: 1rem;
+            width: 2rem;
+            height: 2rem;
           }
         }
 
-        &:last-child {
-          margin-left: 0.3rem;
+        @media (min-width: 26.25rem) {
+          height: 1.5rem;
+
+          > a {
+            &,
+            & svg {
+              width: 1.5rem;
+              height: 1.5rem;
+            }
+          }
+        }
+
+        @media (min-width: 47.5rem) {
+          height: 1rem;
+
+          > a {
+            &,
+            & svg {
+              width: 1rem;
+              height: 1rem;
+            }
+          }
         }
       }
     }
