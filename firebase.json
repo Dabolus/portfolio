@@ -73,7 +73,7 @@
           },
           {
             "key": "Cache-Control",
-            "value": "no-cache"
+            "value": "public, no-cache"
           }
         ]
       },
@@ -82,7 +82,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=31536000, stale-while-revalidate=31536000"
+            "value": "public, max-age=31536000, immutable"
           }
         ]
       },
@@ -95,7 +95,7 @@
           },
           {
             "key": "Cache-Control",
-            "value": "no-cache"
+            "value": "public, no-cache"
           }
         ]
       }
