@@ -136,6 +136,12 @@ const start = async () => {
     server: {
       baseDir: 'dist',
       serveStaticOptions: { extensions: ['html'] },
+      middleware: [
+        (_, res, next) => {
+          res.setHeader('service-worker-allowed', '/');
+          next();
+        },
+      ],
     },
     open: false,
     notify: false,
