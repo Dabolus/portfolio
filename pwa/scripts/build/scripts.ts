@@ -121,7 +121,6 @@ const createBundle = async (
         'process.env.API_URL': production
           ? "'/api'"
           : "'http://localhost:5000/api'",
-        'process.env.AAA': '',
       }),
       ...(production
         ? [
