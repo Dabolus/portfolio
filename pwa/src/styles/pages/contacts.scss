@@ -6,6 +6,17 @@
     transition-delay: 0.5s;
     font-family: 'Mansalva';
 
+    > #error {
+      position: absolute;
+      text-align: center;
+      top: 13.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--theme-red);
+      z-index: 2;
+      display: none;
+    }
+
     > #sent-stamp {
       position: absolute;
       top: 13rem;
@@ -211,6 +222,19 @@
       }
     }
 
+    &.sending,
+    &.sent,
+    &.errored {
+      > #letter-zip {
+        transform: rotateX(0);
+        z-index: 1;
+      }
+
+      > #letter-content {
+        transform: translateY(0);
+      }
+    }
+
     &.sent {
       transform: translateY(-10rem);
 
@@ -219,14 +243,11 @@
         transform: scale(1);
         z-index: 2;
       }
+    }
 
-      > #letter-zip {
-        transform: rotateX(0);
-        z-index: 1;
-      }
-
-      > #letter-content {
-        transform: translateY(0);
+    &.errored {
+      > #error {
+        display: block;
       }
     }
   }

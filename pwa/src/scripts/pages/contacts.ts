@@ -1,4 +1,4 @@
-import { importIIFE } from '../utils';
+import { importIIFE, sleep } from '../utils';
 
 const contactForm = document.querySelector<HTMLFormElement>('#contact-form');
 
@@ -10,20 +10,16 @@ interface FormContent {
   readonly 'g-recaptcha-response'?: string;
 }
 
-interface Window {
-  __recaptchaCallback: (token: string) => void;
-}
-
-enum EmailError {
-  INVALID_NAME = 'INVALID_NAME',
-  INVALID_EMAIL = 'INVALID_EMAIL',
-  INVALID_SUBJECT = 'INVALID_SUBJECT',
-  INVALID_MESSAGE = 'INVALID_MESSAGE',
-  INVALID_RESPONSE = 'INVALID_RESPONSE',
-  UNEXPECTED_ERROR = 'UNEXPECTED_ERROR',
+declare global {
+  interface Window {
+    __recaptchaCallback: (token: string) => void;
+  }
 }
 
 window.__recaptchaCallback = async () => {
+  contactForm.className = 'sending';
+  const animationPromise = sleep(1500);
+
   try {
     const res = await fetch(`${process.env.API_URL}/email`, {
       method: 'POST',
@@ -32,15 +28,10 @@ window.__recaptchaCallback = async () => {
         Accept: 'application/json',
       },
       body: JSON.stringify(
-        [...new FormData(contactForm)].reduce(
-          (json, [key, value]) => ({
-            ...json,
-            [key]: value,
-          }),
-          {},
-        ),
+        Object.fromEntries(Array.from(new FormData(contactForm))),
       ),
     });
+
     if (res.status === 204) {
       contactForm.className = 'sent';
       return;
@@ -48,22 +39,25 @@ window.__recaptchaCallback = async () => {
 
     const { error } = await res.json();
     throw new Error(error);
-  } catch ({ message }) {
-    alert(message);
+  } catch {
+    await animationPromise;
+    contactForm.className = 'errored';
   }
 };
 
 const configure = async () => {
-  document
-    .querySelector<HTMLFormElement>('#contact-form')
-    .addEventListener(
-      'mouseenter',
-      () => importIIFE('https://www.google.com/recaptcha/api.js'),
-      {
-        once: true,
-        passive: true,
-      },
-    );
+  contactForm.addEventListener(
+    'mouseenter',
+    () => importIIFE('https://www.google.com/recaptcha/api.js'),
+    {
+      once: true,
+      passive: true,
+    },
+  );
+
+  contactForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+  });
 };
 
 configure();
