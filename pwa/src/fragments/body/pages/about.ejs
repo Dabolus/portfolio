@@ -1,3 +1,20 @@
+<%
+  const dayMonthFormatter = new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric' })
+  const monthFormatter = new Intl.DateTimeFormat(locale, { month: 'long' });
+
+  const toISODate = (year, month, day) =>
+    `${year}-${(month || 1).toString().padStart(2, '0')}-${(day || 1).toString().padStart(2, '0')}`
+
+  const prettifyDate = (year, month, day) => {
+    if (!month) {
+      return '';
+    }
+
+    const formatter = day ? dayMonthFormatter : monthFormatter;
+
+    return formatter.format(new Date(toISODate(year, month, day)));
+  }
+%>
 <div class="content" id="about" <%- data.page === 'about' ? '' : 'hidden' %>>
   <div class="content-boundaries">
     <div id="propic-container">
@@ -15,5 +32,37 @@
     <% data.pages.about.bio.forEach(str => { %>
       <p><%- str.replace(/%age%/g, `<span id="age">${data.age}</span>`) %></p>
     <% }) %>
+
+    <h3><%= data.pages.about.timeline.title %></h3>
+
+    <ul id="timeline">
+      <% data.pages.about.timeline.events.forEach(({ year, color, items }) => { %>
+        <li>
+          <h4 class="year"><span><%= year %></span></h4>
+          <ul class="events">
+            <% items.forEach(({ icon, month, day, title, description }) => { %>
+              <li class="<%= icon ? '' : 'no-icon' %>">
+                <% if (icon) { %>
+                  <div class="event-icon">
+                    <svg viewBox="0 0 24 24">
+                      <% (Array.isArray(icon) ? icon : [icon]).forEach(iconPart => { %>
+                        <path fill="<%= color %>" d="<%= iconPart %>"/>
+                      <% }) %>
+                    </svg>
+                  </div>
+                <% } %>
+                <div class="event-content">
+                  <h5><%= title %></h5>
+                  <p><%= description %></p>
+                  <time datetime="<%= toISODate(year, month, day) %>">
+                    <%= prettifyDate(year, month, day) %>
+                  </time>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
+        </li>
+      <% }) %>
+    </div>
   </div>
 </div>
