@@ -67,13 +67,13 @@ export async function buildStyles(
     },
   );
 
-  const stylesFile = `main${
+  const stylesFile = `styles/main${
     production ? `.${hash(postprocessedStyles)}` : ''
   }.css`;
 
   const outputPath = path.join(outputDir, stylesFile);
 
-  await fs.mkdir(outputDir, { recursive: true });
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, postprocessedStyles);
 
   return { main: stylesFile };

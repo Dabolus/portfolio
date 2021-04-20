@@ -85,12 +85,9 @@ export const registerServiceWorker = async ({
   onUpdate,
 }: RegisterServiceWorkerOptions = {}) => {
   if (process.env.ENABLE_DEV_SW && 'serviceWorker' in navigator) {
-    const registration = await navigator.serviceWorker.register(
-      `${process.env.JS_DIR}/sw.js`,
-      {
-        scope: '/',
-      },
-    );
+    const registration = await navigator.serviceWorker.register('/sw.js', {
+      scope: '/',
+    });
 
     if (registration.waiting) {
       onUpdate?.();

@@ -1,13 +1,4 @@
 <script defer>
-  window.preload = (href) => {
-    const link = document.createElement('link');
-    link.setAttribute('rel', 'preload');
-    link.setAttribute('href', href);
-    link.setAttribute('as', 'script');
-    link.setAttribute('crossorigin', '');
-    document.head.appendChild(link);
-  };
-
   window.GoogleAnalyticsObject = 'ga';
   window.ga = (...args) => ga.q.push(args);
   ga.q = [];
@@ -15,21 +6,8 @@
   ga('create', 'UA-86330876-7', 'auto');
 </script>
 <script defer src="https://www.google-analytics.com/analytics.js"></script>
-<script defer>
-  import('./<%= output.scripts.module.main %>');
-  window.supportsDynamicImport = true;
-  window.preload('<%= output.scripts.module.utils %>', 'script');
-  window.preload('<%= output.scripts.module[data.page] %>', 'script');
-</script>
-<script defer>
-  if (!window.supportsDynamicImport) {
-    window.preload('<%= output.scripts.nomodule.utils %>', 'script');
-    window.preload('<%= output.scripts.nomodule[data.page] %>', 'script');
-    const systemJsLoaderTag = document.createElement('script');
-    systemJsLoaderTag.src = 's<%= production ? '.min' : '' %>.js';
-    systemJsLoaderTag.addEventListener('load', () => System.import('./<%= output.scripts.nomodule.main %>'), { once: true });
-    document.head.appendChild(systemJsLoaderTag);
-  }
-</script>
+<link rel="modulepreload" href="<%= output.scripts.utils %>">
+<link rel="modulepreload" href="<%= output.scripts[data.page] %>">
+<script type="module" src="<%= output.scripts.main %>"></script>
 <link rel="stylesheet" href="<%= output.styles.main %>">
 <link rel="preconnect" href="https://www.google-analytics.com">

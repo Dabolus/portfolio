@@ -7,7 +7,6 @@ declare namespace NodeJS {
   interface ProcessEnv {
     readonly [key: string]: any;
     readonly ENABLE_DEV_SW?: boolean;
-    readonly JS_DIR: string;
     readonly API_URL: string;
     readonly HOME_OUTPUT: string;
     readonly ABOUT_OUTPUT: string;

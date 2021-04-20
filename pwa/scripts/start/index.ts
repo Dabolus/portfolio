@@ -8,7 +8,6 @@ import { buildScripts } from '../build/scripts';
 import { buildStyles } from '../build/styles';
 import { generateServiceWorkers } from '../build/sw';
 import { copyAssets } from '../build/assets';
-import { buildSitemap } from '../build/sitemap';
 import { Data, LocaleDataModule, Locale } from '../build/models';
 
 const outputPath = path.resolve(__dirname, '../../dist');
@@ -51,28 +50,16 @@ const start = async () => {
           data,
           output: {
             scripts: {
-              module: {
-                main: 'module/main.js',
-                home: 'module/pages/home.js',
-                about: 'module/pages/about.js',
-                certifications: 'module/pages/certifications.js',
-                contacts: 'module/pages/contacts.js',
-                projects: 'module/pages/projects.js',
-                skills: 'module/pages/skills.js',
-                utils: 'module/utils.js',
-              },
-              nomodule: {
-                main: 'nomodule/main.js',
-                home: 'nomodule/pages/home.js',
-                about: 'nomodule/pages/about.js',
-                certifications: 'nomodule/pages/certifications.js',
-                contacts: 'nomodule/pages/contacts.js',
-                projects: 'nomodule/pages/projects.js',
-                skills: 'nomodule/pages/skills.js',
-                utils: 'nomodule/utils.js',
-              },
+              main: 'scripts/main.js',
+              home: 'scripts/pages/home.js',
+              about: 'scripts/pages/about.js',
+              certifications: 'scripts/pages/certifications.js',
+              contacts: 'scripts/pages/contacts.js',
+              projects: 'scripts/pages/projects.js',
+              skills: 'scripts/pages/skills.js',
+              utils: 'scripts/utils.js',
             },
-            styles: { main: 'main.css' },
+            styles: { main: 'styles/main.css' },
           },
           production,
         }),

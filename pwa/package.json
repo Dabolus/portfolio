@@ -13,7 +13,6 @@
   "dependencies": {
     "core-js": "^3.10.2",
     "pwa-helpers": "^0.9.1",
-    "systemjs": "^6.8.3",
     "typed.js": "^2.0.12"
   },
   "devDependencies": {

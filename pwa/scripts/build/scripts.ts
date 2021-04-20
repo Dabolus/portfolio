@@ -4,8 +4,7 @@ import path from 'path';
 import { rollup } from 'rollup';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import rollupBabel from 'rollup-plugin-babel';
-import copy from 'rollup-plugin-copy';
+import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { Data } from './models';
@@ -26,11 +25,6 @@ export interface BuildScriptsOutputBundle {
   readonly skills: string;
 }
 
-export interface BuildScriptsOutput {
-  readonly module: BuildScriptsOutputBundle;
-  readonly nomodule: BuildScriptsOutputBundle;
-}
-
 const scriptsPath = path.resolve(__dirname, '../../src/scripts');
 
 const pathToPageMap: Record<string, keyof BuildScriptsOutputBundle> = {
@@ -44,34 +38,9 @@ const pathToPageMap: Record<string, keyof BuildScriptsOutputBundle> = {
   'pages/skills': 'skills',
 };
 
-const babel = ({ modules }: { modules: boolean }) =>
-  rollupBabel({
-    exclude: /node_modules/,
-    extensions: ['.ts', '.js', '.mjs'],
-    runtimeHelpers: true,
-    presets: [
-      [
-        '@babel/env',
-        {
-          loose: true,
-          useBuiltIns: 'usage',
-          corejs: 3,
-          modules: false,
-          ...(modules && {
-            bugfixes: true,
-            targets: {
-              esmodules: true,
-            },
-          }),
-        },
-      ],
-      '@babel/typescript',
-    ],
-  });
-
 const createBundle = async (
   outputPath: string,
-  { production, modules }: { production: boolean; modules: boolean },
+  { production }: { production: boolean },
 ): Promise<BuildScriptsOutputBundle> => {
   const rollupBuild = await rollup({
     input: {
@@ -84,40 +53,37 @@ const createBundle = async (
       'pages/skills': path.join(scriptsPath, 'pages/skills.ts'),
     },
     plugins: [
-      ...(modules
-        ? []
-        : [
-            copy({
-              targets: [
-                // Try to copy systemjs from current node_modules directory
-                {
-                  src: `node_modules/systemjs/dist/s${
-                    production ? '.min' : ''
-                  }.js`,
-                  dest: path.join(outputPath, 'nomodule'),
-                },
-                // If it is not there, it is most probably in the workspace root
-                {
-                  src: `../node_modules/systemjs/dist/s${
-                    production ? '.min' : ''
-                  }.js`,
-                  dest: path.join(outputPath, 'nomodule'),
-                },
-              ],
-            }),
-          ]),
       resolve({
         extensions: ['.ts', '.js', '.mjs', '.styl', '.hbs'],
       }),
       commonjs(),
-      babel({ modules }),
+      babel({
+        exclude: /node_modules/,
+        extensions: ['.ts', '.js', '.mjs'],
+        runtimeHelpers: true,
+        presets: [
+          [
+            '@babel/env',
+            {
+              loose: true,
+              useBuiltIns: 'usage',
+              corejs: 3,
+              modules: false,
+              bugfixes: true,
+              targets: {
+                esmodules: true,
+              },
+            },
+          ],
+          '@babel/typescript',
+        ],
+      }),
       replace({
         exclude: /node_modules/,
         delimiters: ['', ''],
         'process.env.ENABLE_DEV_SW': `${!!(
           production || process.env.ENABLE_DEV_SW
         )}`,
-        'process.env.JS_DIR': modules ? "'module'" : "'nomodule'",
         'process.env.API_URL': production
           ? "'/api'"
           : "'http://localhost:5000/api'",
@@ -144,10 +110,8 @@ const createBundle = async (
                 unsafe_undefined: true,
               },
               toplevel: true,
-              ...(modules && {
-                module: true,
-                safari10: true,
-              }),
+              module: true,
+              safari10: true,
             }),
           ]
         : []),
@@ -155,34 +119,24 @@ const createBundle = async (
   });
 
   const { output } = await rollupBuild.write({
-    esModule: modules,
+    esModule: true,
     ...(production
       ? {
-          entryFileNames: '[name].[hash].js',
-          chunkFileNames: '[name].[hash].js',
+          entryFileNames: 'scripts/[name].[hash].js',
+          chunkFileNames: 'scripts/[name].[hash].js',
         }
       : {
-          entryFileNames: '[name].js',
-          chunkFileNames: '[name].js',
+          entryFileNames: 'scripts/[name].js',
+          chunkFileNames: 'scripts/[name].js',
         }),
-    ...(modules
-      ? {
-          format: 'esm',
-          dir: path.join(outputPath, 'module'),
-        }
-      : {
-          format: 'system',
-          dir: path.join(outputPath, 'nomodule'),
-        }),
+    format: 'esm',
+    dir: outputPath,
   });
 
   const result = (Object.fromEntries(
     output
       .filter(({ name }) => name in pathToPageMap)
-      .map(({ name, fileName }) => [
-        pathToPageMap[name] || name,
-        `${modules ? 'module' : 'nomodule'}/${fileName}`,
-      ]),
+      .map(({ name, fileName }) => [pathToPageMap[name] || name, fileName]),
   ) as unknown) as BuildScriptsOutputBundle;
 
   const mainOutput = await fs.readFile(
@@ -212,11 +166,6 @@ const createBundle = async (
 export async function buildScripts(
   outputPath: string,
   { production }: BuildScriptsOptions,
-): Promise<BuildScriptsOutput> {
-  const [module, nomodule] = await Promise.all([
-    createBundle(outputPath, { production, modules: true }),
-    createBundle(outputPath, { production, modules: false }),
-  ]);
-
-  return { module, nomodule };
+): Promise<BuildScriptsOutputBundle> {
+  return createBundle(outputPath, { production });
 }

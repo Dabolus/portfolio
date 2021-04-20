@@ -2,11 +2,9 @@ import path from 'path';
 import { generateSW } from 'workbox-build';
 
 const generateServiceWorker = async (
-  outputPath: string,
-  { modules, defaultLocale }: { modules: boolean; defaultLocale: string },
+  globDirectory: string,
+  { defaultLocale }: { defaultLocale: string },
 ) => {
-  const globDirectory = path.join(outputPath, modules ? 'module' : 'nomodule');
-
   await generateSW({
     cacheId: 'gg',
     skipWaiting: true,
@@ -63,11 +61,8 @@ const generateServiceWorker = async (
 };
 
 export async function generateServiceWorkers(
-  outputPath: string,
+  globDirectory: string,
   defaultLocale: string,
 ): Promise<void> {
-  await Promise.all([
-    generateServiceWorker(outputPath, { modules: true, defaultLocale }),
-    generateServiceWorker(outputPath, { modules: false, defaultLocale }),
-  ]);
+  await generateServiceWorker(globDirectory, { defaultLocale });
 }
