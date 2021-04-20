@@ -2,7 +2,7 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import sharp, { Sharp } from 'sharp';
 import primitive from 'primitive';
-import SVGO from 'svgo';
+import { optimize as svgOptimize } from 'svgo';
 import toSafeDataURI from 'mini-svg-data-uri';
 import { Bucket } from '@google-cloud/storage';
 import { CollectionReference } from '@google-cloud/firestore';
@@ -13,16 +13,13 @@ const placeholderHeight = 256;
 let bucket: Bucket;
 let projectsCollection: CollectionReference;
 let certificationsCollection: CollectionReference;
-let svgOptimizer: SVGO;
 
 const optimize = async (svg: string): Promise<string> => {
-  svgOptimizer =
-    svgOptimizer ||
-    new SVGO({
-      multipass: true,
-      floatPrecision: 1,
-    } as any);
-  const { data } = await svgOptimizer.optimize(svg);
+  const { data } = svgOptimize(svg, {
+    multipass: true,
+    floatPrecision: 1,
+  });
+
   return data;
 };
 
