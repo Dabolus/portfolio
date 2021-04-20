@@ -64,7 +64,7 @@
         position: relative;
         display: flex;
 
-        &:last-child .events > li::after {
+        &:last-child .events > li:last-child::after {
           min-height: 8rem;
           background: linear-gradient(
             180deg,
