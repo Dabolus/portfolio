@@ -41,6 +41,10 @@ h6 {
   margin: 0.75em 0 0.5em;
 }
 
+code {
+  white-space: nowrap;
+}
+
 .loading-container {
   width: 100%;
   height: calc(100vh - 5.55rem);
