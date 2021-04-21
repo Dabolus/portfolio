@@ -105,7 +105,9 @@ export const configureRouting = () => {
     });
 
     logEvent('page_view', {
-      page_title: title || 'Home',
+      // On Google Analytics, we send "Home" instead of "Giorgio Garasto"
+      // as title when we are on the home page
+      page_title: !title || title === 'Giorgio Garasto' ? 'Home' : title,
       page_location: location.href,
       page_path: location.pathname,
     });
