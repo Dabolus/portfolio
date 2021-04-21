@@ -1,14 +1,12 @@
 import path from 'path';
-import { generateSW } from 'workbox-build';
+import { injectManifest } from 'workbox-build';
 
 export const generateServiceWorker = async (
   globDirectory: string,
   { defaultLocale }: { defaultLocale: string },
 ) => {
-  await generateSW({
-    cacheId: 'gg',
-    skipWaiting: true,
-    clientsClaim: true,
+  await injectManifest({
+    swSrc: path.join(__dirname, '../../src/sw.js'),
     swDest: path.join(globDirectory, 'sw.js'),
     globDirectory,
     globPatterns: [
@@ -19,44 +17,5 @@ export const generateServiceWorker = async (
       './scripts/**/*.js',
       './styles/**/*.css',
     ],
-    navigateFallback: `/${defaultLocale}/index.html`,
-    navigateFallbackDenylist: [/api/],
-    runtimeCaching: [
-      {
-        method: 'GET',
-        urlPattern: /api/,
-        handler: 'StaleWhileRevalidate',
-        options: {
-          backgroundSync: {
-            name: 'api-sync-queue',
-            options: {
-              maxRetentionTime: 3600,
-            },
-          },
-          cacheableResponse: {
-            statuses: [0, 200],
-          },
-          cacheName: 'api-cache',
-        },
-      },
-      {
-        method: 'GET',
-        urlPattern: /firebasestorage\.googleapis\.com/,
-        handler: 'StaleWhileRevalidate',
-        options: {
-          backgroundSync: {
-            name: 'dynamic-assets-sync-queue',
-            options: {
-              maxRetentionTime: 3600,
-            },
-          },
-          cacheableResponse: {
-            statuses: [0, 200],
-          },
-          cacheName: 'dynamic-assets-cache',
-        },
-      },
-    ],
-    offlineGoogleAnalytics: true,
   });
 };
