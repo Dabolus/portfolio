@@ -1,5 +1,5 @@
 import { installRouter, updateMetadata } from 'pwa-helpers';
-import { scroll } from './utils';
+import { logEvent, scroll } from './utils';
 
 const pageToPathMap: Record<string, string> = {
   home: process.env.HOME_JS_OUTPUT,
@@ -104,11 +104,10 @@ export const configureRouting = () => {
       description,
     });
 
-    ga('set', 'page', location.pathname);
-    ga('send', {
-      hitType: 'pageview',
-      page: location.pathname,
-      title: title || 'Home',
+    logEvent('page_view', {
+      page_title: title || 'Home',
+      page_location: location.href,
+      page_path: location.pathname,
     });
 
     if (path === 'home') {

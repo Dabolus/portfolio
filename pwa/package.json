@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "core-js": "^3.10.2",
+    "firebase": "^9.0.0-beta.1",
     "pwa-helpers": "^0.9.1",
     "typed.js": "^2.0.12"
   },
@@ -25,7 +26,6 @@
     "@types/ejs": "^3.0.6",
     "@types/fs-extra": "^9.0.11",
     "@types/globby": "^9.1.0",
-    "@types/google.analytics": "^0.0.41",
     "@types/html-minifier": "^4.0.0",
     "@types/lodash": "^4.14.168",
     "@types/node-sass": "^4.11.1",

@@ -83,6 +83,7 @@ const createBundle = async (
       replace({
         exclude: /node_modules/,
         delimiters: ['', ''],
+        'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
         'process.env.ENABLE_SERVICE_WORKER': `${!!(
           production || process.env.ENABLE_SERVICE_WORKER
         )}`,

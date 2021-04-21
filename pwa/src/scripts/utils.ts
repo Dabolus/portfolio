@@ -216,3 +216,66 @@ export const loadStyles = (url: string) =>
 
     document.head.appendChild(link);
   });
+
+const initializeAnalytics = async () => {
+  const [{ initializeApp }, { getAnalytics }] = await Promise.all([
+    import('firebase/app'),
+    import('firebase/analytics'),
+  ]);
+
+  const app = initializeApp({
+    apiKey: 'AIzaSyAr4j37kpaRwCtfFOI317G24vl-Zd6Ar9Y',
+    projectId: 'giorgio-garasto-pwa',
+    appId: '1:366299128980:web:3086f9de9d8e90962ec081',
+    measurementId: 'G-2BXKCDTVNJ',
+  });
+  const analytics = getAnalytics(app);
+
+  return analytics;
+};
+
+const analyticsPromise = initializeAnalytics();
+
+type FirebaseLogEventParameters = Parameters<
+  typeof import('firebase/analytics')['logEvent']
+>;
+
+export const logEvent = async (
+  eventName: FirebaseLogEventParameters[1],
+  eventParams?: FirebaseLogEventParameters[2],
+  options?: FirebaseLogEventParameters[3],
+) => {
+  const [analytics, { logEvent: firebaseLogEvent }] = await Promise.all([
+    analyticsPromise,
+    import('firebase/analytics'),
+  ]);
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.groupCollapsed('Analytics event');
+    console.info(`Name: ${eventName}`);
+
+    const { offline, ...filteredParams } = eventParams as Record<
+      string,
+      unknown
+    >;
+
+    if (Object.keys(filteredParams).length > 0) {
+      console.info('Params:');
+      console.table(filteredParams);
+    }
+
+    console.groupEnd();
+
+    return;
+  }
+
+  return firebaseLogEvent(
+    analytics,
+    eventName,
+    {
+      ...eventParams,
+      offline: false,
+    },
+    options,
+  );
+};

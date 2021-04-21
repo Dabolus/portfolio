@@ -6,6 +6,7 @@ declare module 'typed.js/src/typed' {
 declare namespace NodeJS {
   interface ProcessEnv {
     readonly [key: string]: any;
+    readonly NODE_ENV: 'production' | 'development';
     readonly ENABLE_SERVICE_WORKER?: boolean;
     readonly API_URL: string;
     readonly HOME_JS_OUTPUT: string;
