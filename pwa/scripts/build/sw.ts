@@ -1,7 +1,7 @@
 import path from 'path';
 import { generateSW } from 'workbox-build';
 
-const generateServiceWorker = async (
+export const generateServiceWorker = async (
   globDirectory: string,
   { defaultLocale }: { defaultLocale: string },
 ) => {
@@ -12,11 +12,12 @@ const generateServiceWorker = async (
     swDest: path.join(globDirectory, 'sw.js'),
     globDirectory,
     globPatterns: [
-      `../${defaultLocale}/index.html`,
-      '../styles.css',
-      '../fonts/*.woff2',
-      '../images/*.{svg,jpg,webp}',
-      './**/*.js',
+      `./${defaultLocale}/index.html`,
+      `./${defaultLocale}/fragments/**/*.html`,
+      './fonts/**/*.woff2',
+      './images/**/*.{svg,jpg,webp}',
+      './scripts/**/*.js',
+      './styles/**/*.css',
     ],
     navigateFallback: `/${defaultLocale}/index.html`,
     navigateFallbackDenylist: [/api/],
@@ -59,10 +60,3 @@ const generateServiceWorker = async (
     offlineGoogleAnalytics: true,
   });
 };
-
-export async function generateServiceWorkers(
-  globDirectory: string,
-  defaultLocale: string,
-): Promise<void> {
-  await generateServiceWorker(globDirectory, { defaultLocale });
-}

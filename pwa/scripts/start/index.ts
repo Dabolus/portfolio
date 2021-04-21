@@ -6,7 +6,7 @@ import browserSync from 'browser-sync';
 import { buildTemplate } from '../build/templates';
 import { buildScripts } from '../build/scripts';
 import { buildStyles } from '../build/styles';
-import { generateServiceWorkers } from '../build/sw';
+import { generateServiceWorker } from '../build/sw';
 import { copyAssets } from '../build/assets';
 import { Data, LocaleDataModule, Locale, Output } from '../build/models';
 
@@ -128,7 +128,7 @@ const start = async () => {
         if (process.env.ENABLE_DEV_SW) {
           console.log('Regenerating Service Worker...');
 
-          generateServiceWorkers(outputPath, defaultLocale);
+          generateServiceWorker(outputPath, { defaultLocale });
         }
       }, 950),
     );

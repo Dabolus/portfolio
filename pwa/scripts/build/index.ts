@@ -3,7 +3,7 @@ import path from 'path';
 import { buildTemplate } from './templates';
 import { buildScripts } from './scripts';
 import { buildStyles } from './styles';
-import { generateServiceWorkers } from './sw';
+import { generateServiceWorker } from './sw';
 import { copyAssets } from './assets';
 import { buildSitemap } from './sitemap';
 import { Data, LocaleDataModule, Locale } from './models';
@@ -73,7 +73,7 @@ const build = async () => {
     ),
   );
 
-  await generateServiceWorkers(outputPath, defaultLocale);
+  await generateServiceWorker(outputPath, { defaultLocale });
 };
 
 build();
