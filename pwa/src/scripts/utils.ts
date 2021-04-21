@@ -104,3 +104,54 @@ export const registerServiceWorker = async ({
     });
   }
 };
+
+export const loadFile = async (url: string) => {
+  const res = await fetch(url);
+  return res.text();
+};
+
+export const loadTemplate = async (name: string) => {
+  const outputElement = document.querySelector<HTMLDivElement>(`#${name}`);
+
+  // If there is no loading in the output element, it means that
+  // the data has already been loaded, so we just do nothing
+  if (
+    !outputElement.firstElementChild.className.includes('loading-container')
+  ) {
+    return;
+  }
+
+  const template = await loadFile(`en/fragments/${name}.html`);
+
+  outputElement.innerHTML = template;
+};
+
+export const loadStyles = (url: string) =>
+  new Promise<void>((resolve, reject) => {
+    if (document.querySelector(`link[href="${url}"]`)) {
+      return resolve();
+    }
+
+    const link = document.createElement('link');
+
+    link.rel = 'preload';
+    link.as = 'style';
+    link.href = url;
+
+    link.addEventListener(
+      'load',
+      () => {
+        // The styles have been preloaded, but after setting the rel to
+        // stylesheet we wait for the other load event for fairness, even
+        // if it isn't actually needed
+        link.addEventListener('load', () => resolve(), {
+          once: true,
+        });
+        link.rel = 'stylesheet';
+      },
+      { once: true },
+    );
+    link.addEventListener('error', reject, { once: true });
+
+    document.head.appendChild(link);
+  });

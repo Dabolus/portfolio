@@ -1,4 +1,4 @@
-import { generatePicture, Icon } from '../utils';
+import { generatePicture, Icon, loadStyles, loadTemplate } from '../utils';
 
 interface Project {
   readonly id: string;
@@ -17,6 +17,11 @@ const getProjects = async (): Promise<readonly Project[]> => {
 };
 
 const configure = async () => {
+  await Promise.all([
+    loadTemplate('projects'),
+    loadStyles(process.env.PROJECTS_CSS_OUTPUT),
+  ]);
+
   const projectsContainer = document.querySelector<HTMLDivElement>('#projects');
 
   const projects = await getProjects();

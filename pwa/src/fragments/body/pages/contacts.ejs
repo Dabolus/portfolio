@@ -1,71 +1,69 @@
-<div class="content" id="contacts" <%- data.page === 'contacts' ? '' : 'hidden' %>>
-  <div class="content-boundaries">
-    <form id="contact-form">
-      <span id="error" role="alert">There was an error, please try again later</span>
-      <img id="sent-stamp" src="images/sent.svg" alt="" width="96" height="96" loading="lazy">
-      <svg id="letter-zip" viewBox="0 0 100 45">
-        <path fill="var(--theme-default-background)" filter="url(#t)" d="M0,10 l45,31 q5,4 10,0 l45,-31 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" />
-      </svg>
-      <div id="letter-content">
-        <div id="hi"><%= data.pages.contacts.hi %>,</div>
-        <div class="full-width-input">
-          <span><%= data.pages.contacts.reason %>&nbsp;</span>
-          <input name="subject" placeholder="<%= data.pages.contacts.subject.toLowerCase() %>" title="<%= data.pages.contacts.subject %>">
-        </div>
-        <textarea name="message" placeholder="<%= data.pages.contacts.message %>" title="<%= data.pages.contacts.message %>"></textarea>
-        <div class="full-width-input">
-          <span><%= data.pages.contacts.contactMeBack %>&nbsp;</span>
-          <input type="email" name="email" placeholder="<%= data.pages.contacts.email.toLowerCase() %>" title="<%= data.pages.contacts.email %>">
-        </div>
-        <div id="sincerely"><%= data.pages.contacts.sincerely %>,</div>
-        <input name="name" placeholder="<%= data.pages.contacts.name %>" title="<%= data.pages.contacts.name %>">
-        <button
-          type="submit"
-          class="g-recaptcha"
-          data-sitekey="6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH"
-          data-theme="dark"
-          data-callback="__recaptchaCallback"
-        >
-          <%= data.pages.contacts.submit %>
-        </button>
+<div class="content-boundaries">
+  <form id="contact-form">
+    <span id="error" role="alert">There was an error, please try again later</span>
+    <img id="sent-stamp" src="images/sent.svg" alt="" width="96" height="96" loading="lazy">
+    <svg id="letter-zip" viewBox="0 0 100 45">
+      <path fill="var(--theme-default-background)" filter="url(#t)" d="M0,10 l45,31 q5,4 10,0 l45,-31 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" />
+    </svg>
+    <div id="letter-content">
+      <div id="hi"><%= data.pages.contacts.hi %>,</div>
+      <div class="full-width-input">
+        <span><%= data.pages.contacts.reason %>&nbsp;</span>
+        <input name="subject" placeholder="<%= data.pages.contacts.subject.toLowerCase() %>" title="<%= data.pages.contacts.subject %>">
       </div>
-      <svg id="letter" viewBox="0 0 100 80">
-        <defs>
-          <filter id="s">
-            <feOffset result="o" in="SourceAlpha" dx="0" dy="-.5" />
-            <feGaussianBlur result="b" in="o" stdDeviation=".3" />
-            <feColorMatrix result="a" in="b" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .2 0"/>
-            <feBlend in="SourceGraphic" in2="a" mode="normal" />
-          </filter>
-          <filter id="t">
-            <feOffset result="o" in="SourceAlpha" dx="0" dy=".5" />
-            <feGaussianBlur result="b" in="o" stdDeviation=".3" />
-            <feColorMatrix result="a" in="b" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .2 0"/>
-            <feBlend in="SourceGraphic" in2="a" mode="normal" />
-          </filter>
-        </defs>
-        <path fill="var(--theme-default-background)" d="M0,5 l50,35 l50,-35 l0,70 q0,5 -5,5 l-90,0 q-5,0 -5,-5 Z" />
-        <!-- <path fill="var(--theme-default-background)" filter="url(#s)" d="M0,10 l50,35 l50,-35 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" /> -->
-        <path fill="var(--theme-default-background)" filter="url(#s)" d="M0,70 l45,-31 q5,-4 10,0 l45,31 l0,5 q0,5 -5,5 l-90,0 q-5,0 -5,-5 Z" />
-      </svg>
-      <div id="socials">
-        <h6>P.S. you can also contact me on:</h6>
-        <a href="https://www.linkedin.com/in/giorgiogarasto/" title="LinkedIn" rel="external" target="linkedin" class="social">
-          <img src="images/socials/linkedin.svg" alt="LinkedIn" width="30" height="30" loading="lazy">
-        </a>
-        <a href="https://github.com/Dabolus" title="GitHub" rel="external" target="github" class="social">
-          <img src="images/socials/github.svg" alt="GitHub" width="30" height="30" loading="lazy">
-        </a>
-        <a href="https://twitter.com/Dabolus" title="Twitter" rel="external" target="twitter" class="social">
-          <img src="images/socials/twitter.svg" alt="Twitter" width="30" height="30" loading="lazy">
-        </a>
-        <a href="https://fb.me/giorgio.garasto" title="Facebook" rel="external" target="facebook" class="social">
-          <img src="images/socials/facebook.svg" alt="Facebook" width="30" height="30" loading="lazy">
-        </a>
-        <a href="https://t.me/Dabolus" title="Telegram" rel="external" target="telegram" class="social">
-          <img src="images/socials/telegram.svg" alt="Telegram" width="30" height="30" loading="lazy">
-        </a>
+      <textarea name="message" placeholder="<%= data.pages.contacts.message %>" title="<%= data.pages.contacts.message %>"></textarea>
+      <div class="full-width-input">
+        <span><%= data.pages.contacts.contactMeBack %>&nbsp;</span>
+        <input type="email" name="email" placeholder="<%= data.pages.contacts.email.toLowerCase() %>" title="<%= data.pages.contacts.email %>">
       </div>
-    </form>
-  </div>
+      <div id="sincerely"><%= data.pages.contacts.sincerely %>,</div>
+      <input name="name" placeholder="<%= data.pages.contacts.name %>" title="<%= data.pages.contacts.name %>">
+      <button
+        type="submit"
+        class="g-recaptcha"
+        data-sitekey="6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH"
+        data-theme="dark"
+        data-callback="__recaptchaCallback"
+      >
+        <%= data.pages.contacts.submit %>
+      </button>
+    </div>
+    <svg id="letter" viewBox="0 0 100 80">
+      <defs>
+        <filter id="s">
+          <feOffset result="o" in="SourceAlpha" dx="0" dy="-.5" />
+          <feGaussianBlur result="b" in="o" stdDeviation=".3" />
+          <feColorMatrix result="a" in="b" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .2 0"/>
+          <feBlend in="SourceGraphic" in2="a" mode="normal" />
+        </filter>
+        <filter id="t">
+          <feOffset result="o" in="SourceAlpha" dx="0" dy=".5" />
+          <feGaussianBlur result="b" in="o" stdDeviation=".3" />
+          <feColorMatrix result="a" in="b" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .2 0"/>
+          <feBlend in="SourceGraphic" in2="a" mode="normal" />
+        </filter>
+      </defs>
+      <path fill="var(--theme-default-background)" d="M0,5 l50,35 l50,-35 l0,70 q0,5 -5,5 l-90,0 q-5,0 -5,-5 Z" />
+      <!-- <path fill="var(--theme-default-background)" filter="url(#s)" d="M0,10 l50,35 l50,-35 l0,-5 q0,-5 -5,-5 l-90,0 q-5,0 -5,5 Z" /> -->
+      <path fill="var(--theme-default-background)" filter="url(#s)" d="M0,70 l45,-31 q5,-4 10,0 l45,31 l0,5 q0,5 -5,5 l-90,0 q-5,0 -5,-5 Z" />
+    </svg>
+    <div id="socials">
+      <h6>P.S. you can also contact me on:</h6>
+      <a href="https://www.linkedin.com/in/giorgiogarasto/" title="LinkedIn" rel="external" target="linkedin" class="social">
+        <img src="images/socials/linkedin.svg" alt="LinkedIn" width="30" height="30" loading="lazy">
+      </a>
+      <a href="https://github.com/Dabolus" title="GitHub" rel="external" target="github" class="social">
+        <img src="images/socials/github.svg" alt="GitHub" width="30" height="30" loading="lazy">
+      </a>
+      <a href="https://twitter.com/Dabolus" title="Twitter" rel="external" target="twitter" class="social">
+        <img src="images/socials/twitter.svg" alt="Twitter" width="30" height="30" loading="lazy">
+      </a>
+      <a href="https://fb.me/giorgio.garasto" title="Facebook" rel="external" target="facebook" class="social">
+        <img src="images/socials/facebook.svg" alt="Facebook" width="30" height="30" loading="lazy">
+      </a>
+      <a href="https://t.me/Dabolus" title="Telegram" rel="external" target="telegram" class="social">
+        <img src="images/socials/telegram.svg" alt="Telegram" width="30" height="30" loading="lazy">
+      </a>
+    </div>
+  </form>
 </div>

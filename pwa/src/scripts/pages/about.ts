@@ -1,11 +1,11 @@
 import { startAnimation, stopAnimation } from '../animation';
+import { loadStyles, loadTemplate } from '../utils';
 
 // Configure age animation
-const age = document.getElementById('age');
 const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
 const yearLength = 31556926000; // 1 year (365 days, 5 hours, 48 minutes, and 46 seconds)
 
-const updateAge = () => {
+const updateAge = (age: HTMLSpanElement) => () => {
   stopAnimation('age');
   // TODO: decide whether to use actual years or Gregorian calendar years (in that case we would have 365.2425 days per year)
   // Interesting links and papers:
@@ -19,11 +19,25 @@ const updateAge = () => {
     },
   );
 
-  startAnimation('age', updateAge);
+  startAnimation('age', updateAge(age));
 };
 
-export const onPageLoad = () => {
-  startAnimation('age', updateAge);
+const configure = async () => {
+  await Promise.all([
+    loadTemplate('about'),
+    loadStyles(process.env.ABOUT_CSS_OUTPUT),
+  ]);
+};
+
+const configurationPromise = configure();
+
+export const onPageLoad = async () => {
+  await configurationPromise;
+
+  startAnimation(
+    'age',
+    updateAge(document.querySelector<HTMLSpanElement>('#age')),
+  );
 };
 
 export const onPageUnload = () => {

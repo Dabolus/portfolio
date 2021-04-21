@@ -1,3 +1,5 @@
+import { loadStyles, loadTemplate } from '../utils';
+
 interface SkillsData {
   skills: {
     coding: readonly LineData[];
@@ -198,6 +200,11 @@ const getSkills = async () => {
 };
 
 export const configure = async () => {
+  await Promise.all([
+    loadTemplate('home'),
+    loadStyles(process.env.HOME_CSS_OUTPUT),
+  ]);
+
   // TODO: use HTML strings instead of elements as done in other pages
   const loadingContainer = document.querySelector<HTMLDivElement>(
     '#skills > .loading-container',

@@ -2,12 +2,12 @@ import { installRouter, updateMetadata } from 'pwa-helpers';
 import { scroll } from './utils';
 
 const pageToPathMap: Record<string, string> = {
-  home: process.env.HOME_OUTPUT,
-  about: process.env.ABOUT_OUTPUT,
-  certifications: process.env.CERTIFICATIONS_OUTPUT,
-  contacts: process.env.CONTACTS_OUTPUT,
-  projects: process.env.PROJECTS_OUTPUT,
-  skills: process.env.SKILLS_OUTPUT,
+  home: process.env.HOME_JS_OUTPUT,
+  about: process.env.ABOUT_JS_OUTPUT,
+  certifications: process.env.CERTIFICATIONS_JS_OUTPUT,
+  contacts: process.env.CONTACTS_JS_OUTPUT,
+  projects: process.env.PROJECTS_JS_OUTPUT,
+  skills: process.env.SKILLS_JS_OUTPUT,
 };
 
 export const configureRouting = () => {
@@ -84,7 +84,7 @@ export const configureRouting = () => {
       return;
     }
     if (!pages[path].module) {
-      pages[path].module = import(`./pages/${pageToPathMap[path]}.js`);
+      pages[path].module = import(pageToPathMap[path]);
     }
     pages[path].module.then(async ({ onPageLoad }) => {
       pages[path].configured = true;

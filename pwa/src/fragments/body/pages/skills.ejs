@@ -1,28 +1,26 @@
-<div class="content" id="skills" <%- data.page === 'skills' ? '' : 'hidden' %>>
-  <div class="loading-container">
-    <div class="loading"></div>
-  </div>
-  <div class="content-boundaries skills-container" hidden>
-    <article>
-      <h3><%= data.pages.skills.coding %></h3>
-      <div>
-        <section>
-          <h4><%= data.pages.skills.mostConfidentLangs %></h4>
-          <div id="most-confident-langs"></div>
-        </section>
-        <section>
-          <h4><%= data.pages.skills.mostUsedLangs %></h4>
-          <div id="most-used-langs"></div>
-        </section>
-      </div>
-    </article>
-    <article>
-      <h3><%= data.pages.skills.music %></h3>
-      <div id="most-confident-music"></div>
-    </article>
-    <article>
-      <h3><%= data.pages.skills.softSkills %></h3>
-      <div id="most-confident-soft-skills"></div>
-    </article>
-  </div>
+<div class="loading-container">
+  <div class="loading"></div>
+</div>
+<div class="content-boundaries skills-container" hidden>
+  <article>
+    <h3><%= data.pages.skills.coding %></h3>
+    <div>
+      <section>
+        <h4><%= data.pages.skills.mostConfidentLangs %></h4>
+        <div id="most-confident-langs"></div>
+      </section>
+      <section>
+        <h4><%= data.pages.skills.mostUsedLangs %></h4>
+        <div id="most-used-langs"></div>
+      </section>
+    </div>
+  </article>
+  <article>
+    <h3><%= data.pages.skills.music %></h3>
+    <div id="most-confident-music"></div>
+  </article>
+  <article>
+    <h3><%= data.pages.skills.softSkills %></h3>
+    <div id="most-confident-soft-skills"></div>
+  </article>
 </div>

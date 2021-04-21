@@ -8,13 +8,15 @@ import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { Data } from './models';
+import { BuildStylesOutput } from './styles';
 
 export interface BuildScriptsOptions {
   readonly data: Data;
   readonly production: boolean;
+  readonly stylesOutput: BuildStylesOutput;
 }
 
-export interface BuildScriptsOutputBundle {
+export interface BuildScriptsOutput {
   readonly main: string;
   readonly utils: string;
   readonly home: string;
@@ -27,7 +29,7 @@ export interface BuildScriptsOutputBundle {
 
 const scriptsPath = path.resolve(__dirname, '../../src/scripts');
 
-const pathToPageMap: Record<string, keyof BuildScriptsOutputBundle> = {
+const pathToPageMap: Record<string, keyof BuildScriptsOutput> = {
   main: 'main',
   utils: 'utils',
   'pages/home': 'home',
@@ -40,8 +42,8 @@ const pathToPageMap: Record<string, keyof BuildScriptsOutputBundle> = {
 
 const createBundle = async (
   outputPath: string,
-  { production }: { production: boolean },
-): Promise<BuildScriptsOutputBundle> => {
+  { production, stylesOutput }: Omit<BuildScriptsOptions, 'data'>,
+): Promise<BuildScriptsOutput> => {
   const rollupBuild = await rollup({
     input: {
       main: path.join(scriptsPath, 'main.ts'),
@@ -137,27 +139,29 @@ const createBundle = async (
     output
       .filter(({ name }) => name in pathToPageMap)
       .map(({ name, fileName }) => [pathToPageMap[name] || name, fileName]),
-  ) as unknown) as BuildScriptsOutputBundle;
+  ) as unknown) as BuildScriptsOutput;
 
-  const mainOutput = await fs.readFile(
-    path.join(outputPath, result.main),
-    'utf8',
-  );
+  await Promise.all(
+    Object.values(result).map(async (fileName) => {
+      const output = await fs.readFile(path.join(outputPath, fileName), 'utf8');
 
-  const replacedOutput = mainOutput.replace(
-    /process\.env\.(\w+)_OUTPUT/g,
-    (_, id) => {
-      const outputPath =
-        result[id.toLowerCase() as keyof BuildScriptsOutputBundle];
+      const replacedOutput = output.replace(
+        /process\.env\.(\w+)_(JS|CSS)_OUTPUT/g,
+        (_, id: string, type: 'JS' | 'CSS') => {
+          const map = type === 'JS' ? result : stylesOutput;
 
-      return `'${outputPath.slice(outputPath.lastIndexOf('/') + 1, -3)}'`;
-    },
-  );
+          const outputPath = map[id.toLowerCase() as keyof typeof map];
 
-  await fs.writeFile(
-    path.join(outputPath, result.main),
-    replacedOutput,
-    'utf8',
+          return `'/${outputPath}'`;
+        },
+      );
+
+      await fs.writeFile(
+        path.join(outputPath, fileName),
+        replacedOutput,
+        'utf8',
+      );
+    }),
   );
 
   return result;
@@ -165,7 +169,7 @@ const createBundle = async (
 
 export async function buildScripts(
   outputPath: string,
-  { production }: BuildScriptsOptions,
-): Promise<BuildScriptsOutputBundle> {
-  return createBundle(outputPath, { production });
+  { production, stylesOutput }: BuildScriptsOptions,
+): Promise<BuildScriptsOutput> {
+  return createBundle(outputPath, { production, stylesOutput });
 }

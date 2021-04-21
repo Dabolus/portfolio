@@ -12,6 +12,12 @@ import { hash } from '../helpers/hash';
 
 export interface BuildStylesOutput {
   readonly main: string;
+  readonly home: string;
+  readonly about: string;
+  readonly certifications: string;
+  readonly contacts: string;
+  readonly projects: string;
+  readonly skills: string;
 }
 
 const postcssInstance = postcss([
@@ -49,17 +55,31 @@ const generateSassVariables = (data: Record<string, unknown>): string =>
 const injectData = (filePath: string, data: Record<string, unknown>): string =>
   `${generateSassVariables(data)}\n@import '${filePath}';`;
 
+const styles = {
+  main: 'main',
+  home: 'home',
+  about: 'pages/about',
+  certifications: 'pages/certifications',
+  contacts: 'pages/contacts',
+  projects: 'pages/projects',
+  skills: 'pages/skills',
+};
+
 export interface BuildStylesOptions {
   readonly production: boolean;
   readonly data: Record<string, unknown>;
 }
 
-export async function buildStyles(
+export interface CompileStylesOptions extends BuildStylesOptions {
+  readonly fragment?: keyof typeof styles;
+}
+
+const compileStyles = async (
   outputDir: string,
-  { production, data }: BuildStylesOptions,
-): Promise<BuildStylesOutput> {
+  { fragment = 'main', production, data }: CompileStylesOptions,
+) => {
   const { css: postprocessedStyles } = await postcssInstance.process(
-    injectData('./main.scss', data),
+    injectData(`./${styles[fragment]}.scss`, data),
     {
       // NOTE: this is actually a fake path, but we need to use it to
       // correctly resolve imports and generate the source map.
@@ -67,7 +87,7 @@ export async function buildStyles(
     },
   );
 
-  const stylesFile = `styles/main${
+  const stylesFile = `styles/${styles[fragment]}${
     production ? `.${hash(postprocessedStyles)}` : ''
   }.css`;
 
@@ -76,5 +96,22 @@ export async function buildStyles(
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, postprocessedStyles);
 
-  return { main: stylesFile };
+  return stylesFile;
+};
+
+export async function buildStyles(
+  outputDir: string,
+  { production, data }: BuildStylesOptions,
+): Promise<BuildStylesOutput> {
+  const results = await Promise.all(
+    Object.keys(styles).map((fragment) =>
+      compileStyles(outputDir, {
+        fragment: fragment as keyof typeof styles,
+        production,
+        data,
+      }).then((output) => [fragment, output]),
+    ),
+  );
+
+  return Object.fromEntries(results);
 }

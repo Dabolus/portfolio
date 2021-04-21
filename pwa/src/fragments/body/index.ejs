@@ -13,7 +13,16 @@
     </style>
   </noscript>
   <main>
-    <%- await include('home') %>
+    <section id="home" <%- data.page === 'home' ? '' : 'aria-hidden="true"' %>>
+      <% if (data.page === 'home') { %>
+        <%- await include('home') %>
+      <% } else { %>
+        <div class="loading-container">
+          <div class="loading"></div>
+        </div>
+      <% } %>
+    </section>
+
     <%- await include('pages') %>
   </main>
 </body>

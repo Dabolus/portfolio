@@ -8,10 +8,32 @@ import { buildScripts } from '../build/scripts';
 import { buildStyles } from '../build/styles';
 import { generateServiceWorkers } from '../build/sw';
 import { copyAssets } from '../build/assets';
-import { Data, LocaleDataModule, Locale } from '../build/models';
+import { Data, LocaleDataModule, Locale, Output } from '../build/models';
 
 const outputPath = path.resolve(__dirname, '../../dist');
 const localesPath = path.resolve(__dirname, '../../src/locales');
+
+const output: Output = {
+  scripts: {
+    main: 'scripts/main.js',
+    home: 'scripts/pages/home.js',
+    about: 'scripts/pages/about.js',
+    certifications: 'scripts/pages/certifications.js',
+    contacts: 'scripts/pages/contacts.js',
+    projects: 'scripts/pages/projects.js',
+    skills: 'scripts/pages/skills.js',
+    utils: 'scripts/utils.js',
+  },
+  styles: {
+    main: 'styles/main.css',
+    home: 'styles/home.css',
+    about: 'styles/pages/about.css',
+    certifications: 'styles/pages/certifications.css',
+    contacts: 'styles/pages/contacts.css',
+    projects: 'styles/pages/projects.css',
+    skills: 'styles/pages/skills.css',
+  },
+};
 
 const getLocalesData = async (): Promise<readonly Data[]> => {
   const locales = await fs.readdir(localesPath);
@@ -48,19 +70,7 @@ const start = async () => {
       localesData.map((data) =>
         buildTemplate(path.resolve(outputPath, data.locale), {
           data,
-          output: {
-            scripts: {
-              main: 'scripts/main.js',
-              home: 'scripts/pages/home.js',
-              about: 'scripts/pages/about.js',
-              certifications: 'scripts/pages/certifications.js',
-              contacts: 'scripts/pages/contacts.js',
-              projects: 'scripts/pages/projects.js',
-              skills: 'scripts/pages/skills.js',
-              utils: 'scripts/utils.js',
-            },
-            styles: { main: 'styles/main.css' },
-          },
+          output,
           production,
         }),
       );
@@ -85,7 +95,11 @@ const start = async () => {
         `\x1b[32m${changedPath}\x1b[0m changed, rebuilding scripts...`,
       );
 
-      buildScripts(outputPath, { production, data: defaultData });
+      buildScripts(outputPath, {
+        production,
+        data: defaultData,
+        stylesOutput: output.styles,
+      });
     }, 50),
   );
 

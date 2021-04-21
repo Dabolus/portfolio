@@ -34,8 +34,7 @@ const build = async () => {
     ({ locale }) => locale === defaultLocale,
   );
 
-  const [scripts, styles] = await Promise.all([
-    buildScripts(outputPath, { production, data: defaultData }),
+  const [styles] = await Promise.all([
     buildStyles(outputPath, { production, data: {} }),
     buildSitemap(outputPath, {
       data: localesData,
@@ -57,6 +56,12 @@ const build = async () => {
       },
     ]),
   ]);
+
+  const scripts = await buildScripts(outputPath, {
+    production,
+    data: defaultData,
+    stylesOutput: styles,
+  });
 
   await Promise.all(
     localesData.map((data) =>

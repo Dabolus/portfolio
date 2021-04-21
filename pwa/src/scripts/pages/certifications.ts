@@ -1,4 +1,4 @@
-import { generatePicture, Icon } from '../utils';
+import { generatePicture, Icon, loadStyles, loadTemplate } from '../utils';
 
 interface Certification {
   readonly id: string;
@@ -15,6 +15,11 @@ const getCertifications = async (): Promise<readonly Certification[]> => {
 };
 
 const configure = async () => {
+  await Promise.all([
+    loadTemplate('certifications'),
+    loadStyles(process.env.CERTIFICATIONS_CSS_OUTPUT),
+  ]);
+
   const certificationsContainer = document.querySelector<HTMLDivElement>(
     '#certifications',
   );

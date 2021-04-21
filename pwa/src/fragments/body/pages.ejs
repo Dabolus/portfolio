@@ -11,10 +11,20 @@
     <hr>
   </div>
   <div id="content-container">
-    <%- await include('pages/about') %>
-    <%- await include('pages/projects') %>
-    <%- await include('pages/certifications') %>
-    <%- await include('pages/contacts') %>
-    <%- await include('pages/skills') %>
+    <% await Object.entries(data.pages).reduce(async (previousPromise, [id, { link }]) => { %>
+      <% await previousPromise %>
+
+      <% if (id === 'home' || link) { return; } %>
+
+      <div class="content" id="<%= id %>" <%- data.page === 'about' ? '' : 'hidden' %>>
+        <% if (data.page === id) { %>
+          <%- await include(`pages/${id}`) %>
+        <% } else { %>
+          <div class="loading-container">
+            <div class="loading"></div>
+          </div>
+        <% } %>
+      </div>
+    <% }, Promise.resolve()) %>
   </div>
 </section>
