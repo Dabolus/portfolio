@@ -36,7 +36,14 @@
     <% }) %>
   </ul>
 </nav>
-<% Object.entries(data.pages).forEach(([id, { link }]) => { %>
+<% Object.entries(data.pages).forEach(([id, { link, title, slug }]) => { %>
   <% if (!link) { return; } %>
-  <portal src="<%= link %>" id="<%= id %>-link-portal" aria-hidden="true" class="closed"></portal>
+  <portal
+    src="<%= link %>"
+    id="<%= id %>-link-portal"
+    title="<%= title %>"
+    aria-hidden="true"
+    class="closed"
+    data-slug="<%= slug %>"
+  ></portal>
 <% }) %>

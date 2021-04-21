@@ -1,5 +1,5 @@
 import Typed from 'typed.js/src/typed';
-import { loadStyles, loadTemplate, scroll } from '../utils';
+import { loadStyles, loadTemplate, logEvent, scroll } from '../utils';
 
 interface HTMLPortalElement extends HTMLElement {
   src: string;
@@ -44,6 +44,13 @@ export const onPageLoad = async () => {
 
         externalLink.addEventListener('click', (e) => {
           e.preventDefault();
+
+          logEvent('page_view', {
+            page_title: portal.title,
+            page_location: `${location.href}${portal.dataset.slug}`,
+            page_path: `${location.pathname}${portal.dataset.slug}`,
+          });
+
           portal.addEventListener('transitionend', () => portal.activate(), {
             once: true,
           });
