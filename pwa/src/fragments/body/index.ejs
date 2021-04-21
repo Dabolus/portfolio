@@ -24,5 +24,13 @@
     </section>
 
     <%- await include('pages') %>
+
+    <div id="update-notification" hidden>
+      <p><%= data.updateAvailable %></p>
+      <div>
+        <button id="cancel-update"><%= data.cancel %></button>
+        <button id="perform-update" autofocus><%= data.updateNow %></button>
+      </div>
+    </div>
   </main>
 </body>

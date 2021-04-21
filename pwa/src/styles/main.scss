@@ -91,6 +91,58 @@ ul.badges {
   }
 }
 
+#update-notification {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  background: var(--theme-card-background);
+  transform: translate(-50%, -100%);
+  transition: 0.3s transform;
+  padding: 0.5rem;
+  border-radius: 0 0 0.25rem 0.25rem;
+  box-shadow: var(--theme-shadow);
+
+  &.shown {
+    transform: translate(-50%, 0);
+  }
+
+  > p {
+    font-size: 1rem;
+    padding: 0;
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 0.25rem;
+
+    & > button {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      background: none;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+
+      &:hover {
+        background: var(--theme-content-background);
+      }
+
+      &#cancel-update {
+        color: var(--theme-color);
+        margin-right: 0.5rem;
+      }
+
+      &#perform-update {
+        color: var(--theme-accent);
+      }
+    }
+  }
+}
+
 @keyframes loading {
   0% {
     transform: rotate(0deg);

@@ -83,8 +83,8 @@ const createBundle = async (
       replace({
         exclude: /node_modules/,
         delimiters: ['', ''],
-        'process.env.ENABLE_DEV_SW': `${!!(
-          production || process.env.ENABLE_DEV_SW
+        'process.env.ENABLE_SERVICE_WORKER': `${!!(
+          production || process.env.ENABLE_SERVICE_WORKER
         )}`,
         'process.env.API_URL': production
           ? "'/api'"

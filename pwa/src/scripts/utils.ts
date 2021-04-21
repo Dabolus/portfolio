@@ -77,32 +77,93 @@ export const generatePicture = (
   </picture>
 `;
 
-export interface RegisterServiceWorkerOptions {
-  onUpdate?(): unknown;
-}
+let _newSw: ServiceWorker;
 
-export const registerServiceWorker = async ({
-  onUpdate,
-}: RegisterServiceWorkerOptions = {}) => {
-  if (process.env.ENABLE_DEV_SW && 'serviceWorker' in navigator) {
-    const registration = await navigator.serviceWorker.register('/sw.js', {
-      scope: '/',
-    });
+export const setupServiceWorker = async () => {
+  const updateNotification = document.querySelector<HTMLDivElement>(
+    '#update-notification',
+  );
+  const cancelUpdateButton = document.querySelector<HTMLButtonElement>(
+    '#cancel-update',
+  );
+  const performUpdateButton = document.querySelector<HTMLButtonElement>(
+    '#perform-update',
+  );
 
-    if (registration.waiting) {
-      onUpdate?.();
-    }
+  const showUpdateNotification = async () => {
+    updateNotification.hidden = false;
+    await sleep(50);
+    updateNotification.className = 'shown';
+  };
 
-    registration.addEventListener('updatefound', () => {
-      const installingWorker = registration.installing;
+  const hideUpdateNotification = async () => {
+    updateNotification.className = '';
+    await sleep(300);
+    updateNotification.hidden = true;
+  };
 
-      installingWorker.addEventListener('statechange', () => {
-        if (navigator.serviceWorker.controller) {
-          onUpdate?.();
-        }
-      });
-    });
+  cancelUpdateButton.addEventListener('click', () => hideUpdateNotification(), {
+    once: true,
+  });
+
+  performUpdateButton.addEventListener(
+    'click',
+    () => _newSw.postMessage({ action: 'update' }),
+    { once: true },
+  );
+
+  if (process.env.ENABLE_SERVICE_WORKER && 'serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('/sw.js', {
+        scope: '/',
+      })
+      .catch(console.warn);
   }
+
+  const trackInstallation = (sw: ServiceWorker) => {
+    sw.addEventListener('statechange', async () => {
+      if (sw.state === 'installed') {
+        _newSw = sw;
+
+        showUpdateNotification();
+      }
+    });
+  };
+
+  await navigator.serviceWorker
+    .register('/sw.js', {
+      scope: '/',
+    })
+    .catch(console.warn);
+
+  if (!navigator.serviceWorker.controller) {
+    return;
+  }
+
+  const registration = await navigator.serviceWorker.getRegistration('/');
+
+  if (!registration) {
+    return;
+  }
+
+  if (registration.waiting) {
+    _newSw = registration.waiting;
+    showUpdateNotification();
+    return;
+  }
+
+  if (registration.installing) {
+    trackInstallation(registration.installing);
+    return;
+  }
+
+  registration.addEventListener('updatefound', () =>
+    trackInstallation(registration.installing!),
+  );
+
+  navigator.serviceWorker.addEventListener('controllerchange', () =>
+    window.location.reload(),
+  );
 };
 
 export const loadFile = async (url: string) => {

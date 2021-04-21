@@ -1,9 +1,9 @@
-import { registerServiceWorker } from './utils';
+import { setupServiceWorker } from './utils';
 import { configureRouting } from './routing';
 import { setupTopBarAnimation } from './animation';
 
 const start = async () => {
-  registerServiceWorker({ onUpdate: () => window.location.reload() });
+  setupServiceWorker();
   configureRouting();
   setupTopBarAnimation();
 };

@@ -125,8 +125,8 @@ const start = async () => {
     .on(
       'all',
       debounce(() => {
-        if (process.env.ENABLE_DEV_SW) {
-          console.log('Regenerating Service Worker...');
+        if (process.env.ENABLE_SERVICE_WORKER) {
+          console.log('Rebuilding Service Worker...');
 
           generateServiceWorker(outputPath, { defaultLocale });
         }

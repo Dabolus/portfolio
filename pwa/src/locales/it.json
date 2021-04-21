@@ -1,6 +1,9 @@
 {
   "baseTitle": "Giorgio Garasto",
   "baseUrl": "https://giorgio.garasto.me",
+  "updateAvailable": "Una nuova versione della web app è disponibile!",
+  "cancel": "Annulla",
+  "updateNow": "Aggiorna ora",
   "pages": {
     "home": {
       "slug": null,
