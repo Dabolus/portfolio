@@ -16,7 +16,7 @@
 
       <% if (id === 'home' || link) { return; } %>
 
-      <div class="content" id="<%= id %>" <%- data.page === 'about' ? '' : 'hidden' %>>
+      <div class="content" id="<%= id %>" <%- data.page === id ? '' : 'hidden' %>>
         <% if (data.page === id) { %>
           <%- await include(`pages/${id}`) %>
         <% } else { %>
