@@ -47,8 +47,12 @@ export const onPageLoad = async () => {
 
           logEvent('page_view', {
             page_title: portal.title,
-            page_location: `${location.href}${portal.dataset.slug}`,
-            page_path: `${location.pathname}${portal.dataset.slug}`,
+            page_location: `${location.href}${portal.getAttribute(
+              'data-slug',
+            )}`,
+            page_path: `${location.pathname}${portal.getAttribute(
+              'data-slug',
+            )}`,
           });
 
           portal.addEventListener('transitionend', () => portal.activate(), {
