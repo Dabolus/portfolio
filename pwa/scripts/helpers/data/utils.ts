@@ -25,7 +25,7 @@ export const generatePicture = (
     ${svg ? `<source srcset="${svg}" type="image/svg+xml">` : ''}
     ${webp ? `<source srcset="${webp}" type="image/webp">` : ''}
     ${jpg ? `<source srcset="${jpg}" type="image/jpeg">` : ''}
-    <img style="background-image: url(${placeholder});" src="${
+    <img style="background-image: url(&quot;${placeholder}&quot;);" src="${
   jpg || webp || svg
 }" alt="${name}" title="${name}" loading="lazy" lazyload${
   size ? ` width="${size}" height="${size}"` : ''
