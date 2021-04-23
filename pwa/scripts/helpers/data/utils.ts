@@ -18,15 +18,16 @@ export interface Icon {
 
 export const generatePicture = (
   name: string,
-  { svg, webp, jpg, placeholder }: Icon,
+  { svg, webp, jpg, png, placeholder }: Icon,
   size?: number,
 ) => `
   <picture>
     ${svg ? `<source srcset="${svg}" type="image/svg+xml">` : ''}
     ${webp ? `<source srcset="${webp}" type="image/webp">` : ''}
     ${jpg ? `<source srcset="${jpg}" type="image/jpeg">` : ''}
+    ${png ? `<source srcset="${png}" type="image/jpeg">` : ''}
     <img style="background-image: url(&#34;${placeholder}&#34;);" src="${
-  jpg || webp || svg
+  png || jpg || webp || svg
 }" alt="${name}" title="${name}" loading="lazy" lazyload${
   size ? ` width="${size}" height="${size}"` : ''
 }>
