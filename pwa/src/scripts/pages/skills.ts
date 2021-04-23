@@ -81,89 +81,63 @@ const computePie = (
 ) => {
   let R = 0;
   const L = size / 2;
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttributeNS(null, 'viewBox', `0 0 ${size} ${size}`);
 
-  const midCircle = document.createElementNS(
-    'http://www.w3.org/2000/svg',
-    'circle',
-  );
-  midCircle.setAttributeNS(null, 'cx', `${size / 2}`);
-  midCircle.setAttributeNS(null, 'cy', `${size / 2}`);
-  midCircle.setAttributeNS(null, 'r', `${size / 3}`);
-  midCircle.setAttributeNS(null, 'fill', 'var(--theme-content-background)');
+  return `
+    <svg viewBox="0 0 ${size} ${size}">
+      ${data.reduce((sectors, { name, size }) => {
+        const a = 360 * (size / totalSize);
+        const aCalc = a > 180 ? 360 - a : a;
+        const aRad = (aCalc * Math.PI) / 180;
+        const z = Math.sqrt(2 * L * L - 2 * L * L * Math.cos(aRad));
+        const x =
+          aCalc <= 90
+            ? L * Math.sin(aRad)
+            : L * Math.sin(((180 - aCalc) * Math.PI) / 180);
+        const y = Math.sqrt(Math.max(0, z * z - x * x));
+        const Y = y;
+        const [X, arcSweep] = a <= 180 ? [L + x, 0] : [L - x, 1];
 
-  const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  label.setAttributeNS(null, 'x', `${size / 2}`);
-  label.setAttributeNS(null, 'y', `${size / 2}`);
-  label.setAttributeNS(null, 'text-anchor', 'middle');
-  label.setAttributeNS(null, 'dominant-baseline', 'middle');
-  label.setAttributeNS(null, 'fill', 'var(--theme-color)');
-  label.setAttributeNS(null, 'font-size', '6px');
+        const path = `
+          <path
+            class="sector"
+            aria-label="${name}"
+            data-size="${prettifySize(size)}"
+            fill="${skillToColor[name] || 'var(--theme-card-background)'}"
+            d="M${L},${L} L${L},0 A${L},${L} 0 ${arcSweep},1 ${X}, ${Y} z"
+            transform="rotate(${R}, ${L}, ${L})"
+          />
+        `;
 
-  const langName = document.createElementNS(
-    'http://www.w3.org/2000/svg',
-    'tspan',
-  );
-  langName.setAttributeNS(null, 'x', `${size / 2}`);
-  langName.setAttributeNS(null, 'dy', `-0.5em`);
-  langName.textContent = 'Tap or hover a language';
-  label.appendChild(langName);
+        R += a;
 
-  const langSize = document.createElementNS(
-    'http://www.w3.org/2000/svg',
-    'tspan',
-  );
-  langSize.setAttributeNS(null, 'x', `${size / 2}`);
-  langSize.setAttributeNS(null, 'dy', `1.5em`);
-  langSize.textContent = 'to see its stats.';
-  label.appendChild(langSize);
-
-  data.forEach(({ name, size }) => {
-    const a = 360 * (size / totalSize);
-    const aCalc = a > 180 ? 360 - a : a;
-    const aRad = (aCalc * Math.PI) / 180;
-    const z = Math.sqrt(2 * L * L - 2 * L * L * Math.cos(aRad));
-    const x =
-      aCalc <= 90
-        ? L * Math.sin(aRad)
-        : L * Math.sin(((180 - aCalc) * Math.PI) / 180);
-    const y = Math.sqrt(Math.max(0, z * z - x * x));
-    const Y = y;
-    const [X, arcSweep] = a <= 180 ? [L + x, 0] : [L - x, 1];
-
-    const svgSector = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'path',
-    );
-    svgSector.setAttributeNS(
-      null,
-      'fill',
-      skillToColor[name] || 'var(--theme-card-background)',
-    );
-    svgSector.setAttributeNS(
-      null,
-      'd',
-      `M${L},${L} L${L},0 A${L},${L} 0 ${arcSweep},1 ${X}, ${Y} z`,
-    );
-    svgSector.setAttributeNS(null, 'transform', `rotate(${R}, ${L}, ${L})`);
-    svgSector.addEventListener('mouseenter', () => {
-      langName.textContent = name;
-      langSize.textContent = prettifySize(size);
-    });
-    svgSector.addEventListener('mouseleave', () => {
-      langName.textContent = 'Tap or hover a language';
-      langSize.textContent = 'to see its stats.';
-    });
-    svg.appendChild(svgSector);
-
-    R += a;
-  });
-
-  svg.appendChild(midCircle);
-  svg.appendChild(label);
-
-  return svg;
+        return `
+          ${sectors}
+          ${path}
+        `;
+      }, '')}
+      <circle
+        cx="${size / 2}"
+        cy="${size / 2}"
+        r="${size / 3}"
+        fill="var(--theme-content-background)"
+      />
+      <text
+        x="${size / 2}"
+        y="${size / 2}"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        fill="var(--theme-color)"
+        font-size="6px"
+      >
+        <tspan id="language-name" x="${
+          size / 2
+        }" dy="-0.5em">Tap or hover a language</tspan>
+        <tspan id="language-size" x="${
+          size / 2
+        }" dy="1.5em">to see its stats.</tspan>
+      </text>
+    </svg>
+  `;
 };
 
 const computeLineChart = (data: readonly LineData[], size = 100) => `
@@ -225,13 +199,32 @@ export const configure = async () => {
   document.querySelector(
     '#most-confident-langs',
   ).innerHTML = confidentLangsLineChart;
-  document.querySelector('#most-used-langs').appendChild(mostUsedLangsPie);
+  document.querySelector('#most-used-langs').innerHTML = mostUsedLangsPie;
   document.querySelector(
     '#most-confident-music',
   ).innerHTML = confidentMusicLineChart;
   document.querySelector(
     '#most-confident-soft-skills',
   ).innerHTML = confidentSoftSkillsLineChart;
+
+  const languageName = document.querySelector<SVGTSpanElement>(
+    '#language-name',
+  );
+  const languageSize = document.querySelector<SVGTSpanElement>(
+    '#language-size',
+  );
+
+  document.querySelectorAll('.sector').forEach((sector) => {
+    sector.addEventListener('mouseenter', () => {
+      languageName.textContent = sector.getAttribute('aria-label');
+      languageSize.textContent = sector.getAttribute('data-size');
+    });
+
+    sector.addEventListener('mouseleave', () => {
+      languageName.textContent = 'Tap or hover a language';
+      languageSize.textContent = 'to see its stats.';
+    });
+  });
 
   skillsContainer.hidden = false;
   loadingContainer.hidden = true;
