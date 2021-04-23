@@ -15,10 +15,12 @@ declare global {
 let typed: Typed;
 
 const configure = async () => {
-  await Promise.all([
+  const [applyTemplate] = await Promise.all([
     loadTemplate('home'),
     loadStyles(process.env.HOME_CSS_OUTPUT),
   ]);
+
+  applyTemplate();
 };
 
 const configurationPromise = configure();

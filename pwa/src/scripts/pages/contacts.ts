@@ -46,10 +46,12 @@ window.__recaptchaCallback = async () => {
 };
 
 const configure = async () => {
-  await Promise.all([
+  const [applyTemplate] = await Promise.all([
     loadTemplate('contacts'),
     loadStyles(process.env.CONTACTS_CSS_OUTPUT),
   ]);
+
+  applyTemplate();
 
   const contactForm = document.querySelector<HTMLFormElement>('#contact-form');
 

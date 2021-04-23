@@ -147,19 +147,20 @@ export const loadFile = async (url: string) => {
 };
 
 export const loadTemplate = async (name: string) => {
+  const template = await loadFile(`en/fragments/${name}.html`);
   const outputElement = document.querySelector<HTMLDivElement>(`#${name}`);
 
-  // If there is no loading in the output element, it means that
-  // the data has already been loaded, so we just do nothing
-  if (
-    !outputElement.firstElementChild.className.includes('loading-container')
-  ) {
-    return;
-  }
+  return () => {
+    // If there is no loading in the output element, it means that
+    // the data has already been loaded, so we just do nothing
+    if (
+      !outputElement.firstElementChild.className.includes('loading-container')
+    ) {
+      return;
+    }
 
-  const template = await loadFile(`en/fragments/${name}.html`);
-
-  outputElement.innerHTML = template;
+    outputElement.innerHTML = template;
+  };
 };
 
 export const loadStyles = (url: string) =>

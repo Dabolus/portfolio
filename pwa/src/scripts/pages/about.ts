@@ -23,10 +23,12 @@ const updateAge = (age: HTMLSpanElement) => () => {
 };
 
 const configure = async () => {
-  await Promise.all([
+  const [applyTemplate] = await Promise.all([
     loadTemplate('about'),
     loadStyles(process.env.ABOUT_CSS_OUTPUT),
   ]);
+
+  applyTemplate();
 };
 
 const configurationPromise = configure();

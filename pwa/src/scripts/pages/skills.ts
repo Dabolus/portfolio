@@ -1,10 +1,12 @@
 import { loadStyles, loadTemplate } from '../utils';
 
 export const configure = async () => {
-  await Promise.all([
+  const [applyTemplate] = await Promise.all([
     loadTemplate('skills'),
     loadStyles(process.env.SKILLS_CSS_OUTPUT),
   ]);
+
+  applyTemplate();
 
   const languageName = document.querySelector<SVGTSpanElement>(
     '#language-name',
