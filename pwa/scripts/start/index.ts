@@ -9,6 +9,10 @@ import { buildStyles } from '../build/styles';
 import { generateServiceWorker } from '../build/sw';
 import { copyAssets } from '../build/assets';
 import { Data, LocaleDataModule, Locale, Output } from '../build/models';
+import {
+  getDynamicData as defaultGetDynamicData,
+  DynamicData,
+} from '../helpers/data';
 
 const outputPath = path.resolve(__dirname, '../../dist');
 const localesPath = path.resolve(__dirname, '../../src/locales');
@@ -50,11 +54,19 @@ const getLocalesData = async (): Promise<readonly Data[]> => {
   return localesData;
 };
 
+// TODO: use cache to avoid reading data from GitHub everytime we run the script
+const getDynamicData = async (): Promise<DynamicData> => {
+  return defaultGetDynamicData();
+};
+
 const start = async () => {
   const cwd = path.resolve(__dirname, '../..');
   const bs = browserSync.create();
   const defaultLocale = 'en';
-  const localesData = await getLocalesData();
+  const [localesData, dynamicData] = await Promise.all([
+    getLocalesData(),
+    getDynamicData(),
+  ]);
   const production = process.env.NODE_ENV === 'production';
   const defaultData = localesData.find(
     ({ locale }) => locale === defaultLocale,
@@ -69,7 +81,13 @@ const start = async () => {
 
       localesData.map((data) =>
         buildTemplate(path.resolve(outputPath, data.locale), {
-          data,
+          data: {
+            ...data,
+            data: {
+              ...data.data,
+              ...dynamicData,
+            },
+          },
           output,
           production,
         }),

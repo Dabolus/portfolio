@@ -1,3 +1,6 @@
+import { ParsedCertification } from '../helpers/data/certifications';
+import { ParsedProject } from '../helpers/data/projects';
+import { ParsedSkills } from '../helpers/data/skills';
 import { BuildScriptsOutput } from './scripts';
 import { BuildStylesOutput } from './styles';
 
@@ -12,6 +15,9 @@ export interface Page {
 export interface BaseData {
   readonly baseTitle: string;
   readonly baseUrl: string;
+  readonly certifications: readonly ParsedCertification[];
+  readonly projects: readonly ParsedProject[];
+  readonly skills: ParsedSkills;
 }
 
 export interface PageData {
