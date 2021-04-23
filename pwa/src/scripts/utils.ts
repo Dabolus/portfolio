@@ -52,31 +52,6 @@ export const importIIFE = (src: string) => {
   return scriptPromise;
 };
 
-export interface Icon {
-  readonly svg?: string;
-  readonly jpg?: string;
-  readonly png?: string;
-  readonly webp?: string;
-  readonly placeholder: string;
-}
-
-export const generatePicture = (
-  name: string,
-  { svg, webp, jpg, placeholder }: Icon,
-  size?: number,
-) => `
-  <picture>
-    ${svg ? `<source srcset="${svg}" type="image/svg+xml">` : ''}
-    ${webp ? `<source srcset="${webp}" type="image/webp">` : ''}
-    ${jpg ? `<source srcset="${jpg}" type="image/jpeg">` : ''}
-    <img style="background-image: url(&quot;${placeholder}&quot;);" src="${
-  jpg || webp || svg
-}" alt="${name}" title="${name}" loading="lazy" lazyload${
-  size ? ` width="${size}" height="${size}"` : ''
-}>
-  </picture>
-`;
-
 let _newSw: ServiceWorker;
 
 export const setupServiceWorker = async () => {

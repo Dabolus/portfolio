@@ -1,3 +1,11 @@
-<div class="loading-container">
-  <div class="loading"></div>
-</div>
+<% data.certifications.forEach(({ id, name, link, skills, picture }) => { %>
+  <a class="certification" href="<%= link %>" target="<%= id %>">
+    <%- picture %>
+    <h3><%= name %></h3>
+    <ul class="badges">
+      <% skills.forEach(skill => { %>
+        <li><%= skill %></li>
+      <% }) %>
+    </ul>
+  </a>
+<% }) %>
