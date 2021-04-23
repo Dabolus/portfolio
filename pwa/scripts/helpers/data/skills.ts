@@ -8,7 +8,7 @@ export interface LanguageSizeData {
 }
 
 export interface GitHubData {
-  readonly total: number;
+  readonly total: string;
   readonly languages: readonly LanguageSizeData[];
 }
 
@@ -106,7 +106,7 @@ const getGithubData = async (
   );
 
   return {
-    total,
+    total: prettifySize(total),
     languages: Object.entries(languages).reduce(
       (languageArr: any, [name, { color, size }]: [string, any]) => {
         const index = languageArr.findIndex(
