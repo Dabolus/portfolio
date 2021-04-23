@@ -1,26 +1,31 @@
-<div class="loading-container">
-  <div class="loading"></div>
-</div>
-<div class="content-boundaries skills-container" hidden>
+<div class="content-boundaries skills-container">
   <article>
     <h3><%= data.pages.skills.coding %></h3>
     <div>
       <section>
         <h4><%= data.pages.skills.mostConfidentLangs %></h4>
-        <div id="most-confident-langs"></div>
+        <div>
+          <%- data.skills.codingSkillsChart %>
+        </div>
       </section>
       <section>
         <h4><%= data.pages.skills.mostUsedLangs %></h4>
-        <div id="most-used-langs"></div>
+        <div id="most-used-langs">
+          <%- data.skills.codeSizeChart %>
+        </div>
       </section>
     </div>
   </article>
   <article>
     <h3><%= data.pages.skills.music %></h3>
-    <div id="most-confident-music"></div>
+    <div>
+      <%- data.skills.musicSkillsChart %>
+    </div>
   </article>
   <article>
     <h3><%= data.pages.skills.softSkills %></h3>
-    <div id="most-confident-soft-skills"></div>
+    <div>
+      <%- data.skills.softSkillsChart %>
+    </div>
   </article>
 </div>
