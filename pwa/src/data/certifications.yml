@@ -10,7 +10,7 @@ mobile-web-specialist:
     - Testing and Debugging
     - Mobile Web Forms
   icon:
-    jpg: https://firebasestorage.googleapis.com/v0/b/giorgio-garasto-pwa.appspot.com/o/certifications%2Fmobile-web-specialist.jpg?alt=media
+    jpg: images/certifications/mobile-web-specialist.jpg
     placeholder:
       data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
       0 256 256'%3e%3cfilter id='b'%3e%3cfeGaussianBlur stdDeviation='12'/%3e%3c/filter%3e%3cpath
