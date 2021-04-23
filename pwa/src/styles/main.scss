@@ -88,6 +88,10 @@ ul.badges {
     background: var(--theme-content-background);
     border-radius: 0.75rem;
     display: inline-block;
+
+    &:not(:last-child) {
+      margin-right: 0.25rem;
+    }
   }
 }
 
