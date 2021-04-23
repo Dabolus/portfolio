@@ -19,6 +19,7 @@ export interface BuildScriptsOptions {
 export interface BuildScriptsOutput {
   readonly main: string;
   readonly utils: string;
+  readonly animation: string;
   readonly home: string;
   readonly about: string;
   readonly certifications: string;
@@ -32,6 +33,7 @@ const scriptsPath = path.resolve(__dirname, '../../src/scripts');
 const pathToPageMap: Record<string, keyof BuildScriptsOutput> = {
   main: 'main',
   utils: 'utils',
+  animation: 'animation',
   'pages/home': 'home',
   'pages/about': 'about',
   'pages/certifications': 'certifications',

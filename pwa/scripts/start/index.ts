@@ -27,6 +27,7 @@ const output: Output = {
     projects: 'scripts/pages/projects.js',
     skills: 'scripts/pages/skills.js',
     utils: 'scripts/utils.js',
+    animation: 'scripts/animation.js',
   },
   styles: {
     main: 'styles/main.css',
