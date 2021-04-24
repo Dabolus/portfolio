@@ -105,12 +105,6 @@ export const setupServiceWorker = async () => {
     });
   };
 
-  await navigator.serviceWorker
-    .register('/sw.js', {
-      scope: '/',
-    })
-    .catch(console.warn);
-
   if (!navigator.serviceWorker.controller) {
     return;
   }
