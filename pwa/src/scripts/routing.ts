@@ -122,6 +122,11 @@ export const configureRouting = () => {
       page.addEventListener(
         'transitionend',
         () => {
+          // The page changed during the transition, so we do nothing to avoid breaking things
+          if (pathname !== window.location.pathname) {
+            return;
+          }
+
           Object.entries(pages).forEach(
             ([id, { ref }]) => id !== path && (ref.hidden = true),
           );
@@ -141,6 +146,11 @@ export const configureRouting = () => {
         page.addEventListener(
           'transitionend',
           () => {
+            // The page changed during the transition, so we do nothing to avoid breaking things
+            if (pathname !== window.location.pathname) {
+              return;
+            }
+
             hide(pages.home.ref);
             document.body.classList.add('blocked');
           },
