@@ -4,7 +4,7 @@ import { buildScripts } from './scripts';
 import { buildStyles } from './styles';
 import { generateServiceWorker } from './sw';
 import { copyAssets } from './assets';
-// import { buildSitemap } from './sitemap';
+import { buildSitemap } from './sitemap';
 import { getData } from '../helpers/data';
 import {
   defaultLocale,
@@ -35,20 +35,19 @@ const build = async () => {
 
   const [styles] = await Promise.all([
     buildStyles(outputPath, { production }),
-    // TODO: refactor sitemap using EJS
-    // buildSitemap(outputPath, {
-    //   data: localesData,
-    //   priorities: [
-    //     'home',
-    //     'about',
-    //     'projects',
-    //     'certifications',
-    //     'contacts',
-    //     'skills',
-    //     'blog',
-    //   ],
-    //   defaultLocale,
-    // }),
+    buildSitemap(outputPath, {
+      baseUrl: config.baseUrl,
+      pages: [
+        'home',
+        'about',
+        'projects',
+        'certifications',
+        'contacts',
+        'skills',
+        'blog',
+      ],
+      defaultLocale,
+    }),
     copyAssets([
       {
         from: 'src/assets/*',
