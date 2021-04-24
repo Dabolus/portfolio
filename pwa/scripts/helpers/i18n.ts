@@ -14,24 +14,32 @@ export const defaultLocale = 'en';
 export const getAvailableLocales = (): Promise<readonly string[]> =>
   availableLocalesPromise;
 
-export const parseLocaleFile = (content: string): Record<string, string> => {
+export const parseLocaleFile = (
+  content: string,
+): Record<string, string | string[]> => {
   // There is always an empty msgid/msgstr at the beginning of a .po file, so we ignore the first match
   const [, ...matches] = Array.from(
-    content.matchAll(/msgid (.+?)\nmsgstr (.+?)\n\n/gs),
+    content.matchAll(/msgid (.+?)\nmsgstr (.+?)\n(?:\n|$)/gs),
   );
 
   return Object.fromEntries(
-    matches.map(([, msgid, msgstr]) => [
+    matches.map(([, msgid, msgstr]) => {
       // Remove the quotes from the msgid
-      msgid.slice(1, -1),
-      msgstr
+      const id = msgid.slice(1, -1);
+
+      const str = msgstr
         // Split the msgstr into lines
         .split('\n')
         // Parse each line as JSON to remove the quotes and unescape special characters
         .map((msgPart) => JSON.parse(msgPart))
-        // Join everything back together into a single line
-        .join(''),
-    ]),
+        // Join the original lines back into a single line
+        .join('')
+        // Split on the unescaped new lines
+        .split('\n');
+
+      // If we have a single line, we just return the first string. Otherwise, we return an array of strings
+      return [id, str.length > 1 ? str : str[0]];
+    }),
   );
 };
 
