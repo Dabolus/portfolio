@@ -43,6 +43,7 @@ export const buildSitemap = async (
 
   const finalTemplate = minifyTemplate(renderedTemplate, {
     collapseWhitespace: true,
+    keepClosingSlash: true,
   });
 
   const outputPath = path.join(outputDir, 'sitemap.xml');
