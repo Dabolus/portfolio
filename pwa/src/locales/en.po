@@ -14,6 +14,9 @@ msgstr "Cancel"
 msgid "updateNow"
 msgstr "Update now"
 
+msgid "error"
+msgstr "There was an error, please try again later"
+
 msgid "homeDescription"
 msgstr "Hi! I'm Giorgio, a Software Engineer trying to make the web a better place since 2004."
 
@@ -103,6 +106,9 @@ msgstr "Name"
 
 msgid "submit"
 msgstr "Submit"
+
+msgid "alsoContactMe"
+msgstr "P.S. you can also contact me on"
 
 msgid "projects"
 msgstr "Projects"

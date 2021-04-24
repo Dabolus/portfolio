@@ -14,6 +14,9 @@ msgstr "Annulla"
 msgid "updateNow"
 msgstr "Aggiorna ora"
 
+msgid "error"
+msgstr "C'è stato un errore, riprova più tardi"
+
 msgid "homeDescription"
 msgstr "Ciao! Sono Giorgio, un Ingegnere del Software che cerca di rendere il web un posto migliore dal 2004."
 
@@ -103,6 +106,9 @@ msgstr "Nome"
 
 msgid "submit"
 msgstr "Invia"
+
+msgid "alsoContactMe"
+msgstr "P.S. puoi anche contattarmi su"
 
 msgid "projects"
 msgstr "Progetti"
