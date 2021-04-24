@@ -1,58 +1,54 @@
-import { promises as fs } from 'fs';
 import path from 'path';
 import { buildTemplate } from './templates';
 import { buildScripts } from './scripts';
 import { buildStyles } from './styles';
 import { generateServiceWorker } from './sw';
 import { copyAssets } from './assets';
-import { buildSitemap } from './sitemap';
-import { Data, LocaleDataModule, Locale } from './models';
-import { getDynamicData } from '../helpers/data';
+// import { buildSitemap } from './sitemap';
+import { getData } from '../helpers/data';
+import {
+  defaultLocale,
+  getAvailableLocales,
+  setupI18nHelpersMap,
+} from '../helpers/i18n';
+import { getConfig } from '../helpers/config';
+import { setupDatesHelpersMap } from '../helpers/dates';
 
 const outputPath = path.resolve(__dirname, '../../dist');
-const localesPath = path.resolve(__dirname, '../../src/locales');
-
-const getLocalesData = async (): Promise<readonly Data[]> => {
-  const locales = await fs.readdir(localesPath);
-  const localesData = await Promise.all(
-    locales.map(async (localeFile) => {
-      const locale = localeFile.slice(0, 2) as Locale;
-      const localePath = path.resolve(localesPath, localeFile);
-      const { default: data }: LocaleDataModule = await import(localePath);
-
-      return { locale, data };
-    }),
-  );
-
-  return localesData;
-};
 
 const build = async () => {
-  const defaultLocale = 'en';
-  const [localesData, dynamicData] = await Promise.all([
-    getLocalesData(),
-    getDynamicData(),
+  const [
+    config,
+    data,
+    availableLocales,
+    i18nHelpersMap,
+    datesHelpersMap,
+  ] = await Promise.all([
+    getConfig(),
+    getData(),
+    getAvailableLocales(),
+    setupI18nHelpersMap(),
+    setupDatesHelpersMap(),
   ]);
+
   const production = process.env.NODE_ENV === 'production';
-  const defaultData = localesData.find(
-    ({ locale }) => locale === defaultLocale,
-  );
 
   const [styles] = await Promise.all([
-    buildStyles(outputPath, { production, data: {} }),
-    buildSitemap(outputPath, {
-      data: localesData,
-      priorities: [
-        'home',
-        'about',
-        'projects',
-        'certifications',
-        'contacts',
-        'skills',
-        'blog',
-      ],
-      defaultLocale,
-    }),
+    buildStyles(outputPath, { production }),
+    // TODO: refactor sitemap using EJS
+    // buildSitemap(outputPath, {
+    //   data: localesData,
+    //   priorities: [
+    //     'home',
+    //     'about',
+    //     'projects',
+    //     'certifications',
+    //     'contacts',
+    //     'skills',
+    //     'blog',
+    //   ],
+    //   defaultLocale,
+    // }),
     copyAssets([
       {
         from: 'src/assets/*',
@@ -63,21 +59,21 @@ const build = async () => {
 
   const scripts = await buildScripts(outputPath, {
     production,
-    data: defaultData,
     stylesOutput: styles,
   });
 
   await Promise.all(
-    localesData.map((data) =>
-      buildTemplate(path.resolve(outputPath, data.locale), {
+    availableLocales.map((locale) =>
+      buildTemplate(path.resolve(outputPath, locale), {
         data: {
-          ...data,
-          data: {
-            ...data.data,
-            ...dynamicData,
+          config,
+          data,
+          helpers: {
+            ...i18nHelpersMap[locale],
+            ...datesHelpersMap[locale],
           },
+          output: { scripts, styles },
         },
-        output: { scripts, styles },
         production,
       }),
     ),
