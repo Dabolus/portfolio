@@ -8,14 +8,17 @@ import { buildScripts } from '../build/scripts';
 import { buildStyles } from '../build/styles';
 import { generateServiceWorker } from '../build/sw';
 import { copyAssets } from '../build/assets';
-import { Data, LocaleDataModule, Locale, Output } from '../build/models';
+import { Output } from '../build/models';
+import { getConfig } from '../helpers/config';
 import {
-  getDynamicData as defaultGetDynamicData,
-  DynamicData,
-} from '../helpers/data';
+  defaultLocale,
+  getAvailableLocales,
+  setupI18nHelpersMap,
+} from '../helpers/i18n';
+import { setupDatesHelpersMap } from '../helpers/dates';
+import { getData } from '../helpers/data';
 
 const outputPath = path.resolve(__dirname, '../../dist');
-const localesPath = path.resolve(__dirname, '../../src/locales');
 
 const output: Output = {
   scripts: {
@@ -40,58 +43,48 @@ const output: Output = {
   },
 };
 
-const getLocalesData = async (): Promise<readonly Data[]> => {
-  const locales = await fs.readdir(localesPath);
-  const localesData = await Promise.all(
-    locales.map(async (localeFile) => {
-      const locale = localeFile.slice(0, 2) as Locale;
-      const localePath = path.resolve(localesPath, localeFile);
-      const { default: data }: LocaleDataModule = await import(localePath);
-
-      return { locale, data };
-    }),
-  );
-
-  return localesData;
-};
-
-// TODO: use cache to avoid reading data from GitHub everytime we run the script
-const getDynamicData = async (): Promise<DynamicData> => {
-  return defaultGetDynamicData();
-};
-
 const start = async () => {
   const cwd = path.resolve(__dirname, '../..');
   const bs = browserSync.create();
-  const defaultLocale = 'en';
-  const [localesData, dynamicData] = await Promise.all([
-    getLocalesData(),
-    getDynamicData(),
+
+  const [
+    config,
+    data,
+    availableLocales,
+    i18nHelpersMap,
+    datesHelpersMap,
+  ] = await Promise.all([
+    getConfig(),
+    getData(),
+    getAvailableLocales(),
+    setupI18nHelpersMap(),
+    setupDatesHelpersMap(),
   ]);
+
   const production = process.env.NODE_ENV === 'production';
-  const defaultData = localesData.find(
-    ({ locale }) => locale === defaultLocale,
-  );
 
   chokidar.watch(['src/index.ejs', 'src/fragments/**/*.ejs'], { cwd }).on(
     'all',
-    debounce((_, changedPath) => {
+    debounce(async (_, changedPath) => {
       console.log(
         `\x1b[32m${changedPath}\x1b[0m changed, rebuilding templates...`,
       );
 
-      localesData.map((data) =>
-        buildTemplate(path.resolve(outputPath, data.locale), {
-          data: {
-            ...data,
+      await Promise.all(
+        availableLocales.map((locale) =>
+          buildTemplate(path.resolve(outputPath, locale), {
             data: {
-              ...data.data,
-              ...dynamicData,
+              config,
+              data,
+              helpers: {
+                ...i18nHelpersMap[locale],
+                ...datesHelpersMap[locale],
+              },
+              output,
             },
-          },
-          output,
-          production,
-        }),
+            production,
+          }),
+        ),
       );
     }, 50),
   );
@@ -103,7 +96,7 @@ const start = async () => {
         `\x1b[32m${changedPath}\x1b[0m changed, rebuilding styles...`,
       );
 
-      buildStyles(outputPath, { production, data: {} });
+      buildStyles(outputPath, { production });
     }, 50),
   );
 
@@ -116,7 +109,6 @@ const start = async () => {
 
       buildScripts(outputPath, {
         production,
-        data: defaultData,
         stylesOutput: output.styles,
       });
     }, 50),
