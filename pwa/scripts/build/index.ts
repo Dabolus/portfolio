@@ -66,7 +66,10 @@ const build = async () => {
     availableLocales.map((locale) =>
       buildTemplate(path.resolve(outputPath, locale), {
         data: {
-          config,
+          config: {
+            ...config,
+            locale,
+          },
           data,
           helpers: {
             ...i18nHelpersMap[locale],

@@ -12,7 +12,6 @@ export interface ParsedPage extends PageData {
 }
 
 export interface ConfigData {
-  locale: string;
   baseTitle: string;
   baseUrl: string;
   update: {
@@ -20,14 +19,18 @@ export interface ConfigData {
     cancel: string;
     perform: string;
   };
+  error: string;
   pages: Record<string, PageData>;
 }
 
-export interface ParsedConfig extends Omit<ConfigData, 'pages'> {
+export interface ParsedConfigWithoutLocale extends Omit<ConfigData, 'pages'> {
   pages: Record<string, ParsedPage>;
 }
+export interface ParsedConfig extends ParsedConfigWithoutLocale {
+  locale: string;
+}
 
-export const getConfig = async (): Promise<ParsedConfig> => {
+export const getConfig = async (): Promise<ParsedConfigWithoutLocale> => {
   const { pages, ...config } = (await readConfigFile('config')) as ConfigData;
 
   return {
