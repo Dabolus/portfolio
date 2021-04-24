@@ -5,8 +5,11 @@ export interface TimelineEventData {
   readonly day?: number;
   readonly title: string;
   readonly description?: string;
-  readonly color?: string;
-  readonly icon?: string | readonly string[];
+  readonly icon?: {
+    readonly color: string;
+    readonly type?: 'fill' | 'stroke';
+    readonly path?: string | readonly string[];
+  };
 }
 
 export interface TimelineDataItem {

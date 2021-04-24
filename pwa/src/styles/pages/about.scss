@@ -179,10 +179,28 @@
             width: 100%;
             padding: 0.4rem;
 
-            @media not all and (light-level: washed),
-              not all and (prefers-color-scheme: light) {
-              > path {
-                fill: #fff;
+            &.icon-fill {
+              stroke: none;
+
+              @media not all and (light-level: washed),
+                not all and (prefers-color-scheme: light) {
+                > * {
+                  fill: #fff;
+                }
+              }
+            }
+
+            &.icon-stroke {
+              fill: none;
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              stroke-width: 1.5;
+
+              @media not all and (light-level: washed),
+                not all and (prefers-color-scheme: light) {
+                > * {
+                  stroke: #fff;
+                }
               }
             }
           }

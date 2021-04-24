@@ -26,10 +26,16 @@
               <li class="<%= icon ? '' : 'no-icon' %>">
                 <% if (icon) { %>
                   <div class="event-icon">
-                    <svg viewBox="0 0 24 24">
-                      <% (Array.isArray(icon) ? icon : [icon]).forEach(iconPart => { %>
-                        <path fill="<%= color %>" d="<%= iconPart %>"/>
-                      <% }) %>
+                    <svg viewBox="0 0 24 24" class="icon-<%= icon.type %>">
+                      <% if (Array.isArray(icon.path)) { %>
+                        <g <%- icon.type %>="<%= icon.color %>">
+                          <% icon.path.forEach(iconPart => { %>
+                            <path d="<%= iconPart %>" />
+                          <% }) %>
+                        </g>
+                      <% } else { %>
+                        <path d="<%= icon.path %>" <%- icon.type %>="<%= icon.color %>" />
+                      <% } %>
                     </svg>
                   </div>
                 <% } %>
