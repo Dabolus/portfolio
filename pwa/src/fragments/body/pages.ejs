@@ -1,23 +1,23 @@
-<section id="page" <%- data.page === 'home' ? 'aria-hidden="true"' : '' %>>
+<section id="page" <%- page.id === 'home' ? 'aria-hidden="true"' : '' %>>
   <div id="header">
     <div>
-      <a id="back" href="/<%= locale %>/" aria-label="back">
+      <a id="back" href="/<%= config.locale %>/" aria-label="back">
         <svg tabindex="-1" viewBox="0 0 24 24">
           <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
         </svg>
       </a>
-      <h2 id="title"><%= data.title || '' %></h2>
+      <h2 id="title"><%= helpers.translate(page.title) %></h2>
     </div>
     <hr>
   </div>
   <div id="content-container">
-    <% await Object.entries(data.pages).reduce(async (previousPromise, [id, { link }]) => { %>
+    <% await Object.values(config.pages).reduce(async (previousPromise, { id, slug, link }) => { %>
       <% await previousPromise %>
 
-      <% if (id === 'home' || link) { return; } %>
+      <% if (!slug || link) { return; } %>
 
-      <div class="content" id="<%= id %>" <%- data.page === id ? '' : 'hidden' %>>
-        <% if (data.page === id) { %>
+      <div class="content" id="<%= id %>" <%- page.id === id ? '' : 'hidden' %>>
+        <% if (page.id === id) { %>
           <%- await include(`pages/${id}`) %>
         <% } else { %>
           <div class="loading-container">

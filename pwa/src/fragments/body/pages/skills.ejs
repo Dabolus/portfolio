@@ -1,15 +1,15 @@
 <div class="content-boundaries skills-container">
   <article>
-    <h3><%= data.pages.skills.coding %></h3>
+    <h3><%= helpers.translate(page.coding) %></h3>
     <div>
       <section>
-        <h4><%= data.pages.skills.mostConfidentLangs %></h4>
+        <h4><%= helpers.translate(page.mostConfidentLangs) %></h4>
         <div>
           <%- data.skills.codingSkillsChart %>
         </div>
       </section>
       <section>
-        <h4><%= data.pages.skills.mostUsedLangs %></h4>
+        <h4><%= helpers.translate(page.mostUsedLangs) %></h4>
         <div id="most-used-langs">
           <%- data.skills.codeSizeChart %>
         </div>
@@ -17,13 +17,13 @@
     </div>
   </article>
   <article>
-    <h3><%= data.pages.skills.music %></h3>
+    <h3><%= helpers.translate(page.music) %></h3>
     <div>
       <%- data.skills.musicSkillsChart %>
     </div>
   </article>
   <article>
-    <h3><%= data.pages.skills.softSkills %></h3>
+    <h3><%= helpers.translate(page.softSkills) %></h3>
     <div>
       <%- data.skills.softSkillsChart %>
     </div>

@@ -1,27 +1,27 @@
 <div>
-  <h1><%= data.pages.home.greeting %></h1>
-  <h2 id="phrases"><%= data.pages.home.phrases.prefix %>&nbsp;<span id="typed"></span></h2>
+  <h1><%= helpers.translate(page.greeting) %></h1>
+  <h2 id="phrases"><%= helpers.translate(page.phrases.prefix) %>&nbsp;<span id="typed"></span></h2>
   <h2 id="strings-container">
     <ul id="strings">
-      <% data.pages.home.phrases.strings.forEach(str => { %>
-        <li><%- str %></li>
+      <% page.phrases.strings.forEach(str => { %>
+        <li><%- helpers.translate(str) %></li>
       <% }) %>
     </ul>
   </h2>
-  <h2 id="since-2004"><%- data.pages.home.aim %></h2>
+  <h2 id="since-2004"><%- helpers.translate(page.aim) %></h2>
   <svg id="scroll-down" viewBox="0 0 24 24" width="48" height="48">
     <path fill="currentColor" d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"/>
   </svg>
 </div>
 <nav id="menu">
   <ul>
-    <% Object.entries(data.pages).forEach(([id, { title, icon, link }]) => { %>
-      <% if (id === 'home') { return; } %>
+    <% Object.values(config.pages).forEach(({ id, title, icon, link, slug }) => { %>
+      <% if (!slug) { return; } %>
 
       <li>
-        <a href="<%= link || `/${locale}/${id}` %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
+        <a href="<%= link || `/${config.locale}/${slug}` %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
           <span>
-            <%= title %>
+            <%= helpers.translate(title) %>
             <% if (link) { %>
               <svg viewBox="0 0 24 24" width="24" height="24">
                 <path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
@@ -36,12 +36,13 @@
     <% }) %>
   </ul>
 </nav>
-<% Object.entries(data.pages).forEach(([id, { link, title, slug }]) => { %>
+<% Object.values(config.pages).forEach(({ id, link, title, slug }) => { %>
   <% if (!link) { return; } %>
+
   <portal
     src="<%= link %>"
     id="<%= id %>-link-portal"
-    title="<%= title %>"
+    title="<%= helpers.translate(title) %>"
     aria-hidden="true"
     class="closed"
     data-slug="<%= slug %>"

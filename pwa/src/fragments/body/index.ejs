@@ -1,4 +1,4 @@
-<body <%- data.page === 'home' ? '' : 'class="blocked"' %>>
+<body <%- page.id === 'home' ? '' : 'class="blocked"' %>>
   <noscript>
     <style>
       #strings-container {
@@ -13,8 +13,8 @@
     </style>
   </noscript>
   <main>
-    <section id="home" <%- data.page === 'home' ? '' : 'aria-hidden="true"' %>>
-      <% if (data.page === 'home') { %>
+    <section id="home" <%- page.id === 'home' ? '' : 'aria-hidden="true"' %>>
+      <% if (page.id === 'home') { %>
         <%- await include('home') %>
       <% } else { %>
         <div class="loading-container">
@@ -26,10 +26,10 @@
     <%- await include('pages') %>
 
     <div id="update-notification" hidden>
-      <p><%= data.updateAvailable %></p>
+      <p><%= helpers.translate(config.update.available) %></p>
       <div>
-        <button id="cancel-update"><%= data.cancel %></button>
-        <button id="perform-update" autofocus><%= data.updateNow %></button>
+        <button id="cancel-update"><%= helpers.translate(config.update.cancel) %></button>
+        <button id="perform-update" autofocus><%= helpers.translate(config.update.perform) %></button>
       </div>
     </div>
   </main>

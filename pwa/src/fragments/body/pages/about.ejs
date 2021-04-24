@@ -1,20 +1,3 @@
-<%
-  const dayMonthFormatter = new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric' })
-  const monthFormatter = new Intl.DateTimeFormat(locale, { month: 'long' });
-
-  const toISODate = (year, month, day) =>
-    `${year}-${(month || 1).toString().padStart(2, '0')}-${(day || 1).toString().padStart(2, '0')}`
-
-  const prettifyDate = (year, month, day) => {
-    if (!month) {
-      return '';
-    }
-
-    const formatter = day ? dayMonthFormatter : monthFormatter;
-
-    return formatter.format(new Date(toISODate(year, month, day)));
-  }
-%>
 <div class="content-boundaries">
   <div id="propic-container">
     <div id="propic">
@@ -28,12 +11,12 @@
     <img id="pin" src="images/pin.svg" alt="">
   </div>
 
-  <% data.pages.about.bio.forEach(str => { %>
-    <p><%- str.replace(/%age%/g, `<span id="age">${data.age}</span>`) %></p>
+  <% helpers.translate(page.bio).forEach(str => { %>
+    <p><%- str.replace(/%age%/g, `<span id="age">${helpers.getAge()}</span>`) %></p>
   <% }) %>
 
   <section id="timeline">
-    <h3><%= data.pages.about.timelineTitle %></h3>
+    <h3><%= helpers.translate(page.timelineTitle) %></h3>
     <ul>
       <% data.timeline.forEach(({ year, events }) => { %>
         <li>
@@ -56,8 +39,8 @@
                     <p><%- description %></p>
                   <% } %>
                   <% if (month) { %>
-                    <time datetime="<%= toISODate(year, month, day) %>">
-                      <%= prettifyDate(year, month, day) %>
+                    <time datetime="<%= helpers.toISODate(year, month, day) %>">
+                      <%= helpers.prettifyDate(year, month, day) %>
                     </time>
                   <% } %>
                 </div>
