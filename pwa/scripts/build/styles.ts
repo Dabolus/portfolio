@@ -67,7 +67,6 @@ const styles = {
 
 export interface BuildStylesOptions {
   readonly production: boolean;
-  readonly data: Record<string, unknown>;
 }
 
 export interface CompileStylesOptions extends BuildStylesOptions {
@@ -76,10 +75,10 @@ export interface CompileStylesOptions extends BuildStylesOptions {
 
 const compileStyles = async (
   outputDir: string,
-  { fragment = 'main', production, data }: CompileStylesOptions,
+  { fragment = 'main', production }: CompileStylesOptions,
 ) => {
   const { css: postprocessedStyles } = await postcssInstance.process(
-    injectData(`./${styles[fragment]}.scss`, data),
+    injectData(`./${styles[fragment]}.scss`, {}),
     {
       // NOTE: this is actually a fake path, but we need to use it to
       // correctly resolve imports and generate the source map.
@@ -101,14 +100,13 @@ const compileStyles = async (
 
 export async function buildStyles(
   outputDir: string,
-  { production, data }: BuildStylesOptions,
+  { production }: BuildStylesOptions,
 ): Promise<BuildStylesOutput> {
   const results = await Promise.all(
     Object.keys(styles).map((fragment) =>
       compileStyles(outputDir, {
         fragment: fragment as keyof typeof styles,
         production,
-        data,
       }).then((output) => [fragment, output]),
     ),
   );

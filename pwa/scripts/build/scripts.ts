@@ -7,11 +7,9 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
-import { Data } from './models';
 import { BuildStylesOutput } from './styles';
 
 export interface BuildScriptsOptions {
-  readonly data: Data;
   readonly production: boolean;
   readonly stylesOutput: BuildStylesOutput;
 }

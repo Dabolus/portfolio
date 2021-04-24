@@ -4,7 +4,7 @@ import { render as renderTemplate } from 'ejs';
 import { minify as minifyTemplate } from 'html-minifier';
 import type { MinifyOutput } from 'terser';
 import syncRpc from 'sync-rpc';
-import { Data, Output, PageData } from './models';
+import { PageData } from './models';
 
 const minifyScript: (code: string) => MinifyOutput = syncRpc(
   path.resolve(__dirname, '../helpers/minify.js'),
@@ -26,15 +26,14 @@ const templates = {
 const templatesCache = new Map<string, Promise<string>>();
 
 export interface BuildTemplateOptions {
-  readonly data: Data;
-  readonly output: Output;
+  readonly data: Omit<PageData, 'page'>;
   readonly production: boolean;
 }
 
-export interface CompileTemplateOptions {
+export interface CompileTemplateOptions
+  extends Omit<BuildTemplateOptions, 'data'> {
   readonly fragment: keyof typeof templates;
   readonly pageData: PageData;
-  readonly production: boolean;
   readonly partial?: boolean;
 }
 
@@ -91,50 +90,31 @@ const compileTemplate = async (
 
 export async function buildTemplate(
   outputDir: string,
-  { data, output, production }: BuildTemplateOptions,
+  { data, production }: BuildTemplateOptions,
 ): Promise<void> {
-  const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
-  const yearLength = 31556926000; // 1 year (365 days, 5 hours, 48 minutes, and 46 seconds)
-  const age = ((Date.now() - dateOfBirth) / yearLength).toLocaleString(
-    data.locale,
-    {
-      minimumFractionDigits: 9,
-      maximumFractionDigits: 9,
-    },
-  );
-
-  const pagesData = Object.entries(data.data.pages).map<PageData>(
-    ([page, pageData]) => ({
-      locale: data.locale,
-      production,
-      output,
-      data: {
-        page,
-        age,
-        ...data.data,
-        ...pageData,
-      },
-    }),
-  );
+  const pagesData = Object.values(data.config.pages).map<PageData>((page) => ({
+    ...data,
+    page,
+  }));
 
   await Promise.all(
     pagesData.flatMap((pageData) => {
-      if (pageData.data.pages[pageData.data.page].link) {
+      if (pageData.page.link) {
         return [];
       }
 
       return [
         compileTemplate(outputDir, {
           fragment:
-            pageData.data.page === 'home'
+            pageData.page.id === 'home'
               ? 'index'
-              : (pageData.data.page as keyof typeof templates),
+              : (pageData.page.id as keyof typeof templates),
           pageData,
           production,
           partial: false,
         }),
         compileTemplate(outputDir, {
-          fragment: pageData.data.page as keyof typeof templates,
+          fragment: pageData.page.id as keyof typeof templates,
           pageData,
           production,
           partial: true,
