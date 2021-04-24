@@ -6,8 +6,6 @@ update:
   perform: updateNow
 pages:
   home:
-    slug: null
-    title: null
     description: homeDescription
     greeting: greeting
     phrases:
