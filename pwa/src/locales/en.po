@@ -1,0 +1,135 @@
+msgid ""
+msgstr ""
+"Mime-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "updateAvailable"
+msgstr "A new version of the web app is available!"
+
+msgid "cancel"
+msgstr "Cancel"
+
+msgid "updateNow"
+msgstr "Update now"
+
+msgid "homeDescription"
+msgstr "Hi! I'm Giorgio, a Software Engineer trying to make the web a better place since 2004."
+
+msgid "greeting"
+msgstr "Hi! I'm Giorgio."
+
+msgid "a"
+msgstr "A"
+
+msgid "softwareEngineer"
+msgstr "Software Engineer"
+
+msgid "mobileWebSpecialist"
+msgstr ""
+"<img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\" width=\"21\" height=\"21\">"
+"<span>&nbsp;Certified Mobile Web Specialist</span>"
+
+msgid "cloudTechnician"
+msgstr "Cloud Technician"
+
+msgid "developerAdvocate"
+msgstr "Developer Advocate"
+
+msgid "graphicDesigner"
+msgstr "Graphic Designer (sort of)"
+
+msgid "musician"
+msgstr "Musician in free time"
+
+msgid "aim"
+msgstr ""
+"trying to make the web a better place&nbsp;"
+"<a id=\"since-2004-link\" rel=\"external\" href=\"https://translate.google.com/translate?js=n&sl=it&tl=en&u=https://web.archive.org/web/20101103024916/http://www.w3schools.it:80/\" target=\"since-2004\" rel=\"nofollow\">since&nbsp;2004</a>."
+
+msgid "aboutMe"
+msgstr "About me"
+
+msgid "aboutDescription"
+msgstr "Curious about who I am? Get to know me and what I do."
+
+msgid "bio"
+msgstr ""
+"My name is Giorgio Garasto and I'm %age% years old.\n"
+"I put my hands on HTML for the first time when I was seven years old to help my father, and I've never stopped playing with it since then. The passion for web development influenced both my work and study choices and brought me to gain a <a href=\"https://www.udacity.com/grow-with-google\" rel=\"external\" target=\"scholarship\">scholarship</a> from Google and Udacity that gave me the chance to obtain the <a href=\"https://developers.google.com/training/certification/mobile-web-specialist\" rel=\"external\" target=\"mws\">Mobile Web Specialist</a> certification.\n"
+"At work, I gained a vast experience in front end development by means of libraries and frameworks such as <a href=\"https://reactjs.org\" rel=\"external\" target=\"react\">React</a> and <a href=\"https://angular.io\" rel=\"external\" target=\"angular\">Angular</a>, as well as using native technologies, like Web Components and Service Workers. On the back end side, I mainly use <a href=\"https://nodejs.org\" rel=\"external\" target=\"nodejs\">Node.js</a> and <a href=\"https://golang.org\" rel=\"external\" target=\"golang\">Golang</a>. Outside the working world, I like devoting myself to music. I love playing guitar and singing, but I do dabble also with piano and drums.\n"
+"Right now, I'm working as a Software Engineer at <a href=\"https://molo17.com\" rel=\"external\" target=\"company-link\">MOLO17</a>, a company based in Italy with more than 25 employees whose goal is to build cutting-edge mobile and web applications.\n"
+"I also have a bunch of open source projects, which you can check out <a href=\"/en/projects\">in the projects section</a>."
+
+msgid "myStory"
+msgstr "My story"
+
+msgid "certifications"
+msgstr "Certifications"
+
+msgid "certificationsDescription"
+msgstr "Check out my certifications and awards."
+
+msgid "contacts"
+msgstr "Contacts"
+
+msgid "contactsDescription"
+msgstr "Interested in what I do and/or have some questions? Contact me!"
+
+msgid "hi"
+msgstr "Hi Giorgio"
+
+msgid "reason"
+msgstr "I'm writing to you to talk about"
+
+msgid "subject"
+msgstr "Subject"
+
+msgid "message"
+msgstr "Message"
+
+msgid "contactMeBack"
+msgstr "You can contact me back at"
+
+msgid "email"
+msgstr "Email"
+
+msgid "sincerely"
+msgstr "Sincerely"
+
+msgid "name"
+msgstr "Name"
+
+msgid "submit"
+msgstr "Submit"
+
+msgid "projects"
+msgstr "Projects"
+
+msgid "projectsDescription"
+msgstr "Check out the list of the projects I built and maintain."
+
+msgid "skills"
+msgstr "Skills"
+
+msgid "skillsDescription"
+msgstr "Want to know what I am good at? Check it out here."
+
+msgid "coding"
+msgstr "Coding"
+
+msgid "mostConfidentLangs"
+msgstr "Languages I feel most confident with"
+
+msgid "mostUsedLangs"
+msgstr "Languages I use the most"
+
+msgid "music"
+msgstr "Music"
+
+msgid "softSkills"
+msgstr "Soft skills"
+
+msgid "blog"
+msgstr "Blog"
