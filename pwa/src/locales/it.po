@@ -49,7 +49,7 @@ msgstr "Musicista nel tempo libero"
 msgid "aim"
 msgstr ""
 "che cerca di rendere il web un posto migliore&nbsp;"
-"<a id=\"since-2004-link\" rel=\"external\" href=\"https://web.archive.org/web/20101103024916/http://www.w3schools.it:80/\" target=\"since-2004\" rel=\"nofollow\">dal&nbsp;2004</a>."
+"<a id=\"since-2004-link\" rel=\"external\" href=\"https://web.archive.org/web/20101103024916/http://www.w3schools.it:80/\" target=\"since-2004\" rel=\"noopener\">dal&nbsp;2004</a>."
 
 msgid "aboutMe"
 msgstr "Chi sono"
