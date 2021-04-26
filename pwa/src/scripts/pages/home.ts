@@ -1,4 +1,3 @@
-import Typed from 'typed.js/src/typed';
 import { loadStyles, loadTemplate, logEvent, scroll } from '../utils';
 
 interface HTMLPortalElement extends HTMLElement {
@@ -12,7 +11,7 @@ declare global {
   }
 }
 
-let typed: Typed;
+let typed: typeof import('typed.js/src/typed')['default']['prototype'];
 
 const configure = async () => {
   const [applyTemplate] = await Promise.all([
@@ -67,6 +66,7 @@ export const onPageLoad = async () => {
   }
 
   if (!typed) {
+    const { default: Typed } = await import('typed.js/src/typed');
     // Configure typing animation
     typed = new Typed('#typed', {
       backDelay: 2000,
