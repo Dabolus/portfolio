@@ -9,15 +9,36 @@
       <div id="hi"><%= helpers.translate(page.hi) %>,</div>
       <div class="full-width-input">
         <span><%= helpers.translate(page.reason) %>&nbsp;</span>
-        <input name="subject" placeholder="<%= helpers.translate(page.subject).toLowerCase() %>" title="<%= helpers.translate(page.subject) %>">
+        <input
+          name="subject"
+          placeholder="<%= helpers.translate(page.subject).toLowerCase() %>"
+          title="<%= helpers.translate(page.subject) %>"
+          required
+        >
       </div>
-      <textarea name="message" placeholder="<%= helpers.translate(page.message) %>" title="<%= helpers.translate(page.message) %>"></textarea>
+      <textarea
+        name="message"
+        placeholder="<%= helpers.translate(page.message) %>"
+        title="<%= helpers.translate(page.message) %>"
+        required
+      ></textarea>
       <div class="full-width-input">
         <span><%= helpers.translate(page.contactMeBack) %>&nbsp;</span>
-        <input type="email" name="email" placeholder="<%= helpers.translate(page.email).toLowerCase() %>" title="<%= helpers.translate(page.email) %>">
+        <input
+          type="email"
+          name="email"
+          placeholder="<%= helpers.translate(page.email).toLowerCase() %>"
+          title="<%= helpers.translate(page.email) %>"
+          required
+        >
       </div>
       <div id="sincerely"><%= helpers.translate(page.sincerely) %>,</div>
-      <input name="name" placeholder="<%= helpers.translate(page.name) %>" title="<%= helpers.translate(page.name) %>">
+      <input
+        name="name"
+        placeholder="<%= helpers.translate(page.name) %>"
+        title="<%= helpers.translate(page.name) %>"
+        required
+      >
       <button
         type="submit"
         class="g-recaptcha"
