@@ -92,13 +92,11 @@ const start = async () => {
 
   const [
     config,
-    data,
     availableLocales,
     i18nHelpersMap,
     datesHelpersMap,
   ] = await Promise.all([
     getConfig(),
-    getDataWithCache(),
     getAvailableLocales(),
     setupI18nHelpersMap(),
     setupDatesHelpersMap(),
@@ -106,34 +104,40 @@ const start = async () => {
 
   const production = process.env.NODE_ENV === 'production';
 
-  chokidar.watch(['src/index.ejs', 'src/fragments/**/*.ejs'], { cwd }).on(
-    'all',
-    debounce(async (_, changedPath) => {
-      console.log(
-        `\x1b[32m${changedPath}\x1b[0m changed, rebuilding templates...`,
-      );
+  chokidar
+    .watch(['src/index.ejs', 'src/fragments/**/*.ejs', 'src/data/**/*.yml'], {
+      cwd,
+    })
+    .on(
+      'all',
+      debounce(async (_, changedPath) => {
+        console.log(
+          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding templates...`,
+        );
 
-      await Promise.all(
-        availableLocales.map((locale) =>
-          buildTemplate(path.resolve(outputPath, locale), {
-            data: {
-              config: {
-                ...config,
-                locale,
+        const data = await getDataWithCache();
+
+        await Promise.all(
+          availableLocales.map((locale) =>
+            buildTemplate(path.resolve(outputPath, locale), {
+              data: {
+                config: {
+                  ...config,
+                  locale,
+                },
+                data,
+                helpers: {
+                  ...i18nHelpersMap[locale],
+                  ...datesHelpersMap[locale],
+                },
+                output,
               },
-              data,
-              helpers: {
-                ...i18nHelpersMap[locale],
-                ...datesHelpersMap[locale],
-              },
-              output,
-            },
-            production,
-          }),
-        ),
-      );
-    }, 50),
-  );
+              production,
+            }),
+          ),
+        );
+      }, 50),
+    );
 
   chokidar.watch('src/styles/**/*.scss', { cwd }).on(
     'all',
