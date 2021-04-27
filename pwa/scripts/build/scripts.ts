@@ -7,6 +7,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
+import po from '../helpers/plugins/po';
 import { BuildStylesOutput } from './styles';
 
 export interface BuildScriptsOptions {
@@ -56,9 +57,10 @@ const createBundle = async (
     },
     plugins: [
       resolve({
-        extensions: ['.ts', '.js', '.mjs', '.styl', '.hbs'],
+        extensions: ['.ts', '.js', '.mjs', '.styl', '.hbs', '.po'],
       }),
       commonjs(),
+      po(),
       babel({
         exclude: /node_modules/,
         extensions: ['.ts', '.js', '.mjs'],

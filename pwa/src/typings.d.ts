@@ -23,3 +23,8 @@ declare namespace NodeJS {
     readonly SKILLS_CSS_OUTPUT: string;
   }
 }
+
+declare module '*.po' {
+  const translations: Record<string, string>;
+  export default translations;
+}
