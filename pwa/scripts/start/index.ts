@@ -51,7 +51,8 @@ const output: Output = {
 const getSkillsWithCache = async (): Promise<ParsedSkills> => {
   // TODO: only cache GitHub data instead of all skills
   let skillsData: ParsedSkills | undefined = await fs
-    .readFile(path.join(cachePath, 'skills.json'))
+    .readFile(path.join(cachePath, 'skills.json'), 'utf8')
+    .then((skills) => JSON.parse(skills))
     .catch(() => undefined);
 
   if (!skillsData) {
