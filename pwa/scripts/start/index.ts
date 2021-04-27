@@ -16,8 +16,13 @@ import {
   setupI18nHelpersMap,
 } from '../helpers/i18n';
 import { setupDatesHelpersMap } from '../helpers/dates';
-import { getData } from '../helpers/data';
+import { Data } from '../helpers/data';
+import { getSkills, ParsedSkills } from '../helpers/data/skills';
+import { getCertifications } from '../helpers/data/certifications';
+import { getProjects } from '../helpers/data/projects';
+import { getTimeline } from '../helpers/data/timeline';
 
+const cachePath = path.resolve(__dirname, '../../node_modules/.cache/pwa');
 const outputPath = path.resolve(__dirname, '../../dist');
 
 const output: Output = {
@@ -43,6 +48,44 @@ const output: Output = {
   },
 };
 
+const getSkillsWithCache = async (): Promise<ParsedSkills> => {
+  // TODO: only cache GitHub data instead of all skills
+  let skillsData: ParsedSkills | undefined = await fs
+    .readFile(path.join(cachePath, 'skills.json'))
+    .catch(() => undefined);
+
+  if (!skillsData) {
+    console.log('No cached data, generating it');
+    const skills = await getSkills();
+    await fs.mkdir(cachePath, { recursive: true });
+    await fs.writeFile(
+      path.join(cachePath, 'skills.json'),
+      JSON.stringify(skills),
+    );
+    skillsData = skills;
+  } else {
+    console.log('Using cached data');
+  }
+
+  return skillsData;
+};
+
+const getDataWithCache = async (): Promise<Data> => {
+  const [certifications, projects, skills, timeline] = await Promise.all([
+    getCertifications(),
+    getProjects(),
+    getSkillsWithCache(),
+    getTimeline(),
+  ]);
+
+  return {
+    certifications,
+    projects,
+    skills,
+    timeline,
+  };
+};
+
 const start = async () => {
   const cwd = path.resolve(__dirname, '../..');
   const bs = browserSync.create();
@@ -55,7 +98,7 @@ const start = async () => {
     datesHelpersMap,
   ] = await Promise.all([
     getConfig(),
-    getData(),
+    getDataWithCache(),
     getAvailableLocales(),
     setupI18nHelpersMap(),
     setupDatesHelpersMap(),
