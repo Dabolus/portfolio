@@ -39,17 +39,21 @@
                     </svg>
                   </div>
                 <% } %>
-                <div class="event-content">
-                  <h5><%- title %></h5>
-                  <% if (description) { %>
-                    <p><%- description %></p>
-                  <% } %>
-                  <% if (month) { %>
-                    <time datetime="<%= helpers.toISODate(year, month, day) %>">
-                      <%= helpers.prettifyDate(year, month, day) %>
-                    </time>
-                  <% } %>
-                </div>
+                <% if (title || description || month) { %>
+                  <div class="event-content">
+                    <% if (title) { %>
+                      <h5><%- title %></h5>
+                    <% } %>
+                    <% if (description) { %>
+                      <p><%- description %></p>
+                    <% } %>
+                    <% if (month) { %>
+                      <time datetime="<%= helpers.toISODate(year, month, day) %>">
+                        <%= helpers.prettifyDate(year, month, day) %>
+                      </time>
+                    <% } %>
+                  </div>
+                <% } %>
               </li>
             <% }) %>
           </ul>

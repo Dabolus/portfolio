@@ -65,7 +65,6 @@
         display: flex;
 
         &:last-child .events > li:last-child::after {
-          height: 12rem;
           background: linear-gradient(
             180deg,
             var(--theme-color) 0%,
@@ -235,7 +234,6 @@
     align-items: baseline;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: 3rem;
 
     > p {
       margin: 0;
