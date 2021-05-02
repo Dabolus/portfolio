@@ -232,7 +232,7 @@
 
   #resume-form {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
     flex-wrap: wrap;
     padding-top: 3rem;
@@ -243,10 +243,14 @@
 
     > button {
       color: var(--theme-color);
-      background: var(--theme-accent);
-      padding: 0.4rem 0.5rem;
-      border-radius: 0.25rem;
       font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      color: var(--theme-accent);
+
+      &:hover {
+        background: var(--theme-card-background);
+      }
     }
 
     > #resume-error {
