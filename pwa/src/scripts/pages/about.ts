@@ -1,5 +1,5 @@
 import { startAnimation, stopAnimation } from '../animation';
-import { importIIFE, loadStyles, loadTemplate } from '../utils';
+import { importRecaptcha, loadStyles, loadTemplate } from '../utils';
 
 declare global {
   interface Window {
@@ -9,12 +9,10 @@ declare global {
 
 window.__resumeRecaptchaCallback = async () => {
   const resumeForm = document.querySelector<HTMLFormElement>('#resume-form');
-  const getResumeButton = resumeForm.querySelector<HTMLButtonElement>('button');
   const resumeError = resumeForm.querySelector<HTMLSpanElement>(
     '#resume-error',
   );
 
-  getResumeButton.disabled = true;
   resumeError.hidden = true;
 
   try {
@@ -81,17 +79,17 @@ const configure = async () => {
 
   const resumeForm = document.querySelector<HTMLFormElement>('#resume-form');
 
-  resumeForm.addEventListener(
-    'mouseenter',
-    () => importIIFE('https://www.google.com/recaptcha/api.js'),
-    {
-      once: true,
-      passive: true,
-    },
-  );
+  resumeForm.addEventListener('mouseenter', () => importRecaptcha(), {
+    once: true,
+    passive: true,
+  });
 
   resumeForm.addEventListener('submit', (event) => {
     event.preventDefault();
+    const getResumeButton = resumeForm.querySelector<HTMLButtonElement>(
+      'button',
+    );
+    getResumeButton.disabled = true;
   });
 };
 

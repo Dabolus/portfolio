@@ -1,4 +1,4 @@
-import { importIIFE, loadStyles, loadTemplate, sleep } from '../utils';
+import { importRecaptcha, loadStyles, loadTemplate, sleep } from '../utils';
 
 interface FormContent {
   readonly name?: string;
@@ -17,7 +17,6 @@ declare global {
 window.__contactRecaptchaCallback = async () => {
   const contactForm = document.querySelector<HTMLFormElement>('#contact-form');
 
-  contactForm.className = 'sending';
   const animationPromise = sleep(1500);
 
   try {
@@ -55,17 +54,14 @@ const configure = async () => {
 
   const contactForm = document.querySelector<HTMLFormElement>('#contact-form');
 
-  contactForm.addEventListener(
-    'mouseenter',
-    () => importIIFE('https://www.google.com/recaptcha/api.js'),
-    {
-      once: true,
-      passive: true,
-    },
-  );
+  contactForm.addEventListener('mouseenter', () => importRecaptcha(), {
+    once: true,
+    passive: true,
+  });
 
   contactForm.addEventListener('submit', (event) => {
     event.preventDefault();
+    contactForm.className = 'sending';
   });
 };
 
