@@ -8,7 +8,7 @@
     transition-delay: 0.5s;
     font-family: 'Mansalva';
 
-    > #error {
+    > #contact-error {
       position: absolute;
       text-align: center;
       top: 13.5rem;
@@ -127,6 +127,7 @@
       }
 
       button {
+        appearance: none;
         outline: none;
         border: 0.05rem solid var(--theme-color);
         color: var(--theme-color);
@@ -248,7 +249,7 @@
     }
 
     &.errored {
-      > #error {
+      > #contact-error {
         display: block;
       }
     }

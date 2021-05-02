@@ -10,11 +10,11 @@ interface FormContent {
 
 declare global {
   interface Window {
-    __recaptchaCallback: (token: string) => void;
+    __contactRecaptchaCallback: (token: string) => void;
   }
 }
 
-window.__recaptchaCallback = async () => {
+window.__contactRecaptchaCallback = async () => {
   const contactForm = document.querySelector<HTMLFormElement>('#contact-form');
 
   contactForm.className = 'sending';

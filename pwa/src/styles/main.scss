@@ -100,6 +100,19 @@ ul.badges {
   }
 }
 
+button {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  background: none;
+
+  &[disabled] {
+    pointer-events: none;
+    opacity: 0.6;
+    filter: saturate(0);
+  }
+}
+
 #update-notification {
   position: fixed;
   top: 0;
@@ -128,10 +141,6 @@ ul.badges {
     padding-top: 0.25rem;
 
     & > button {
-      appearance: none;
-      border: none;
-      cursor: pointer;
-      background: none;
       font-size: 0.75rem;
       padding: 0.25rem 0.5rem;
       border-radius: 0.25rem;

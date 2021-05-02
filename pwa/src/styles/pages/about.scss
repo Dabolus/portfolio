@@ -65,7 +65,7 @@
         display: flex;
 
         &:last-child .events > li:last-child::after {
-          min-height: 8rem;
+          height: 12rem;
           background: linear-gradient(
             180deg,
             var(--theme-color) 0%,
@@ -227,6 +227,30 @@
           }
         }
       }
+    }
+  }
+
+  #resume-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 3rem;
+
+    > p {
+      margin: 0;
+    }
+
+    > button {
+      color: var(--theme-color);
+      background: var(--theme-accent);
+      padding: 0.4rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+    }
+
+    > #resume-error {
+      color: var(--theme-red);
     }
   }
 }

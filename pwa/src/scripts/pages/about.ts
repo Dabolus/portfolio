@@ -1,5 +1,54 @@
 import { startAnimation, stopAnimation } from '../animation';
-import { loadStyles, loadTemplate } from '../utils';
+import { importIIFE, loadStyles, loadTemplate } from '../utils';
+
+declare global {
+  interface Window {
+    __resumeRecaptchaCallback: (token: string) => void;
+  }
+}
+
+window.__resumeRecaptchaCallback = async () => {
+  const resumeForm = document.querySelector<HTMLFormElement>('#resume-form');
+  const getResumeButton = resumeForm.querySelector<HTMLButtonElement>('button');
+  const resumeError = resumeForm.querySelector<HTMLSpanElement>(
+    '#resume-error',
+  );
+
+  getResumeButton.disabled = true;
+  resumeError.hidden = true;
+
+  try {
+    const res = await fetch(`${process.env.API_URL}/resume`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(
+        Object.fromEntries(Array.from(new FormData(resumeForm))),
+      ),
+    });
+
+    if (res.status !== 200) {
+      throw new Error();
+    }
+
+    const resumeBlob = await res.blob();
+
+    const resumeUrl = URL.createObjectURL(resumeBlob);
+
+    const anchor = document.createElement('a');
+    anchor.target = 'resume';
+    anchor.download = 'resume.pdf';
+    anchor.rel = 'noopener';
+    anchor.href = resumeUrl;
+    anchor.click();
+
+    setTimeout(() => URL.revokeObjectURL(resumeUrl), 10000);
+  } catch {
+    resumeError.hidden = false;
+  }
+};
 
 // Configure age animation
 const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
@@ -29,6 +78,21 @@ const configure = async () => {
   ]);
 
   applyTemplate();
+
+  const resumeForm = document.querySelector<HTMLFormElement>('#resume-form');
+
+  resumeForm.addEventListener(
+    'mouseenter',
+    () => importIIFE('https://www.google.com/recaptcha/api.js'),
+    {
+      once: true,
+      passive: true,
+    },
+  );
+
+  resumeForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+  });
 };
 
 const configurationPromise = configure();
