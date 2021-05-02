@@ -65,7 +65,7 @@ export const importRecaptcha = () => {
     recaptchaPromise = new Promise<void>((resolve, reject) => {
       window.__recaptchaLoadedCallback = resolve;
       importIIFE(
-        'https://www.google.com/recaptcha/api.js?onload=__recaptchaLoadedCallback',
+        'https://www.google.com/recaptcha/api.js?onload=__recaptchaLoadedCallback&render=explicit',
       ).catch(reject);
     });
   }

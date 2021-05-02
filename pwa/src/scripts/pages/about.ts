@@ -1,53 +1,6 @@
 import { startAnimation, stopAnimation } from '../animation';
 import { importRecaptcha, loadStyles, loadTemplate } from '../utils';
 
-declare global {
-  interface Window {
-    __resumeRecaptchaCallback: (token: string) => void;
-  }
-}
-
-window.__resumeRecaptchaCallback = async () => {
-  const resumeForm = document.querySelector<HTMLFormElement>('#resume-form');
-  const resumeError = resumeForm.querySelector<HTMLSpanElement>(
-    '#resume-error',
-  );
-
-  resumeError.hidden = true;
-
-  try {
-    const res = await fetch(`${process.env.API_URL}/resume`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(
-        Object.fromEntries(Array.from(new FormData(resumeForm))),
-      ),
-    });
-
-    if (res.status !== 200) {
-      throw new Error();
-    }
-
-    const resumeBlob = await res.blob();
-
-    const resumeUrl = URL.createObjectURL(resumeBlob);
-
-    const anchor = document.createElement('a');
-    anchor.target = 'resume';
-    anchor.download = 'resume.pdf';
-    anchor.rel = 'noopener';
-    anchor.href = resumeUrl;
-    anchor.click();
-
-    setTimeout(() => URL.revokeObjectURL(resumeUrl), 10000);
-  } catch {
-    resumeError.hidden = false;
-  }
-};
-
 // Configure age animation
 const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
 const yearLength = 31556926000; // 1 year (365 days, 5 hours, 48 minutes, and 46 seconds)
@@ -78,17 +31,63 @@ const configure = async () => {
   applyTemplate();
 
   const resumeForm = document.querySelector<HTMLFormElement>('#resume-form');
+  const getResumeButton = resumeForm.querySelector<HTMLButtonElement>('button');
+  const resumeError = resumeForm.querySelector<HTMLSpanElement>(
+    '#resume-error',
+  );
 
-  resumeForm.addEventListener('mouseenter', () => importRecaptcha(), {
-    once: true,
-    passive: true,
-  });
+  resumeForm.addEventListener(
+    'mouseenter',
+    async () => {
+      await importRecaptcha();
+      grecaptcha.render(getResumeButton, {
+        sitekey: '6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH',
+        theme: 'dark',
+        callback: async () => {
+          resumeError.hidden = true;
+
+          try {
+            const res = await fetch(`${process.env.API_URL}/resume`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify(
+                Object.fromEntries(Array.from(new FormData(resumeForm))),
+              ),
+            });
+
+            if (res.status !== 200) {
+              throw new Error();
+            }
+
+            const resumeBlob = await res.blob();
+
+            const resumeUrl = URL.createObjectURL(resumeBlob);
+
+            const anchor = document.createElement('a');
+            anchor.target = 'resume';
+            anchor.download = 'resume.pdf';
+            anchor.rel = 'noopener';
+            anchor.href = resumeUrl;
+            anchor.click();
+
+            setTimeout(() => URL.revokeObjectURL(resumeUrl), 10000);
+          } catch {
+            resumeError.hidden = false;
+          }
+        },
+      });
+    },
+    {
+      once: true,
+      passive: true,
+    },
+  );
 
   resumeForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const getResumeButton = resumeForm.querySelector<HTMLButtonElement>(
-      'button',
-    );
     getResumeButton.disabled = true;
   });
 };

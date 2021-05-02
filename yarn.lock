@@ -2550,6 +2550,11 @@
   dependencies:
     globby "*"
 
+"@types/grecaptcha@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/grecaptcha/-/grecaptcha-3.0.2.tgz#9c903d11b5d2bbf2670099c43c8986bf73bf44dd"
+  integrity sha512-KMuF6aFT5mradNvxs1Lv1D7c+H5InmUeR+gscpoyaz16GnJY4NmzWBlyNr66mj20U/QS2MR+/WPxuYH6bdJATA==
+
 "@types/html-minifier@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/html-minifier/-/html-minifier-4.0.0.tgz#2065cb9944f2d1b241146707c6935aa7b947d279"
