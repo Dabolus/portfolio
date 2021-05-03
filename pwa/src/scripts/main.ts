@@ -1,11 +1,13 @@
 import { setupServiceWorker } from './utils';
 import { configureRouting } from './routing';
 import { setupTopBarAnimation } from './animation';
+import { setupThemeChangeObserver } from './theme';
 
 const start = async () => {
   setupServiceWorker();
   configureRouting();
   setupTopBarAnimation();
+  setupThemeChangeObserver();
 };
 
 if (
