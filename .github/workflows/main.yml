@@ -1,5 +1,5 @@
 name: Build, deploy and audit
-on:
+'on':
   push:
     branches:
       - master
