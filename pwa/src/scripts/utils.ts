@@ -64,6 +64,9 @@ export const setupServiceWorker = async () => {
   const performUpdateButton = document.querySelector<HTMLButtonElement>(
     '#perform-update',
   );
+  const performUpdateLoading = performUpdateButton.querySelector<HTMLDivElement>(
+    '.loading',
+  );
 
   const showUpdateNotification = async () => {
     updateNotification.hidden = false;
@@ -83,7 +86,12 @@ export const setupServiceWorker = async () => {
 
   performUpdateButton.addEventListener(
     'click',
-    () => _newSw.postMessage({ action: 'update' }),
+    () => {
+      cancelUpdateButton.disabled = true;
+      performUpdateButton.disabled = true;
+      performUpdateLoading.hidden = false;
+      _newSw.postMessage({ action: 'update' });
+    },
     { once: true },
   );
 
