@@ -1,7 +1,8 @@
-<link rel="modulepreload" href="<%= output.scripts.utils %>">
-<link rel="modulepreload" href="<%= output.scripts.animation %>">
-<link rel="modulepreload" href="<%= output.scripts[page.id] %>">
-<script type="module" src="<%= output.scripts.main %>"></script>
-<link rel="stylesheet" href="<%= output.styles.main %>">
-<link rel="stylesheet" href="<%= output.styles[page.id] %>">
+<link rel="modulepreload" href="<%= output.scripts[page.id].fileName %>">
+<% output.scripts[page.id].dependencies.forEach(dependency => { %>
+  <link rel="modulepreload" href="<%= dependency %>">
+<% }) %>
+<script type="module" src="<%= output.scripts.main.fileName %>"></script>
+<link rel="stylesheet" href="<%= output.styles.main.fileName %>">
+<link rel="stylesheet" href="<%= output.styles[page.id].fileName %>">
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>

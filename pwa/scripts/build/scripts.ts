@@ -1,7 +1,7 @@
 /// <reference types="../typings" />
 import { promises as fs } from 'fs';
 import path from 'path';
-import { rollup } from 'rollup';
+import { OutputChunk, rollup } from 'rollup';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
@@ -15,30 +15,47 @@ export interface BuildScriptsOptions {
   readonly stylesOutput: BuildStylesOutput;
 }
 
+export interface BuildScriptOutput {
+  readonly fileName: string;
+  readonly dependencies: readonly string[];
+}
+
 export interface BuildScriptsOutput {
-  readonly main: string;
-  readonly utils: string;
-  readonly animation: string;
-  readonly home: string;
-  readonly about: string;
-  readonly certifications: string;
-  readonly contacts: string;
-  readonly projects: string;
-  readonly skills: string;
+  readonly main: BuildScriptOutput;
+  readonly home: BuildScriptOutput;
+  readonly about: BuildScriptOutput;
+  readonly certifications: BuildScriptOutput;
+  readonly contacts: BuildScriptOutput;
+  readonly projects: BuildScriptOutput;
+  readonly skills: BuildScriptOutput;
 }
 
 const scriptsPath = path.resolve(__dirname, '../../src/scripts');
 
 const pathToPageMap: Record<string, keyof BuildScriptsOutput> = {
   main: 'main',
-  utils: 'utils',
-  animation: 'animation',
   'pages/home': 'home',
   'pages/about': 'about',
   'pages/certifications': 'certifications',
   'pages/contacts': 'contacts',
   'pages/projects': 'projects',
   'pages/skills': 'skills',
+};
+
+const getDependencies = (
+  fileName: string,
+  outputs: readonly OutputChunk[],
+): readonly string[] => {
+  const output = outputs.find((output) => output.fileName === fileName);
+
+  return Array.from(
+    new Set([
+      ...output.imports,
+      ...output.dynamicImports,
+      ...output.imports.flatMap((imp) => getDependencies(imp, outputs)),
+      ...output.dynamicImports.flatMap((imp) => getDependencies(imp, outputs)),
+    ]),
+  );
 };
 
 const createBundle = async (
@@ -139,13 +156,34 @@ const createBundle = async (
   });
 
   const result = (Object.fromEntries(
-    output
+    (output as readonly OutputChunk[])
       .filter(({ name }) => name in pathToPageMap)
-      .map(({ name, fileName }) => [pathToPageMap[name] || name, fileName]),
+      .map(({ name, fileName }) => [
+        pathToPageMap[name] || name,
+        {
+          fileName,
+          dependencies: getDependencies(
+            fileName,
+            output as readonly OutputChunk[],
+          ),
+        },
+      ]),
   ) as unknown) as BuildScriptsOutput;
 
+  console.log(
+    (output as readonly OutputChunk[]).map(
+      ({ name, fileName, imports, dynamicImports }) => ({
+        name,
+        fileName,
+        imports,
+        dynamicImports,
+      }),
+    ),
+  );
+  console.log(result);
+
   await Promise.all(
-    Object.values(result).map(async (fileName) => {
+    Object.values(result).map(async ({ fileName }: BuildScriptOutput) => {
       const output = await fs.readFile(path.join(outputPath, fileName), 'utf8');
 
       const replacedOutput = output.replace(
@@ -153,7 +191,7 @@ const createBundle = async (
         (_, id: string, type: 'JS' | 'CSS') => {
           const map = type === 'JS' ? result : stylesOutput;
 
-          const outputPath = map[id.toLowerCase() as keyof typeof map];
+          const outputPath = map[id.toLowerCase() as keyof typeof map].fileName;
 
           return `'/${outputPath}'`;
         },

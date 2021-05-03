@@ -25,26 +25,62 @@ import { getTimeline } from '../helpers/data/timeline';
 const cachePath = path.resolve(__dirname, '../../node_modules/.cache/pwa');
 const outputPath = path.resolve(__dirname, '../../dist');
 
+// Not having the hashes in dev mode allows us to know in advance the output file names.
+// This allows us to build some things in parallel.
 const output: Output = {
+  // NOTE: we don't care about preloading imports in dev mode, so we just set them to an empty array
   scripts: {
-    main: 'scripts/main.js',
-    home: 'scripts/pages/home.js',
-    about: 'scripts/pages/about.js',
-    certifications: 'scripts/pages/certifications.js',
-    contacts: 'scripts/pages/contacts.js',
-    projects: 'scripts/pages/projects.js',
-    skills: 'scripts/pages/skills.js',
-    utils: 'scripts/utils.js',
-    animation: 'scripts/animation.js',
+    main: {
+      fileName: 'scripts/main.js',
+      dependencies: [],
+    },
+    home: {
+      fileName: 'scripts/pages/home.js',
+      dependencies: [],
+    },
+    about: {
+      fileName: 'scripts/pages/about.js',
+      dependencies: [],
+    },
+    certifications: {
+      fileName: 'scripts/pages/certifications.js',
+      dependencies: [],
+    },
+    contacts: {
+      fileName: 'scripts/pages/contacts.js',
+      dependencies: [],
+    },
+    projects: {
+      fileName: 'scripts/pages/projects.js',
+      dependencies: [],
+    },
+    skills: {
+      fileName: 'scripts/pages/skills.js',
+      dependencies: [],
+    },
   },
   styles: {
-    main: 'styles/main.css',
-    home: 'styles/home.css',
-    about: 'styles/pages/about.css',
-    certifications: 'styles/pages/certifications.css',
-    contacts: 'styles/pages/contacts.css',
-    projects: 'styles/pages/projects.css',
-    skills: 'styles/pages/skills.css',
+    main: {
+      fileName: 'styles/main.css',
+    },
+    home: {
+      fileName: 'styles/home.css',
+    },
+    about: {
+      fileName: 'styles/pages/about.css',
+    },
+    certifications: {
+      fileName: 'styles/pages/certifications.css',
+    },
+    contacts: {
+      fileName: 'styles/pages/contacts.css',
+    },
+    projects: {
+      fileName: 'styles/pages/projects.css',
+    },
+    skills: {
+      fileName: 'styles/pages/skills.css',
+    },
   },
 };
 

@@ -10,14 +10,17 @@ import cssnano from 'cssnano';
 
 import { hash } from '../helpers/hash';
 
+export interface BuildStyleOutput {
+  readonly fileName: string;
+}
 export interface BuildStylesOutput {
-  readonly main: string;
-  readonly home: string;
-  readonly about: string;
-  readonly certifications: string;
-  readonly contacts: string;
-  readonly projects: string;
-  readonly skills: string;
+  readonly main: BuildStyleOutput;
+  readonly home: BuildStyleOutput;
+  readonly about: BuildStyleOutput;
+  readonly certifications: BuildStyleOutput;
+  readonly contacts: BuildStyleOutput;
+  readonly projects: BuildStyleOutput;
+  readonly skills: BuildStyleOutput;
 }
 
 const postcssInstance = postcss([
@@ -107,7 +110,7 @@ export async function buildStyles(
       compileStyles(outputDir, {
         fragment: fragment as keyof typeof styles,
         production,
-      }).then((output) => [fragment, output]),
+      }).then((fileName) => [fragment, { fileName }]),
     ),
   );
 
