@@ -170,18 +170,6 @@ const createBundle = async (
       ]),
   ) as unknown) as BuildScriptsOutput;
 
-  console.log(
-    (output as readonly OutputChunk[]).map(
-      ({ name, fileName, imports, dynamicImports }) => ({
-        name,
-        fileName,
-        imports,
-        dynamicImports,
-      }),
-    ),
-  );
-  console.log(result);
-
   await Promise.all(
     Object.values(result).map(async ({ fileName }: BuildScriptOutput) => {
       const output = await fs.readFile(path.join(outputPath, fileName), 'utf8');
