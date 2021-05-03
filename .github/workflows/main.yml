@@ -3,6 +3,8 @@ name: Build, deploy and audit
   push:
     branches:
       - master
+  schedule:
+    - cron: '0 12 1 * *'
 jobs:
   main:
     runs-on: ubuntu-latest
