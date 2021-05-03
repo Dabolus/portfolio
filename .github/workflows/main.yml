@@ -19,6 +19,8 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy
         uses: Dabolus/deploy-firebase@master
         env:
