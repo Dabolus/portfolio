@@ -63,8 +63,12 @@
   </section>
 
   <form id="resume-form">
+    <div class="captcha"></div>
     <p>You seem very interested in my story.</p>
-    <button type="submit">Get my resume</button>
+    <button type="submit">
+      <span>Get my resume</span>
+      <div class="loading" hidden></div>
+    </button>
     <span id="resume-error" hidden>There was an error getting the resume, please try again.</span>
   </form>
 </div>

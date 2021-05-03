@@ -1,7 +1,8 @@
 import { saveAs } from 'file-saver';
 
 import { startAnimation, stopAnimation } from '../animation';
-import { importRecaptcha, loadStyles, loadTemplate } from '../utils';
+import { executeCaptcha, renderCaptcha, resetCaptcha } from '../captcha';
+import { loadStyles, loadTemplate } from '../utils';
 
 // Configure age animation
 const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
@@ -33,55 +34,59 @@ const configure = async () => {
   applyTemplate();
 
   const resumeForm = document.querySelector<HTMLFormElement>('#resume-form');
+  const getResumeCaptcha = resumeForm.querySelector<HTMLDivElement>('.captcha');
   const getResumeButton = resumeForm.querySelector<HTMLButtonElement>('button');
+  const getResumeLoading = getResumeButton.querySelector<HTMLDivElement>(
+    '.loading',
+  );
   const resumeError = resumeForm.querySelector<HTMLSpanElement>(
     '#resume-error',
   );
 
   resumeForm.addEventListener(
     'mouseenter',
-    async () => {
-      await importRecaptcha();
-      grecaptcha.render(getResumeButton, {
-        sitekey: '6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH',
-        theme: 'dark',
-        callback: async () => {
-          resumeError.hidden = true;
-
-          try {
-            const res = await fetch(`${process.env.API_URL}/resume`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-              },
-              body: JSON.stringify(
-                Object.fromEntries(Array.from(new FormData(resumeForm))),
-              ),
-            });
-
-            if (res.status !== 200) {
-              throw new Error();
-            }
-
-            const resumeBlob = await res.blob();
-
-            saveAs(resumeBlob, 'Giorgio Garasto - Resume.pdf');
-          } catch {
-            resumeError.hidden = false;
-          }
-        },
-      });
-    },
+    () => renderCaptcha(getResumeCaptcha),
     {
       once: true,
       passive: true,
     },
   );
 
-  resumeForm.addEventListener('submit', (event) => {
+  resumeForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    resumeError.hidden = true;
     getResumeButton.disabled = true;
+    getResumeLoading.hidden = false;
+
+    await executeCaptcha(getResumeCaptcha);
+
+    try {
+      const res = await fetch(`${process.env.API_URL}/resume`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(
+          Object.fromEntries(Array.from(new FormData(resumeForm))),
+        ),
+      });
+
+      if (res.status !== 200) {
+        throw new Error();
+      }
+
+      const resumeBlob = await res.blob();
+
+      saveAs(resumeBlob, 'Giorgio Garasto - Resume.pdf');
+    } catch {
+      resumeError.hidden = false;
+    }
+
+    getResumeLoading.hidden = true;
+    getResumeButton.disabled = false;
+
+    resetCaptcha(getResumeCaptcha);
   });
 };
 

@@ -52,27 +52,6 @@ export const importIIFE = (src: string) => {
   return scriptPromise;
 };
 
-declare global {
-  interface Window {
-    __recaptchaLoadedCallback: () => void;
-  }
-}
-
-let recaptchaPromise: Promise<unknown>;
-
-export const importRecaptcha = () => {
-  if (!recaptchaPromise) {
-    recaptchaPromise = new Promise<void>((resolve, reject) => {
-      window.__recaptchaLoadedCallback = resolve;
-      importIIFE(
-        'https://www.google.com/recaptcha/api.js?onload=__recaptchaLoadedCallback&render=explicit',
-      ).catch(reject);
-    });
-  }
-
-  return recaptchaPromise;
-};
-
 let _newSw: ServiceWorker;
 
 export const setupServiceWorker = async () => {

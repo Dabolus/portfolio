@@ -1,5 +1,9 @@
 @import './variables';
 
+html {
+  --loading-size: 2rem;
+}
+
 a {
   color: var(--theme-accent);
   text-decoration: none;
@@ -57,25 +61,31 @@ sup {
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
-  > .loading {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
+.loading {
+  display: inline-block;
+  width: var(--loading-size);
+  height: var(--loading-size);
 
-    &:after {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 2rem;
-      margin: 1px;
-      border-radius: 50%;
-      border: 0.2rem solid var(--theme-accent);
-      border-color: var(--theme-accent) transparent var(--theme-accent)
-        transparent;
-      animation: loading 1.2s linear infinite;
-    }
+  &:after {
+    content: '';
+    display: block;
+    width: var(--loading-size);
+    height: var(--loading-size);
+    margin: 1px;
+    border-radius: 50%;
+    border: calc(var(--loading-size) / 10) solid var(--theme-accent);
+    border-color: var(--theme-accent) transparent var(--theme-accent)
+      transparent;
+    animation: loading 1.2s linear infinite;
   }
+}
+
+button > .loading {
+  position: absolute;
+  top: calc(50% - (var(--loading-size) / 2));
+  left: calc(50% - (var(--loading-size) / 2));
 }
 
 ul.badges {
@@ -105,12 +115,22 @@ button {
   border: none;
   cursor: pointer;
   background: none;
+  user-select: none;
+  position: relative;
+  --loading-size: 1rem;
 
   &[disabled] {
     pointer-events: none;
-    opacity: 0.6;
-    filter: saturate(0);
+
+    > span {
+      opacity: 0.6;
+      filter: saturate(0);
+    }
   }
+}
+
+.captcha {
+  display: none;
 }
 
 #update-notification {
