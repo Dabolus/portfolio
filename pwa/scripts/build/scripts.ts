@@ -76,7 +76,7 @@ const createBundle = async (
       resolve({
         extensions: ['.ts', '.js', '.mjs', '.styl', '.hbs', '.po'],
       }),
-      commonjs(),
+      commonjs({ namedExports: { 'file-saver': ['saveAs'] } }),
       po(),
       babel({
         exclude: /node_modules/,

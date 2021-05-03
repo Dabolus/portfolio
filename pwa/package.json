@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "core-js": "^3.10.2",
+    "file-saver": "^2.0.5",
     "firebase": "^9.0.0-beta.1",
     "pwa-helpers": "^0.9.1",
     "typed.js": "^2.0.12"
@@ -25,6 +26,7 @@
     "@types/browser-sync": "^2.26.1",
     "@types/cssnano": "^4.0.0",
     "@types/ejs": "^3.0.6",
+    "@types/file-saver": "^2.0.2",
     "@types/fs-extra": "^9.0.11",
     "@types/globby": "^9.1.0",
     "@types/grecaptcha": "^3.0.2",

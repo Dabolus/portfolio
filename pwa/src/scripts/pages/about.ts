@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver';
+
 import { startAnimation, stopAnimation } from '../animation';
 import { importRecaptcha, loadStyles, loadTemplate } from '../utils';
 
@@ -64,16 +66,7 @@ const configure = async () => {
 
             const resumeBlob = await res.blob();
 
-            const resumeUrl = URL.createObjectURL(resumeBlob);
-
-            const anchor = document.createElement('a');
-            anchor.target = 'resume';
-            anchor.download = 'resume.pdf';
-            anchor.rel = 'noopener';
-            anchor.href = resumeUrl;
-            anchor.click();
-
-            setTimeout(() => URL.revokeObjectURL(resumeUrl), 10000);
+            saveAs(resumeBlob, 'Giorgio Garasto - Resume.pdf');
           } catch {
             resumeError.hidden = false;
           }
