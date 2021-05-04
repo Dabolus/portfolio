@@ -4,7 +4,7 @@
       <picture>
         <source srcset="images/me-vintage.webp" type="image/webp">
         <source srcset="images/me-vintage.jpg" type="image/jpeg">
-        <img id="me-vintage" src="images/me-vintage.jpg" alt="<%= helpers.translate('me') %>" title="<%= helpers.translate('me') %>" width="101" height="125">
+        <img id="me-vintage" src="images/me-vintage.jpg" alt="<%= helpers.translate(page.me) %>" title="<%= helpers.translate(page.me) %>" width="101" height="125">
       </picture>
       <img id="polaroid-frame" src="images/polaroid-frame-<%= config.locale %>.svg" alt="" width="114" height="138">
     </div>
@@ -64,11 +64,11 @@
 
   <form id="resume-form">
     <div class="captcha"></div>
-    <p><%= helpers.translate('veryInterested') %></p>
+    <p><%= helpers.translate(page.veryInterested) %></p>
     <button type="submit">
-      <span><%= helpers.translate('getResume') %></span>
+      <span><%= helpers.translate(page.getResume) %></span>
       <div class="loading" hidden></div>
     </button>
-    <span id="resume-error" hidden><%= helpers.translate('resumeError') %></span>
+    <span id="resume-error" hidden><%= helpers.translate(page.resumeError) %></span>
   </form>
 </div>
