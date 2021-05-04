@@ -2,10 +2,8 @@
   events:
     - month: 9
       day: 1
-      title: <code>printf("hello, world\n");</code>
-      description:
-        It was 23:20 when my first commit was pushed to the <code>world</code>
-        repo, on the <code>italy</code> branch.
+      title: helloWorldTitle
+      description: helloWorldDescription
       icon:
         color: '#1976d2'
         type: fill
@@ -26,10 +24,8 @@
           2.25 0 11-2.25 2.25A2.25 2.25 0 0112 1.5z
 - year: 2004
   events:
-    - title: First steps
-      description:
-        My father asked me to help him with his work, and that's when I discovered
-        HTML.
+    - title: firstStepsTitle
+      description: firstStepsDescription
       icon:
         color: '#e34c26'
         type: fill
@@ -47,10 +43,8 @@
 - year: 2015
   events:
     - month: 6
-      title: The first work experience ever…
-      description:
-        During the school summer break, I applied to be part of a group of
-        students who had the chance to work for our province as handymen.
+      title: lavoriInCorsoTitle
+      description: lavoriInCorsoDescription
       icon:
         color: '#ffdb01'
         type: fill
@@ -69,11 +63,8 @@
           - M9.7 6.8a3.4 3.4 0 006.7-1A3.3 3.3 0 0016 4zM17.1 3v-.2a.9.9 0 00-.4 0l-1.4.5A3.4
             3.4 0 009.6 6a2.4 2.4 0 000 .4z
     - month: 7
-      title: '…and the first one in the IT world'
-      description:
-        While working for the province of Pordenone, I also started an internship
-        at a furniture shop called <a href="https://milani6.com" target="milani6" rel="noopener">Milani6</a>,
-        where a school<wbr>mate and I built a simple e-commerce in AngularJS 1 and PHP.
+      title: milani6InternshipTitle
+      description: milani6InternshipDescription
       icon:
         color: '#2b2a29'
         type: fill
@@ -89,12 +80,8 @@
 - year: 2017
   events:
     - month: 3
-      title: Working smartly
-      description:
-        Through Lionbridge, I applied to become a Google Ads Quality Evaluator.
-        That job taught me what smart working is, thanks to being a remote work without
-        a fixed schedule. It also taught me to think like end users and to understand
-        their intent.
+      title: lionbridgeTitle
+      description: lionbridgeDescription
       icon:
         color: '#f16421'
         type: stroke
@@ -102,8 +89,8 @@
           - M4.1 2.2L1.6 5.8l4.7 2.8-.7 11.6 6.4-2.7 6.4 2.7-.7-11.6 4.7-2.8-2.5-3.6
           - M5.6 4.4L9.8 7l-.5 6.8 2.7 1 2.7-1-.5-6.8 4.2-2.6
     - month: 6
-      title: Real Comm
-      description: '// TODO'
+      title: realCommInternshipTitle
+      description: realCommInternshipDescription
       icon:
         color: '#878787'
         type: fill
@@ -113,8 +100,8 @@
           - M21.4 11.7a7.9 7.9 0 01.9 2.4c0 .7-.4 2.2-2.5 3.2s-3.4 2-8.9 2A32 32 0 010
             16.9s4.6 3.7 12.7 3.7S24 17.5 24 15.3s-2.6-3.6-2.6-3.6z
     - month: 11
-      title: Google Developer Scholarship
-      description: '// TODO'
+      title: googleScholarshipTitle
+      description: googleScholarshipDescription
       icon:
         color: '#4285f4'
         type: fill
@@ -122,8 +109,8 @@
 - year: 2018
   events:
     - month: 2
-      title: MOLO17 // Internship
-      description: '// TODO'
+      title: molo17InternshipTitle
+      description: molo17InternshipDescription
       icon:
         color: '#e30613'
         type: fill
@@ -131,14 +118,11 @@
           M20.62.41l-7.21 7.41v-1A6.42 6.42 0 00.59 6v18h2.77V6.83a3.63 3.63 0 017.26
           0V24h2.79V11.82l7.21-7.41V24h2.8V.41z
     - month: 8
-      title: The first full-time contract
-      description:
-        At the end of the internship, I've been asked to work for MOLO17
-        after finishing my studies. I really liked the technologies we used and the
-        development team, so I was happy to accept.
+      title: molo17ContractTitle
+      description: molo17ContractDescription
     - month: 8
-      title: Mobile Web Specialist
-      description: '// TODO'
+      title: mobileWebSpecialistTitle
+      description: mobileWebSpecialistDescription
       icon:
         color: '#50b6d2'
         type: fill
@@ -146,8 +130,8 @@
           - M22 10.8l.8-3.5-3.2-1.7-1.2-3.3-3.6.3L12 .4 9.2 2.6l-3.6-.4-1.2 3.4-3.2 1.7.8 3.5-1.8 3.1 2.6 2.5L3 20l3.5.7 2.1 3 3.4-1.4 3.3 1.3 2.1-2.9L21 20l.2-3.6 2.6-2.5zm-10.2 8.3a7 7 0 117-7 7 7 0 01-7 7z
           - M11.8 14.5l-2.7 1.4.6-3-2.2-2 3-.5 1.3-2.7 1.4 2.7 3 .4L14 13l.5 3z
     - month: 10
-      title: Facebook PyTorch Scholarship
-      description: '// TODO'
+      title: facebookScholarshipTitle
+      description: facebookScholarshipDescription
       icon:
         color: '#1877f2'
         type: fill
@@ -155,15 +139,15 @@
 - year: 2019
   events:
     - month: 11
-      title: Bertelsmann Technology Scholarship
-      description: '// TODO'
+      title: bertelsmannScholarshipTitle
+      description: bertelsmannScholarshipDescription
       icon:
         color: '#003063'
         type: fill
         path: M7.3 21h4c3 0 5.3-1.5 5.3-4 0-3.2-2.8-4.5-6.2-4.5H9.2l1.3-2.7c1.8 0 5-.3 5-3.6 0-1.6-1-3.2-4.5-3.2H7.3v18zM3.9.1h7.5C16.9.2 19 3 19 6a5.5 5.5 0 01-3 4.9 6 6 0 014.2 5.9c0 3.7-2.6 7-8.8 7H3.9z
     - month: 12
-      title: Intel<sup>®</sup> Edge AI Scholarship
-      description: '// TODO'
+      title: intelScholarshipTitle
+      description: intelScholarshipDescription
       icon:
         color: '#0071c5'
         type: fill
@@ -171,12 +155,8 @@
 - year: 2021
   events:
     - month: 2
-      title: Decentralizing the web
-      description:
-        I've been interested in and have been experimenting with the Ethereum
-        blockchain since 2017, so—when there was the new crypto boom—I finally decided
-        to take the leap by taking the Udacity <a href="https://www.udacity.com/course/blockchain-developer-nanodegree--nd1309"
-        target="blockchain-nanodegree" rel="noopener"> Blockchain Developer Nanodegree</a>.
+      title: blockchainNanodegreeTitle
+      description: blockchainNanodegreeDescription
       icon:
         color: '#454a75'
         type: fill
@@ -185,11 +165,8 @@
           - M18.4 11L12 0 5.7 11l6.3 3zM12 2.8l3.6 6.3L12 7.4 8.4 9.1zM12 9l3.7 1.8-3.7
             1.7-3.7-1.8z
     - month: 5
-      title: Starting a new adventure
-      description:
-        I've always been eager to help people. That's why—when I came to
-        know of <a href="https://www.empatica.com" target="empatica" rel="noopener">Empatica</a>—applying
-        was quite a natural choice.
+      title: empaticaContractTitle
+      description: empaticaContractDescription
       icon:
         color: '#bc204b'
         type: fill

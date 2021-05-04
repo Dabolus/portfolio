@@ -42,10 +42,10 @@
                 <% if (title || description || month) { %>
                   <div class="event-content">
                     <% if (title) { %>
-                      <h5><%- title %></h5>
+                      <h5><%- helpers.translate(title) %></h5>
                     <% } %>
                     <% if (description) { %>
-                      <p><%- description %></p>
+                      <p><%- helpers.translate(description) %></p>
                     <% } %>
                     <% if (month) { %>
                       <time datetime="<%= helpers.toISODate(year, month, day) %>">

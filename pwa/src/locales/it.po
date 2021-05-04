@@ -139,3 +139,114 @@ msgstr "Soft skill"
 
 msgid "blog"
 msgstr "Blog"
+
+msgid "helloWorldTitle"
+msgstr "<code>printf(\"hello, world\\n\");</code>"
+
+msgid "helloWorldDescription"
+msgstr ""
+"It was 23:20 when my first commit was pushed to the <code>world</code> "
+"repo, on the <code>italy</code> branch."
+
+msgid "firstStepsTitle"
+msgstr "First steps"
+
+msgid "firstStepsDescription"
+msgstr "My father asked me to help him with his work, and that's when I discovered HTML."
+
+msgid "lavoriInCorsoTitle"
+msgstr "The first work experience ever…"
+
+msgid "lavoriInCorsoDescription"
+msgstr ""
+"During the school summer break, I applied to be part of a group of "
+"students who had the chance to work for our province as handymen."
+
+msgid "milani6InternshipTitle"
+msgstr "…and the first one in the IT world"
+
+msgid "milani6InternshipDescription"
+msgstr ""
+"While working for the province of Pordenone, I also started an internship "
+"at a furniture shop called <a href=\"https://milani6.com\" target=\"milani6\" rel=\"noopener\">Milani6</a>, "
+"where a school<wbr>mate and I built a simple e-commerce in AngularJS 1 and PHP."
+
+msgid "lionbridgeTitle"
+msgstr "Working smartly"
+
+msgid "lionbridgeDescription"
+msgstr ""
+"Through Lionbridge, I applied to become a Google Ads Quality Evaluator. "
+"That job taught me what smart working is, thanks to being a remote work without "
+"a fixed schedule. It also taught me to think like end users and to understand "
+"their intent."
+
+msgid "realCommInternshipTitle"
+msgstr "Real Comm"
+
+msgid "realCommInternshipDescription"
+msgstr "TODO"
+
+msgid "googleScholarshipTitle"
+msgstr "Google Developer Scholarship"
+
+msgid "googleScholarshipDescription"
+msgstr "TODO"
+
+msgid "molo17InternshipTitle"
+msgstr "MOLO17 // Internship"
+
+msgid "molo17InternshipDescription"
+msgstr "TODO"
+
+msgid "molo17ContractTitle"
+msgstr "The first full-time contract"
+
+msgid "molo17ContractDescription"
+msgstr ""
+"At the end of the internship, I've been asked to work for MOLO17 "
+"after finishing my studies. I really liked the technologies we used and the "
+"development team, so I was happy to accept."
+
+msgid "mobileWebSpecialistTitle"
+msgstr "Mobile Web Specialist"
+
+msgid "mobileWebSpecialistDescription"
+msgstr "TODO"
+
+msgid "facebookScholarshipTitle"
+msgstr "Facebook PyTorch Scholarship"
+
+msgid "facebookScholarshipDescription"
+msgstr "TODO"
+
+msgid "bertelsmannScholarshipTitle"
+msgstr "Bertelsmann Technology Scholarship"
+
+msgid "bertelsmannScholarshipDescription"
+msgstr "TODO"
+
+msgid "intelScholarshipTitle"
+msgstr "Intel<sup>®</sup> Edge AI Scholarship"
+
+msgid "intelScholarshipDescription"
+msgstr "TODO"
+
+msgid "blockchainNanodegreeTitle"
+msgstr "Decentralizing the web"
+
+msgid "blockchainNanodegreeDescription"
+msgstr ""
+"I've been interested in and have been experimenting with the Ethereum "
+"blockchain since 2017, so—when there was the new crypto boom—I finally decided "
+"to take the leap by taking the Udacity <a href=\"https://www.udacity.com/course/blockchain-developer-nanodegree--nd1309\" "
+"target=\"blockchain-nanodegree\" rel=\"noopener\"> Blockchain Developer Nanodegree</a>."
+
+msgid "empaticaContractTitle"
+msgstr "Starting a new adventure"
+
+msgid "empaticaContractDescription"
+msgstr ""
+"I've always been eager to help people. That's why—when I came to "
+"know of <a href=\"https://www.empatica.com\" target=\"empatica\" "
+"rel=\"noopener\">Empatica</a>—applying was quite a natural choice."
