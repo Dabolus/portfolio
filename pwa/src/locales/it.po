@@ -140,6 +140,21 @@ msgstr "Soft skill"
 msgid "blog"
 msgstr "Blog"
 
+msgid "back"
+msgstr "Indietro"
+
+msgid "me"
+msgstr "Io"
+
+msgid "veryInterested"
+msgstr "Sembri molto interessato/a alla mia storia."
+
+msgid "getResume"
+msgstr "Scarica il mio resume"
+
+msgid "resumeError"
+msgstr "C'è stato un errore scaricando il resume, riprova."
+
 msgid "helloWorldTitle"
 msgstr "<code>printf(\"hello, world\\n\");</code>"
 
