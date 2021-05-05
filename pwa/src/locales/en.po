@@ -197,10 +197,13 @@ msgstr ""
 "their intent."
 
 msgid "realCommInternshipTitle"
-msgstr "Real Comm"
+msgstr "MVP in MVC"
 
 msgid "realCommInternshipDescription"
-msgstr "TODO"
+msgstr ""
+"During my first year at the ITS Kennedy Foundation, I did a two-month internship at "
+"<a href=\"https://www.realcomm.it\" target=\"realcomm\" rel=\"noopener\">Real Comm</a>, "
+"where I built ASP.NET MVC web applications using C#."
 
 msgid "googleScholarshipTitle"
 msgstr "Google Developer Scholarship"
