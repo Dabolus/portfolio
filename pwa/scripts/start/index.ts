@@ -127,24 +127,20 @@ const start = async () => {
   const cwd = path.resolve(__dirname, '../..');
   const bs = browserSync.create();
 
-  const [
-    config,
-    availableLocales,
-    i18nHelpersMap,
-    datesHelpersMap,
-  ] = await Promise.all([
-    getConfig(),
-    getAvailableLocales(),
-    setupI18nHelpersMap(),
-    setupDatesHelpersMap(),
-  ]);
-
   const production = process.env.NODE_ENV === 'production';
 
   chokidar
-    .watch(['src/index.ejs', 'src/fragments/**/*.ejs', 'src/data/**/*.yml'], {
-      cwd,
-    })
+    .watch(
+      [
+        'src/index.ejs',
+        'src/fragments/**/*.ejs',
+        'src/data/**/*.yml',
+        'src/locales/**/*.po',
+      ],
+      {
+        cwd,
+      },
+    )
     .on(
       'all',
       debounce(async (_, changedPath) => {
@@ -152,7 +148,19 @@ const start = async () => {
           `\x1b[32m${changedPath}\x1b[0m changed, rebuilding templates...`,
         );
 
-        const data = await getDataWithCache();
+        const [
+          config,
+          data,
+          availableLocales,
+          i18nHelpersMap,
+          datesHelpersMap,
+        ] = await Promise.all([
+          getConfig(),
+          getDataWithCache(),
+          getAvailableLocales(),
+          setupI18nHelpersMap(),
+          setupDatesHelpersMap(),
+        ]);
 
         await Promise.all(
           availableLocales.map((locale) =>
