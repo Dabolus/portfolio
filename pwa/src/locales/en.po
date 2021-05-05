@@ -233,7 +233,10 @@ msgid "mobileWebSpecialistTitle"
 msgstr "Mobile Web Specialist"
 
 msgid "mobileWebSpecialistDescription"
-msgstr "TODO"
+msgstr ""
+"After completing the Google Developer Scholarship, I was finally ready to obtain the Google "
+"<a href=\"https://web.archive.org/web/20190516134811/https://developers.google.com/training/certification/mobile-web-specialist\" rel=\"external\" target=\"mws\">Mobile Web Specialist</a> "
+"certification."
 
 msgid "facebookScholarshipTitle"
 msgstr "Facebook PyTorch Scholarship"
