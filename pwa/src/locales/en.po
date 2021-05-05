@@ -209,7 +209,10 @@ msgid "googleScholarshipTitle"
 msgstr "Google Developer Scholarship"
 
 msgid "googleScholarshipDescription"
-msgstr "TODO"
+msgstr ""
+"Google partnered with Udacity to offer scholarships to selected students. "
+"After a few months of selection, I was chosen to be one of the 5000 recipients "
+"out of the more than 200000 candidates that applied."
 
 msgid "molo17InternshipTitle"
 msgstr "MOLO17 // Internship"
