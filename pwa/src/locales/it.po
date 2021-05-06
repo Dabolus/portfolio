@@ -215,13 +215,15 @@ msgstr ""
 "out of the more than 200,000 candidates that applied."
 
 msgid "molo17InternshipTitle"
-msgstr "MOLO17 // Internship"
+msgstr "MOLO17 // Internship…"
 
 msgid "molo17InternshipDescription"
-msgstr "TODO"
+msgstr ""
+"Another ITS Kennedy Foundation year, another internship! This time it was a three-month "
+"intership at MOLO17, where I was able to work with cutting edge technologies that I love."
 
 msgid "molo17ContractTitle"
-msgstr "The first full-time contract"
+msgstr "…and first full-time contract"
 
 msgid "molo17ContractDescription"
 msgstr ""
