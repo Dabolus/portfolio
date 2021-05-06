@@ -11,6 +11,7 @@ import {
   getAvailableLocales,
   setupI18nHelpersMap,
 } from '../helpers/i18n';
+import { generateStructuredData } from '../helpers/structuredData';
 import { getConfig } from '../helpers/config';
 import { setupDatesHelpersMap } from '../helpers/dates';
 
@@ -73,6 +74,7 @@ const build = async () => {
           helpers: {
             ...i18nHelpersMap[locale],
             ...datesHelpersMap[locale],
+            generateStructuredData,
           },
           output: { scripts, styles },
         },

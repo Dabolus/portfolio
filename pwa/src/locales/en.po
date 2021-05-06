@@ -5,6 +5,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "formalDescription"
+msgstr ""
+"Giorgio Garasto—also known as Dabolus—is an italian Software Engineer "
+"and Graphic Designer specialized in web development. He is mainly known "
+"for his very first published project, the Clash Royale Card Maker."
+
+msgid "companyAddress"
+msgstr "Via Stendhal, 36, 20144 Milano MI, Italy"
+
 msgid "updateAvailable"
 msgstr "A new version of the web app is available!"
 

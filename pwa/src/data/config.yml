@@ -1,5 +1,9 @@
 baseTitle: Giorgio Garasto
 baseUrl: https://giorgio.garasto.me
+structuredData:
+  description: formalDescription
+  jobTitle: softwareEngineer
+  address: companyAddress
 update:
   available: updateAvailable
   cancel: cancel

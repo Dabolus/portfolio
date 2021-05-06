@@ -1,33 +1,38 @@
 import { readConfigFile } from './data/utils';
 
 export interface PageData extends Record<string, unknown> {
-  slug?: string;
-  title?: string;
-  link?: string;
-  description: string;
+  readonly slug?: string;
+  readonly title?: string;
+  readonly link?: string;
+  readonly description: string;
 }
 
 export interface ParsedPage extends PageData {
-  id: string;
+  readonly id: string;
 }
 
 export interface ConfigData {
-  baseTitle: string;
-  baseUrl: string;
-  update: {
-    available: string;
-    cancel: string;
-    perform: string;
+  readonly baseTitle: string;
+  readonly baseUrl: string;
+  readonly update: {
+    readonly available: string;
+    readonly cancel: string;
+    readonly perform: string;
   };
-  error: string;
-  pages: Record<string, PageData>;
+  readonly back: string;
+  readonly structuredData: {
+    readonly description: string;
+    readonly jobTitle: string;
+    readonly address: string;
+  };
+  readonly pages: Record<string, PageData>;
 }
 
 export interface ParsedConfigWithoutLocale extends Omit<ConfigData, 'pages'> {
-  pages: Record<string, ParsedPage>;
+  readonly pages: Record<string, ParsedPage>;
 }
 export interface ParsedConfig extends ParsedConfigWithoutLocale {
-  locale: string;
+  readonly locale: string;
 }
 
 export const getConfig = async (): Promise<ParsedConfigWithoutLocale> => {

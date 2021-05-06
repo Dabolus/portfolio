@@ -16,6 +16,7 @@ import {
   setupI18nHelpersMap,
 } from '../helpers/i18n';
 import { setupDatesHelpersMap } from '../helpers/dates';
+import { generateStructuredData } from '../helpers/structuredData';
 import { Data } from '../helpers/data';
 import { getSkills, ParsedSkills } from '../helpers/data/skills';
 import { getCertifications } from '../helpers/data/certifications';
@@ -174,6 +175,7 @@ const start = async () => {
                 helpers: {
                   ...i18nHelpersMap[locale],
                   ...datesHelpersMap[locale],
+                  generateStructuredData,
                 },
                 output,
               },
