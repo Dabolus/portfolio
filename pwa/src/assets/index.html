@@ -7,10 +7,8 @@
   </head>
   <body>
     <script>
-      // TODO: enable multilanguage support as soon as scripts get adapted
-      // var userLanguage = navigator.language.slice(0, 2);
-      // location.replace('/' + (['en', 'it'].indexOf(userLanguage) >= 0 ? userLanguage : 'en') + '/');
-      location.replace('/en/');
+      var userLanguage = navigator.language.slice(0, 2);
+      location.replace('/' + (['en', 'it'].indexOf(userLanguage) >= 0 ? userLanguage : 'en') + '/');
     </script>
   </body>
 </html>

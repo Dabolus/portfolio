@@ -25,6 +25,7 @@ export interface ConfigData {
     readonly jobTitle: string;
     readonly address: string;
   };
+  readonly availableLocales: Record<string, string>;
   readonly pages: Record<string, PageData>;
 }
 

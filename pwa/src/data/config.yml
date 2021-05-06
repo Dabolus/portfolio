@@ -9,6 +9,9 @@ update:
   cancel: cancel
   perform: updateNow
 back: back
+availableLocales:
+  it: Italiano
+  en: English
 pages:
   home:
     description: homeDescription

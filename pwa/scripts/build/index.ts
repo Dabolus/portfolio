@@ -83,7 +83,7 @@ const build = async () => {
     ),
   );
 
-  await generateServiceWorker(outputPath, { defaultLocale });
+  await generateServiceWorker(outputPath, availableLocales);
 };
 
 build();

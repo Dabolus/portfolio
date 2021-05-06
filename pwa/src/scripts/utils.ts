@@ -143,13 +143,15 @@ export const setupServiceWorker = async () => {
   );
 };
 
+export const getLanguage = () => location.pathname.slice(1, 3);
+
 export const loadFile = async (url: string) => {
   const res = await fetch(url);
   return res.text();
 };
 
 export const loadTemplate = async (name: string) => {
-  const template = await loadFile(`en/fragments/${name}.html`);
+  const template = await loadFile(`${getLanguage()}/fragments/${name}.html`);
   const outputElement = document.querySelector<HTMLDivElement>(`#${name}`);
 
   return () => {
