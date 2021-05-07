@@ -130,6 +130,8 @@ const start = async () => {
 
   const production = process.env.NODE_ENV === 'production';
 
+  const availableLocales = await getAvailableLocales();
+
   chokidar
     .watch(
       [
@@ -152,13 +154,11 @@ const start = async () => {
         const [
           config,
           data,
-          availableLocales,
           i18nHelpersMap,
           datesHelpersMap,
         ] = await Promise.all([
           getConfig(),
           getDataWithCache(),
-          getAvailableLocales(),
           setupI18nHelpersMap(),
           setupDatesHelpersMap(),
         ]);
@@ -236,7 +236,7 @@ const start = async () => {
         if (process.env.ENABLE_SERVICE_WORKER) {
           console.log('Rebuilding Service Worker...');
 
-          generateServiceWorker(outputPath, { defaultLocale });
+          generateServiceWorker(outputPath, availableLocales);
         }
       }, 950),
     );
