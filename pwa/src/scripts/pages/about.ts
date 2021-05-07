@@ -2,6 +2,7 @@ import { saveAs } from 'file-saver';
 
 import { startAnimation, stopAnimation } from '../animation';
 import { executeCaptcha, renderCaptcha, resetCaptcha } from '../captcha';
+import { getLocale } from '../i18n';
 import { loadStyles, loadTemplate, logEvent } from '../utils';
 
 // Configure age animation
@@ -15,7 +16,7 @@ const updateAge = (age: HTMLSpanElement) => () => {
   // - https://pumas.jpl.nasa.gov/files/04_21_97_1.pdf
   // - https://www.grc.nasa.gov/WWW/k-12/Numbers/Math/Mathematical_Thinking/calendar_calculations.htm
   age.textContent = ((Date.now() - dateOfBirth) / yearLength).toLocaleString(
-    'en', // TODO: use current locale
+    getLocale(),
     {
       minimumFractionDigits: 9,
       maximumFractionDigits: 9,

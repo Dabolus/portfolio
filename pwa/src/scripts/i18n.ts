@@ -1,3 +1,5 @@
+export const getLocale = () => location.pathname.slice(1, 3);
+
 export const setupI18n = () => {
   const languageSwitcherContainer = document.querySelector<HTMLDivElement>(
     '#language',
