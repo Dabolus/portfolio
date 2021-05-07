@@ -1,16 +1,12 @@
 import path from 'path';
-import { buildTemplate } from './templates';
+import { compileTemplate, buildTemplate } from './templates';
 import { buildScripts } from './scripts';
 import { buildStyles } from './styles';
 import { generateServiceWorker } from './sw';
 import { copyAssets } from './assets';
 import { buildSitemap } from './sitemap';
 import { getData } from '../helpers/data';
-import {
-  defaultLocale,
-  getAvailableLocales,
-  setupI18nHelpersMap,
-} from '../helpers/i18n';
+import { getAvailableLocales, setupI18nHelpersMap } from '../helpers/i18n';
 import { generateStructuredData } from '../helpers/structuredData';
 import { getConfig } from '../helpers/config';
 import { setupDatesHelpersMap } from '../helpers/dates';
@@ -47,7 +43,7 @@ const build = async () => {
         'skills',
         'blog',
       ],
-      defaultLocale,
+      defaultLocale: config.defaultLocale,
     }),
     copyAssets([
       {
@@ -62,9 +58,32 @@ const build = async () => {
     stylesOutput: styles,
   });
 
-  await Promise.all(
-    availableLocales.map((locale) =>
-      buildTemplate(path.resolve(outputPath, locale), {
+  await Promise.all([
+    compileTemplate(outputPath, {
+      partial: true,
+      fragment: 'landing',
+      outputPath: 'index.html',
+      pageData: {
+        page: {
+          id: 'landing',
+          description: 'Landing page',
+        },
+        config: {
+          ...config,
+          locale: config.defaultLocale,
+        },
+        data,
+        helpers: {
+          ...i18nHelpersMap[config.defaultLocale],
+          ...datesHelpersMap[config.defaultLocale],
+          generateStructuredData,
+        },
+        output: { scripts, styles },
+      },
+      production,
+    }),
+    ...availableLocales.map((locale) =>
+      buildTemplate(path.join(outputPath, locale), {
         data: {
           config: {
             ...config,
@@ -81,7 +100,7 @@ const build = async () => {
         production,
       }),
     ),
-  );
+  ]);
 
   await generateServiceWorker(outputPath, availableLocales);
 };

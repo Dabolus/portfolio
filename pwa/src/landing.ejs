@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="<%= config.defaultLocale %>">
+  <head>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=/<%= config.defaultLocale %>/">
+    </noscript>
+  </head>
+  <body>
+    <script>
+      const userLanguage =
+        localStorage.getItem('locale') || navigator.language.slice(0, 2);
+
+      location.replace(
+        `/${
+          ['<%= config.defaultLocale %>', 'it'].includes(userLanguage)
+            ? userLanguage
+            : '<%= config.defaultLocale %>'
+        }/`,
+      );
+    </script>
+  </body>
+</html>

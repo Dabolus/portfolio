@@ -3,18 +3,14 @@ import path from 'path';
 import chokidar from 'chokidar';
 import { debounce } from 'lodash';
 import browserSync from 'browser-sync';
-import { buildTemplate } from '../build/templates';
+import { compileTemplate, buildTemplate } from '../build/templates';
 import { buildScripts } from '../build/scripts';
 import { buildStyles } from '../build/styles';
 import { generateServiceWorker } from '../build/sw';
 import { copyAssets } from '../build/assets';
 import { Output } from '../build/models';
 import { getConfig } from '../helpers/config';
-import {
-  defaultLocale,
-  getAvailableLocales,
-  setupI18nHelpersMap,
-} from '../helpers/i18n';
+import { getAvailableLocales, setupI18nHelpersMap } from '../helpers/i18n';
 import { setupDatesHelpersMap } from '../helpers/dates';
 import { generateStructuredData } from '../helpers/structuredData';
 import { Data } from '../helpers/data';
@@ -163,8 +159,31 @@ const start = async () => {
           setupDatesHelpersMap(),
         ]);
 
-        await Promise.all(
-          availableLocales.map((locale) =>
+        await Promise.all([
+          compileTemplate(outputPath, {
+            partial: true,
+            fragment: 'landing',
+            outputPath: 'index.html',
+            pageData: {
+              page: {
+                id: 'landing',
+                description: 'Landing page',
+              },
+              config: {
+                ...config,
+                locale: config.defaultLocale,
+              },
+              data,
+              helpers: {
+                ...i18nHelpersMap[config.defaultLocale],
+                ...datesHelpersMap[config.defaultLocale],
+                generateStructuredData,
+              },
+              output,
+            },
+            production,
+          }),
+          ...availableLocales.map((locale) =>
             buildTemplate(path.resolve(outputPath, locale), {
               data: {
                 config: {
@@ -182,7 +201,7 @@ const start = async () => {
               production,
             }),
           ),
-        );
+        ]);
       }, 50),
     );
 

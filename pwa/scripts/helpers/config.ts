@@ -26,6 +26,7 @@ export interface ConfigData {
     readonly address: string;
   };
   readonly availableLocales: Record<string, string>;
+  readonly defaultLocale: string;
   readonly pages: Record<string, PageData>;
 }
 

@@ -10,20 +10,32 @@ const minifyScript: (code: string) => MinifyOutput = syncRpc(
   path.resolve(__dirname, '../helpers/minify.js'),
 );
 
+interface TemplateData {
+  readonly path: string;
+  readonly contentPromise: Promise<string>;
+}
+
 const templatesBasePath = path.join(__dirname, '../../src');
-const templates = {
-  index: path.join(templatesBasePath, 'index.ejs'),
-  home: path.join(templatesBasePath, 'fragments/body/home.ejs'),
-  about: path.join(templatesBasePath, 'fragments/body/pages/about.ejs'),
-  certifications: path.join(
-    templatesBasePath,
-    'fragments/body/pages/certifications.ejs',
-  ),
-  contacts: path.join(templatesBasePath, 'fragments/body/pages/contacts.ejs'),
-  projects: path.join(templatesBasePath, 'fragments/body/pages/projects.ejs'),
-  skills: path.join(templatesBasePath, 'fragments/body/pages/skills.ejs'),
+
+const getTemplateInfo = (relativePath: string): TemplateData => {
+  const templatePath = path.join(templatesBasePath, relativePath);
+
+  return {
+    path: templatePath,
+    contentPromise: fs.readFile(templatePath, 'utf8'),
+  };
 };
-const templatesCache = new Map<string, Promise<string>>();
+
+const templates = {
+  landing: getTemplateInfo('landing.ejs'),
+  index: getTemplateInfo('index.ejs'),
+  home: getTemplateInfo('fragments/body/home.ejs'),
+  about: getTemplateInfo('fragments/body/pages/about.ejs'),
+  certifications: getTemplateInfo('fragments/body/pages/certifications.ejs'),
+  contacts: getTemplateInfo('fragments/body/pages/contacts.ejs'),
+  projects: getTemplateInfo('fragments/body/pages/projects.ejs'),
+  skills: getTemplateInfo('fragments/body/pages/skills.ejs'),
+};
 
 export interface BuildTemplateOptions {
   readonly data: Omit<PageData, 'page'>;
@@ -35,19 +47,24 @@ export interface CompileTemplateOptions
   readonly fragment: keyof typeof templates;
   readonly pageData: PageData;
   readonly partial?: boolean;
+  readonly outputPath?: string;
 }
 
-const compileTemplate = async (
+export const compileTemplate = async (
   outputDir: string,
-  { fragment, pageData, production, partial }: CompileTemplateOptions,
+  {
+    fragment,
+    pageData,
+    production,
+    partial,
+    outputPath,
+  }: CompileTemplateOptions,
 ) => {
-  const templatePath = templates[partial ? fragment : 'index'];
+  const { path: templatePath, contentPromise } = templates[
+    partial ? fragment : 'index'
+  ];
 
-  if (!templatesCache.has(templatePath)) {
-    templatesCache.set(templatePath, fs.readFile(templatePath, 'utf8'));
-  }
-
-  const template = await templatesCache.get(templatePath);
+  const template = await contentPromise;
 
   const renderedTemplate = await renderTemplate(template, pageData, {
     filename: templatePath,
@@ -78,14 +95,12 @@ const compileTemplate = async (
       })
     : renderedTemplate;
 
-  const outputPath = path.join(
-    outputDir,
-    partial ? 'fragments' : '',
-    `${fragment}.html`,
-  );
+  const finalOutputPath = outputPath
+    ? path.join(outputDir, outputPath)
+    : path.join(outputDir, partial ? 'fragments' : '', `${fragment}.html`);
 
-  await fs.mkdir(path.dirname(outputPath), { recursive: true });
-  await fs.writeFile(outputPath, finalTemplate);
+  await fs.mkdir(path.dirname(finalOutputPath), { recursive: true });
+  await fs.writeFile(finalOutputPath, finalTemplate);
 };
 
 export async function buildTemplate(

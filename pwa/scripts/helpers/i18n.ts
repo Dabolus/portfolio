@@ -9,8 +9,6 @@ const availableLocalesPromise = fs
 
 export type TranslateFunction = (id: string) => string | string[];
 
-export const defaultLocale = 'en';
-
 export const getAvailableLocales = (): Promise<readonly string[]> =>
   availableLocalesPromise;
 

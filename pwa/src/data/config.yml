@@ -10,8 +10,9 @@ update:
   perform: updateNow
 back: back
 availableLocales:
-  it: Italiano
   en: English
+  it: Italiano
+defaultLocale: en
 pages:
   home:
     description: homeDescription
