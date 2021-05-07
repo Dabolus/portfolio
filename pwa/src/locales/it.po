@@ -82,7 +82,7 @@ msgstr ""
 "<a href=\"https://golang.org\" rel=\"external\" target=\"golang\" aria-label=\"Golang\">Go</a>. Al di fuori del mondo lavorativo, "
 "mi piace dedicarmi alla musica. Amo suonare la chitarra e cantare, ma mi diletto anche con il pianoforte e con le percussioni.\n"
 "In questo momento, sto lavorando come Ingegnere Frontend presso <a href=\"https://www.empatica.com\" rel=\"noopener\" target=\"empatica\">Empatica</a>, "
-"un'azienda spin-off del MIT con sede a Boston e a Milano, il cuo obiettivo è quello di "
+"un'azienda spin-off del MIT con sede a Boston e a Milano, il cui obiettivo è quello di "
 "progettare e sviluppare sistemi di IA per monitorare la salute umana attraverso sensori indossabili.\n"
 "Ho anche svariati progetti open source, che puoi trovare <a href=\"/it/projects\">nella sezione progetti</a>."
 
