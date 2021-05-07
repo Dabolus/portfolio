@@ -3,10 +3,9 @@ declare module 'typed.js/src/typed' {
   export default Typed;
 }
 
-declare namespace NodeJS {
-  interface ProcessEnv {
-    readonly [key: string]: any;
-    readonly NODE_ENV: 'production' | 'development';
+interface ImportMeta {
+  readonly env: {
+    readonly BROWSER_ENV: 'production' | 'development';
     readonly ENABLE_SERVICE_WORKER?: boolean;
     readonly API_URL: string;
     readonly HOME_JS_OUTPUT: string;
@@ -21,7 +20,7 @@ declare namespace NodeJS {
     readonly CONTACTS_CSS_OUTPUT: string;
     readonly PROJECTS_CSS_OUTPUT: string;
     readonly SKILLS_CSS_OUTPUT: string;
-  }
+  };
 }
 
 declare module '*.po' {

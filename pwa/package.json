@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "yarn clean && cross-env NODE_ENV=development ts-node --transpile-only --require dotenv/config scripts/start",
-    "build": "yarn clean && cross-env NODE_ENV=production ts-node --transpile-only --require dotenv/config scripts/build",
+    "start": "yarn clean && cross-env NODE_ENV=development ts-node --require dotenv/config scripts/start",
+    "build": "yarn clean && cross-env NODE_ENV=production ts-node --require dotenv/config scripts/build",
     "clean": "rm -rf dist/",
     "deploy": "firebase deploy"
   },

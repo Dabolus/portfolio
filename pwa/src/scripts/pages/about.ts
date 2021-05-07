@@ -28,7 +28,7 @@ const updateAge = (age: HTMLSpanElement) => () => {
 const configure = async () => {
   const [applyTemplate] = await Promise.all([
     loadTemplate('about'),
-    loadStyles(process.env.ABOUT_CSS_OUTPUT),
+    loadStyles(import.meta.env.ABOUT_CSS_OUTPUT),
   ]);
 
   applyTemplate();
@@ -64,7 +64,7 @@ const configure = async () => {
     await executeCaptcha(getResumeCaptcha);
 
     try {
-      const res = await fetch(`${process.env.API_URL}/resume`, {
+      const res = await fetch(`${import.meta.env.API_URL}/resume`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

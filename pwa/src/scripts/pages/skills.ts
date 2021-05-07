@@ -3,7 +3,7 @@ import { loadStyles, loadTemplate } from '../utils';
 export const configure = async () => {
   const [applyTemplate] = await Promise.all([
     loadTemplate('skills'),
-    loadStyles(process.env.SKILLS_CSS_OUTPUT),
+    loadStyles(import.meta.env.SKILLS_CSS_OUTPUT),
   ]);
 
   applyTemplate();

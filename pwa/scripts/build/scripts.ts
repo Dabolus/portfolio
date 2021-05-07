@@ -102,11 +102,11 @@ const createBundle = async (
       replace({
         exclude: /node_modules/,
         delimiters: ['', ''],
-        'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
-        'process.env.ENABLE_SERVICE_WORKER': `${!!(
+        'import.meta.env.BROWSER_ENV': `'${process.env.NODE_ENV}'`,
+        'import.meta.env.ENABLE_SERVICE_WORKER': `${!!(
           production || process.env.ENABLE_SERVICE_WORKER
         )}`,
-        'process.env.API_URL': production
+        'import.meta.env.API_URL': production
           ? "'/api'"
           : "'http://localhost:5000/api'",
       }),
@@ -175,7 +175,7 @@ const createBundle = async (
       const output = await fs.readFile(path.join(outputPath, fileName), 'utf8');
 
       const replacedOutput = output.replace(
-        /process\.env\.(\w+)_(JS|CSS)_OUTPUT/g,
+        /import\.meta\.env\.(\w+)_(JS|CSS)_OUTPUT/g,
         (_, id: string, type: 'JS' | 'CSS') => {
           const map = type === 'JS' ? result : stylesOutput;
 

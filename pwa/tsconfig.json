@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "module": "commonjs",
+    "module": "es2020",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -9,15 +9,14 @@
     "allowJs": true,
     "checkJs": true,
     "esModuleInterop": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "target": "esnext"
+    "lib": ["dom", "dom.iterable", "es2020"],
+    "target": "es2020"
   },
-  "include": [
-    "src/**/*.ts",
-    "scripts/**/*.ts"
-  ]
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "include": ["src/**/*.ts", "scripts/**/*.ts"]
 }

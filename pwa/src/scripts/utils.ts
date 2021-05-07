@@ -95,7 +95,7 @@ export const setupServiceWorker = async () => {
     { once: true },
   );
 
-  if (process.env.ENABLE_SERVICE_WORKER && 'serviceWorker' in navigator) {
+  if (import.meta.env.ENABLE_SERVICE_WORKER && 'serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('/sw.js', {
         scope: '/',
@@ -230,7 +230,7 @@ export const logEvent = async (
     import('firebase/analytics'),
   ]);
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (import.meta.env.BROWSER_ENV !== 'production') {
     console.groupCollapsed('Analytics event');
     console.info(`Name: ${eventName}`);
 

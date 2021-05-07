@@ -4,7 +4,7 @@ import { loadStyles, loadTemplate, logEvent, sleep } from '../utils';
 const configure = async () => {
   const [applyTemplate] = await Promise.all([
     loadTemplate('contacts'),
-    loadStyles(process.env.CONTACTS_CSS_OUTPUT),
+    loadStyles(import.meta.env.CONTACTS_CSS_OUTPUT),
   ]);
 
   applyTemplate();
@@ -33,7 +33,7 @@ const configure = async () => {
     const animationPromise = sleep(1500);
 
     try {
-      const res = await fetch(`${process.env.API_URL}/email`, {
+      const res = await fetch(`${import.meta.env.API_URL}/email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

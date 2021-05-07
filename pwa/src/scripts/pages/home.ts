@@ -16,7 +16,7 @@ let typed: typeof import('typed.js/src/typed')['default']['prototype'];
 const configure = async () => {
   const [applyTemplate] = await Promise.all([
     loadTemplate('home'),
-    loadStyles(process.env.HOME_CSS_OUTPUT),
+    loadStyles(import.meta.env.HOME_CSS_OUTPUT),
   ]);
 
   applyTemplate();

@@ -2,12 +2,12 @@ import { installRouter, updateMetadata } from 'pwa-helpers';
 import { logEvent, scroll } from './utils';
 
 const pageToPathMap: Record<string, string> = {
-  home: process.env.HOME_JS_OUTPUT,
-  about: process.env.ABOUT_JS_OUTPUT,
-  certifications: process.env.CERTIFICATIONS_JS_OUTPUT,
-  contacts: process.env.CONTACTS_JS_OUTPUT,
-  projects: process.env.PROJECTS_JS_OUTPUT,
-  skills: process.env.SKILLS_JS_OUTPUT,
+  home: import.meta.env.HOME_JS_OUTPUT,
+  about: import.meta.env.ABOUT_JS_OUTPUT,
+  certifications: import.meta.env.CERTIFICATIONS_JS_OUTPUT,
+  contacts: import.meta.env.CONTACTS_JS_OUTPUT,
+  projects: import.meta.env.PROJECTS_JS_OUTPUT,
+  skills: import.meta.env.SKILLS_JS_OUTPUT,
 };
 
 export const configureRouting = () => {
