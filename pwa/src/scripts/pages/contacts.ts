@@ -1,5 +1,5 @@
 import { executeCaptcha, renderCaptcha } from '../captcha';
-import { loadStyles, loadTemplate, sleep } from '../utils';
+import { loadStyles, loadTemplate, logEvent, sleep } from '../utils';
 
 const configure = async () => {
   const [applyTemplate] = await Promise.all([
@@ -23,7 +23,10 @@ const configure = async () => {
 
   contactForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+
     contactForm.className = 'sending';
+
+    logEvent('contact');
 
     await executeCaptcha(contactCaptcha);
 

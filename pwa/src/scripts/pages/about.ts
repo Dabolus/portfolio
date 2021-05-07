@@ -2,7 +2,7 @@ import { saveAs } from 'file-saver';
 
 import { startAnimation, stopAnimation } from '../animation';
 import { executeCaptcha, renderCaptcha, resetCaptcha } from '../captcha';
-import { loadStyles, loadTemplate } from '../utils';
+import { loadStyles, loadTemplate, logEvent } from '../utils';
 
 // Configure age animation
 const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
@@ -54,9 +54,12 @@ const configure = async () => {
 
   resumeForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+
     resumeError.hidden = true;
     getResumeButton.disabled = true;
     getResumeLoading.hidden = false;
+
+    logEvent('get_resume');
 
     await executeCaptcha(getResumeCaptcha);
 
