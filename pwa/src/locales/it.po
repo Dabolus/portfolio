@@ -64,7 +64,7 @@ msgid "aboutMe"
 msgstr "Chi sono"
 
 msgid "aboutDescription"
-msgstr "Curioso/a di sapere chi sono? Conosci me e ciò che faccio."
+msgstr "Vuoi sapere chi sono? Vieni a conoscere me e ciò che faccio."
 
 msgid "bio"
 msgstr ""
@@ -93,13 +93,13 @@ msgid "certifications"
 msgstr "Certificazioni"
 
 msgid "certificationsDescription"
-msgstr "Controlla le mie certificazioni e i miei premi."
+msgstr "Scopri le mie certificazioni e i miei premi."
 
 msgid "contacts"
 msgstr "Contatti"
 
 msgid "contactsDescription"
-msgstr "Interessato/a in ciò che faccio e/o hai qualche domanda? Contattami!"
+msgstr "Ti interessa ciò che faccio e/o hai qualche domanda? Contattami!"
 
 msgid "hi"
 msgstr "Ciao Giorgio"
@@ -135,13 +135,13 @@ msgid "projects"
 msgstr "Progetti"
 
 msgid "projectsDescription"
-msgstr "Controlla la lista dei progetti che ho sviluppato e che mantengo."
+msgstr "Dai un'occhiata alla lista dei progetti che ho sviluppato e che mantengo."
 
 msgid "skills"
 msgstr "Abilità"
 
 msgid "skillsDescription"
-msgstr "Vuoi sapere in cosa sono bravo? Controllalo qui."
+msgstr "Vuoi sapere in cosa sono bravo? Puoi scoprirlo qui."
 
 msgid "coding"
 msgstr "Programmazione"
@@ -168,7 +168,7 @@ msgid "me"
 msgstr "Io"
 
 msgid "veryInterested"
-msgstr "Sembri molto interessato/a alla mia storia."
+msgstr "Sembra ti interessi molto la mia storia."
 
 msgid "getResume"
 msgstr "Scarica il mio resume"
