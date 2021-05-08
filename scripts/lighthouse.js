@@ -7,27 +7,27 @@ const {
 
 const configs = [
   {
-    url: '/',
+    url: '/en/',
     title: 'Home',
   },
   {
-    url: '/about',
+    url: '/en/about',
     title: 'About me',
   },
   {
-    url: '/certifications',
+    url: '/en/certifications',
     title: 'Certifications',
   },
   {
-    url: '/contacts',
+    url: '/en/contacts',
     title: 'Contacts',
   },
   {
-    url: '/projects',
+    url: '/en/projects',
     title: 'Projects',
   },
   {
-    url: '/skills',
+    url: '/en/skills',
     title: 'Skills',
   },
 ];
