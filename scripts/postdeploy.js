@@ -4,7 +4,6 @@ const sendMessage = require('./telegram');
 
 const postdeploy = async () => {
   try {
-    process.stdout.write('Purging CloudFlare cache...\n');
     await purgeCache();
 
     const report = await audit();
