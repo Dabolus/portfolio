@@ -1,3 +1,4 @@
+import { setupLanguageSwitcher } from '../i18n';
 import { loadStyles, loadTemplate, logEvent, scroll } from '../utils';
 
 interface HTMLPortalElement extends HTMLElement {
@@ -20,6 +21,7 @@ const configure = async () => {
   ]);
 
   applyTemplate();
+  setupLanguageSwitcher();
 };
 
 const configurationPromise = configure();

@@ -3,7 +3,7 @@ import { getBasePath } from './utils';
 export const getLocale = () =>
   location.pathname.replace(getBasePath(), '').slice(1, 3);
 
-export const setupI18n = () => {
+export const setupLanguageSwitcher = () => {
   const languageSwitcherContainer = document.querySelector<HTMLDivElement>(
     '#language',
   );
