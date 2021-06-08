@@ -1,5 +1,6 @@
 import { installRouter, updateMetadata } from 'pwa-helpers';
-import { logEvent, scroll } from './utils';
+import { getBasePath, logEvent, scroll } from './utils';
+import { getLocale } from './i18n';
 
 const pageToPathMap: Record<string, string> = {
   home: import.meta.env.HOME_JS_OUTPUT,
@@ -75,9 +76,10 @@ export const configureRouting = () => {
 
   // Configure routing
   installRouter(({ pathname }) => {
-    let path = (pathname.slice(4) || 'home') as Page;
+    let path = (pathname.replace(`${getBasePath()}/${getLocale()}/`, '') ||
+      'home') as Page;
     if (!Object.keys(pages).includes(path)) {
-      window.history.replaceState({}, '', '/');
+      window.history.replaceState({}, '', `${getBasePath()}/${getLocale()}/`);
       path = 'home';
     }
     if (path === previousPath) {

@@ -181,7 +181,7 @@ const createBundle = async (
 
           const outputPath = map[id.toLowerCase() as keyof typeof map].fileName;
 
-          return `'/${outputPath}'`;
+          return `'../${outputPath}'`;
         },
       );
 

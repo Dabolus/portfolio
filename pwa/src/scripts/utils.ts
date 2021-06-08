@@ -1,5 +1,11 @@
 import { getLocale } from './i18n';
 
+export const getBasePath = () =>
+  location.pathname.slice(
+    0,
+    location.pathname.indexOf(location.pathname.match(/\/[a-z]{2}\//)[0]),
+  );
+
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -98,9 +104,11 @@ export const setupServiceWorker = async () => {
   );
 
   if (import.meta.env.ENABLE_SERVICE_WORKER && 'serviceWorker' in navigator) {
+    const basePath = getBasePath();
+
     navigator.serviceWorker
-      .register('/sw.js', {
-        scope: '/',
+      .register(`${basePath}/sw.js`, {
+        scope: `${basePath}/`,
       })
       .catch(console.warn);
   }
@@ -151,7 +159,9 @@ export const loadFile = async (url: string) => {
 };
 
 export const loadTemplate = async (name: string) => {
-  const template = await loadFile(`${getLocale()}/fragments/${name}.html`);
+  const template = await loadFile(
+    `${getBasePath()}/${getLocale()}/fragments/${name}.html`,
+  );
   const outputElement = document.querySelector<HTMLDivElement>(`#${name}`);
 
   return () => {

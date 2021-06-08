@@ -6,7 +6,7 @@
           <% if (languageId === config.locale) { %>
             <span><%= languageName %></span>
           <% } else { %>
-            <a href="/<%= languageId %>/" rel="external"><%= languageName %></a>
+            <a href="../<%= languageId %>/" rel="external"><%= languageName %></a>
           <% } %>
         </li>
       <% }) %>
@@ -39,7 +39,7 @@
       <% if (!slug) { return; } %>
 
       <li>
-        <a href="<%= link || `/${config.locale}/${slug}` %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
+        <a href="<%= link || slug %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
           <span>
             <%= helpers.translate(title) %>
             <% if (link) { %>

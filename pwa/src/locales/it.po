@@ -41,7 +41,7 @@ msgstr "Programmatore"
 msgid "mobileWebSpecialist"
 msgstr ""
 "<span>Mobile Web Specialist certificato&nbsp;</span>"
-"<img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\" width=\"21\" height=\"21\">"
+"<img src=\"../images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\" width=\"21\" height=\"21\">"
 
 msgid "cloudTechnician"
 msgstr "Tecnico Cloud"

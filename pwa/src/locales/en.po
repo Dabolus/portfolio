@@ -40,7 +40,7 @@ msgstr "Software Engineer"
 
 msgid "mobileWebSpecialist"
 msgstr ""
-"<img src=\"images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\" width=\"21\" height=\"21\">"
+"<img src=\"../images/google-g.svg\" id=\"google-g\" alt=\"Google\" title=\"Google\" width=\"21\" height=\"21\">"
 "<span>&nbsp;Certified Mobile Web Specialist</span>"
 
 msgid "cloudTechnician"

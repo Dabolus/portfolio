@@ -1,7 +1,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <base href="/">
 
   <%- await include('icons') %>
 
@@ -10,7 +9,7 @@
 
   <meta property="og:title" content="<%= page.title ? `${helpers.translate(page.title)} - ${config.baseTitle}` : config.baseTitle %>">
   <meta property="og:description" content="<%= helpers.translate(page.description) %>">
-  <meta property="og:image" content="images/propic.jpg">
+  <meta property="og:image" content="../images/propic.jpg">
   <meta property="og:image:alt" content="Giorgio Garasto">
   <meta property="og:url" content="<%= `${config.baseUrl}/${config.locale}/${page.slug ? `${page.slug}` : ''}` %>">
   <meta name="twitter:card" content="summary">

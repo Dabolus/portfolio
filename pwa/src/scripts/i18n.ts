@@ -1,4 +1,7 @@
-export const getLocale = () => location.pathname.slice(1, 3);
+import { getBasePath } from './utils';
+
+export const getLocale = () =>
+  location.pathname.replace(getBasePath(), '').slice(1, 3);
 
 export const setupI18n = () => {
   const languageSwitcherContainer = document.querySelector<HTMLDivElement>(
@@ -10,6 +13,6 @@ export const setupI18n = () => {
 
   languageSwitcherContainer.hidden = false;
   languageSwitcher.addEventListener('change', () => {
-    window.location.href = `/${languageSwitcher.value}/`;
+    window.location.href = `${getBasePath()}/${languageSwitcher.value}/`;
   });
 };

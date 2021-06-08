@@ -22,11 +22,11 @@ export const generatePicture = (
   size?: number,
 ) => `
   <picture>
-    ${svg ? `<source srcset="${svg}" type="image/svg+xml">` : ''}
-    ${webp ? `<source srcset="${webp}" type="image/webp">` : ''}
-    ${jpg ? `<source srcset="${jpg}" type="image/jpeg">` : ''}
-    ${png ? `<source srcset="${png}" type="image/jpeg">` : ''}
-    <img style="background-image: url(&#34;${placeholder}&#34;);" src="${
+    ${svg ? `<source srcset="../${svg}" type="image/svg+xml">` : ''}
+    ${webp ? `<source srcset="../${webp}" type="image/webp">` : ''}
+    ${jpg ? `<source srcset="../${jpg}" type="image/jpeg">` : ''}
+    ${png ? `<source srcset="../${png}" type="image/jpeg">` : ''}
+    <img style="background-image: url(&#34;${placeholder}&#34;);" src="../${
   png || jpg || webp || svg
 }" alt="${name}" title="${name}" loading="lazy" lazyload${
   size ? ` width="${size}" height="${size}"` : ''
