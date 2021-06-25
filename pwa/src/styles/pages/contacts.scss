@@ -167,7 +167,7 @@
 
     > #socials {
       position: absolute;
-      top: 23.5rem;
+      top: 24.5rem;
       left: 0;
       width: 100%;
       text-align: center;
@@ -221,6 +221,10 @@
 
         &[target='telegram'] {
           background: #08c;
+        }
+
+        &[target='polywork'] {
+          background: #543de0;
         }
       }
     }
