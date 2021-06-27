@@ -35,6 +35,7 @@ coc-troop-creator:
   icon:
     jpg: images/projects/coc-troop-creator.jpg
     webp: images/projects/coc-troop-creator.webp
+    jxl: images/projects/coc-troop-creator.jxl
     placeholder:
       data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
       0 256 256'%3e%3cfilter id='b'%3e%3cfeGaussianBlur stdDeviation='12'/%3e%3c/filter%3e%3cpath
@@ -64,6 +65,7 @@ cr-card-maker:
   icon:
     jpg: images/projects/cr-card-maker.jpg
     webp: images/projects/cr-card-maker.webp
+    jxl: images/projects/cr-card-maker.jxl
     placeholder:
       data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
       0 256 256'%3e%3cfilter id='b'%3e%3cfeGaussianBlur stdDeviation='12'/%3e%3c/filter%3e%3cpath
@@ -93,6 +95,7 @@ dabbext:
   icon:
     jpg: images/projects/dabbext.jpg
     webp: images/projects/dabbext.webp
+    jxl: images/projects/dabbext.jxl
     placeholder:
       data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
       0 256 256'%3e%3cfilter id='b'%3e%3cfeGaussianBlur stdDeviation='12'/%3e%3c/filter%3e%3cpath
@@ -203,6 +206,7 @@ win-xkill:
     - C
   icon:
     png: images/projects/win-xkill.png
+    jxl: images/projects/win-xkill.jxl
     placeholder:
       data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
       0 256 256'%3e%3cfilter id='b'%3e%3cfeGaussianBlur stdDeviation='12'/%3e%3c/filter%3e%3cpath
