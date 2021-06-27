@@ -17,14 +17,6 @@ workbox.core.setCacheNameDetails({
 workbox.core.clientsClaim();
 workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
 workbox.routing.registerRoute(
-  new workbox.routing.NavigationRoute(
-    workbox.precaching.createHandlerBoundToURL('index.html'),
-    {
-      denylist: [/api/],
-    },
-  ),
-);
-workbox.routing.registerRoute(
   /api/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'api-cache',
