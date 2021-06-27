@@ -106,9 +106,9 @@ const createBundle = async (
         'import.meta.env.ENABLE_SERVICE_WORKER': `${!!(
           production || process.env.ENABLE_SERVICE_WORKER
         )}`,
-        'import.meta.env.API_URL': production
-          ? "'/api'"
-          : "'http://localhost:5000/api'",
+        'import.meta.env.API_URL':
+          JSON.stringify(process.env.API_URL) ||
+          (production ? "'/api'" : "'http://localhost:5000/api'"),
       }),
       ...(production
         ? [
