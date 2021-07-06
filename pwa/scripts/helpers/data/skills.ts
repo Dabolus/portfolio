@@ -180,7 +180,7 @@ const computePie = (
         text-anchor="middle"
         dominant-baseline="middle"
         fill="var(--theme-color)"
-        font-size="6px"
+        font-size="${size * 0.06}px"
       >
         <tspan id="language-name" x="${
           size / 2
@@ -197,25 +197,25 @@ const computeLineChart = (data: Record<string, SkillData>, size = 100) => {
   const entries = Object.entries(data).filter(([, { score }]) => !!score);
 
   return `
-    <svg viewBox="0 0 ${size} ${entries.length * 7 - 2}">
+    <svg viewBox="0 0 ${size} ${((entries.length * 7 - 2) / 100) * size}">
       ${entries.reduce(
         (lineChart, [name, { score, color }], index) => `
           ${lineChart}
           <text
             x="0"
-            y="${index * 7 + 2.5}"
+            y="${((index * 7 + 2.5) / 100) * size}"
             dominant-baseline="middle"
             fill="var(--theme-color)"
-            font-size="4px"
+            font-size="${size * 0.04}px"
           >
             ${name}
           </text>
           <rect
             fill="${color || 'var(--theme-card-background)'}"
             width="${(size / 3) * 2 * score}"
-            height="5"
+            height="${size * 0.05}"
             x="${size / 3}"
-            y="${index * 7}"
+            y="${((index * 7) / 100) * size}"
           />
       `,
         '',
