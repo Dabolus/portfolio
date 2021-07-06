@@ -130,7 +130,7 @@ const getGithubData = async (
 const computePie = (
   data: readonly LanguageSizeData[],
   totalSize: number,
-  size = 100,
+  size = 400,
 ) => {
   let R = 0;
   const L = size / 2;
@@ -193,7 +193,7 @@ const computePie = (
   `;
 };
 
-const computeLineChart = (data: Record<string, SkillData>, size = 100) => {
+const computeLineChart = (data: Record<string, SkillData>, size = 400) => {
   const entries = Object.entries(data).filter(([, { score }]) => !!score);
 
   return `
