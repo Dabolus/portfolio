@@ -1,6 +1,7 @@
 const path = require('path');
 const { performance } = require('perf_hooks');
 const esbuild = require('esbuild');
+const { default: NodeResolve } = require('@esbuild-plugins/node-resolve');
 const { typeCheck, entryPoint, outDir } = require('./utils');
 
 const build = async () => {
@@ -22,6 +23,15 @@ const build = async () => {
           sourcemap: true,
           bundle: true,
           outfile: path.join(outDir, 'index.js'),
+          plugins: [
+            NodeResolve({
+              extensions: ['.ts', '.js'],
+              onResolved: (resolved) =>
+                resolved.includes('node_modules')
+                  ? { external: true }
+                  : resolved,
+            }),
+          ],
         })
         .then(() => {
           process.stdout.write(
