@@ -5,3 +5,4 @@ functions/index.hbs
 functions/.runtimeconfig.json
 .firebase*
 .env
+*.log

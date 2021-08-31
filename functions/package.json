@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "start": "run-p start:firebase start:functions",
-    "start:firebase": "cross-env NODE_ENV=development firebase serve --only hosting,functions",
-    "start:functions": "cross-env NODE_ENV=development tsc -w",
-    "build": "cross-env NODE_ENV=production tsc"
+    "start:firebase": "cross-env NODE_ENV=development firebase emulators:start --only hosting,functions",
+    "start:functions": "cross-env NODE_ENV=development node scripts/watch",
+    "build": "cross-env NODE_ENV=production node scripts/build"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -23,13 +23,16 @@
     "svgo": "^2.5.0"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-resolve": "^0.0.15",
     "@types/marked": "^3.0.0",
     "@types/node": "^16.7.8",
     "@types/node-fetch": "^2.5.12",
     "@types/nodemailer": "^6.4.4",
     "@types/sharp": "^0.28.5",
     "@types/svgo": "^2.4.0",
+    "chokidar": "^3.5.1",
     "cross-env": "^7.0.3",
+    "esbuild": "^0.11.2",
     "typescript": "^4.4.2"
   }
 }
