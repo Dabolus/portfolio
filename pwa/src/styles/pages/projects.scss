@@ -8,7 +8,8 @@
   width: 100%;
   height: 7.5rem;
   background-color: var(--theme-card-background);
-  border-bottom: 0.12rem solid rgba($theme-black, 0.12);
+  border-bottom: 0.06rem solid rgba($theme-black, 0.12);
+  box-sizing: content-box;
 
   img {
     width: 7.5rem;
