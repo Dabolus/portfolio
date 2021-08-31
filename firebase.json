@@ -1,7 +1,7 @@
 {
   "functions": {
     "source": "functions",
-    "runtime": "nodejs10"
+    "runtime": "nodejs14"
   },
   "hosting": {
     "public": "pwa/dist",
