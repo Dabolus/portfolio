@@ -9,7 +9,7 @@ const {
   },
 } = process;
 
-module.exports = async () => {
+export default async () => {
   process.stdout.write('Purging CloudFlare cache...\n');
   const cloudflareRes = await fetch(
     `https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`,

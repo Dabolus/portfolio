@@ -13,7 +13,7 @@ const auditPage = async (port, url) => {
   return categories;
 };
 
-module.exports = async () => {
+export default async () => {
   process.stdout.write('Starting Chrome...\n');
   const chrome = await puppeteer.launch();
   const { port } = new URL(chrome.wsEndpoint());
