@@ -1,6 +1,6 @@
-const purgeCache = require('./cloudflare');
-const audit = require('./lighthouse');
-const sendMessage = require('./telegram');
+import purgeCache from './cloudflare.js';
+import audit from './lighthouse.js';
+import sendMessage from './telegram.js';
 
 const postdeploy = async () => {
   try {

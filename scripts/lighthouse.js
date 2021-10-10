@@ -1,6 +1,6 @@
-const lighthouse = require('lighthouse');
-const puppeteer = require('puppeteer');
-const { pages } = require('./utils');
+import lighthouse from 'lighthouse';
+import puppeteer from 'puppeteer';
+import { pages } from './utils.js';
 
 const {
   env: { REPORTER_BASE_URL: baseUrl, REPORTER_PROJECT_NAME: projectName },

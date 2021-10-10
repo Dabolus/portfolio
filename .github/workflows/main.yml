@@ -33,9 +33,9 @@ jobs:
           # Install libgbm
           sudo apt-get -y install libgbm1
           # Install required libraries
-          sudo yarn add -D -W node-fetch@2 lighthouse@8 puppeteer@10 node-telegram-bot-api
+          sudo yarn add -D -W node-fetch@3 lighthouse@8 puppeteer@10 node-telegram-bot-api@0.54
           # Run the postdeploy script
-          node scripts/postdeploy
+          node scripts/postdeploy.js
         env:
           REPORTER_BASE_URL: ${{ secrets.REPORTER_BASE_URL }}
           REPORTER_BOT_TOKEN: ${{ secrets.REPORTER_BOT_TOKEN }}

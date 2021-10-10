@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
-const { pages } = require('./utils');
+import fetch from 'node-fetch';
+import { pages } from './utils.js';
 
 const {
   env: {

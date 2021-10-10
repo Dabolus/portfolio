@@ -1,4 +1,4 @@
-module.exports.pages = [
+export const pages = [
   {
     url: '/en/',
     title: 'Home',
