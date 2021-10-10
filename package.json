@@ -4,6 +4,7 @@
   "author": "Giorgio Garasto <giorgio@garasto.me>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "lerna run start --stream",
     "build": "lerna run build --stream",
@@ -16,9 +17,9 @@
     "format": "prettier --write '**/*.{ts,js,scss}'"
   },
   "devDependencies": {
-    "firebase-tools": "^9.16.6",
+    "firebase-tools": "^9.20.0",
     "lerna": "^4.0.0",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.3"
   },
   "workspaces": [
     "functions",

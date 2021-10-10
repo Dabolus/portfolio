@@ -1,4 +1,4 @@
-import { loadStyles, loadTemplate } from '../utils';
+import { loadStyles, loadTemplate } from '../utils.js';
 
 export const configure = async () => {
   const [applyTemplate] = await Promise.all([
@@ -8,12 +8,10 @@ export const configure = async () => {
 
   applyTemplate();
 
-  const languageName = document.querySelector<SVGTSpanElement>(
-    '#language-name',
-  );
-  const languageSize = document.querySelector<SVGTSpanElement>(
-    '#language-size',
-  );
+  const languageName =
+    document.querySelector<SVGTSpanElement>('#language-name');
+  const languageSize =
+    document.querySelector<SVGTSpanElement>('#language-size');
 
   document.querySelectorAll('.sector').forEach((sector) => {
     sector.addEventListener('mouseenter', () => {

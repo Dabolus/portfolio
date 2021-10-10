@@ -1,5 +1,5 @@
 import { setupLanguageSwitcher } from '../i18n';
-import { loadStyles, loadTemplate, logEvent, scroll } from '../utils';
+import { loadStyles, loadTemplate, logEvent, scroll } from '../utils.js';
 
 interface HTMLPortalElement extends HTMLElement {
   src: string;

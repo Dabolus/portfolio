@@ -1,4 +1,4 @@
-import { setupServiceWorker } from './utils';
+import { setupServiceWorker } from './utils.js';
 import { configureRouting } from './routing';
 import { setupTopBarAnimation } from './animation';
 import { setupThemeChangeObserver } from './theme';

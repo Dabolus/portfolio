@@ -1,9 +1,9 @@
-import * as functions from 'firebase-functions';
+import functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import nodemailer from 'nodemailer';
 import { stringify } from 'querystring';
 import marked from 'marked';
-import { RuntimeConfig } from './models';
+import { RuntimeConfig } from './models.js';
 
 const {
   to,
@@ -124,7 +124,7 @@ export const sendEmail = functions.https.onRequest(
           ...(remoteip ? { remoteip } : {}),
         })}`,
       );
-      const { success } = await recaptchaRes.json();
+      const { success } = (await recaptchaRes.json()) as { success: boolean };
 
       if (!success) {
         res.status(400).json({ error: EmailError.INVALID_RESPONSE });

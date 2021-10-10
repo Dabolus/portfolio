@@ -1,4 +1,4 @@
-import { readConfigFile } from './utils';
+import { readConfigFile } from './utils.js';
 
 export interface TimelineEventData {
   readonly month?: number;

@@ -3,7 +3,7 @@ import { saveAs } from 'file-saver';
 import { startAnimation, stopAnimation } from '../animation';
 import { executeCaptcha, renderCaptcha, resetCaptcha } from '../captcha';
 import { getLocale } from '../i18n';
-import { loadStyles, loadTemplate, logEvent } from '../utils';
+import { loadStyles, loadTemplate, logEvent } from '../utils.js';
 
 // Configure age animation
 const dateOfBirth = 873148830000; // 1st Sep 1997 at 23:20:30
@@ -37,12 +37,10 @@ const configure = async () => {
   const resumeForm = document.querySelector<HTMLFormElement>('#resume-form');
   const getResumeCaptcha = resumeForm.querySelector<HTMLDivElement>('.captcha');
   const getResumeButton = resumeForm.querySelector<HTMLButtonElement>('button');
-  const getResumeLoading = getResumeButton.querySelector<HTMLDivElement>(
-    '.loading',
-  );
-  const resumeError = resumeForm.querySelector<HTMLSpanElement>(
-    '#resume-error',
-  );
+  const getResumeLoading =
+    getResumeButton.querySelector<HTMLDivElement>('.loading');
+  const resumeError =
+    resumeForm.querySelector<HTMLSpanElement>('#resume-error');
 
   resumeForm.addEventListener(
     'mouseenter',

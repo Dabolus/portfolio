@@ -1,4 +1,4 @@
-import { getAvailableLocales } from './i18n';
+import { getAvailableLocales } from './i18n.js';
 
 export type GetAgeFunction = () => string;
 export type ToISODateFunction = (

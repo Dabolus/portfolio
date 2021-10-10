@@ -1,5 +1,8 @@
 import path from 'path';
 import { injectManifest } from 'workbox-build';
+import { computeDirname } from '../helpers/utils.js';
+
+const __dirname = computeDirname(import.meta.url);
 
 export const generateServiceWorker = async (
   globDirectory: string,

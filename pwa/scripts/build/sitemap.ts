@@ -2,7 +2,10 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { render as renderTemplate } from 'ejs';
 import { minify as minifyTemplate } from 'html-minifier';
-import { getAvailableLocales } from '../helpers/i18n';
+import { getAvailableLocales } from '../helpers/i18n.js';
+import { computeDirname } from '../helpers/utils.js';
+
+const __dirname = computeDirname(import.meta.url);
 
 export interface BuildSitemapData {
   readonly baseUrl: string;

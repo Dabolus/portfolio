@@ -1,6 +1,9 @@
 import path from 'path';
 import fs from 'fs-extra';
-import globby from 'globby';
+import { globby } from 'globby';
+import { computeDirname } from '../helpers/utils.js';
+
+const __dirname = computeDirname(import.meta.url);
 
 export interface CopyTarget {
   from: string;

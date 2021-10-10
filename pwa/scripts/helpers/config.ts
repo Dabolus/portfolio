@@ -1,4 +1,4 @@
-import { readConfigFile } from './data/utils';
+import { readConfigFile } from './data/utils.js';
 
 export interface PageData extends Record<string, unknown> {
   readonly slug?: string;

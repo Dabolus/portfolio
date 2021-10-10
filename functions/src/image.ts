@@ -1,5 +1,5 @@
-import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
+import admin from 'firebase-admin';
+import functions from 'firebase-functions';
 import sharp, { Sharp } from 'sharp';
 import primitive from 'primitive';
 import { optimize as svgOptimize } from 'svgo';

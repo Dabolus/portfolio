@@ -6,3 +6,4 @@ functions/.runtimeconfig.json
 .firebase*
 .env
 *.log
+.scripts-compiled/

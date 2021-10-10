@@ -7,8 +7,10 @@ import postcssSass from 'csstools-postcss-sass-pre-release';
 import postcssPresetEnv from 'postcss-preset-env';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
+import { hash } from '../helpers/hash.js';
+import { computeDirname } from '../helpers/utils.js';
 
-import { hash } from '../helpers/hash';
+const __dirname = computeDirname(import.meta.url);
 
 export interface BuildStyleOutput {
   readonly fileName: string;

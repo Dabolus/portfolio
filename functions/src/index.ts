@@ -1,3 +1,3 @@
-export { processImage } from './image';
-export { sendEmail } from './email';
-export { retrieveResume } from './resume';
+export { processImage } from './image.js';
+export { sendEmail } from './email.js';
+export { retrieveResume } from './resume.js';

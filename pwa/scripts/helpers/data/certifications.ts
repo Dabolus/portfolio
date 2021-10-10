@@ -1,4 +1,4 @@
-import { Icon, readConfigFile, generatePicture } from './utils';
+import { Icon, readConfigFile, generatePicture } from './utils.js';
 
 export interface CertificationData {
   readonly name: string;

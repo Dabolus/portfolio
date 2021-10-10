@@ -1,6 +1,9 @@
 import path from 'path';
 import { promises as fs } from 'fs';
 import yaml from 'js-yaml';
+import { computeDirname } from '../utils.js';
+
+const __dirname = computeDirname(import.meta.url);
 
 export const readConfigFile = async (name: string) => {
   const filePath = path.join(__dirname, `../../../src/data/${name}.yml`);

@@ -1,5 +1,8 @@
 import path from 'path';
 import { promises as fs } from 'fs';
+import { computeDirname } from './utils.js';
+
+const __dirname = computeDirname(import.meta.url);
 
 const localesPath = path.join(__dirname, '../../src/locales');
 

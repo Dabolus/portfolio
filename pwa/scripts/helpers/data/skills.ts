@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { readConfigFile } from './utils';
+import { readConfigFile } from './utils.js';
 
 export interface LanguageSizeData {
   readonly name: string;
@@ -72,7 +72,7 @@ const getGithubData = async (
     }),
   });
 
-  const response = await request.json();
+  const response = (await request.json()) as any;
 
   const { total, languages } = response.data.viewer.repositories.nodes.reduce(
     (acc: any, repo: any) => ({

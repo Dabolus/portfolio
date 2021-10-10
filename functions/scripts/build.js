@@ -1,8 +1,8 @@
-const path = require('path');
-const { performance } = require('perf_hooks');
-const esbuild = require('esbuild');
-const { default: NodeResolve } = require('@esbuild-plugins/node-resolve');
-const { typeCheck, entryPoint, outDir } = require('./utils');
+import path from 'path';
+import { performance } from 'perf_hooks';
+import esbuild from 'esbuild';
+import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve';
+import { typeCheck, entryPoint, outDir, __dirname } from './utils.js';
 
 const build = async () => {
   process.chdir(path.join(__dirname, '..'));
@@ -17,14 +17,14 @@ const build = async () => {
         .build({
           entryPoints: [entryPoint],
           platform: 'node',
-          format: 'cjs',
+          format: 'esm',
           target: 'node14',
           minify: true,
           sourcemap: true,
           bundle: true,
           outfile: path.join(outDir, 'index.js'),
           plugins: [
-            NodeResolve({
+            NodeResolvePlugin({
               extensions: ['.ts', '.js'],
               onResolved: (resolved) =>
                 resolved.includes('node_modules')

@@ -1,4 +1,4 @@
-import { importIIFE } from './utils';
+import { importIIFE } from './utils.js';
 
 declare global {
   interface Window {

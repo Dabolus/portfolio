@@ -1,4 +1,4 @@
-import { Icon, readConfigFile, generatePicture } from './utils';
+import { Icon, readConfigFile, generatePicture } from './utils.js';
 
 export interface ProjectData {
   readonly name: string;

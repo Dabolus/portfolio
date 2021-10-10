@@ -1,7 +1,7 @@
-import { getCertifications, ParsedCertification } from './certifications';
-import { getProjects, ParsedProject } from './projects';
-import { getSkills, ParsedSkills } from './skills';
-import { getTimeline, ParsedTimelineItem } from './timeline';
+import { getCertifications, ParsedCertification } from './certifications.js';
+import { getProjects, ParsedProject } from './projects.js';
+import { getSkills, ParsedSkills } from './skills.js';
+import { getTimeline, ParsedTimelineItem } from './timeline.js';
 
 export interface Data {
   readonly certifications: readonly ParsedCertification[];

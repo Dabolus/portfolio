@@ -1,4 +1,4 @@
-import { remToPx } from './utils';
+import { remToPx } from './utils.js';
 
 const frameMap: { [key: string]: number } = {};
 
@@ -17,9 +17,8 @@ export const stopAnimation = (id: string) => {
 
 export const setupTopBarAnimation = () => {
   const header = document.querySelector<HTMLDivElement>('#header');
-  const scrollTarget = document.querySelector<HTMLDivElement>(
-    '#content-container',
-  );
+  const scrollTarget =
+    document.querySelector<HTMLDivElement>('#content-container');
 
   let ticking = false;
   let latestPosition = scrollTarget.scrollTop;

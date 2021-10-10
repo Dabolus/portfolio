@@ -2,13 +2,16 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { OutputChunk, rollup } from 'rollup';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import babel from 'rollup-plugin-babel';
-import replace from 'rollup-plugin-replace';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import { babel } from '@rollup/plugin-babel';
+import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
-import po from '../helpers/plugins/po';
-import { BuildStylesOutput } from './styles';
+import po from '../helpers/plugins/po.js';
+import { BuildStylesOutput } from './styles.js';
+import { computeDirname } from '../helpers/utils.js';
+
+const __dirname = computeDirname(import.meta.url);
 
 export interface BuildScriptsOptions {
   readonly production: boolean;
@@ -73,15 +76,16 @@ const createBundle = async (
       'pages/skills': path.join(scriptsPath, 'pages/skills.ts'),
     },
     plugins: [
-      resolve({
+      nodeResolve({
         extensions: ['.ts', '.js', '.mjs', '.styl', '.hbs', '.po'],
       }),
-      commonjs({ namedExports: { 'file-saver': ['saveAs'] } }),
+      // TODO: delete comment
+      commonjs(), // { namedExports: { 'file-saver': ['saveAs'] } }),
       po(),
       babel({
         exclude: /node_modules/,
         extensions: ['.ts', '.js', '.mjs'],
-        runtimeHelpers: true,
+        babelHelpers: 'bundled',
         presets: [
           [
             '@babel/env',
@@ -102,6 +106,7 @@ const createBundle = async (
       replace({
         exclude: /node_modules/,
         delimiters: ['', ''],
+        preventAssignment: true,
         'import.meta.env.BROWSER_ENV': `'${process.env.NODE_ENV}'`,
         'import.meta.env.ENABLE_SERVICE_WORKER': `${!!(
           production || process.env.ENABLE_SERVICE_WORKER
@@ -155,7 +160,7 @@ const createBundle = async (
     dir: outputPath,
   });
 
-  const result = (Object.fromEntries(
+  const result = Object.fromEntries(
     (output as readonly OutputChunk[])
       .filter(({ name }) => name in pathToPageMap)
       .map(({ name, fileName }) => [
@@ -168,7 +173,7 @@ const createBundle = async (
           ),
         },
       ]),
-  ) as unknown) as BuildScriptsOutput;
+  ) as unknown as BuildScriptsOutput;
 
   await Promise.all(
     Object.values(result).map(async ({ fileName }: BuildScriptOutput) => {

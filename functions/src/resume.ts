@@ -1,5 +1,5 @@
-import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
+import admin from 'firebase-admin';
+import functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import { stringify } from 'querystring';
 import { Bucket } from '@google-cloud/storage';
@@ -44,7 +44,7 @@ export const retrieveResume = functions.https.onRequest(
           ...(remoteip ? { remoteip } : {}),
         })}`,
       );
-      const { success } = await recaptchaRes.json();
+      const { success } = (await recaptchaRes.json()) as { success: boolean };
 
       if (!success) {
         res.status(400).json({ error: ResumeError.INVALID_RESPONSE });

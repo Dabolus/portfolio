@@ -1,5 +1,5 @@
 import { executeCaptcha, renderCaptcha } from '../captcha';
-import { loadStyles, loadTemplate, logEvent, sleep } from '../utils';
+import { loadStyles, loadTemplate, logEvent, sleep } from '../utils.js';
 
 const configure = async () => {
   const [applyTemplate] = await Promise.all([

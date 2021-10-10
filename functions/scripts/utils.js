@@ -1,11 +1,14 @@
-const path = require('path');
-const childProcess = require('child_process');
+import path from 'path';
+import childProcess from 'child_process';
+import { fileURLToPath } from 'url';
 
-module.exports.entryPoint = path.join(__dirname, '../src/index.ts');
+export const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-module.exports.outDir = path.join(__dirname, '../lib');
+export const entryPoint = path.join(__dirname, '../src/index.ts');
 
-module.exports.typeCheck = () =>
+export const outDir = path.join(__dirname, '../lib');
+
+export const typeCheck = () =>
   new Promise((resolve, reject) =>
     childProcess.exec(`tsc -p tsconfig.json`, (error, stdout) =>
       error ? reject(stdout) : resolve(),

@@ -1,4 +1,4 @@
-import { loadStyles, loadTemplate } from '../utils';
+import { loadStyles, loadTemplate } from '../utils.js';
 
 const configure = async () => {
   const [applyTemplate] = await Promise.all([

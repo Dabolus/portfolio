@@ -5,9 +5,12 @@ import { minify as minifyTemplate } from 'html-minifier';
 import type { MinifyOutput } from 'terser';
 import syncRpc from 'sync-rpc';
 import { PageData } from './models';
+import { computeDirname } from '../helpers/utils.js';
+
+const __dirname = computeDirname(import.meta.url);
 
 const minifyScript: (code: string) => MinifyOutput = syncRpc(
-  path.resolve(__dirname, '../helpers/minify.js'),
+  path.resolve(__dirname, '../helpers/minify.cjs'),
 );
 
 interface TemplateData {
@@ -60,9 +63,8 @@ export const compileTemplate = async (
     outputPath,
   }: CompileTemplateOptions,
 ) => {
-  const { path: templatePath, contentPromise } = templates[
-    partial ? fragment : 'index'
-  ];
+  const { path: templatePath, contentPromise } =
+    templates[partial ? fragment : 'index'];
 
   const template = await contentPromise;
 

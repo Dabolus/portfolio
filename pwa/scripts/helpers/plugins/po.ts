@@ -1,7 +1,6 @@
 import { Plugin } from 'rollup';
-import { createFilter, dataToEsm } from '@rollup/pluginutils';
-
-import { parseLocaleFile } from '../i18n';
+import { dataToEsm } from '@rollup/pluginutils';
+import { parseLocaleFile } from '../i18n.js';
 
 const po = (): Plugin => {
   return {
