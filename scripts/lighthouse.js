@@ -1,6 +1,5 @@
 import lighthouse from 'lighthouse';
 import puppeteer from 'puppeteer';
-import sharp from 'sharp';
 import { pages } from './utils.js';
 
 const {
@@ -48,13 +47,8 @@ export default async () => {
         };
       });
       const pdf = await lighthousePage.pdf(pageSize);
-      const screenshot = await lighthousePage.screenshot({ type: 'png' });
-      const thumbnail = await sharp(screenshot)
-        .resize(320, 320)
-        .jpeg({ mozjpeg: true })
-        .toBuffer();
 
-      return [...previousReports, { title, pdf, thumbnail }];
+      return [...previousReports, { title, pdf }];
     },
     Promise.resolve([]),
   );
