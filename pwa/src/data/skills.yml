@@ -14,18 +14,18 @@ coding:
   SCSS:
     score: 0.85
     color: '#c6538c'
+  Go:
+    score: 0.8
+    color: '#00add8'
   C#:
-    score: 0.75
+    score: 0.72
     color: '#178600'
   Java:
-    score: 0.7
+    score: 0.67
     color: '#b07219'
   PHP:
     score: 0.6
     color: '#4f5d95'
-  Go:
-    score: 0.5
-    color: '#00add8'
   C++:
     score: 0.4
     color: '#f34b7d'
