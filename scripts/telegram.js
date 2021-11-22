@@ -15,6 +15,7 @@ export default (report) =>
       thumb: thumbnail,
       fileOptions: {
         filename: `${title}.pdf`,
+        contentType: 'application/pdf',
       },
     })),
   );
