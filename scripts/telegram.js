@@ -6,7 +6,12 @@ const {
 
 const bot = new TelegramBot(botToken);
 
-export default (content) =>
-  bot.sendMessage(chatId, content, {
-    parse_mode: 'Markdown',
-  });
+export default (report) =>
+  bot.sendMediaGroup(
+    chatId,
+    report.map(({ title, pdf }) => ({
+      type: 'document',
+      media: pdf,
+      caption: title,
+    })),
+  );

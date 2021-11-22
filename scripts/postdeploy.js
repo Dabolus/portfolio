@@ -1,6 +1,6 @@
 import purgeCache from './cloudflare.js';
 import audit from './lighthouse.js';
-import sendMessage from './telegram.js';
+import sendDocuments from './telegram.js';
 
 const postdeploy = async () => {
   try {
@@ -9,7 +9,7 @@ const postdeploy = async () => {
     const report = await audit();
 
     process.stdout.write('Sending report to Telegram...\n');
-    await sendMessage(report);
+    await sendDocuments(report);
 
     process.stdout.write('Report successfully sent to Telegram.\n');
     process.exit(0);
