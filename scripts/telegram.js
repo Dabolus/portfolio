@@ -9,9 +9,12 @@ const bot = new TelegramBot(botToken);
 export default (report) =>
   bot.sendMediaGroup(
     chatId,
-    report.map(({ title, pdf }) => ({
+    report.map(({ title, pdf, thumbnail }) => ({
       type: 'document',
       media: pdf,
-      caption: title,
+      thumb: thumbnail,
+      fileOptions: {
+        filename: `${title}.pdf`,
+      },
     })),
   );
