@@ -13,7 +13,7 @@
     </style>
   </noscript>
   <main>
-    <section id="home" <%- page.id === 'home' ? '' : 'aria-hidden="true"' %>>
+    <section id="home" <%- page.id === 'home' ? '' : 'class="invisible" aria-hidden="true"' %>>
       <% if (page.id === 'home') { %>
         <%- await include('home') %>
       <% } else { %>

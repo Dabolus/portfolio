@@ -62,7 +62,7 @@ export const onPageLoad = async () => {
             once: true,
           });
           portal.setAttribute('aria-hidden', 'false');
-          portal.classList.remove('closed');
+          portal.classList.remove('closed', 'invisible');
         });
       });
   }

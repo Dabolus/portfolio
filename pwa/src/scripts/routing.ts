@@ -71,8 +71,14 @@ export const configureRouting = () => {
   const pageTitle = document.querySelector<HTMLHeadingElement>('#title');
   let previousPath: Page;
 
-  const hide = (el: HTMLElement) => el.setAttribute('aria-hidden', 'true');
-  const unhide = (el: HTMLElement) => el.setAttribute('aria-hidden', 'false');
+  const hide = (el: HTMLElement) => {
+    el.classList.add('invisible');
+    el.setAttribute('aria-hidden', 'true');
+  };
+  const unhide = (el: HTMLElement) => {
+    el.classList.remove('invisible');
+    el.setAttribute('aria-hidden', 'false');
+  };
 
   // Configure routing
   installRouter(({ pathname }) => {

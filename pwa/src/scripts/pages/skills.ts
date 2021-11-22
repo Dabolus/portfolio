@@ -15,7 +15,7 @@ export const configure = async () => {
 
   document.querySelectorAll('.sector').forEach((sector) => {
     sector.addEventListener('mouseenter', () => {
-      languageName.textContent = sector.getAttribute('aria-label');
+      languageName.textContent = sector.getAttribute('data-lang');
       languageSize.textContent = sector.getAttribute('data-size');
     });
 
