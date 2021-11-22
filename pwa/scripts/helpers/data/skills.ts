@@ -1,4 +1,7 @@
+import { promises as fs } from 'fs';
+import path from 'path';
 import fetch from 'node-fetch';
+import { cachePath } from '../utils.js';
 import { readConfigFile } from './utils.js';
 
 export interface LanguageSizeData {
@@ -224,12 +227,28 @@ const computeLineChart = (data: Record<string, SkillData>, size = 400) => {
   `;
 };
 
-export const getSkills = async (): Promise<ParsedSkills> => {
+export interface GetSkillsOptions {
+  cache?: boolean;
+}
+
+export const getSkills = async ({
+  cache,
+}: GetSkillsOptions = {}): Promise<ParsedSkills> => {
   const skillsData = (await readConfigFile('skills')) as SkillsData;
-  const { languages, total } = await getGithubData(skillsData.coding);
+
+  let githubData: GitHubData | undefined = cache
+    ? await fs
+        .readFile(path.join(cachePath, 'github-skills.json'), 'utf8')
+        .then((skills) => JSON.parse(skills))
+        .catch(() => undefined)
+    : undefined;
+
+  if (!githubData) {
+    githubData = await getGithubData(skillsData.coding);
+  }
 
   return {
-    codeSizeChart: computePie(languages, total),
+    codeSizeChart: computePie(githubData.languages, githubData.total),
     codingSkillsChart: computeLineChart(skillsData.coding),
     musicSkillsChart: computeLineChart(skillsData.music),
     softSkillsChart: computeLineChart(skillsData.soft),

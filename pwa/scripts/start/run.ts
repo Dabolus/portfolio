@@ -22,7 +22,6 @@ import { computeDirname } from '../helpers/utils.js';
 
 const __dirname = computeDirname(import.meta.url);
 
-const cachePath = path.resolve(__dirname, '../../node_modules/.cache/pwa');
 const outputPath = path.resolve(__dirname, '../../dist');
 
 // Not having the hashes in dev mode allows us to know in advance the output file names.
@@ -84,34 +83,11 @@ const output: Output = {
   },
 };
 
-const getSkillsWithCache = async (): Promise<ParsedSkills> => {
-  // TODO: only cache GitHub data instead of all skills
-  let skillsData: ParsedSkills | undefined = await fs
-    .readFile(path.join(cachePath, 'skills.json'), 'utf8')
-    .then((skills) => JSON.parse(skills))
-    .catch(() => undefined);
-
-  if (!skillsData) {
-    console.log('No cached data, generating it');
-    const skills = await getSkills();
-    await fs.mkdir(cachePath, { recursive: true });
-    await fs.writeFile(
-      path.join(cachePath, 'skills.json'),
-      JSON.stringify(skills),
-    );
-    skillsData = skills;
-  } else {
-    console.log('Using cached data');
-  }
-
-  return skillsData;
-};
-
 const getDataWithCache = async (): Promise<Data> => {
   const [certifications, projects, skills, timeline] = await Promise.all([
     getCertifications(),
     getProjects(),
-    getSkillsWithCache(),
+    getSkills({ cache: true }),
     getTimeline(),
   ]);
 
@@ -261,7 +237,7 @@ const start = async () => {
 
   bs.init({
     server: {
-      baseDir: 'dist',
+      baseDir: path.resolve(cwd, 'dist'),
       serveStaticOptions: { extensions: ['html'] },
       middleware: [
         (_, res, next) => {
