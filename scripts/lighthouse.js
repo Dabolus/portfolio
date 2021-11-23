@@ -15,7 +15,10 @@ export default async () => {
     async (previousReportsPromise, { url, title }) => {
       const previousReports = await previousReportsPromise;
       process.stdout.write(`Auditing ${title} (${baseUrl}${url})...\n`);
-      const { report } = await lighthouse(`${baseUrl}${url}`, {
+      const {
+        report,
+        lhr: { categories },
+      } = await lighthouse(`${baseUrl}${url}`, {
         port,
         output: 'html',
       });
@@ -48,7 +51,14 @@ export default async () => {
       });
       const pdf = await lighthousePage.pdf(pageSize);
 
-      return [...previousReports, { title, pdf }];
+      return [
+        ...previousReports,
+        {
+          title,
+          pdf,
+          scores: Object.values(categories),
+        },
+      ];
     },
     Promise.resolve([]),
   );

@@ -9,9 +9,15 @@ const bot = new TelegramBot(botToken);
 export default (report) =>
   bot.sendMediaGroup(
     chatId,
-    report.map(({ title, pdf }) => ({
+    report.map(({ title, pdf, scores }) => ({
       type: 'document',
       media: pdf,
+      caption: scores
+        .map(
+          ({ title: auditTitle, score }) =>
+            `*${auditTitle}:* \`${Math.round(score * 100)}\``,
+        )
+        .join('\n'),
       fileOptions: {
         filename: `${title}.pdf`,
         contentType: 'application/pdf',
