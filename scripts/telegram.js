@@ -12,12 +12,12 @@ export default (report) =>
     report.map(({ title, pdf, scores }) => ({
       type: 'document',
       media: pdf,
-      caption: scores
+      caption: `*${title}*\n${scores
         .map(
           ({ title: auditTitle, score }) =>
             `*${auditTitle}:* \`${Math.round(score * 100)}\``,
         )
-        .join('\n'),
+        .join('\n')}`,
       parse_mode: 'MarkdownV2',
       fileOptions: {
         filename: `${title}.pdf`,
