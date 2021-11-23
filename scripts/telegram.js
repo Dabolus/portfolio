@@ -1,13 +1,31 @@
+import { promises as fs } from 'fs';
+import sharp from 'sharp';
 import TelegramBot from 'node-telegram-bot-api';
 
 const {
-  env: { REPORTER_BOT_TOKEN: botToken, REPORTER_CHAT_ID: chatId },
+  env: {
+    REPORTER_BOT_TOKEN: botToken,
+    REPORTER_CHAT_ID: chatId,
+    REPORTER_PROJECT_NAME: projectName,
+  },
 } = process;
+
+// NOTE: this code is a good candidate to be moved into an external library
+const createHeader = async (projectName) => {
+  const headerTemplate = await fs.readFile('./header.svg', 'utf8');
+  const headerSvg = headerTemplate.replace(/%PROJECT_NAME%/g, projectName);
+  return sharp(headerSvg).resize(512, 512).webp().toBuffer();
+};
+
+const headerPromise = createHeader(projectName);
 
 const bot = new TelegramBot(botToken);
 
-export default (report) =>
-  bot.sendMediaGroup(
+export default async (report) => {
+  const header = await headerPromise;
+  // Since the sticker is sent just to make the report prettier, there's no reason to send a notification for it
+  await bot.sendSticker(chatId, header, { disable_notification: true });
+  await bot.sendMediaGroup(
     chatId,
     report.map(({ title, pdf, scores }) => ({
       type: 'document',
@@ -25,3 +43,4 @@ export default (report) =>
       },
     })),
   );
+};
