@@ -19,7 +19,7 @@ const createHeader = async (projectName) => {
     'utf8',
   );
   const headerSvg = headerTemplate.replace(/%PROJECT_NAME%/g, projectName);
-  return sharp(headerSvg).resize(512, 512).webp().toBuffer();
+  return sharp(Buffer.from(headerSvg)).resize(512, 512).webp().toBuffer();
 };
 
 const headerPromise = createHeader(projectName);
