@@ -1,6 +1,8 @@
 import { promises as fs } from 'fs';
+import path from 'path';
 import sharp from 'sharp';
 import TelegramBot from 'node-telegram-bot-api';
+import { __dirname } from './utils.js';
 
 const {
   env: {
@@ -12,7 +14,10 @@ const {
 
 // NOTE: this code is a good candidate to be moved into an external library
 const createHeader = async (projectName) => {
-  const headerTemplate = await fs.readFile('./header.svg', 'utf8');
+  const headerTemplate = await fs.readFile(
+    path.join(__dirname, 'header.svg'),
+    'utf8',
+  );
   const headerSvg = headerTemplate.replace(/%PROJECT_NAME%/g, projectName);
   return sharp(headerSvg).resize(512, 512).webp().toBuffer();
 };
