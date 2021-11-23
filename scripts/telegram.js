@@ -18,6 +18,7 @@ export default (report) =>
             `*${auditTitle}:* \`${Math.round(score * 100)}\``,
         )
         .join('\n'),
+      parse_mode: 'MarkdownV2',
       fileOptions: {
         filename: `${title}.pdf`,
         contentType: 'application/pdf',
