@@ -128,8 +128,8 @@ msgstr "Nome"
 msgid "submit"
 msgstr "Invia"
 
-msgid "alsoContactMe"
-msgstr "P.S. puoi anche contattarmi su"
+msgid "alsoFindMe"
+msgstr "P.S. puoi anche trovarmi su"
 
 msgid "projects"
 msgstr "Progetti"

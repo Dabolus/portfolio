@@ -129,8 +129,8 @@ msgstr "Name"
 msgid "submit"
 msgstr "Submit"
 
-msgid "alsoContactMe"
-msgstr "P.S. you can also contact me on"
+msgid "alsoFindMe"
+msgstr "P.S. you can also find me on"
 
 msgid "projects"
 msgstr "Projects"

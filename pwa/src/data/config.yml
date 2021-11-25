@@ -57,7 +57,7 @@ pages:
     sincerely: sincerely
     name: name
     submit: submit
-    ps: alsoContactMe
+    ps: alsoFindMe
     error: error
   projects:
     slug: projects
