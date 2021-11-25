@@ -14,10 +14,11 @@ import { getAvailableLocales, setupI18nHelpersMap } from '../helpers/i18n.js';
 import { setupDatesHelpersMap } from '../helpers/dates.js';
 import { generateStructuredData } from '../helpers/structuredData.js';
 import { Data } from '../helpers/data/index.js';
-import { getSkills, ParsedSkills } from '../helpers/data/skills.js';
+import { getSkills } from '../helpers/data/skills.js';
 import { getCertifications } from '../helpers/data/certifications.js';
 import { getProjects } from '../helpers/data/projects.js';
 import { getTimeline } from '../helpers/data/timeline.js';
+import { getSocials } from '../helpers/data/socials.js';
 import { computeDirname } from '../helpers/utils.js';
 
 const __dirname = computeDirname(import.meta.url);
@@ -84,18 +85,21 @@ const output: Output = {
 };
 
 const getDataWithCache = async (): Promise<Data> => {
-  const [certifications, projects, skills, timeline] = await Promise.all([
-    getCertifications(),
-    getProjects(),
-    getSkills({ cache: true }),
-    getTimeline(),
-  ]);
+  const [certifications, projects, skills, timeline, socials] =
+    await Promise.all([
+      getCertifications(),
+      getProjects(),
+      getSkills({ cache: true }),
+      getTimeline(),
+      getSocials(),
+    ]);
 
   return {
     certifications,
     projects,
     skills,
     timeline,
+    socials,
   };
 };
 
