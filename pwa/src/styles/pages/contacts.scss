@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import '../variables';
 
 .content#contacts {
@@ -203,28 +204,10 @@
           padding: 0.5rem;
         }
 
-        &[target='linkedin'] {
-          background: #0077b5;
-        }
-
-        &[target='github'] {
-          background: #333;
-        }
-
-        &[target='twitter'] {
-          background: #1da1f2;
-        }
-
-        &[target='facebook'] {
-          background: #3b5998;
-        }
-
-        &[target='telegram'] {
-          background: #08c;
-        }
-
-        &[target='polywork'] {
-          background: #543de0;
+        @each $social in $socials {
+          &[target=#{map.get($social, 'id')}] {
+            background: map.get($social, 'background');
+          }
         }
       }
     }
