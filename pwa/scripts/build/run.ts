@@ -29,7 +29,7 @@ const build = async () => {
   const production = process.env.NODE_ENV === 'production';
 
   const [styles] = await Promise.all([
-    buildStyles(outputPath, { production }),
+    buildStyles(outputPath, { production, data }),
     buildSitemap(outputPath, {
       baseUrl: config.baseUrl,
       pages: [

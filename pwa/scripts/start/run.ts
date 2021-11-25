@@ -184,14 +184,16 @@ const start = async () => {
       }, 50),
     );
 
-  chokidar.watch('src/styles/**/*.scss', { cwd }).on(
+  chokidar.watch(['src/styles/**/*.scss', 'src/data/**/*.yml'], { cwd }).on(
     'all',
-    debounce((_, changedPath) => {
+    debounce(async (_, changedPath) => {
       console.log(
         `\x1b[32m${changedPath}\x1b[0m changed, rebuilding styles...`,
       );
 
-      buildStyles(outputPath, { production });
+      const data = await getDataWithCache();
+
+      buildStyles(outputPath, { production, data });
     }, 50),
   );
 

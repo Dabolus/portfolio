@@ -9,6 +9,7 @@ import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import { hash } from '../helpers/hash.js';
 import { computeDirname } from '../helpers/utils.js';
+import { Data } from '../helpers/data/index.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -34,7 +35,10 @@ const postcssInstance = postcss([
 
 const toSassVariable = (val: unknown): string => {
   if (typeof val !== 'object' || val === null) {
-    return `${val}`;
+    const stringifiedVal = `${val}`.replace(/[\/"']/g, '\\$&');
+    return stringifiedVal.includes('.')
+      ? `'${stringifiedVal}'`
+      : stringifiedVal;
   }
 
   if (Array.isArray(val)) {
@@ -72,6 +76,7 @@ const styles = {
 
 export interface BuildStylesOptions {
   readonly production: boolean;
+  readonly data: Data;
 }
 
 export interface CompileStylesOptions extends BuildStylesOptions {
@@ -80,10 +85,12 @@ export interface CompileStylesOptions extends BuildStylesOptions {
 
 const compileStyles = async (
   outputDir: string,
-  { fragment = 'main', production }: CompileStylesOptions,
+  { fragment = 'main', production, data }: CompileStylesOptions,
 ) => {
   const { css: postprocessedStyles } = await postcssInstance.process(
-    injectData(`./${styles[fragment]}.scss`, {}),
+    injectData(`./${styles[fragment]}.scss`, {
+      socials: data.socials,
+    }),
     {
       // NOTE: this is actually a fake path, but we need to use it to
       // correctly resolve imports and generate the source map.
@@ -105,13 +112,14 @@ const compileStyles = async (
 
 export async function buildStyles(
   outputDir: string,
-  { production }: BuildStylesOptions,
+  { production, data }: BuildStylesOptions,
 ): Promise<BuildStylesOutput> {
   const results = await Promise.all(
     Object.keys(styles).map((fragment) =>
       compileStyles(outputDir, {
         fragment: fragment as keyof typeof styles,
         production,
+        data,
       }).then((fileName) => [fragment, { fileName }]),
     ),
   );
