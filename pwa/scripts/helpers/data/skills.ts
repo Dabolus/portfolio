@@ -156,13 +156,14 @@ const computePie = (
         const path = `
           <path
             class="sector"
-            aria-label="${name}: ${prettifySize(size)}"
             data-lang="${name}"
             data-size="${prettifySize(size)}"
             fill="${color || 'var(--theme-card-background)'}"
             d="M${L},${L} L${L},0 A${L},${L} 0 ${arcSweep},1 ${X}, ${Y} z"
             transform="rotate(${R}, ${L}, ${L})"
-          />
+          >
+            <title>${name}: ${prettifySize(size)}</title>
+          </path>
         `;
 
         R += a;
@@ -222,8 +223,9 @@ const computeLineChart = (data: Record<string, SkillData>, size = 400) => {
             height="${size * 0.05}"
             x="${size / 3}"
             y="${((index * 7) / 100) * size}"
-            aria-label="${Math.round(score * 100)}%"
-          />
+          >
+            <title>${name}: ${Math.round(score * 100)}%</title>
+          </rect>
       `,
         '',
       )}
