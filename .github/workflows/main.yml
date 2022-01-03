@@ -19,6 +19,8 @@ jobs:
           node-version: 14
       - name: Install deps
         run: yarn install
+      - name: Run E2E tests
+        run: yarn test:e2e
       - name: Build
         run: yarn build
         env:
