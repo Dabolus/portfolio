@@ -10,7 +10,7 @@
     </div>
     <hr>
   </div>
-  <div id="content-container">
+  <div id="content-container" tabindex="0">
     <% await Object.values(config.pages).reduce(async (previousPromise, { id, slug, link }) => { %>
       <% await previousPromise %>
 
