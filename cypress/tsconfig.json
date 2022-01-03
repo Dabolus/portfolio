@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "lib": ["dom", "dom.iterable", "es2020"],
+    "target": "es2020",
+    "types": ["cypress", "@testing-library/cypress", "cypress-axe"]
+  },
+  "include": ["**/*.ts"]
+}
