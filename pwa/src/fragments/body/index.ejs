@@ -12,8 +12,8 @@
       }
     </style>
   </noscript>
-  <main>
-    <section id="home" <%- page.id === 'home' ? '' : 'class="invisible" aria-hidden="true"' %>>
+  <div>
+    <div id="home" <%- page.id === 'home' ? '' : 'class="invisible" aria-hidden="true"' %>>
       <% if (page.id === 'home') { %>
         <%- await include('home') %>
       <% } else { %>
@@ -21,7 +21,7 @@
           <div class="loading"></div>
         </div>
       <% } %>
-    </section>
+    </div>
 
     <%- await include('pages') %>
 
@@ -37,5 +37,5 @@
         </button>
       </div>
     </div>
-  </main>
+  </div>
 </body>

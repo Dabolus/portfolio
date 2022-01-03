@@ -1,5 +1,5 @@
-<section id="page" <%- page.id === 'home' ? 'class="invisible" aria-hidden="true"' : '' %>>
-  <div id="header">
+<div id="page" <%- page.id === 'home' ? 'class="invisible" aria-hidden="true"' : '' %>>
+  <header id="header">
     <div>
       <a id="back" href="." aria-label="<%= helpers.translate(config.back) %>">
         <svg tabindex="-1" viewBox="0 0 24 24">
@@ -9,8 +9,8 @@
       <h1 id="title"><%= helpers.translate(page.title) %></h1>
     </div>
     <hr>
-  </div>
-  <div id="content-container" tabindex="0">
+  </header>
+  <main id="content-container" tabindex="0">
     <% await Object.values(config.pages).reduce(async (previousPromise, { id, slug, link }) => { %>
       <% await previousPromise %>
 
@@ -26,5 +26,5 @@
         <% } %>
       </div>
     <% }, Promise.resolve()) %>
-  </div>
-</section>
+  </main>
+</div>

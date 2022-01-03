@@ -1,35 +1,39 @@
 <div>
-  <noscript>
-    <ul class="language-switcher">
-      <% Object.entries(config.availableLocales).forEach(([languageId, languageName], index, languagesArray) => { %>
-        <li>
-          <% if (languageId === config.locale) { %>
-            <span><%= languageName %></span>
-          <% } else { %>
-            <a href="../<%= languageId %>/" rel="external"><%= languageName %></a>
-          <% } %>
-        </li>
-      <% }) %>
-    </ul>
-  </noscript>
-  <div class="select language-switcher" id="language" hidden>
-    <select aria-label="Language">
-      <option value="en" <%- config.locale === 'en' ? 'selected' : '' %>>English</option>
-      <option value="it" <%- config.locale === 'it' ? 'selected' : '' %>>Italiano</option>
-    </select>
-    <span class="focus"></span>
-  </div>
-  <h1><%= helpers.translate(page.greeting) %></h1>
-  <h2 id="phrases"><%= helpers.translate(page.phrases.prefix) %>&nbsp;<span id="typed"></span></h2>
-  <h2 id="strings-container">
-    <ul id="strings">
-      <% page.phrases.strings.forEach(str => { %>
-        <li><%- helpers.translate(str) %></li>
-      <% }) %>
-    </ul>
-  </h2>
-  <h2 id="since-2004"><%- helpers.translate(page.aim) %></h2>
-  <svg id="scroll-down" viewBox="0 0 24 24" width="48" height="48">
+  <header>
+    <noscript>
+      <ul class="language-switcher">
+        <% Object.entries(config.availableLocales).forEach(([languageId, languageName], index, languagesArray) => { %>
+          <li>
+            <% if (languageId === config.locale) { %>
+              <span><%= languageName %></span>
+            <% } else { %>
+              <a href="../<%= languageId %>/" rel="external"><%= languageName %></a>
+            <% } %>
+          </li>
+        <% }) %>
+      </ul>
+    </noscript>
+    <div class="select language-switcher" id="language" hidden>
+      <select aria-label="Language">
+        <option value="en" <%- config.locale === 'en' ? 'selected' : '' %>>English</option>
+        <option value="it" <%- config.locale === 'it' ? 'selected' : '' %>>Italiano</option>
+      </select>
+      <span class="focus"></span>
+    </div>
+  </header>
+  <main>
+    <h1><%= helpers.translate(page.greeting) %></h1>
+    <h2 id="phrases"><%= helpers.translate(page.phrases.prefix) %>&nbsp;<span id="typed"></span></h2>
+    <h2 id="strings-container">
+      <ul id="strings">
+        <% page.phrases.strings.forEach(str => { %>
+          <li><%- helpers.translate(str) %></li>
+        <% }) %>
+      </ul>
+    </h2>
+    <h2 id="since-2004"><%- helpers.translate(page.aim) %></h2>
+  </main>
+  <svg id="scroll-down" viewBox="0 0 24 24" width="48" height="48" role="presentation">
     <path fill="currentColor" d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"/>
   </svg>
 </div>

@@ -38,47 +38,49 @@
       }
     }
 
-    > h1 {
-      font-size: 3rem;
-      font-weight: 600;
-      margin: 2.6rem 0 0.6rem 0;
+    > main {
+      > h1 {
+        font-size: 3rem;
+        font-weight: 600;
+        margin: 2.6rem 0 0.6rem 0;
 
-      @media (min-width: 47.5rem) {
-        font-size: 3.6rem;
+        @media (min-width: 47.5rem) {
+          font-size: 3.6rem;
+        }
       }
-    }
 
-    > h2 {
-      font-size: 1.3rem;
-      font-weight: 300;
-      margin: 0.2rem 0;
-      height: 2.4rem;
+      > h2 {
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin: 0.2rem 0;
+        height: 2.4rem;
 
-      &#since-2004 {
-        margin-bottom: 2.6rem;
+        &#since-2004 {
+          margin-bottom: 2.6rem;
+        }
       }
-    }
 
-    > #phrases {
-      display: flex;
-      align-items: center;
-    }
+      > #phrases {
+        display: flex;
+        align-items: center;
+      }
 
-    #typed {
-      display: inline-flex;
-      width: 20.25rem;
-      text-align: left;
-      align-items: center;
-    }
+      #typed {
+        display: inline-flex;
+        width: 20.25rem;
+        text-align: left;
+        align-items: center;
+      }
 
-    #google-g {
-      width: 1.3rem;
-      height: 1.3rem;
-    }
+      #google-g {
+        width: 1.3rem;
+        height: 1.3rem;
+      }
 
-    > #strings-container {
-      position: fixed;
-      top: -9999rem;
+      > #strings-container {
+        position: fixed;
+        top: -9999rem;
+      }
     }
 
     > #scroll-down {
