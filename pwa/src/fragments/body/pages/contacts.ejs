@@ -13,14 +13,14 @@
         <input
           name="subject"
           placeholder="<%= helpers.translate(page.subject).toLowerCase() %>"
-          title="<%= helpers.translate(page.subject) %>"
+          aria-label="<%= helpers.translate(page.subject) %>"
           required
         >
       </div>
       <textarea
         name="message"
         placeholder="<%= helpers.translate(page.message) %>"
-        title="<%= helpers.translate(page.message) %>"
+        aria-label="<%= helpers.translate(page.message) %>"
         required
       ></textarea>
       <div class="full-width-input">
@@ -29,7 +29,7 @@
           type="email"
           name="email"
           placeholder="<%= helpers.translate(page.email).toLowerCase() %>"
-          title="<%= helpers.translate(page.email) %>"
+          aria-label="<%= helpers.translate(page.email) %>"
           required
         >
       </div>
@@ -37,7 +37,7 @@
       <input
         name="name"
         placeholder="<%= helpers.translate(page.name) %>"
-        title="<%= helpers.translate(page.name) %>"
+        aria-label="<%= helpers.translate(page.name) %>"
         required
       >
       <button type="submit">
