@@ -51,8 +51,9 @@
   }
 
   #timeline {
-    > h3 {
+    > h2 {
       text-align: center;
+      font-size: 1.17em;
     }
 
     > ul {
@@ -209,7 +210,7 @@
           flex: 1 1 auto;
           margin: 0.35rem 0.5rem;
 
-          h5 {
+          h4 {
             font-size: 0.9rem;
             font-weight: 400;
             margin: 0;

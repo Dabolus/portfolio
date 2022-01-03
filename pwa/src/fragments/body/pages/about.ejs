@@ -17,11 +17,11 @@
   <% }) %>
 
   <section id="timeline">
-    <h3><%= helpers.translate(page.timelineTitle) %></h3>
+    <h2><%= helpers.translate(page.timelineTitle) %></h2>
     <ul>
       <% data.timeline.forEach(({ year, events }) => { %>
         <li>
-          <h4 class="year"><span><%= year %></span></h4>
+          <h3 class="year"><span><%= year %></span></h3>
           <ul class="events">
             <% events.forEach(({ icon, color, month, day, title, description }) => { %>
               <li class="<%= icon ? '' : 'no-icon' %>">
@@ -43,7 +43,7 @@
                 <% if (title || description || month) { %>
                   <div class="event-content">
                     <% if (title) { %>
-                      <h5><%- helpers.translate(title) %></h5>
+                      <h4><%- helpers.translate(title) %></h4>
                     <% } %>
                     <% if (description) { %>
                       <p><%- helpers.translate(description) %></p>
