@@ -21,6 +21,8 @@ jobs:
         run: yarn install
       - name: Run E2E tests
         run: yarn test:e2e
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Build
         run: yarn build
         env:
