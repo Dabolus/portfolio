@@ -1,4 +1,4 @@
-import { getBasePath } from './utils.js';
+import { getBasePath } from './path.js';
 
 export const getLocale = () =>
   location.pathname.replace(getBasePath(), '').slice(1, 3);

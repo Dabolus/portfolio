@@ -1,5 +1,6 @@
 import { installRouter, updateMetadata } from 'pwa-helpers';
-import { getBasePath, logEvent, scroll } from './utils.js';
+import { logEvent, scroll } from './utils.js';
+import { getBasePath } from './path.js';
 import { getLocale } from './i18n.js';
 
 const pageToPathMap: Record<string, string> = {

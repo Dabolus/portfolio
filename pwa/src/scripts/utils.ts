@@ -1,10 +1,5 @@
 import { getLocale } from './i18n.js';
-
-export const getBasePath = () =>
-  location.pathname.slice(
-    0,
-    location.pathname.indexOf(location.pathname.match(/\/[a-z]{2}\//)[0]),
-  );
+import { getBasePath } from './path.js';
 
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
