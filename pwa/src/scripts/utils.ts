@@ -1,4 +1,4 @@
-import { getLocale } from './i18n';
+import { getLocale } from './i18n.js';
 
 export const getBasePath = () =>
   location.pathname.slice(
@@ -66,15 +66,12 @@ export const setupServiceWorker = async () => {
   const updateNotification = document.querySelector<HTMLDivElement>(
     '#update-notification',
   );
-  const cancelUpdateButton = document.querySelector<HTMLButtonElement>(
-    '#cancel-update',
-  );
-  const performUpdateButton = document.querySelector<HTMLButtonElement>(
-    '#perform-update',
-  );
-  const performUpdateLoading = performUpdateButton.querySelector<HTMLDivElement>(
-    '.loading',
-  );
+  const cancelUpdateButton =
+    document.querySelector<HTMLButtonElement>('#cancel-update');
+  const performUpdateButton =
+    document.querySelector<HTMLButtonElement>('#perform-update');
+  const performUpdateLoading =
+    performUpdateButton.querySelector<HTMLDivElement>('.loading');
 
   const showUpdateNotification = async () => {
     updateNotification.hidden = false;

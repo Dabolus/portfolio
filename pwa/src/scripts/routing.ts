@@ -1,6 +1,6 @@
 import { installRouter, updateMetadata } from 'pwa-helpers';
 import { getBasePath, logEvent, scroll } from './utils.js';
-import { getLocale } from './i18n';
+import { getLocale } from './i18n.js';
 
 const pageToPathMap: Record<string, string> = {
   home: import.meta.env.HOME_JS_OUTPUT,

@@ -1,7 +1,7 @@
 import { setupServiceWorker } from './utils.js';
-import { configureRouting } from './routing';
-import { setupTopBarAnimation } from './animation';
-import { setupThemeChangeObserver } from './theme';
+import { configureRouting } from './routing.js';
+import { setupTopBarAnimation } from './animation.js';
+import { setupThemeChangeObserver } from './theme.js';
 
 const start = async () => {
   setupServiceWorker();
