@@ -23,6 +23,14 @@ jobs:
         run: yarn test:e2e
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Upload videos and screenshots if E2E tests failed
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-report
+          path: |
+            cypress/screenshots
+            cypress/videos
       - name: Build
         run: yarn build
         env:
