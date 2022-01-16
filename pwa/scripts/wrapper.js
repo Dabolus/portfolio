@@ -34,7 +34,7 @@ const build = async () => {
     entryPoints,
     platform: 'node',
     format: 'esm',
-    target: 'node14',
+    target: 'node16',
     minify: false,
     sourcemap: true,
     bundle: false,

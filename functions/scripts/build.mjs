@@ -18,7 +18,7 @@ const build = async () => {
           entryPoints: [entryPoint],
           platform: 'node',
           format: 'cjs', // TODO: set to 'esm' when Firebase Functions support it
-          target: 'node14',
+          target: 'node16',
           minify: true,
           sourcemap: true,
           bundle: true,
