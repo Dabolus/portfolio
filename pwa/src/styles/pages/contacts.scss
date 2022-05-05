@@ -12,7 +12,7 @@
     > #contact-error {
       position: absolute;
       text-align: center;
-      top: 13.5rem;
+      top: 15.5rem;
       left: 50%;
       transform: translateX(-50%);
       color: var(--theme-red);
@@ -22,7 +22,7 @@
 
     > #sent-stamp {
       position: absolute;
-      top: 13rem;
+      top: 15rem;
       left: 6rem;
       width: 6rem;
       height: 6rem;
@@ -37,10 +37,10 @@
 
     > #letter-zip {
       position: absolute;
-      top: 11.6rem;
+      top: 13.6rem;
       left: 0;
       width: 100%;
-      max-width: 28rem;
+      max-width: 32rem;
       pointer-events: none;
       will-change: transform, z-index;
       transform-origin: top center;
@@ -53,7 +53,7 @@
     > #letter-content {
       position: absolute;
       padding: 1rem 1.5rem;
-      top: 12.4rem;
+      top: 14.4rem;
       left: 0;
       width: 100%;
       height: calc(80vw - 2rem);
@@ -159,7 +159,7 @@
 
     > #letter {
       position: absolute;
-      top: 12.6rem;
+      top: 14.6rem;
       left: 0;
       width: 100%;
       margin-bottom: 1rem;
@@ -168,17 +168,17 @@
 
     > #socials {
       position: absolute;
-      top: 24.5rem;
+      top: 29rem;
       left: 0;
       width: 100%;
       text-align: center;
 
       @media (min-width: 26.25rem) {
-        top: 25rem;
+        top: 29.5rem;
       }
 
       @media (min-width: 47.5rem) {
-        top: 26.5rem;
+        top: 31rem;
       }
 
       > p {
