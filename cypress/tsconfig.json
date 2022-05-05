@@ -11,7 +11,12 @@
     "esModuleInterop": true,
     "lib": ["dom", "dom.iterable", "es2020"],
     "target": "es2020",
-    "types": ["cypress", "@testing-library/cypress", "cypress-axe"]
+    "types": [
+      "cypress",
+      "@testing-library/cypress",
+      "cypress-axe",
+      "@percy/cypress"
+    ]
   },
   "include": ["**/*.ts"]
 }

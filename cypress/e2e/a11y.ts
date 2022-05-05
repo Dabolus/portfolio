@@ -15,6 +15,8 @@ describe('accessibility', () => {
               }
             : undefined,
         );
+        // Take a snapshot to check the visual diff of the page
+        cy.percySnapshot(`${page[0].toUpperCase()}${page.slice(1)}`);
       });
     },
   );
