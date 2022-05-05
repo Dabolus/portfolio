@@ -3,6 +3,8 @@ name: Build, deploy and audit
   push:
     branches:
       - master
+      - 'feature/**'
+      - 'fix/**'
   schedule:
     - cron: '0 12 * * 0'
 jobs:
@@ -37,11 +39,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Deploy
+        if: github.ref == 'refs/heads/master'
         uses: Dabolus/deploy-firebase@master
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
       - name: Purge cache, audit, and report
+        if: github.ref == 'refs/heads/master'
         run: |
           # Install libgbm
           sudo apt-get -y install libgbm1 fonts-roboto
