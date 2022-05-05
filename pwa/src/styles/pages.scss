@@ -45,6 +45,11 @@ portal,
       width: 3rem;
       height: 3rem;
       flex: 0 0 auto;
+
+      > svg {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     > #title {
@@ -73,7 +78,7 @@ portal,
     }
 
     .content-boundaries {
-      max-width: 28rem;
+      max-width: 32rem;
       margin: 0 auto;
     }
   }
