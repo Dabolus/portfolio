@@ -97,10 +97,20 @@ const configurationPromise = configure();
 export const onPageLoad = async () => {
   await configurationPromise;
 
-  startAnimation(
-    'age',
-    updateAge(document.querySelector<HTMLSpanElement>('#age')),
-  );
+  // If running E2E tests, replace the age animation with a static string to simplify visual diff testing
+  if ('Cypress' in window) {
+    document.querySelector<HTMLSpanElement>('#age').textContent =
+      (24.123456789).toLocaleString(getLocale(), {
+        minimumFractionDigits: 9,
+        maximumFractionDigits: 9,
+      });
+    // Otherwise, setup the age animation
+  } else {
+    startAnimation(
+      'age',
+      updateAge(document.querySelector<HTMLSpanElement>('#age')),
+    );
+  }
 };
 
 export const onPageUnload = () => {

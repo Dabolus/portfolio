@@ -67,21 +67,29 @@ export const onPageLoad = async () => {
       });
   }
 
-  if (!typed) {
-    const { default: Typed } = await import('typed.js/src/typed');
-    // Configure typing animation
-    typed = new Typed('#typed', {
-      backDelay: 2000,
-      backSpeed: 30,
-      loop: true,
-      showCursor: false,
-      smartBackspace: false,
-      startDelay: 0,
-      stringsElement: '#strings',
-      typeSpeed: 90,
-    });
+  // If running E2E tests, replace the typed animation with a static string to simplify visual diff testing
+  if ('Cypress' in window) {
+    document.querySelector('#typed').innerHTML = document.querySelector(
+      '#strings > :first-child',
+    ).innerHTML;
   } else {
-    typed.start();
+    // Otherwise, setup Typed.js
+    if (!typed) {
+      const { default: Typed } = await import('typed.js/src/typed');
+      // Configure typing animation
+      typed = new Typed('#typed', {
+        backDelay: 2000,
+        backSpeed: 30,
+        loop: true,
+        showCursor: false,
+        smartBackspace: false,
+        startDelay: 0,
+        stringsElement: '#strings',
+        typeSpeed: 90,
+      });
+    } else {
+      typed.start();
+    }
   }
 };
 
