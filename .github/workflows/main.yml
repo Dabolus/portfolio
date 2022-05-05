@@ -23,6 +23,7 @@ jobs:
         run: yarn test:e2e
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
       - name: Upload videos and screenshots if E2E tests failed
         uses: actions/upload-artifact@v2
         if: failure()
