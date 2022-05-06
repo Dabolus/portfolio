@@ -40,12 +40,12 @@
 
     > main {
       > h1 {
-        font-size: 3rem;
+        font-size: 3.2rem;
         font-weight: 600;
         margin: 2.6rem 0 0.6rem 0;
 
         @media (min-width: 47.5rem) {
-          font-size: 3.6rem;
+          font-size: 4.2rem;
         }
       }
 
@@ -146,7 +146,7 @@
 
           > span {
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             will-change: transform;
             transition: 0.3s transform;
             transition-delay: 0.9s;

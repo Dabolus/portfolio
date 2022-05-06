@@ -10,7 +10,7 @@
 
 .certification {
   background: var(--theme-card-background);
-  width: 16rem;
+  width: 18rem;
   margin: 1rem;
   color: var(--theme-color);
   will-change: transform;
@@ -23,8 +23,8 @@
   }
 
   img {
-    width: 16rem;
-    height: 16rem;
+    width: 18rem;
+    height: 18rem;
     object-fit: cover;
   }
 
@@ -35,11 +35,11 @@
   }
 
   @media (min-width: 47.5rem) {
-    width: 10rem;
+    width: 12rem;
 
     img {
-      width: 10rem;
-      height: 10rem;
+      width: 12rem;
+      height: 12rem;
     }
   }
 }
