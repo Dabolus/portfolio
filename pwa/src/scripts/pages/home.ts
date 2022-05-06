@@ -65,6 +65,36 @@ export const onPageLoad = async () => {
           portal.classList.remove('closed', 'invisible');
         });
       });
+
+    const ninetiesLink =
+      document.querySelector<HTMLAnchorElement>('#nineties-link');
+    let ninetiesPortal: HTMLPortalElement;
+    const createNinetiesPortal = () => {
+      if (ninetiesPortal) {
+        return;
+      }
+      ninetiesPortal = document.createElement('portal');
+      ninetiesPortal.setAttribute('id', 'nineties-portal');
+      ninetiesPortal.setAttribute('title', 'The 90s');
+      ninetiesPortal.setAttribute('aria-hidden', 'true');
+      ninetiesPortal.setAttribute('src', ninetiesLink.href);
+      ninetiesPortal.setAttribute('class', 'nineties-portal-closed');
+      document.body.appendChild(ninetiesPortal);
+    };
+    ninetiesLink.addEventListener('mouseenter', createNinetiesPortal);
+    ninetiesLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      createNinetiesPortal();
+      ninetiesPortal.addEventListener(
+        'transitionend',
+        () => ninetiesPortal.activate(),
+        {
+          once: true,
+        },
+      );
+      ninetiesPortal.setAttribute('aria-hidden', 'false');
+      ninetiesPortal.classList.remove('nineties-portal-closed');
+    });
   }
 
   // If running E2E tests, replace the typed animation with a static string to simplify visual diff testing
