@@ -2,7 +2,7 @@ import functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import nodemailer from 'nodemailer';
 import { stringify } from 'querystring';
-import marked from 'marked';
+import { marked } from 'marked';
 import { RuntimeConfig } from './models.js';
 
 const {
