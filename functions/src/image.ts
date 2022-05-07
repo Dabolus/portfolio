@@ -1,4 +1,6 @@
-import admin from 'firebase-admin';
+import { App, initializeApp, getApp } from 'firebase-admin/app';
+import { getStorage, Storage } from 'firebase-admin/storage';
+import { getFirestore, Firestore } from 'firebase-admin/firestore';
 import functions from 'firebase-functions';
 import sharp, { Sharp } from 'sharp';
 import primitive from 'primitive';
@@ -10,17 +12,24 @@ import { CollectionReference } from '@google-cloud/firestore';
 const placeholderWidth = 256;
 const placeholderHeight = 256;
 
+let app: App;
+let storage: Storage;
+let firestore: Firestore;
 let bucket: Bucket;
 let projectsCollection: CollectionReference;
 let certificationsCollection: CollectionReference;
 
 const optimize = async (svg: string): Promise<string> => {
-  const { data } = svgOptimize(svg, {
+  const result = svgOptimize(svg, {
     multipass: true,
     floatPrecision: 1,
   });
 
-  return data;
+  if (result.modernError) {
+    throw result.modernError;
+  }
+
+  return result.data;
 };
 
 const patchSVGGroup = (svg: string): string => {
@@ -94,18 +103,28 @@ const generatePlaceholder = async (
 };
 
 const getCollection = (entity: string) => {
+  if (!app) {
+    try {
+      app = initializeApp(functions.config().firebase);
+    } catch {
+      app = getApp();
+    }
+  }
+
+  if (!firestore) {
+    firestore = getFirestore(app);
+  }
+
   switch (entity) {
     case 'projects':
       if (!projectsCollection) {
-        projectsCollection = admin.firestore().collection('projects');
+        projectsCollection = firestore.collection('projects');
       }
 
       return projectsCollection;
     case 'certifications':
       if (!certificationsCollection) {
-        certificationsCollection = admin
-          .firestore()
-          .collection('certifications');
+        certificationsCollection = firestore.collection('certifications');
       }
 
       return certificationsCollection;
@@ -139,12 +158,20 @@ export const processImage = functions.storage
       `Generating thumbnail for ${entity.slice(0, -1)} '${id}'...\n`,
     );
 
-    if (!bucket) {
+    if (!app) {
       try {
-        admin.initializeApp(functions.config().firebase);
-      } catch {}
+        app = initializeApp(functions.config().firebase);
+      } catch {
+        app = getApp();
+      }
+    }
 
-      bucket = admin.storage().bucket();
+    if (!storage) {
+      storage = getStorage(app);
+    }
+
+    if (!bucket) {
+      bucket = storage.bucket();
     }
 
     const collection = getCollection(entity);

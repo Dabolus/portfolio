@@ -1,4 +1,5 @@
-import admin from 'firebase-admin';
+import { App, initializeApp, getApp } from 'firebase-admin/app';
+import { getStorage, Storage } from 'firebase-admin/storage';
 import functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import { stringify } from 'querystring';
@@ -13,6 +14,8 @@ interface RetrieveResumeBody {
   readonly response: string;
 }
 
+let app: App;
+let storage: Storage;
 let bucket: Bucket;
 
 const validateBody = ({ response }: RetrieveResumeBody) => {
@@ -51,12 +54,20 @@ export const retrieveResume = functions.https.onRequest(
         return;
       }
 
-      if (!bucket) {
+      if (!app) {
         try {
-          admin.initializeApp(functions.config().firebase);
-        } catch {}
+          app = initializeApp(functions.config().firebase);
+        } catch {
+          app = getApp();
+        }
+      }
 
-        bucket = admin.storage().bucket();
+      if (!storage) {
+        storage = getStorage(app);
+      }
+
+      if (!bucket) {
+        bucket = storage.bucket();
       }
 
       bucket.file('assets/resume.pdf').createReadStream().pipe(res);
