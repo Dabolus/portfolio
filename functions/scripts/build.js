@@ -2,7 +2,7 @@ import path from 'path';
 import { performance } from 'perf_hooks';
 import esbuild from 'esbuild';
 import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve';
-import { typeCheck, entryPoints, outDir, __dirname } from './utils.mjs';
+import { typeCheck, entryPoints, outDir, __dirname } from './utils.js';
 
 const build = async () => {
   process.chdir(path.join(__dirname, '..'));

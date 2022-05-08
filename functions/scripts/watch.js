@@ -3,7 +3,7 @@ import { performance } from 'perf_hooks';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve';
-import { typeCheck, entryPoints, outDir, __dirname } from './utils.mjs';
+import { typeCheck, entryPoints, outDir, __dirname } from './utils.js';
 
 process.chdir(path.join(__dirname, '..'));
 

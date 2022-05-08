@@ -4,11 +4,12 @@
   "author": "Giorgio Garasto <giorgio@garasto.me>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "run-p start:firebase start:functions",
     "start:firebase": "cross-env NODE_ENV=development firebase emulators:start --only hosting,functions",
-    "start:functions": "cross-env NODE_ENV=development node scripts/watch.mjs",
-    "build": "cross-env NODE_ENV=production node scripts/build.mjs"
+    "start:functions": "cross-env NODE_ENV=development node scripts/watch.js",
+    "build": "cross-env NODE_ENV=production node scripts/build.js"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -16,7 +17,7 @@
     "firebase-functions": "^3.21.0",
     "marked": "^4.0.15",
     "mini-svg-data-uri": "^1.4.4",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.2.4",
     "nodemailer": "^6.7.5",
     "primitive": "^1.0.1",
     "sharp": "^0.30.4",
