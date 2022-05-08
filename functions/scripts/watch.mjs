@@ -3,7 +3,7 @@ import { performance } from 'perf_hooks';
 import chokidar from 'chokidar';
 import esbuild from 'esbuild';
 import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve';
-import { typeCheck, entryPoint, outDir, __dirname } from './utils.mjs';
+import { typeCheck, entryPoints, outDir, __dirname } from './utils.mjs';
 
 process.chdir(path.join(__dirname, '..'));
 
@@ -18,23 +18,14 @@ const build = async () => {
     const builderPromise = builder
       ? builder.rebuild()
       : esbuild.build({
-          entryPoints: [entryPoint],
+          entryPoints,
           platform: 'node',
-          format: 'cjs', // TODO: set to 'esm' when Firebase Functions support it
+          format: 'esm',
           target: 'node16',
           sourcemap: 'inline',
-          bundle: true,
-          outfile: path.join(outDir, 'index.js'),
+          outdir: outDir,
           incremental: true,
-          plugins: [
-            NodeResolvePlugin({
-              extensions: ['.ts', '.js'],
-              onResolved: (resolved) =>
-                resolved.includes('node_modules')
-                  ? { external: true }
-                  : resolved,
-            }),
-          ],
+          plugins: [NodeResolvePlugin({ extensions: ['.ts', '.js'] })],
         });
 
     const [newBuilder] = await Promise.all([

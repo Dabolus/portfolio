@@ -2,7 +2,7 @@ import path from 'path';
 import { performance } from 'perf_hooks';
 import esbuild from 'esbuild';
 import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve';
-import { typeCheck, entryPoint, outDir, __dirname } from './utils.mjs';
+import { typeCheck, entryPoints, outDir, __dirname } from './utils.mjs';
 
 const build = async () => {
   process.chdir(path.join(__dirname, '..'));
@@ -15,23 +15,14 @@ const build = async () => {
     await Promise.all([
       esbuild
         .build({
-          entryPoints: [entryPoint],
+          entryPoints,
           platform: 'node',
-          format: 'cjs', // TODO: set to 'esm' when Firebase Functions support it
+          format: 'esm',
           target: 'node16',
           minify: true,
           sourcemap: true,
-          bundle: true,
-          outfile: path.join(outDir, 'index.js'),
-          plugins: [
-            NodeResolvePlugin({
-              extensions: ['.ts', '.js'],
-              onResolved: (resolved) =>
-                resolved.includes('node_modules')
-                  ? { external: true }
-                  : resolved,
-            }),
-          ],
+          outdir: outDir,
+          plugins: [NodeResolvePlugin({ extensions: ['.ts', '.js'] })],
         })
         .then(() => {
           process.stdout.write(
