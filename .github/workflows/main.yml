@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 16
       - name: Install deps
-        run: yarn install
+        run: yarn install --prefer-offline --immutable
       - name: Run E2E tests
         run: yarn test:e2e
         env:
@@ -50,7 +50,7 @@ jobs:
           # Install libgbm
           sudo apt-get -y install libgbm1 fonts-roboto
           # Install required libraries
-          sudo yarn add -D -W node-fetch@3 lighthouse@9 puppeteer@13 node-telegram-bot-api@0.57 sharp@0.30
+          sudo yarn add -D node-fetch@3 lighthouse@9 puppeteer@13 node-telegram-bot-api@0.57 sharp@0.30
           # Run the postdeploy script
           node scripts/postdeploy.js
         env:
