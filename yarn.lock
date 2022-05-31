@@ -3814,6 +3814,7 @@ __metadata:
     "@percy/cli": ^1.2.1
     "@percy/cypress": ^3.1.1
     "@testing-library/cypress": ^8.0.2
+    axe-core: ^4.4.1
     cypress: ^9.7.0
     cypress-axe: ^0.14.0
     firebase-tools: ^11.0.1
@@ -5636,6 +5637,13 @@ __metadata:
   version: 4.4.1
   resolution: "axe-core@npm:4.4.1"
   checksum: ad14c5b71059dc3d24ef2519b8cd96e98b4a572379396201ce449d1c4262181821d6ca9550df65b22371faf06d28bbe94d391fe5675f2a08e6550f7b5da8416d
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:^4.4.1":
+  version: 4.4.2
+  resolution: "axe-core@npm:4.4.2"
+  checksum: 93fbb36c5ac8ab5e67e49678a6f7be0dc799a9f560edd95cca1f0a8183def8c50205972366b9941a3ea2b20224a1fe230e6d87ef38cb6db70472ed1b694febd1
   languageName: node
   linkType: hard
 
