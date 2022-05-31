@@ -1,5 +1,5 @@
 {
-  "name": "portfolio",
+  "name": "@portfolio/root",
   "version": "0.1.0",
   "author": "Giorgio Garasto <giorgio@garasto.me>",
   "license": "MIT",
@@ -8,10 +8,10 @@
   "scripts": {
     "start": "lerna run start --stream",
     "build": "lerna run build --stream",
-    "start:pwa": "yarn workspace portfolio-pwa start",
-    "build:pwa": "yarn workspace portfolio-pwa run build",
-    "start:functions": "yarn workspace portfolio-functions start",
-    "build:functions": "yarn workspace portfolio-functions run build",
+    "start:pwa": "yarn workspace @portfolio/pwa start",
+    "build:pwa": "yarn workspace @portfolio/pwa run build",
+    "start:functions": "yarn workspace @portfolio/functions start",
+    "build:functions": "yarn workspace @portfolio/functions run build",
     "deploy": "firebase deploy",
     "lint": "eslint '**/*.{ts,js}'",
     "format": "prettier --write '**/*.{ts,js,scss}'",
@@ -37,5 +37,6 @@
   ],
   "resolutions": {
     "color": "3"
-  }
+  },
+  "packageManager": "yarn@3.2.1"
 }

@@ -3,7 +3,7 @@ import { getStorage, Storage } from 'firebase-admin/storage';
 import functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import { stringify } from 'querystring';
-import { Bucket } from '@google-cloud/storage';
+import type { Bucket } from '@google-cloud/storage';
 
 enum ResumeError {
   INVALID_RESPONSE = 'INVALID_RESPONSE',

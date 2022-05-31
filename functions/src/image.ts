@@ -6,8 +6,8 @@ import sharp, { Sharp } from 'sharp';
 import primitive from 'primitive';
 import { optimize as svgOptimize } from 'svgo';
 import toSafeDataURI from 'mini-svg-data-uri';
-import { Bucket } from '@google-cloud/storage';
-import { CollectionReference } from '@google-cloud/firestore';
+import type { Bucket } from '@google-cloud/storage';
+import type { CollectionReference } from '@google-cloud/firestore';
 
 const placeholderWidth = 256;
 const placeholderHeight = 256;

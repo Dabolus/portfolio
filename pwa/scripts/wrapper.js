@@ -11,8 +11,8 @@ export const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const runScript = (script) =>
   new Promise((resolve, reject) => {
     const process = childProcess.spawn(
-      'node',
-      ['-r', 'dotenv/config', script],
+      'yarn',
+      ['node', '-r', 'dotenv/config', script],
       {
         stdio: 'inherit',
       },
