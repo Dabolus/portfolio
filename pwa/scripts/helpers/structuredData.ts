@@ -23,7 +23,7 @@ export const generateStructuredData: GenerateStructuredDataFunction = ({
       '@context': 'http://schema.org/',
       '@type': 'Person',
       url: config.baseUrl,
-      image: `${config.baseUrl}/images/propic.jpg`,
+      image: `${config.baseUrl}/images/propic-20220630.jpg`,
       name: 'Dabolus',
       givenName: 'Giorgio',
       familyName: 'Garasto',
