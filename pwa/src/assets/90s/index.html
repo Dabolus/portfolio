@@ -32,11 +32,22 @@
 
 <BODY BGCOLOR=#000000 BACKGROUND=img/bg.gif TEXT=#000000 LINK=#C00000 VLINK=#800000 ALINK=#FF00FF>
   <BASEFONT FACE="'Comic Sans MS','Comic Sans',cursive">
-  <P ALIGN=RIGHT>
-    <A HREF=../en/>
-      <IMG SRC=img/back-to-the-future.gif WIDTH=120 HEIGHT=60 ALT="Back to the future"/>
-    </A>
-  </P>
+
+  <TABLE WIDTH=100%>
+    <TR>
+      <TD ALIGN=LEFT>
+        <A HREF=../cartridge/ TITLE="Time Travel">
+          <IMG SRC=img/cartridge.gif WIDTH=70 HEIGHT=80 ALT="Time Travel"/>
+        </A>
+      </TD>
+      <TD ALIGN=RIGHT>
+        <A HREF=../en/ TITLE="Back to the future">
+          <IMG SRC=img/back-to-the-future.gif WIDTH=120 HEIGHT=60 ALT="Back to the future"/>
+        </A>
+      </TD>
+    </TR>
+  </TABLE>
+
   <TABLE ALIGN=CENTER WIDTH=640>
     <TR>
       <TD>
@@ -280,11 +291,20 @@
     </TR>
   </TABLE>
 
-  <P ALIGN=RIGHT>
-    <A HREF=../en/>
-      <IMG SRC=img/back-to-the-future.gif WIDTH=120 HEIGHT=60 ALT="Back to the future"/>
-    </A>
-  </P>
+  <TABLE WIDTH=100%>
+    <TR>
+      <TD ALIGN=LEFT>
+        <A HREF=../cartridge/ TITLE="Time Travel">
+          <IMG SRC=img/cartridge.gif WIDTH=70 HEIGHT=80 ALT="Time Travel"/>
+        </A>
+      </TD>
+      <TD ALIGN=RIGHT>
+        <A HREF=../en/ TITLE="Back to the future">
+          <IMG SRC=img/back-to-the-future.gif WIDTH=120 HEIGHT=60 ALT="Back to the future"/>
+        </A>
+      </TD>
+    </TR>
+  </TABLE>
 
   <script>
     // Can't believe I'm using JS to polyfill a feature that has
@@ -292,31 +312,46 @@
     document.documentElement.style.fontFamily = document.querySelector('BASEFONT').getAttribute('FACE');
 
     if ('HTMLPortalElement' in window) {
-      var futurePortal;
-      function createFuturePortal() {
-        if (futurePortal) {
-          return;
+      var portals = {};
+      function createPortal(src, title) {
+        if (portals[src]) {
+          return portals[src];
         }
-        futurePortal = document.createElement('portal');
-        futurePortal.setAttribute('src', '../en/');
-        futurePortal.setAttribute('title', 'The future');
-        futurePortal.setAttribute('class', 'invisible');
-        futurePortal.setAttribute('aria-hidden', 'true');
-        document.body.appendChild(futurePortal);
+        portals[src] = document.createElement('portal');
+        portals[src].setAttribute('src', src);
+        portals[src].setAttribute('title', title);
+        portals[src].setAttribute('class', 'invisible');
+        portals[src].setAttribute('aria-hidden', 'true');
+        document.body.appendChild(portals[src]);
+        return portals[src];
       }
 
-      document.querySelectorAll('A[HREF="../en/"]').forEach(function (futureLink) {
-        futureLink.addEventListener('mouseenter', createFuturePortal);
-        futureLink.addEventListener('click', function (event) {
-          event.preventDefault();
-          createFuturePortal();
-          futurePortal.addEventListener('transitionend', function() {
-            futurePortal.activate(), { once: true };
+      function setupListeners(anchor) {
+        var href = anchor.getAttribute('HREF');
+        var title = anchor.getAttribute('TITLE');
+        anchor.addEventListener('mouseenter', function () {
+            createPortal(href, title);
           });
-          futurePortal.setAttribute('aria-hidden', 'false');
-          futurePortal.classList.remove('invisible');
+        anchor.addEventListener('click', function (event) {
+          event.preventDefault();
+          createPortal(href, title);
+          portals[href].addEventListener('transitionend', function() {
+            portals[href].activate(), { once: true };
+          });
+          portals[href].setAttribute('aria-hidden', 'false');
+          portals[href].classList.remove('invisible');
         });
-      });
+      }
+
+      var anchors = document.getElementsByTagName('A');
+
+      for (var i = 0; i < anchors.length; i++) {
+        var anchor = anchors[i];
+        var href = anchor.getAttribute('HREF');
+        if (href.indexOf('../en/') === 0 || href.indexOf('../cartridge/') === 0) {
+          setupListeners(anchor);
+        }
+      }
     }
   </script>
 </BODY>
