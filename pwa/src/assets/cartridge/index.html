@@ -197,6 +197,9 @@
       );
       await WasmBoy.loadROM('./portfolio.gb');
       await WasmBoy.play();
+
+      window.addEventListener('blur', () => WasmBoy.pause());
+      window.addEventListener('focus', () => WasmBoy.play());
     </script>
   </body>
 </html>
