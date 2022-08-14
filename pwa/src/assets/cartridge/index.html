@@ -25,6 +25,19 @@
         }
       }
 
+      #future {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width : 96px;
+        height: 32px;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        background: rgba(255, 255, 255, 0.3);
+        padding: 8px 16px;
+        z-index: 1;
+      }
+
       #container {
         position: relative;
         width: 100vmin;
@@ -138,6 +151,9 @@
     </style>
   </head>
   <body>
+    <a id="future" href="../90s/" title="Back to the future">
+      <img src="./future-gb.png" alt="Back to the future">
+    </a>
     <div id="container">
       <img src="./frame.jpg" alt="">
       <canvas width="160" height="144"></canvas>
