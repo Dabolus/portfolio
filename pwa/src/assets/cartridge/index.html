@@ -30,20 +30,22 @@
         height: calc((100vmin / 1840) * 3020);
       }
 
-      #power-led {
+      #container > * {
         position: absolute;
+      }
+
+      #power-led {
         top: 22.5%;
         left: 13.55%;
         width: 2.5%;
         aspect-ratio: 1;
-        background-color: #ff0000;
+        background-color: red;
         filter: blur(2px);
         border-radius: 50%;
         pointer-events: none;
       }
 
       #frame-shadow {
-        position: absolute;
         top: 13.6%;
         left: 24.3%;
         width: 51.2%;
@@ -52,8 +54,72 @@
         pointer-events: none;
       }
 
+      button {
+        appearance: none;
+        border: none;
+        outline: none;
+        background: transparent;
+      }
+
+      #dpad-up, #dpad-down, #dpad-left, #dpad-right {
+        width: 10.5%;
+        height: 6.5%;
+      }
+
+      #dpad-up, #dpad-down {
+        left: 15.5%;
+      }
+
+      #dpad-left, #dpad-right {
+        top: 64%;
+      }
+
+      #dpad-up {
+        top: 58%;
+      }
+
+      #dpad-down {
+        top: 70.5%;
+      }
+
+      #dpad-left {
+        left: 5.5%;
+      }
+
+      #dpad-right {
+        left: 25.5%;
+      }
+
+      #btn-a, #btn-b {
+        width: 15%;
+        aspect-ratio: 1;
+      }
+
+      #btn-a {
+        top: 59.8%;
+        left: 78%;
+      }
+
+      #btn-b {
+        top: 64.2%;
+        left: 62%;
+      }
+
+      #btn-select, #btn-start {
+        top: 78%;
+        width: 16.5%;
+        height: 10%;
+      }
+
+      #btn-start {
+        left: 45.5%;
+      }
+
+      #btn-select {
+        left: 29%;
+      }
+
       img {
-        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
@@ -61,7 +127,6 @@
       }
 
       canvas {
-        position: absolute;
         top: 13.6%;
         left: 24.3%;
         width: 51.2%;
@@ -77,6 +142,14 @@
       <canvas width="160" height="144"></canvas>
       <div id="power-led"></div>
       <div id="frame-shadow"></div>
+      <button id="dpad-up" aria-label="D-pad up"></button>
+      <button id="dpad-right" aria-label="D-pad right"></button>
+      <button id="dpad-down" aria-label="D-pad down"></button>
+      <button id="dpad-left" aria-label="D-pad left"></button>
+      <button id="btn-a" aria-label="A"></button>
+      <button id="btn-b" aria-label="B"></button>
+      <button id="btn-start" aria-label="Start"></button>
+      <button id="btn-select" aria-label="Select"></button>
     </div>
     <script type="module">
       import { WasmBoy } from 'https://unpkg.com/wasmboy@0.7.1/dist/wasmboy.wasm.esm.js?module';
@@ -106,6 +179,21 @@
           }
         }
       }, canvas);
+      [
+        ['dpad-up', 'DPAD_UP'],
+        ['dpad-right', 'DPAD_RIGHT'],
+        ['dpad-down', 'DPAD_DOWN'],
+        ['dpad-left', 'DPAD_LEFT'],
+        ['btn-a', 'A'],
+        ['btn-b', 'B'],
+        ['btn-start', 'START'],
+        ['btn-select', 'SELECT'],
+      ].forEach(([element, button]) =>
+        WasmBoy.ResponsiveGamepad.TouchInput.addButtonInput(
+          document.querySelector(`#${element}`),
+          WasmBoy.ResponsiveGamepad.RESPONSIVE_GAMEPAD_INPUTS[button],
+        ),
+      );
       await WasmBoy.loadROM('./portfolio.gb');
       await WasmBoy.play();
     </script>
