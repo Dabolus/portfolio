@@ -1,15 +1,163 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta http-equiv="refresh" content="5; URL='./gb/'" />
+    <title>Giorgio Garasto - Cartridges</title>
+    <meta name="description" content="Hi! I'm Giorgio, and this is the collection of the cartridges of my Portfolio!">
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ba8c63;
+        background-image: url(img/wood-pattern.png);
+      }
+
+      #box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 1080px;
+        gap: 16px;
+        padding: 64px;
+        margin: 32px;
+        outline: 8px solid #600;
+        border: 8px dashed rgba(20, 20, 20, 0.7);
+        border-radius: 64px;
+        background-image: url(img/box-pattern.webp);
+        background-size: 8px 24px;
+        box-shadow:
+          9px 18px 36px rgba(0, 0, 0, .7),
+          inset 3px 6px 24px rgba(0, 0, 0, .7),
+          inset 0 0 0 4px rgba(255, 4, 4, 0.7);
+      }
+
+      a {
+        position: relative;
+      }
+
+      a#gb, a#gbc {
+        width: 195px;
+        height: 220.5px;
+      }
+
+      a > img {
+        position: absolute;
+        left: 50%;
+        bottom: 12px;
+        transform: translate(-50%, 0);
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, .7);
+        animation: put-cartridge .5s ease-in-out forwards;
+      }
+
+      a::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 75%;
+        left: 0;
+        bottom: 0;
+        background:
+          repeating-linear-gradient(
+            -45deg,
+            transparent 0,
+            transparent 2px,
+            #000 4px
+          ),
+          repeating-linear-gradient(
+            45deg,
+            transparent 0,
+            transparent 2px,
+            #000 4px
+          ),
+          transparent;
+        border: 8px solid #000;
+        border-radius: 0 0 8px 8px;
+        transform: perspective(480px) rotateX(0);
+        transform-origin: bottom center;
+        animation: put-cartridge-container .5s ease-in-out forwards;
+      }
+
+      a:hover > img {
+        animation: get-cartridge .5s ease-in-out forwards;
+      }
+
+      a:hover::after {
+        animation: get-cartridge-container .5s ease-in-out forwards;
+      }
+
+      @keyframes put-cartridge {
+        0% {
+          transform: translate(-50%, -15%) scale(1.4) rotate(0);
+          box-shadow: 16px 32px 64px rgba(0, 0, 0, .7);
+          z-index: 1;
+        }
+        50% {
+          transform: translate(-50%, -100%) scale(1.2) rotate(18deg);
+        }
+        100% {
+          transform: translate(-50%, 0) scale(1) rotate(0);
+          box-shadow: 1px 2px 4px rgba(0, 0, 0, .7);
+          z-index: 0;
+        }
+      }
+
+      @keyframes get-cartridge {
+        0% {
+          transform: translate(-50%, 0) scale(1) rotate(0);
+          box-shadow: 1px 2px 4px rgba(0, 0, 0, .7);
+          z-index: 0;
+        }
+        50% {
+          transform: translate(-50%, -100%) scale(1.2) rotate(18deg);
+        }
+        100% {
+          transform: translate(-50%, -15%) scale(1.4) rotate(0);
+          box-shadow: 16px 32px 64px rgba(0, 0, 0, .7);
+          z-index: 1;
+        }
+      }
+
+      @keyframes put-cartridge-container {
+        0%, 100% {
+          transform: perspective(480px) rotateX(0);
+        }
+        50% {
+          transform: perspective(480px) rotateX(-3deg);
+        }
+      }
+      @keyframes get-cartridge-container {
+        0%, 100% {
+          transform: perspective(480px) rotateX(0);
+        }
+        50% {
+          transform: perspective(480px) rotateX(-3deg);
+        }
+      }
+    </style>
   </head>
   <body>
-    <p>Right now, only the Game Boy cartridge is available.</p>
-    <p>Since you're probably looking for that one, I'm redirecting you there in 5 seconds.</p>
-    <p>Stay tuned for when alternative cartridges will be released!</p>
-    <script>
-      // If for some reason the redirect meta-tag doesn't work, fallback to the good ol' JS approach.
-      setTimeout(() => window.location.href = './gb/', 5000);
-    </script>
+    <div id="box">
+      <a id="gb" href="gb/" title="Game Boy">
+        <img src="img/carts/gb.png" alt="Game Boy" width="171" height="196.5">
+      </a>
+      <a id="gbc" href="gbc/" title="Game Boy Color">
+        <img src="img/carts/gbc.png" alt="Game Boy Color" width="171" height="196.5">
+      </a>
+    </div>
   </body>
 </html>
