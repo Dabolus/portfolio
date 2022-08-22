@@ -42,6 +42,13 @@
         "function": "redirect"
       }
     ],
+    "redirects": [
+      {
+        "source": "/cartridge/*",
+        "destination": "/cartridges/gb/",
+        "type": 301
+      }
+    ],
     "headers": [
       {
         "source": "**",
