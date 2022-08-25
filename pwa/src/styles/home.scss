@@ -246,22 +246,6 @@
   }
 }
 
-#nineties-portal {
-  z-index: 9999;
-  opacity: 1;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  transition: 1s opacity;
-
-  &.nineties-portal-closed {
-    z-index: -1;
-    opacity: 0;
-  }
-}
-
 @keyframes up-down {
   from {
     transform: translateY(0);

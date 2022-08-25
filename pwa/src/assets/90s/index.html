@@ -6,28 +6,6 @@
     <META NAME=DESCRIPTION CONTENT="Hi! I'm Giorgio, a Software Engineer trying to make the web a better place since the future!">
     <META NAME=GENERATOR   CONTENT=Vim>
     <TITLE>Giorgio Garasto - 90s version</TITLE>
-
-    <!--
-      Ignore these styles, they're only used by the time machine.
-      The OG webmasters at the time used HTML to style their pages 👀
-    -->
-    <style>
-      portal {
-        z-index: 9999;
-        opacity: 1;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        transition: 1s opacity;
-      }
-
-      portal.invisible {
-        z-index: -1;
-        opacity: 0;
-      }
-    </STYLE>
 </HEAD>
 
 <BODY BGCOLOR=#000000 BACKGROUND=img/bg.gif TEXT=#000000 LINK=#C00000 VLINK=#800000 ALINK=#FF00FF>
@@ -310,49 +288,6 @@
     // Can't believe I'm using JS to polyfill a feature that has
     // been deprecated and removed from all browsers LMAO
     document.documentElement.style.fontFamily = document.querySelector('BASEFONT').getAttribute('FACE');
-
-    if ('HTMLPortalElement' in window) {
-      var portals = {};
-      function createPortal(src, title) {
-        if (portals[src]) {
-          return portals[src];
-        }
-        portals[src] = document.createElement('portal');
-        portals[src].setAttribute('src', src);
-        portals[src].setAttribute('title', title);
-        portals[src].setAttribute('class', 'invisible');
-        portals[src].setAttribute('aria-hidden', 'true');
-        document.body.appendChild(portals[src]);
-        return portals[src];
-      }
-
-      function setupListeners(anchor) {
-        var href = anchor.getAttribute('HREF');
-        var title = anchor.getAttribute('TITLE');
-        anchor.addEventListener('mouseenter', function () {
-            createPortal(href, title);
-          });
-        anchor.addEventListener('click', function (event) {
-          event.preventDefault();
-          createPortal(href, title);
-          portals[href].addEventListener('transitionend', function() {
-            portals[href].activate(), { once: true };
-          });
-          portals[href].setAttribute('aria-hidden', 'false');
-          portals[href].classList.remove('invisible');
-        });
-      }
-
-      var anchors = document.getElementsByTagName('A');
-
-      for (var i = 0; i < anchors.length; i++) {
-        var anchor = anchors[i];
-        var href = anchor.getAttribute('HREF');
-        if (href.indexOf('../en/') === 0 || href.indexOf('../cartridges/') === 0) {
-          setupListeners(anchor);
-        }
-      }
-    }
   </script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2BXKCDTVNJ"></script>

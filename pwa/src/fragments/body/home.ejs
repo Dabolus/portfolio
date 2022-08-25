@@ -65,16 +65,3 @@
     <% }) %>
   </ul>
 </nav>
-<% Object.values(config.pages).forEach(({ id, link, title, slug }) => { %>
-  <% if (!link) { return; } %>
-
-  <portal
-    src="<%= link %>"
-    id="<%= id %>-link-portal"
-    title="<%= helpers.translate(title) %>"
-    aria-hidden="true"
-    class="closed invisible"
-    data-type="external-page-portal"
-    data-slug="<%= slug %>"
-  ></portal>
-<% }) %>
