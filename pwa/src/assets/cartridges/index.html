@@ -25,6 +25,25 @@
         background-image: url(img/wood-pattern.png);
       }
 
+      #future {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width : 96px;
+        height: 32px;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        background: rgba(255, 255, 255, 0.3);
+        padding: 8px 16px;
+        z-index: 1;
+        box-sizing: content-box;
+      }
+
+      #future > img {
+        width: 100%;
+        height: 100%;
+      }
+
       #box {
         display: flex;
         align-items: center;
@@ -46,16 +65,16 @@
           inset 0 0 0 4px rgba(255, 4, 4, 0.7);
       }
 
-      a {
+      .cartridge {
         position: relative;
       }
 
-      a#gb, a#gbc {
+      .cartridge#gb, .cartridge#gbc {
         width: 195px;
         height: 220.5px;
       }
 
-      a > img {
+      .cartridge > img {
         position: absolute;
         left: 50%;
         bottom: 12px;
@@ -64,7 +83,7 @@
         animation: put-cartridge .5s ease-in-out forwards;
       }
 
-      a::after {
+      .cartridge::after {
         content: '';
         position: absolute;
         width: 100%;
@@ -92,11 +111,11 @@
         animation: put-cartridge-container .5s ease-in-out forwards;
       }
 
-      a:hover > img {
+      .cartridge:hover > img {
         animation: get-cartridge .5s ease-in-out forwards;
       }
 
-      a:hover::after {
+      .cartridge:hover::after {
         animation: get-cartridge-container .5s ease-in-out forwards;
       }
 
@@ -151,11 +170,14 @@
     </style>
   </head>
   <body>
+    <a id="future" href="../" title="Back to the future">
+      <img src="./img/future-gb.png" alt="Back to the future">
+    </a>
     <div id="box">
-      <a id="gb" href="gb/" title="Game Boy">
+      <a class="cartridge" id="gb" href="gb/" title="Game Boy">
         <img src="img/carts/gb.png" alt="Game Boy" width="171" height="196.5">
       </a>
-      <a id="gbc" href="gbc/" title="Game Boy Color">
+      <a class="cartridge" id="gbc" href="gbc/" title="Game Boy Color">
         <img src="img/carts/gbc.png" alt="Game Boy Color" width="171" height="196.5">
       </a>
     </div>
