@@ -14,7 +14,7 @@ export const setupTimeMachine = () => {
     '#time-machine-dialog',
   );
   const timeMachineTravelsContainer =
-    document.querySelector<HTMLUListElement>('ul');
+    timeMachineDialog.querySelector<HTMLUListElement>('ul');
   const timeMachineTravels = Array.from(
     timeMachineTravelsContainer.querySelectorAll<HTMLLIElement>('li'),
   );
@@ -27,7 +27,6 @@ export const setupTimeMachine = () => {
   );
 
   const updateActiveTravel = (newIndex: number) => {
-    timeMachineTravels[newIndex].scrollIntoView({ behavior: 'smooth' });
     timeMachineTravels.forEach((travel, index) =>
       travel.setAttribute('aria-hidden', index === newIndex ? 'false' : 'true'),
     );
@@ -40,17 +39,20 @@ export const setupTimeMachine = () => {
     setVisibility(nextTravelButton, newIndex < timeMachineTravels.length - 1);
   };
 
+  const scrollToTravel = (newIndex: number) =>
+    timeMachineTravels[newIndex].scrollIntoView({ behavior: 'smooth' });
+
   previousTravelButton.addEventListener('click', () => {
     const currentTravelIndex = timeMachineTravels.findIndex(
       (travel) => travel.getAttribute('aria-hidden') !== 'true',
     );
-    updateActiveTravel(Math.max(currentTravelIndex - 1, 0));
+    scrollToTravel(Math.max(currentTravelIndex - 1, 0));
   });
   nextTravelButton.addEventListener('click', () => {
     const currentTravelIndex = timeMachineTravels.findIndex(
       (travel) => travel.getAttribute('aria-hidden') !== 'true',
     );
-    updateActiveTravel(
+    scrollToTravel(
       Math.min(currentTravelIndex + 1, timeMachineTravels.length - 1),
     );
   });
@@ -60,9 +62,19 @@ export const setupTimeMachine = () => {
     timeMachineDialog.showModal();
   });
 
-  timeMachineTravelsContainer.scrollTo({
-    left: timeMachineTravelsContainer.scrollWidth,
+  timeMachineTravelsContainer.addEventListener('scroll', () => {
+    if (
+      timeMachineTravelsContainer.scrollLeft %
+        timeMachineTravelsContainer.offsetWidth ===
+      0
+    ) {
+      updateActiveTravel(
+        timeMachineTravelsContainer.scrollLeft /
+          timeMachineTravelsContainer.offsetWidth,
+      );
+    }
   });
 
+  scrollToTravel(timeMachineTravels.length - 1);
   timeMachineButton.hidden = false;
 };
