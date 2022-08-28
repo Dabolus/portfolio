@@ -68,8 +68,8 @@
 
         #previous-travel,
         #next-travel {
-          padding: 1rem 0.5rem;
-          flex: 0 0 3rem;
+          padding: 1rem 0;
+          flex: 0 0 2.5rem;
           cursor: pointer;
 
           &,
@@ -77,6 +77,14 @@
             width: 2rem;
             height: 2rem;
           }
+        }
+
+        #previous-travel {
+          padding-left: 0.5rem;
+        }
+
+        #next-travel {
+          padding-right: 0.5rem;
         }
 
         ul {
@@ -118,6 +126,7 @@
 
         p {
           font-size: 0.9rem;
+          padding: 1rem 0.5rem;
         }
       }
     }
