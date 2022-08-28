@@ -34,7 +34,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      transform: translateY(-120vw);
+      transform: translateY(-150vw);
       transition: 0.6s transform;
       display: flex;
       flex-direction: column;
@@ -44,7 +44,7 @@
       padding: 1rem 0 0.5rem;
       border: 0;
       z-index: 3;
-      width: 100%;
+      width: calc(100% - 2rem);
       max-width: 32rem;
       background: var(--theme-card-background);
       color: var(--theme-color);
