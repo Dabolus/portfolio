@@ -1,11 +1,11 @@
 <div>
   <header>
-    <a id="nineties-link" href="../90s/" rel="external" title="Time Travel">
-      <svg width="32" height="32" viewBox="0 0 600 600" fill="currentColor" role="presentation">
-        <path d="M534 212c-23-15-46-30-59-56C427 43 343 20 280 20 126 20 0 146 0 300s126 280 280 280c111 0 187-45 233-136l-17-9c-42 85-113 126-216 126-143 0-261-117-261-261S137 39 280 39c57 0 134 21 179 125 14 31 41 49 65 64 30 19 55 36 55 72 0 31-23 63-45 88l14 12c24-28 50-64 50-100 0-47-33-67-64-88z"/><path d="M550 333c7-12 10-23 10-33 0-29-25-45-52-61-24-14-48-29-60-55-29-62-70-127-168-127C147 57 38 167 38 300s109 243 242 243c117 0 171-59 195-109 12-22 27-42 43-60l3-3-14-12-3 4c-16 18-33 40-45 64-32 63-94 97-179 97-123 0-224-101-224-224S157 76 280 76c49 0 106 14 151 116 14 31 42 48 67 63 27 16 44 27 44 45 0 7-3 14-8 23l16 10z"/><path d="m450 362 15-12c-21-26-45-30-62-34-18-3-26-6-30-19-6-17-12-36-30-42-12-4-26 1-44 13a37 37 0 0 0-56 32c0 21 17 37 37 37 21 0 38-16 38-37 0-7-2-12-5-18 15-10 22-10 25-9 8 2 12 16 17 30 8 24 26 28 44 32 18 2 34 6 51 27zm-170-43c-10 0-18-9-18-19s8-19 18-19c11 0 19 9 19 19s-8 19-19 19zM84 291h19v18H84v-18zM280 477h28v19h-28v-19zM178 459h18v18h-18v-18zM178 123h18v18h-18v-18zM112 393h19v19h-19v-19zM112 188h19v19h-19v-19zM368 461l10 15c1-1 31-20 41-51l-17-6c-8 24-33 41-34 42zM486 311l17-4c-5-24-24-32-40-40-14-6-27-12-34-28l-17 9c10 20 28 29 44 36 16 8 26 13 30 27zM375 201l16-8-6-19c-5-16-9-33-25-41l-9 17c9 4 12 17 16 30 2 7 4 15 8 21zM314 122l8-17c-21-11-52-1-54-1l6 18c6-2 27-7 40 0z"/>
-      </svg>
-    </a>
     <noscript>
+      <a class="time-machine" href="../90s/" rel="external" title="Time Machine">
+        <svg width="32" height="32" viewBox="0 0 600 600" fill="currentColor" role="presentation">
+          <path d="M534 212c-23-15-46-30-59-56C427 43 343 20 280 20 126 20 0 146 0 300s126 280 280 280c111 0 187-45 233-136l-17-9c-42 85-113 126-216 126-143 0-261-117-261-261S137 39 280 39c57 0 134 21 179 125 14 31 41 49 65 64 30 19 55 36 55 72 0 31-23 63-45 88l14 12c24-28 50-64 50-100 0-47-33-67-64-88z"/><path d="M550 333c7-12 10-23 10-33 0-29-25-45-52-61-24-14-48-29-60-55-29-62-70-127-168-127C147 57 38 167 38 300s109 243 242 243c117 0 171-59 195-109 12-22 27-42 43-60l3-3-14-12-3 4c-16 18-33 40-45 64-32 63-94 97-179 97-123 0-224-101-224-224S157 76 280 76c49 0 106 14 151 116 14 31 42 48 67 63 27 16 44 27 44 45 0 7-3 14-8 23l16 10z"/><path d="m450 362 15-12c-21-26-45-30-62-34-18-3-26-6-30-19-6-17-12-36-30-42-12-4-26 1-44 13a37 37 0 0 0-56 32c0 21 17 37 37 37 21 0 38-16 38-37 0-7-2-12-5-18 15-10 22-10 25-9 8 2 12 16 17 30 8 24 26 28 44 32 18 2 34 6 51 27zm-170-43c-10 0-18-9-18-19s8-19 18-19c11 0 19 9 19 19s-8 19-19 19zM84 291h19v18H84v-18zM280 477h28v19h-28v-19zM178 459h18v18h-18v-18zM178 123h18v18h-18v-18zM112 393h19v19h-19v-19zM112 188h19v19h-19v-19zM368 461l10 15c1-1 31-20 41-51l-17-6c-8 24-33 41-34 42zM486 311l17-4c-5-24-24-32-40-40-14-6-27-12-34-28l-17 9c10 20 28 29 44 36 16 8 26 13 30 27zM375 201l16-8-6-19c-5-16-9-33-25-41l-9 17c9 4 12 17 16 30 2 7 4 15 8 21zM314 122l8-17c-21-11-52-1-54-1l6 18c6-2 27-7 40 0z"/>
+        </svg>
+      </a>
       <ul class="language-switcher">
         <% Object.entries(config.availableLocales).forEach(([languageId, languageName], index, languagesArray) => { %>
           <li>
@@ -18,6 +18,50 @@
         <% }) %>
       </ul>
     </noscript>
+    <div
+      id="time-machine"
+      class="time-machine"
+      role="button"
+      title="Time Machine"
+      tabindex="0"
+      aria-haspopup="true"
+      aria-controls="time-machine-dialog"
+      aria-expanded="false"
+      hidden
+    >
+      <svg width="32" height="32" viewBox="0 0 600 600" fill="currentColor" role="presentation">
+        <path d="M534 212c-23-15-46-30-59-56C427 43 343 20 280 20 126 20 0 146 0 300s126 280 280 280c111 0 187-45 233-136l-17-9c-42 85-113 126-216 126-143 0-261-117-261-261S137 39 280 39c57 0 134 21 179 125 14 31 41 49 65 64 30 19 55 36 55 72 0 31-23 63-45 88l14 12c24-28 50-64 50-100 0-47-33-67-64-88z"/><path d="M550 333c7-12 10-23 10-33 0-29-25-45-52-61-24-14-48-29-60-55-29-62-70-127-168-127C147 57 38 167 38 300s109 243 242 243c117 0 171-59 195-109 12-22 27-42 43-60l3-3-14-12-3 4c-16 18-33 40-45 64-32 63-94 97-179 97-123 0-224-101-224-224S157 76 280 76c49 0 106 14 151 116 14 31 42 48 67 63 27 16 44 27 44 45 0 7-3 14-8 23l16 10z"/><path d="m450 362 15-12c-21-26-45-30-62-34-18-3-26-6-30-19-6-17-12-36-30-42-12-4-26 1-44 13a37 37 0 0 0-56 32c0 21 17 37 37 37 21 0 38-16 38-37 0-7-2-12-5-18 15-10 22-10 25-9 8 2 12 16 17 30 8 24 26 28 44 32 18 2 34 6 51 27zm-170-43c-10 0-18-9-18-19s8-19 18-19c11 0 19 9 19 19s-8 19-19 19zM84 291h19v18H84v-18zM280 477h28v19h-28v-19zM178 459h18v18h-18v-18zM178 123h18v18h-18v-18zM112 393h19v19h-19v-19zM112 188h19v19h-19v-19zM368 461l10 15c1-1 31-20 41-51l-17-6c-8 24-33 41-34 42zM486 311l17-4c-5-24-24-32-40-40-14-6-27-12-34-28l-17 9c10 20 28 29 44 36 16 8 26 13 30 27zM375 201l16-8-6-19c-5-16-9-33-25-41l-9 17c9 4 12 17 16 30 2 7 4 15 8 21zM314 122l8-17c-21-11-52-1-54-1l6 18c6-2 27-7 40 0z"/>
+      </svg>
+    </div>
+    <dialog id="time-machine-dialog" aria-modal="true">
+      <form method="dialog">
+        <main>
+          <div role="button" id="previous-travel" aria-label="Previous travel">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" role="presentation">
+              <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+            </svg>
+          </div>
+          <ul>
+            <% data.timeMachineTravels.forEach(({ year, name, href, description }, index) => { %>
+              <li data-href="<%= href %>" <%- index === data.timeMachineTravels.length - 1 ? '' : 'aria-hidden="true"' %>>
+                <h1><%= helpers.translate(name) %></h1>
+                <h2><%= year.toString().replace('<<year>>', new Date().getFullYear()) %></h2>
+                <p><%= helpers.translate(description) %></p>
+              </li>
+            <% }) %>
+          </ul>
+          <div role="button" id="next-travel" class="invisible" aria-hidden="true" aria-label="Next travel">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" role="presentation">
+              <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+            </svg>
+          </div>
+        </main>
+        <footer>
+          <button class="action-button secondary">Cancel</button>
+          <a href="/" rel="external" class="action-button primary" hidden>Time Travel</a>
+        </footer>
+      </form>
+    </dialog>
     <div class="select language-switcher" id="language" hidden>
       <select aria-label="Language">
         <option value="en" <%- config.locale === 'en' ? 'selected' : '' %>>English</option>

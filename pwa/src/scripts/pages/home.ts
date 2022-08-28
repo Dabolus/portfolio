@@ -1,5 +1,6 @@
-import { setupLanguageSwitcher } from '../i18n';
-import { loadStyles, loadTemplate, logEvent, scroll } from '../utils.js';
+import { setupLanguageSwitcher } from '../i18n.js';
+import { setupTimeMachine } from '../timeMachine.js';
+import { loadStyles, loadTemplate, scroll } from '../utils.js';
 
 let typed: typeof import('typed.js/src/typed')['default']['prototype'];
 
@@ -11,6 +12,7 @@ const configure = async () => {
 
   applyTemplate();
   setupLanguageSwitcher();
+  setupTimeMachine();
 };
 
 const configurationPromise = configure();

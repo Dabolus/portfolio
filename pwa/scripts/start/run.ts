@@ -19,6 +19,7 @@ import { getCertifications } from '../helpers/data/certifications.js';
 import { getProjects } from '../helpers/data/projects.js';
 import { getTimeline } from '../helpers/data/timeline.js';
 import { getSocials } from '../helpers/data/socials.js';
+import { getTimeMachineTravels } from '../helpers/data/timeMachine.js';
 import { computeDirname } from '../helpers/utils.js';
 
 const __dirname = computeDirname(import.meta.url);
@@ -85,14 +86,21 @@ const output: Output = {
 };
 
 const getDataWithCache = async (): Promise<Data> => {
-  const [certifications, projects, skills, timeline, socials] =
-    await Promise.all([
-      getCertifications(),
-      getProjects(),
-      getSkills({ cache: true }),
-      getTimeline(),
-      getSocials(),
-    ]);
+  const [
+    certifications,
+    projects,
+    skills,
+    timeline,
+    socials,
+    timeMachineTravels,
+  ] = await Promise.all([
+    getCertifications(),
+    getProjects(),
+    getSkills({ cache: true }),
+    getTimeline(),
+    getSocials(),
+    getTimeMachineTravels(),
+  ]);
 
   return {
     certifications,
@@ -100,6 +108,7 @@ const getDataWithCache = async (): Promise<Data> => {
     skills,
     timeline,
     socials,
+    timeMachineTravels,
   };
 };
 

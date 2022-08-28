@@ -3,6 +3,10 @@ import { getProjects, ParsedProject } from './projects.js';
 import { getSkills, ParsedSkills } from './skills.js';
 import { getTimeline, ParsedTimelineItem } from './timeline.js';
 import { getSocials, ParsedSocial } from './socials.js';
+import {
+  getTimeMachineTravels,
+  ParsedTimeMachineTravel,
+} from './timeMachine.js';
 
 export interface Data {
   readonly certifications: readonly ParsedCertification[];
@@ -10,17 +14,25 @@ export interface Data {
   readonly skills: ParsedSkills;
   readonly timeline: readonly ParsedTimelineItem[];
   readonly socials: readonly ParsedSocial[];
+  readonly timeMachineTravels: readonly ParsedTimeMachineTravel[];
 }
 
 export const getData = async (): Promise<Data> => {
-  const [certifications, projects, skills, timeline, socials] =
-    await Promise.all([
-      getCertifications(),
-      getProjects(),
-      getSkills(),
-      getTimeline(),
-      getSocials(),
-    ]);
+  const [
+    certifications,
+    projects,
+    skills,
+    timeline,
+    socials,
+    timeMachineTravels,
+  ] = await Promise.all([
+    getCertifications(),
+    getProjects(),
+    getSkills(),
+    getTimeline(),
+    getSocials(),
+    getTimeMachineTravels(),
+  ]);
 
   return {
     certifications,
@@ -28,5 +40,6 @@ export const getData = async (): Promise<Data> => {
     skills,
     timeline,
     socials,
+    timeMachineTravels,
   };
 };

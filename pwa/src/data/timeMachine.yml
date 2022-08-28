@@ -1,0 +1,16 @@
+- href: /cartridges/gb/
+  year: 1989
+  name: timeTravelGameBoyTitle
+  description: timeTravelGameBoyDescription
+- href: /90s/
+  year: 1996
+  name: timeTravel90sTitle
+  description: timeTravel90sDescription
+- href: /cartridges/gbc/
+  year: 1998
+  name: timeTravelGameBoyColorTitle
+  description: timeTravelGameBoyColorDescription
+- href: /
+  year: <<year>>
+  name: timeTravelPresentDayTitle
+  description: timeTravelPresentDayDescription

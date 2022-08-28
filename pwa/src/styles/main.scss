@@ -162,24 +162,28 @@ button {
     justify-content: flex-end;
     padding-top: 0.25rem;
 
-    & > button {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-
-      &:hover {
-        background: var(--theme-content-background);
-      }
-
-      &#cancel-update {
-        color: var(--theme-color);
-        margin-right: 0.5rem;
-      }
-
-      &#perform-update {
-        color: var(--theme-accent);
-      }
+    &#cancel-update {
+      margin-right: 0.5rem;
     }
+  }
+}
+
+.action-button {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+
+  &:hover {
+    background: var(--theme-content-background);
+    text-decoration: none;
+  }
+
+  &.secondary {
+    color: var(--theme-color);
+  }
+
+  &.primary {
+    color: var(--theme-accent);
   }
 }
 

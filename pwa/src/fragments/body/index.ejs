@@ -28,10 +28,10 @@
     <div id="update-notification" hidden>
       <p><%= helpers.translate(config.update.available) %></p>
       <div>
-        <button id="cancel-update">
+        <button id="cancel-update" class="action-button secondary">
           <span><%= helpers.translate(config.update.cancel) %></span>
         </button>
-        <button id="perform-update" autofocus>
+        <button id="perform-update" class="action-button primary" autofocus>
           <span><%= helpers.translate(config.update.perform) %></span>
           <div class="loading" hidden></div>
         </button>
