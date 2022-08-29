@@ -22,6 +22,9 @@ export const setupTimeMachine = () => {
     timeMachineDialog.querySelector<HTMLDivElement>('#previous-travel');
   const nextTravelButton =
     timeMachineDialog.querySelector<HTMLDivElement>('#next-travel');
+  const cancelTravelButton = timeMachineDialog.querySelector<HTMLAnchorElement>(
+    '.action-button.secondary',
+  );
   const goToTravelLink = timeMachineDialog.querySelector<HTMLAnchorElement>(
     '.action-button.primary',
   );
@@ -59,7 +62,15 @@ export const setupTimeMachine = () => {
 
   timeMachineButton.addEventListener('click', () => {
     timeMachineButton.setAttribute('aria-expanded', 'true');
+    timeMachineDialog.setAttribute('aria-hidden', 'false');
     timeMachineDialog.showModal();
+  });
+
+  cancelTravelButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    timeMachineDialog.close();
+    timeMachineDialog.setAttribute('aria-hidden', 'true');
+    timeMachineButton.setAttribute('aria-expanded', 'false');
   });
 
   timeMachineTravelsContainer.addEventListener('scroll', () => {
