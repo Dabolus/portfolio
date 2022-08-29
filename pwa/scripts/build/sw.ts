@@ -22,6 +22,8 @@ export const generateServiceWorker = async (
       './images/**/*.{svg,jpg,webp}',
       './scripts/**/*.js',
       './styles/**/*.css',
+      './90s/**/*',
+      './cartridges/**/*',
     ],
   });
 };
