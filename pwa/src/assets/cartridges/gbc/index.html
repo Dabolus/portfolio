@@ -25,20 +25,29 @@
         }
       }
 
-      #future {
+      #carts, #future {
         position: fixed;
         top: 0;
-        right: 0;
-        width : 96px;
         height: 32px;
         image-rendering: pixelated;
         image-rendering: crisp-edges;
         background: rgba(255, 255, 255, 0.3);
         padding: 8px 16px;
         z-index: 1;
+        box-sizing: content-box;
       }
 
-      #future > img {
+      #carts {
+        width : 80px;
+        left: 0;
+      }
+
+      #future {
+        width : 96px;
+        right: 0;
+      }
+
+      #carts > img, #future > img {
         width: 100%;
         height: 100%;
       }
@@ -159,6 +168,9 @@
     </style>
   </head>
   <body>
+    <a id="carts" href="../" title="Back to carts">
+      <img src="../img/carts-gb.png" alt="Back to carts">
+    </a>
     <a id="future" href="../../" title="Back to the future">
       <img src="../img/future-gb.png" alt="Back to the future">
     </a>
