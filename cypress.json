@@ -1,9 +1,0 @@
-{
-  "baseUrl": "http://localhost:3000",
-  "integrationFolder": "cypress/e2e",
-  "viewportWidth": 1024,
-  "viewportHeight": 768,
-  "morgan": false,
-  "pluginsFile": "cypress/plugins/index.cjs",
-  "videoUploadOnPasses": false
-}

@@ -1,6 +1,6 @@
 declare module '@rollup/plugin-babel';
 
-declare module 'csstools-postcss-sass-pre-release' {
+declare module '@csstools/postcss-sass' {
   import { Options } from 'node-sass';
   import { AcceptedPlugin } from 'postcss';
 

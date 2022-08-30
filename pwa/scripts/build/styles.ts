@@ -2,8 +2,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import postcss from 'postcss';
-// TODO: replace with @csstools/postcss-sass
-import postcssSass from 'csstools-postcss-sass-pre-release';
+import postcssSass from '@csstools/postcss-sass';
 import postcssPresetEnv from 'postcss-preset-env';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
