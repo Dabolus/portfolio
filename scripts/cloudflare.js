@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import { pages } from './utils.js';
 
 const {
