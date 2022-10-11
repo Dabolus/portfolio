@@ -1,29 +1,15 @@
-import { Icon, readConfigFile, generatePicture } from './utils.js';
+import { certifications, Certification } from '@dabolus/portfolio-data';
+import { generatePicture } from './utils.js';
 
-export interface CertificationData {
-  readonly name: string;
-  readonly link: string;
-  readonly skills: readonly string[];
-  readonly icon: Icon;
-}
-
-export interface ParsedCertification extends Omit<CertificationData, 'icon'> {
+export interface ParsedCertification extends Omit<Certification, 'icon'> {
   readonly id: string;
   readonly picture: string;
 }
 
-export const getCertifications = async (): Promise<ParsedCertification[]> => {
-  const certifications = (await readConfigFile('certifications')) as Record<
-    string,
-    CertificationData
-  >;
-
-  return Object.entries(certifications).map(
-    ([id, { name, icon, ...data }]) => ({
-      id,
-      name,
-      picture: generatePicture(name, icon, 112),
-      ...data,
-    }),
-  );
-};
+export const getCertifications = async (): Promise<ParsedCertification[]> =>
+  Object.entries(certifications).map(([id, { name, icon, ...data }]) => ({
+    id,
+    name,
+    picture: generatePicture(name, icon, 112),
+    ...data,
+  }));

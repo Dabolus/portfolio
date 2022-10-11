@@ -1,29 +1,12 @@
-import { promises as fs } from 'fs';
 import path from 'path';
+import {
+  getGitHubCodeStats,
+  skills,
+  Skill,
+  GitHubData,
+  LanguageSizeData,
+} from '@dabolus/portfolio-data';
 import { cachePath } from '../utils.js';
-import { readConfigFile } from './utils.js';
-
-export interface LanguageSizeData {
-  readonly name: string;
-  readonly size: number;
-  readonly color: string;
-}
-
-export interface GitHubData {
-  readonly total: number;
-  readonly languages: readonly LanguageSizeData[];
-}
-
-export interface SkillData {
-  readonly score?: number;
-  readonly color: string;
-}
-
-export interface SkillsData {
-  readonly coding: Record<string, SkillData>;
-  readonly music: Record<string, SkillData>;
-  readonly soft: Record<string, SkillData>;
-}
 
 export interface ParsedSkills {
   readonly codeSizeChart: string;
@@ -41,92 +24,6 @@ const prettifySize = (bytes: number) => {
     unitIndex++;
   }
   return `≈${Math.round(finalVal)}${measurementUnits[unitIndex]}`;
-};
-
-const getGithubData = async (
-  codingSkillsData: Record<string, SkillData>,
-): Promise<GitHubData> => {
-  const request = await fetch('https://api.github.com/graphql', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.GH_TOKEN}`,
-    },
-    body: JSON.stringify({
-      query: `
-          query {
-            viewer {
-              repositories(first: 100) {
-                nodes {
-                  languages(first: 100) {
-                    edges {
-                      node {
-                        name
-                      }
-                      size
-                    }
-                    totalSize
-                  }
-                }
-              }
-            }
-          }
-        `,
-    }),
-  });
-
-  const response = (await request.json()) as any;
-
-  const { total, languages } = response.data.viewer.repositories.nodes.reduce(
-    (acc: any, repo: any) => ({
-      ...acc,
-      total: (acc.total || 0) + repo.languages.totalSize,
-      languages: {
-        ...acc.languages,
-        ...repo.languages.edges.reduce(
-          (languages: any, language: any) => ({
-            ...languages,
-            [language.node.name]: {
-              ...acc.languages[language.node.name],
-              color: language.node.color,
-              size:
-                ((acc.languages[language.node.name] || {}).size || 0) +
-                language.size,
-            },
-          }),
-          {},
-        ),
-      },
-    }),
-    { total: 0, languages: {} },
-  );
-
-  return {
-    total,
-    languages: Object.entries(languages).reduce(
-      (languageArr: any, [name, { color, size }]: [string, any]) => {
-        const index = languageArr.findIndex(
-          (language: any) => language.size < size,
-        );
-        const newElemIndex = index < 0 ? languageArr.length : index;
-        const firstSlice = languageArr.slice(0, newElemIndex);
-        const secondSlice = languageArr.slice(newElemIndex);
-
-        return [
-          ...firstSlice,
-          {
-            name,
-            size,
-            color:
-              color ||
-              codingSkillsData[name]?.color ||
-              'var(--theme-card-background)',
-          },
-          ...secondSlice,
-        ];
-      },
-      [],
-    ),
-  };
 };
 
 const computePie = (
@@ -199,7 +96,7 @@ const computePie = (
   `;
 };
 
-const computeLineChart = (data: Record<string, SkillData>, size = 400) => {
+const computeLineChart = (data: Record<string, Skill>, size = 400) => {
   const entries = Object.entries(data).filter(([, { score }]) => !!score);
 
   return `
@@ -239,23 +136,15 @@ export interface GetSkillsOptions {
 export const getSkills = async ({
   cache,
 }: GetSkillsOptions = {}): Promise<ParsedSkills> => {
-  const skillsData = (await readConfigFile('skills')) as SkillsData;
-
-  let githubData: GitHubData | undefined = cache
-    ? await fs
-        .readFile(path.join(cachePath, 'github-skills.json'), 'utf8')
-        .then((skills) => JSON.parse(skills))
-        .catch(() => undefined)
-    : undefined;
-
-  if (!githubData) {
-    githubData = await getGithubData(skillsData.coding);
-  }
+  const githubData = await getGitHubCodeStats({
+    cache,
+    cachePath: path.join(cachePath, 'github-skills.json'),
+  });
 
   return {
     codeSizeChart: computePie(githubData.languages, githubData.total),
-    codingSkillsChart: computeLineChart(skillsData.coding),
-    musicSkillsChart: computeLineChart(skillsData.music),
-    softSkillsChart: computeLineChart(skillsData.soft),
+    codingSkillsChart: computeLineChart(skills.coding),
+    musicSkillsChart: computeLineChart(skills.music),
+    softSkillsChart: computeLineChart(skills.soft),
   };
 };

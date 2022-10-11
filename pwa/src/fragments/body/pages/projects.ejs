@@ -1,4 +1,4 @@
-<% data.projects.forEach(({ id, name, source, link, description, technologies, picture }) => { %>
+<% data.projects.forEach(({ id, name, source, link, description, languages, frameworks = [], api = [], picture }) => { %>
   <div class="project">
     <%- picture %>
     <div>
@@ -23,7 +23,7 @@
       </div>
       <p><%= description %></p>
       <ul class="badges" tabindex="0">
-        <% technologies.forEach(technology => { %>
+        <% [...languages, ...frameworks, ...api].forEach(technology => { %>
           <li><%= technology %></li>
         <% }) %>
       </ul>

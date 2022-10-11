@@ -1,15 +1,11 @@
-import { readConfigFile } from './utils.js';
+import { socials, Social } from '@dabolus/portfolio-data';
 
-export interface SocialData {
+export interface ParsedSocial extends Social {
   readonly id: string;
-  readonly name: string;
-  readonly link: string;
 }
 
-export type ParsedSocial = SocialData;
-
-export const getSocials = async (): Promise<readonly ParsedSocial[]> => {
-  const socials = (await readConfigFile('socials')) as readonly SocialData[];
-
-  return socials;
-};
+export const getSocials = async (): Promise<readonly ParsedSocial[]> =>
+  Object.entries(socials).map(([id, social]) => ({
+    id,
+    ...social,
+  }));
