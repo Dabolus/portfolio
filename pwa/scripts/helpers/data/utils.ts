@@ -11,29 +11,58 @@ export const readConfigFile = async (name: string) => {
   return yaml.load(content);
 };
 
+export enum IconFormat {
+  SVG = 'svg',
+  JPEG = 'jpg',
+  PNG = 'png',
+  PNG_PIXELATED = 'png-pixelated',
+  WEBP = 'webp',
+  JPEG_XL = 'jxl',
+}
+
+export enum IconCategory {
+  CERTIFICATIONS = 'certifications',
+  PROJECTS = 'projects',
+}
+
+const iconFormatsExtensionsExceptions: Partial<Record<IconFormat, string>> = {
+  [IconFormat.PNG_PIXELATED]: 'png',
+};
+
+const iconFormatsMediaTypesExceptions: Partial<Record<IconFormat, string>> = {
+  [IconFormat.PNG_PIXELATED]: 'png',
+  [IconFormat.SVG]: 'svg+xml',
+  [IconFormat.JPEG]: 'jpeg',
+};
+
 export interface Icon {
-  readonly svg?: string;
-  readonly jpg?: string;
-  readonly png?: string;
-  readonly webp?: string;
-  readonly jxl?: string;
+  readonly formats: readonly IconFormat[];
   readonly placeholder: string;
 }
 
 export const generatePicture = (
+  id: string,
   name: string,
-  { svg, jxl, webp, jpg, png, placeholder }: Icon,
+  category: IconCategory,
+  { formats, placeholder }: Icon,
   size?: number,
 ) => `
   <picture>
-    ${svg ? `<source srcset="../${svg}" type="image/svg+xml">` : ''}
-    ${jxl ? `<source srcset="../${jxl}" type="image/jxl">` : ''}
-    ${webp ? `<source srcset="../${webp}" type="image/webp">` : ''}
-    ${jpg ? `<source srcset="../${jpg}" type="image/jpeg">` : ''}
-    ${png ? `<source srcset="../${png}" type="image/jpeg">` : ''}
-    <img style="background-image: url(&#34;${placeholder}&#34;);" src="../${
-  png || jpg || webp || jxl || svg
-}" alt="${name}" title="${name}" loading="lazy" lazyload${
+    ${formats
+      .map(
+        (format) =>
+          `<source srcset="../images/${category}/${id}.${
+            iconFormatsExtensionsExceptions[format] || format
+          }" type="image/${
+            iconFormatsMediaTypesExceptions[format] || format
+          }">`,
+      )
+      .join('')}
+    <img ${
+      formats.includes(IconFormat.PNG_PIXELATED) ? 'class="pixelated" ' : ''
+    }style="background-image: url(&#34;${placeholder}&#34;);" src="../${formats.at(
+  -1,
+)}" alt="${name}" title="${name}" loading="lazy" lazyload${
   size ? ` width="${size}" height="${size}"` : ''
 }>
   </picture>

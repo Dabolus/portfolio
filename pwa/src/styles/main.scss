@@ -248,4 +248,8 @@ select {
   }
 }
 
+.pixelated {
+  image-rendering: pixelated;
+}
+
 @import './pages';
