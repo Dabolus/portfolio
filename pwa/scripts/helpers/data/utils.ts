@@ -46,24 +46,28 @@ export const generatePicture = (
   category: IconCategory,
   { formats, placeholder }: Icon,
   size?: number,
-) => `
-  <picture>
-    ${formats
-      .map(
-        (format) =>
-          `<source srcset="../images/${category}/${id}.${
-            iconFormatsExtensionsExceptions[format] || format
-          }" type="image/${
-            iconFormatsMediaTypesExceptions[format] || format
-          }">`,
-      )
-      .join('')}
-    <img ${
-      formats.includes(IconFormat.PNG_PIXELATED) ? 'class="pixelated" ' : ''
-    }style="background-image: url(&#34;${placeholder}&#34;);" src="../${formats.at(
-  -1,
-)}" alt="${name}" title="${name}" loading="lazy" lazyload${
-  size ? ` width="${size}" height="${size}"` : ''
-}>
-  </picture>
-`;
+) => {
+  const fallbackFormat = formats.at(-1);
+
+  return `
+    <picture>
+      ${formats
+        .map(
+          (format) =>
+            `<source srcset="../images/${category}/${id}.${
+              iconFormatsExtensionsExceptions[format] || format
+            }" type="image/${
+              iconFormatsMediaTypesExceptions[format] || format
+            }">`,
+        )
+        .join('')}
+      <img ${
+        formats.includes(IconFormat.PNG_PIXELATED) ? 'class="pixelated" ' : ''
+      }style="background-image: url(&#34;${placeholder}&#34;);" src="../images/${category}/${id}.${
+    iconFormatsExtensionsExceptions[fallbackFormat] || fallbackFormat
+  }" alt="${name}" title="${name}" loading="lazy" lazyload${
+    size ? ` width="${size}" height="${size}"` : ''
+  }>
+    </picture>
+  `;
+};
