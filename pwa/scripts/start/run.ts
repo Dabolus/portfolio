@@ -20,7 +20,7 @@ import { getProjects } from '../helpers/data/projects.js';
 import { getTimeline } from '../helpers/data/timeline.js';
 import { getSocials } from '../helpers/data/socials.js';
 import { getTimeMachineTravels } from '../helpers/data/timeMachine.js';
-import { computeDirname } from '../helpers/utils.js';
+import { computeDirname, resolveDependencyPath } from '../helpers/utils.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -118,7 +118,10 @@ const start = async () => {
 
   const production = process.env.NODE_ENV === 'production';
 
-  const availableLocales = await getAvailableLocales();
+  const [availableLocales, portfolioDataAssetsPath] = await Promise.all([
+    getAvailableLocales(),
+    resolveDependencyPath('@dabolus/portfolio-data/assets'),
+  ]);
 
   chokidar
     .watch(
@@ -220,19 +223,25 @@ const start = async () => {
     }, 50),
   );
 
-  chokidar.watch('src/assets/**/*', { cwd }).on(
-    'all',
-    debounce((_, changedPath) => {
-      console.log(`\x1b[32m${changedPath}\x1b[0m changed, copying assets...`);
+  chokidar
+    .watch(['src/assets/**/*', `${portfolioDataAssetsPath}/**/*`], { cwd })
+    .on(
+      'all',
+      debounce((_, changedPath) => {
+        console.log(`\x1b[32m${changedPath}\x1b[0m changed, copying assets...`);
 
-      copyAssets([
-        {
-          from: 'src/assets/*',
-          to: 'dist',
-        },
-      ]);
-    }, 50),
-  );
+        copyAssets([
+          {
+            from: 'src/assets/*',
+            to: 'dist',
+          },
+          {
+            from: `${portfolioDataAssetsPath}/*`,
+            to: 'dist',
+          },
+        ]);
+      }, 50),
+    );
 
   chokidar
     .watch('dist/**/*', {

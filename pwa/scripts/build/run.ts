@@ -10,21 +10,28 @@ import { getAvailableLocales, setupI18nHelpersMap } from '../helpers/i18n.js';
 import { generateStructuredData } from '../helpers/structuredData.js';
 import { getConfig } from '../helpers/config.js';
 import { setupDatesHelpersMap } from '../helpers/dates.js';
-import { computeDirname } from '../helpers/utils.js';
+import { computeDirname, resolveDependencyPath } from '../helpers/utils.js';
 
 const __dirname = computeDirname(import.meta.url);
 
 const outputPath = path.resolve(__dirname, '../../dist');
 
 const build = async () => {
-  const [config, data, availableLocales, i18nHelpersMap, datesHelpersMap] =
-    await Promise.all([
-      getConfig(),
-      getData(),
-      getAvailableLocales(),
-      setupI18nHelpersMap(),
-      setupDatesHelpersMap(),
-    ]);
+  const [
+    config,
+    data,
+    availableLocales,
+    i18nHelpersMap,
+    datesHelpersMap,
+    portfolioDataAssetsPath,
+  ] = await Promise.all([
+    getConfig(),
+    getData(),
+    getAvailableLocales(),
+    setupI18nHelpersMap(),
+    setupDatesHelpersMap(),
+    resolveDependencyPath('@dabolus/portfolio-data/assets'),
+  ]);
 
   const production = process.env.NODE_ENV === 'production';
 
@@ -46,6 +53,10 @@ const build = async () => {
     copyAssets([
       {
         from: 'src/assets/*',
+        to: 'dist',
+      },
+      {
+        from: `${portfolioDataAssetsPath}/*`,
         to: 'dist',
       },
     ]),

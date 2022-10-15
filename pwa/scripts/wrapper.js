@@ -12,7 +12,13 @@ const runScript = (script) =>
   new Promise((resolve, reject) => {
     const process = childProcess.spawn(
       'yarn',
-      ['node', '-r', 'dotenv/config', script],
+      [
+        'node',
+        '-r',
+        'dotenv/config',
+        '--experimental-import-meta-resolve',
+        script,
+      ],
       {
         stdio: 'inherit',
       },
