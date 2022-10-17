@@ -230,7 +230,7 @@
           WasmBoy.ResponsiveGamepad.RESPONSIVE_GAMEPAD_INPUTS[button],
         ),
       );
-      await WasmBoy.loadROM('./portfolio.gb');
+      await WasmBoy.loadROM('../roms/portfolio.gb');
       await WasmBoy.play();
 
       window.addEventListener('blur', () => WasmBoy.pause());

@@ -6,7 +6,7 @@ import { compileTemplate, buildTemplate } from '../build/templates.js';
 import { buildScripts } from '../build/scripts.js';
 import { buildStyles } from '../build/styles.js';
 import { generateServiceWorker } from '../build/sw.js';
-import { copyAssets } from '../build/assets.js';
+import { copyAssets, downloadROMs } from '../build/assets.js';
 import { Output } from '../build/models.js';
 import { getConfig } from '../helpers/config.js';
 import { getAvailableLocales, setupI18nHelpersMap } from '../helpers/i18n.js';
@@ -239,6 +239,7 @@ const start = async () => {
             to: 'dist',
           },
         ]);
+        downloadROMs('dist/cartridges/roms');
       }, 50),
     );
 

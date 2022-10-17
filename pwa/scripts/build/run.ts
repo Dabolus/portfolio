@@ -3,7 +3,7 @@ import { compileTemplate, buildTemplate } from './templates.js';
 import { buildScripts } from './scripts.js';
 import { buildStyles } from './styles.js';
 import { generateServiceWorker } from './sw.js';
-import { copyAssets } from './assets.js';
+import { copyAssets, downloadROMs } from './assets.js';
 import { buildSitemap } from './sitemap.js';
 import { getData } from '../helpers/data/index.js';
 import { getAvailableLocales, setupI18nHelpersMap } from '../helpers/i18n.js';
@@ -60,6 +60,7 @@ const build = async () => {
         to: 'dist',
       },
     ]),
+    downloadROMs('dist/cartridges/roms'),
   ]);
 
   const scripts = await buildScripts(outputPath, {
