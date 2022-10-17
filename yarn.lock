@@ -2745,10 +2745,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dabolus/portfolio-data@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@dabolus/portfolio-data@npm:0.9.0"
-  checksum: f6ab6512f1da7d0ea59041b5ada7ae0ec7d365f57f36c7a7a5ae33c011b43bd1d5aca8fc3571559fd4cf07161e1b631307473d6a5331a0e9502fb107983d5acd
+"@dabolus/portfolio-data@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@dabolus/portfolio-data@npm:0.11.0"
+  checksum: 116138d7695dd203cc3226fceb98dbf12cc0d11b22786464c8d9ef2060747e7bba1772a3c19e667fa4f9a9065fd1537e6a4bf7fc75e0d0b5c2e1dc260d72922a
   languageName: node
   linkType: hard
 
@@ -5103,7 +5103,7 @@ __metadata:
     "@babel/preset-env": ^7.19.4
     "@babel/preset-typescript": ^7.18.6
     "@csstools/postcss-sass": ^5.0.1
-    "@dabolus/portfolio-data": ^0.9.0
+    "@dabolus/portfolio-data": ^0.11.0
     "@esbuild-plugins/node-resolve": ^0.1.4
     "@rollup/plugin-babel": ^6.0.0
     "@rollup/plugin-commonjs": ^23.0.0

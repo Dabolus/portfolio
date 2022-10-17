@@ -1,6 +1,7 @@
 import path from 'path';
 import { promises as fs } from 'fs';
 import yaml from 'js-yaml';
+import { Icon, IconFormat } from '@dabolus/portfolio-data';
 import { computeDirname } from '../utils.js';
 
 const __dirname = computeDirname(import.meta.url);
@@ -11,15 +12,6 @@ export const readConfigFile = async (name: string) => {
   return yaml.load(content);
 };
 
-export enum IconFormat {
-  SVG = 'svg',
-  JPEG = 'jpg',
-  PNG = 'png',
-  PNG_PIXELATED = 'png-pixelated',
-  WEBP = 'webp',
-  JPEG_XL = 'jxl',
-}
-
 export enum IconCategory {
   CERTIFICATIONS = 'certifications',
   PROJECTS = 'projects',
@@ -27,18 +19,15 @@ export enum IconCategory {
 
 const iconFormatsExtensionsExceptions: Partial<Record<IconFormat, string>> = {
   [IconFormat.PNG_PIXELATED]: 'png',
+  [IconFormat.GIF_PIXELATED]: 'gif',
 };
 
 const iconFormatsMediaTypesExceptions: Partial<Record<IconFormat, string>> = {
   [IconFormat.PNG_PIXELATED]: 'png',
+  [IconFormat.GIF_PIXELATED]: 'gif',
   [IconFormat.SVG]: 'svg+xml',
   [IconFormat.JPEG]: 'jpeg',
 };
-
-export interface Icon {
-  readonly formats: readonly IconFormat[];
-  readonly placeholder: string;
-}
 
 export const generatePicture = (
   id: string,
@@ -62,7 +51,10 @@ export const generatePicture = (
         )
         .join('')}
       <img ${
-        formats.includes(IconFormat.PNG_PIXELATED) ? 'class="pixelated" ' : ''
+        fallbackFormat === IconFormat.PNG_PIXELATED ||
+        fallbackFormat === IconFormat.GIF_PIXELATED
+          ? 'class="pixelated" '
+          : ''
       }style="background-image: url(&#34;${placeholder}&#34;);" src="../images/${category}/${id}.${
     iconFormatsExtensionsExceptions[fallbackFormat] || fallbackFormat
   }" alt="${name}" title="${name}" loading="lazy" lazyload${
