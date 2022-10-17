@@ -1,4 +1,3 @@
-import { promises as fs } from 'fs';
 import path from 'path';
 import chokidar from 'chokidar';
 import { debounce } from 'lodash-es';
