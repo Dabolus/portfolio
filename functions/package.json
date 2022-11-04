@@ -13,29 +13,28 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "firebase-admin": "^11.1.0",
-    "firebase-functions": "^3.24.1",
-    "marked": "^4.1.1",
+    "firebase-admin": "^11.2.0",
+    "firebase-functions": "^4.0.2",
+    "marked": "^4.2.1",
     "mini-svg-data-uri": "^1.4.4",
     "node-fetch": "^3.2.10",
     "nodemailer": "^6.8.0",
     "primitive": "^1.0.1",
-    "sharp": "^0.31.1",
-    "svgo": "^2.8.0"
+    "sharp": "^0.31.2",
+    "svgo": "^3.0.0"
   },
   "devDependencies": {
     "@esbuild-plugins/node-resolve": "^0.1.4",
-    "@google-cloud/firestore": "^6.3.0",
-    "@google-cloud/storage": "^6.5.2",
+    "@google-cloud/firestore": "^6.4.1",
+    "@google-cloud/storage": "^6.7.0",
     "@types/marked": "^4.0.7",
-    "@types/node": "^18.8.3",
+    "@types/node": "^18.11.9",
     "@types/node-fetch": "^2.6.2",
     "@types/nodemailer": "^6.4.6",
     "@types/sharp": "^0.31.0",
-    "@types/svgo": "^2.6.4",
     "chokidar": "^3.5.3",
     "cross-env": "^7.0.3",
-    "esbuild": "^0.15.10",
+    "esbuild": "^0.15.13",
     "npm-run-all": "^4.1.5",
     "typescript": "^4.8.4"
   }
