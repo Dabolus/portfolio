@@ -1,17 +1,4 @@
 <body <%- page.id === 'home' ? '' : 'class="blocked"' %>>
-  <noscript>
-    <style>
-      #strings-container {
-        height: 100% !important;
-        position: initial !important;
-        top: initial !important;
-      }
-
-      #strings {
-        list-style: none;
-      }
-    </style>
-  </noscript>
   <div>
     <div id="home" <%- page.id === 'home' ? '' : 'class="invisible" aria-hidden="true"' %>>
       <% if (page.id === 'home') { %>

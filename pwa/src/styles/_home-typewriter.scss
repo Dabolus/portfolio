@@ -1,0 +1,663 @@
+#typed {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 1.95rem;
+}
+
+#typed > li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Jost*';
+  font-weight: 300;
+  white-space: nowrap;
+  width: 0;
+  overflow: hidden;
+}
+
+#typed > li:nth-child(1) {
+  animation: typewriter-phrase-1 27.72s steps(1, end) infinite;
+}
+
+@keyframes typewriter-phrase-1 {
+  0%,
+  100% {
+    width: 0;
+    visibility: hidden;
+  }
+  0.325% {
+    width: 0.523em;
+    visibility: visible;
+  }
+  14.683% {
+    width: 0.523em;
+    visibility: hidden;
+  }
+  0.649%,
+  14.574% {
+    width: 1.072em;
+  }
+  0.974%,
+  14.466% {
+    width: 1.354em;
+  }
+  1.299%,
+  14.358% {
+    width: 1.574em;
+  }
+  1.623%,
+  14.25% {
+    width: 2.228em;
+  }
+  1.948%,
+  14.141% {
+    width: 2.69em;
+  }
+  2.273%,
+  14.033% {
+    width: 3.012em;
+  }
+  2.597%,
+  13.925% {
+    width: 3.521em;
+  }
+  2.922%,
+  13.817% {
+    width: 3.82em;
+  }
+  3.247%,
+  13.709% {
+    width: 4.353em;
+  }
+  3.571%,
+  13.6% {
+    width: 4.857em;
+  }
+  3.896%,
+  13.492% {
+    width: 5.414em;
+  }
+  4.221%,
+  13.384% {
+    width: 5.645em;
+  }
+  4.545%,
+  13.276% {
+    width: 6.149em;
+  }
+  4.87%,
+  13.167% {
+    width: 6.658em;
+  }
+  5.195%,
+  13.059% {
+    width: 7.167em;
+  }
+  5.519%,
+  12.951% {
+    width: 7.489em;
+  }
+  12.734% {
+    width: 7.489em;
+  }
+}
+
+#typed > li:nth-child(2) {
+  animation: typewriter-phrase-2 27.72s steps(1, end) infinite;
+}
+
+@keyframes typewriter-phrase-2 {
+  0%,
+  14.574%,
+  100% {
+    width: 0;
+    visibility: hidden;
+  }
+  14.899% {
+    width: 1.3em;
+    visibility: visible;
+  }
+  36.183% {
+    width: 1.3em;
+    visibility: hidden;
+  }
+  15.224%,
+  36.075% {
+    width: 1.339em;
+  }
+  15.548%,
+  35.967% {
+    width: 2.023em;
+  }
+  15.873%,
+  35.859% {
+    width: 2.532em;
+  }
+  16.198%,
+  35.75% {
+    width: 2.853em;
+  }
+  16.522%,
+  35.642% {
+    width: 3.073em;
+  }
+  16.847%,
+  35.534% {
+    width: 3.304em;
+  }
+  17.172%,
+  35.426% {
+    width: 3.587em;
+  }
+  17.496%,
+  35.317% {
+    width: 3.818em;
+  }
+  17.821%,
+  35.209% {
+    width: 4.327em;
+  }
+  18.146%,
+  35.101% {
+    width: 4.884em;
+  }
+  18.47%,
+  34.993% {
+    width: 5.183em;
+  }
+  18.795%,
+  34.885% {
+    width: 6em;
+  }
+  19.12%,
+  34.776% {
+    width: 6.549em;
+  }
+  19.444%,
+  34.668% {
+    width: 7.105em;
+  }
+  19.769%,
+  34.56% {
+    width: 7.337em;
+  }
+  20.094%,
+  34.452% {
+    width: 7.546em;
+  }
+  20.418%,
+  34.343% {
+    width: 8.055em;
+  }
+  20.743%,
+  34.235% {
+    width: 8.355em;
+  }
+  21.068%,
+  34.127% {
+    width: 9.327em;
+  }
+  21.392%,
+  34.019% {
+    width: 9.836em;
+  }
+  21.717%,
+  33.911% {
+    width: 10.393em;
+  }
+  22.042%,
+  33.802% {
+    width: 10.692em;
+  }
+  22.367%,
+  33.694% {
+    width: 11.215em;
+  }
+  22.691%,
+  33.586% {
+    width: 11.772em;
+  }
+  23.016%,
+  33.478% {
+    width: 12.281em;
+  }
+  23.341%,
+  33.369% {
+    width: 12.762em;
+  }
+  23.665%,
+  33.261% {
+    width: 12.993em;
+  }
+  23.99%,
+  33.153% {
+    width: 13.455em;
+  }
+  24.315%,
+  33.045% {
+    width: 13.665em;
+  }
+  24.639%,
+  32.937% {
+    width: 13.896em;
+  }
+  24.964%,
+  32.828% {
+    width: 14.299em;
+  }
+  25.289%,
+  32.72% {
+    width: 14.518em;
+  }
+  32.504% {
+    width: 14.518em;
+  }
+}
+
+#typed > li:nth-child(3) {
+  animation: typewriter-phrase-3 27.72s steps(1, end) infinite;
+}
+
+@keyframes typewriter-phrase-3 {
+  0%,
+  36.075%,
+  100% {
+    width: 0;
+    visibility: hidden;
+  }
+  36.4% {
+    width: 0.684em;
+    visibility: visible;
+  }
+  50.325% {
+    width: 0.684em;
+    visibility: hidden;
+  }
+  36.724%,
+  50.216% {
+    width: 0.893em;
+  }
+  37.049%,
+  50.108% {
+    width: 1.442em;
+  }
+  37.374%,
+  50% {
+    width: 1.946em;
+  }
+  37.698%,
+  49.892% {
+    width: 2.503em;
+  }
+  38.023%,
+  49.784% {
+    width: 2.802em;
+  }
+  38.348%,
+  49.675% {
+    width: 3.252em;
+  }
+  38.672%,
+  49.567% {
+    width: 3.761em;
+  }
+  38.997%,
+  49.459% {
+    width: 4.242em;
+  }
+  39.322%,
+  49.351% {
+    width: 4.746em;
+  }
+  39.646%,
+  49.242% {
+    width: 5.25em;
+  }
+  39.971%,
+  49.134% {
+    width: 5.482em;
+  }
+  40.296%,
+  49.026% {
+    width: 5.963em;
+  }
+  40.62%,
+  48.918% {
+    width: 6.194em;
+  }
+  40.945%,
+  48.81% {
+    width: 6.656em;
+  }
+  41.27%,
+  48.701% {
+    width: 7.16em;
+  }
+  48.485% {
+    width: 7.16em;
+  }
+}
+
+#typed > li:nth-child(4) {
+  animation: typewriter-phrase-4 27.72s steps(1, end) infinite;
+}
+
+@keyframes typewriter-phrase-4 {
+  0%,
+  50.216%,
+  100% {
+    width: 0;
+    visibility: hidden;
+  }
+  50.541% {
+    width: 0.661em;
+    visibility: visible;
+  }
+  65.332% {
+    width: 0.661em;
+    visibility: hidden;
+  }
+  50.866%,
+  65.224% {
+    width: 1.17em;
+  }
+  51.19%,
+  65.115% {
+    width: 1.601em;
+  }
+  51.515%,
+  65.007% {
+    width: 2.11em;
+  }
+  51.84%,
+  64.899% {
+    width: 2.319em;
+  }
+  52.165%,
+  64.791% {
+    width: 2.868em;
+  }
+  52.489%,
+  64.683% {
+    width: 3.425em;
+  }
+  52.814%,
+  64.574% {
+    width: 3.934em;
+  }
+  53.139%,
+  64.466% {
+    width: 4.255em;
+  }
+  53.463%,
+  64.358% {
+    width: 4.555em;
+  }
+  53.788%,
+  64.25% {
+    width: 5.189em;
+  }
+  54.113%,
+  64.141% {
+    width: 5.746em;
+  }
+  54.437%,
+  64.033% {
+    width: 6.177em;
+  }
+  54.762%,
+  63.925% {
+    width: 6.726em;
+  }
+  55.087%,
+  63.817% {
+    width: 7.207em;
+  }
+  55.411%,
+  63.709% {
+    width: 7.669em;
+  }
+  55.736%,
+  63.6% {
+    width: 7.889em;
+  }
+  56.061%,
+  63.492% {
+    width: 8.398em;
+  }
+  63.276% {
+    width: 8.398em;
+  }
+}
+
+#typed > li:nth-child(5) {
+  animation: typewriter-phrase-5 27.72s steps(1, end) infinite;
+}
+
+@keyframes typewriter-phrase-5 {
+  0%,
+  65.224%,
+  100% {
+    width: 0;
+    visibility: hidden;
+  }
+  65.548% {
+    width: 0.769em;
+    visibility: visible;
+  }
+  83.802% {
+    width: 0.769em;
+    visibility: hidden;
+  }
+  65.873%,
+  83.694% {
+    width: 1.091em;
+  }
+  66.198%,
+  83.586% {
+    width: 1.553em;
+  }
+  66.522%,
+  83.478% {
+    width: 2.11em;
+  }
+  66.847%,
+  83.369% {
+    width: 2.614em;
+  }
+  67.172%,
+  83.261% {
+    width: 2.845em;
+  }
+  67.496%,
+  83.153% {
+    width: 3.326em;
+  }
+  67.821%,
+  83.045% {
+    width: 3.626em;
+  }
+  68.146%,
+  82.937% {
+    width: 4.286em;
+  }
+  68.47%,
+  82.828% {
+    width: 4.795em;
+  }
+  68.795%,
+  82.72% {
+    width: 5.197em;
+  }
+  69.12%,
+  82.612% {
+    width: 5.429em;
+  }
+  69.444%,
+  82.504% {
+    width: 5.986em;
+  }
+  69.769%,
+  82.395% {
+    width: 6.49em;
+  }
+  70.094%,
+  82.287% {
+    width: 6.999em;
+  }
+  70.418%,
+  82.179% {
+    width: 7.32em;
+  }
+  70.743%,
+  82.071% {
+    width: 7.619em;
+  }
+  71.068%,
+  81.962% {
+    width: 7.901em;
+  }
+  71.392%,
+  81.854% {
+    width: 8.303em;
+  }
+  71.717%,
+  81.746% {
+    width: 8.852em;
+  }
+  72.042%,
+  81.638% {
+    width: 9.173em;
+  }
+  72.367%,
+  81.53% {
+    width: 9.393em;
+  }
+  72.691%,
+  81.421% {
+    width: 9.692em;
+  }
+  73.016%,
+  81.313% {
+    width: 10.241em;
+  }
+  73.341%,
+  81.205% {
+    width: 10.523em;
+  }
+  73.665%,
+  81.097% {
+    width: 10.805em;
+  }
+  80.88% {
+    width: 10.805em;
+  }
+}
+
+#typed > li:nth-child(6) {
+  animation: typewriter-phrase-6 27.72s steps(1, end) infinite;
+}
+
+@keyframes typewriter-phrase-6 {
+  0%,
+  83.694%,
+  100% {
+    width: 0;
+    visibility: hidden;
+  }
+  84.019% {
+    width: 0.816em;
+    visibility: visible;
+  }
+  99.972% {
+    width: 0.816em;
+    visibility: hidden;
+  }
+  84.343%,
+  99.932% {
+    width: 1.32em;
+  }
+  84.668%,
+  99.892% {
+    width: 1.722em;
+  }
+  84.993%,
+  99.784% {
+    width: 1.954em;
+  }
+  85.317%,
+  99.675% {
+    width: 2.435em;
+  }
+  85.642%,
+  99.567% {
+    width: 2.667em;
+  }
+  85.967%,
+  99.459% {
+    width: 3.129em;
+  }
+  86.291%,
+  99.351% {
+    width: 3.633em;
+  }
+  86.616%,
+  99.242% {
+    width: 3.932em;
+  }
+  86.941%,
+  99.134% {
+    width: 4.163em;
+  }
+  87.266%,
+  99.026% {
+    width: 4.667em;
+  }
+  87.59%,
+  98.918% {
+    width: 4.967em;
+  }
+  87.915%,
+  98.81% {
+    width: 5.249em;
+  }
+  88.24%,
+  98.701% {
+    width: 5.571em;
+  }
+  88.564%,
+  98.593% {
+    width: 6.08em;
+  }
+  88.889%,
+  98.485% {
+    width: 6.588em;
+  }
+  89.214%,
+  98.377% {
+    width: 6.888em;
+  }
+  89.538%,
+  98.268% {
+    width: 7.107em;
+  }
+  89.863%,
+  98.16% {
+    width: 7.339em;
+  }
+  90.188%,
+  98.052% {
+    width: 8.081em;
+  }
+  90.512%,
+  97.944% {
+    width: 8.59em;
+  }
+  97.727% {
+    width: 8.59em;
+  }
+}

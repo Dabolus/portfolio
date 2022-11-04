@@ -5156,7 +5156,6 @@ __metadata:
     sync-rpc: ^1.3.6
     terser: ^5.15.1
     ts-node: ^10.9.1
-    typed.js: ^2.0.12
     typescript: ^4.8.4
     workbox-build: ^6.5.4
   languageName: unknown
@@ -19922,13 +19921,6 @@ __metadata:
     media-typer: 0.3.0
     mime-types: ~2.1.24
   checksum: 2c8e47675d55f8b4e404bcf529abdf5036c537a04c2b20177bcf78c9e3c1da69da3942b1346e6edb09e823228c0ee656ef0e033765ec39a70d496ef601a0c657
-  languageName: node
-  linkType: hard
-
-"typed.js@npm:^2.0.12":
-  version: 2.0.12
-  resolution: "typed.js@npm:2.0.12"
-  checksum: ea753bf8e01fd6e37390f8d02de58cc084e7b11620e937e75a6cad58829dd55a9273954191529cddad58ab102479f097db4587c6790ba4ff2dabc5d4fb6192d8
   languageName: node
   linkType: hard
 

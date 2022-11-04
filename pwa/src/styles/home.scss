@@ -1,4 +1,5 @@
 @import './variables';
+@import './home-typewriter';
 
 #home {
   > div {
@@ -193,11 +194,6 @@
       #google-g {
         width: 1.3rem;
         height: 1.3rem;
-      }
-
-      > #strings-container {
-        position: fixed;
-        top: -9999rem;
       }
     }
 

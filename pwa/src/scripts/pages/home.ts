@@ -2,8 +2,6 @@ import { setupLanguageSwitcher } from '../i18n.js';
 import { setupTimeMachine } from '../timeMachine.js';
 import { loadStyles, loadTemplate, scroll } from '../utils.js';
 
-let typed: typeof import('typed.js/src/typed')['default']['prototype'];
-
 const configure = async () => {
   const [applyTemplate] = await Promise.all([
     loadTemplate('home'),
@@ -27,35 +25,4 @@ export const onPageLoad = async () => {
   document
     .querySelectorAll<HTMLAnchorElement>('#menu a:not([rel="external"])')
     .forEach((link) => link.addEventListener('focus', () => scroll()));
-
-  // If running E2E tests, replace the typed animation with a static string to simplify visual diff testing
-  if ('Cypress' in window) {
-    document.querySelector('#typed').innerHTML = document.querySelector(
-      '#strings > :first-child',
-    ).innerHTML;
-  } else {
-    // Otherwise, setup Typed.js
-    if (!typed) {
-      const { default: Typed } = await import('typed.js/src/typed');
-      // Configure typing animation
-      typed = new Typed('#typed', {
-        backDelay: 2000,
-        backSpeed: 30,
-        loop: true,
-        showCursor: false,
-        smartBackspace: false,
-        startDelay: 0,
-        stringsElement: '#strings',
-        typeSpeed: 90,
-      });
-    } else {
-      typed.start();
-    }
-  }
-};
-
-export const onPageUnload = () => {
-  if (typed) {
-    typed.stop();
-  }
 };

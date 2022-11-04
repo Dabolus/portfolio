@@ -1,8 +1,3 @@
-declare module 'typed.js/src/typed' {
-  import Typed from 'typed.js';
-  export default Typed;
-}
-
 interface ImportMeta {
   readonly env: {
     readonly BROWSER_ENV: 'production' | 'development';

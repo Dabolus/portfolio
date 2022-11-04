@@ -15,8 +15,7 @@
     "core-js": "^3.25.5",
     "file-saver": "^2.0.5",
     "firebase": "^9.11.0",
-    "pwa-helpers": "^0.9.1",
-    "typed.js": "^2.0.12"
+    "pwa-helpers": "^0.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

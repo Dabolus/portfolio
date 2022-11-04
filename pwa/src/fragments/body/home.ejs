@@ -72,9 +72,9 @@
   </header>
   <main>
     <h1><%= helpers.translate(page.greeting) %></h1>
-    <h2 id="phrases"><%= helpers.translate(page.phrases.prefix) %>&nbsp;<span id="typed"></span></h2>
-    <h2 id="strings-container">
-      <ul id="strings">
+    <h2 id="phrases">
+      <span><%= helpers.translate(page.phrases.prefix) %>&nbsp;</span>
+      <ul id="typed">
         <% page.phrases.strings.forEach(str => { %>
           <li><%- helpers.translate(str) %></li>
         <% }) %>
