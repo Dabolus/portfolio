@@ -22,6 +22,16 @@ describe('accessibility', () => {
               height: 100vh !important;
               overflow: hidden !important;
             }
+
+            #typed > li {
+              animation: none !important;
+              visibility: hidden !important;
+            }
+
+            #typed > li:first-child {
+              visibility: visible !important;
+              width: auto !important;
+            }
           `,
         });
       });
