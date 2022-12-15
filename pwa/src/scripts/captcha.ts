@@ -13,7 +13,7 @@ export const importCaptcha = () => {
     captchaPromise = new Promise<void>((resolve, reject) => {
       window.__captchaLoadedCallback = resolve;
       importIIFE(
-        'https://www.google.com/recaptcha/api.js?onload=__captchaLoadedCallback&render=explicit',
+        'https://www.google.com/recaptcha/enterprise.js?onload=__captchaLoadedCallback&render=explicit',
       ).catch(reject);
     });
   }
@@ -49,7 +49,7 @@ export const renderCaptcha = (element: HTMLElement) => {
           loop();
         });
 
-        const id = grecaptcha.render(element, {
+        const id = grecaptcha.enterprise.render(element, {
           sitekey: '6LcULLwUAAAAAE_M-jUN-D-gX2SQ4uzODS4uxneH',
           theme: 'dark',
           size: 'invisible',
@@ -75,7 +75,7 @@ export const renderCaptcha = (element: HTMLElement) => {
 export const executeCaptcha = async (element: HTMLElement) => {
   const { id, response } = await captchaCache.get(element);
 
-  grecaptcha.execute(id);
+  grecaptcha.enterprise.execute(id);
 
   return response;
 };
@@ -83,5 +83,5 @@ export const executeCaptcha = async (element: HTMLElement) => {
 export const resetCaptcha = async (element: HTMLElement) => {
   const { id } = await captchaCache.get(element);
 
-  grecaptcha.reset(id);
+  grecaptcha.enterprise.reset(id);
 };

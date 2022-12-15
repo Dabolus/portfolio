@@ -1,4 +1,4 @@
-import { executeCaptcha, renderCaptcha } from '../captcha';
+import { executeCaptcha, renderCaptcha } from '../captcha.js';
 import { loadStyles, loadTemplate, logEvent, sleep } from '../utils.js';
 
 const configure = async () => {
