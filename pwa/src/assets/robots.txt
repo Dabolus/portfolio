@@ -1,3 +1,2 @@
-# Disallow crawling of "special" pages of the app
 User-agent: *
-Disallow: /90s/
+Disallow:
