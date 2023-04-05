@@ -20,17 +20,17 @@
     "test:e2e:open": "start-server-and-test start:pwa http-get://localhost:3000 \"cypress open -C cypress/cypress.config.ts\""
   },
   "devDependencies": {
-    "@percy/cli": "^1.16.0",
+    "@percy/cli": "^1.21.0",
     "@percy/cypress": "^3.1.2",
     "@testing-library/cypress": "^9.0.0",
-    "axe-core": "^4.6.1",
-    "cypress": "^12.1.0",
-    "cypress-axe": "^1.2.0",
-    "firebase-tools": "^11.18.0",
+    "axe-core": "^4.6.3",
+    "cypress": "^12.9.0",
+    "cypress-axe": "^1.4.0",
+    "firebase-tools": "^11.25.2",
     "is-ci-cli": "^2.2.0",
-    "lerna": "^6.1.0",
-    "start-server-and-test": "^1.15.2",
-    "typescript": "^4.9.4"
+    "lerna": "^6.6.1",
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.0.3"
   },
   "workspaces": [
     "functions",
