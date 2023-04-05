@@ -46,7 +46,6 @@ const build = async () => {
         'certifications',
         'contacts',
         'skills',
-        'blog',
       ],
       defaultLocale: config.defaultLocale,
     }),
