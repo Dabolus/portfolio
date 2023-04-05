@@ -47,6 +47,7 @@ const build = async () => {
         'contacts',
         'skills',
       ],
+      extraPages: ['90s/', 'cartridges/', 'cartridges/gb/', 'cartridges/gbc/'],
       defaultLocale: config.defaultLocale,
     }),
     copyAssets([

@@ -16,4 +16,12 @@
       <lastmod><%= now %></lastmod>
     </url>
   <% }) %>
+  <% (extraPages || []).forEach((page, index) => { %>
+    <url>
+      <loc><%= `${baseUrl}/${page}` %></loc>
+      <changefreq>weekly</changefreq>
+      <priority><%= (1 - (pages.length + index) / 10).toFixed(1) %></priority>
+      <lastmod><%= now %></lastmod>
+    </url>
+  <% }) %>
 </urlset>

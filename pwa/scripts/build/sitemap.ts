@@ -9,7 +9,8 @@ const __dirname = computeDirname(import.meta.url);
 
 export interface BuildSitemapData {
   readonly baseUrl: string;
-  readonly pages: string[];
+  readonly pages: readonly string[];
+  readonly extraPages?: readonly string[];
   readonly defaultLocale: string;
 }
 
@@ -17,7 +18,7 @@ const sitemapTemplatePath = path.join(__dirname, '../../src/sitemap.ejs');
 
 export const buildSitemap = async (
   outputDir: string,
-  { baseUrl, pages, defaultLocale }: BuildSitemapData,
+  { baseUrl, pages, extraPages, defaultLocale }: BuildSitemapData,
 ): Promise<void> => {
   const [template, availableLocales] = await Promise.all([
     fs.readFile(sitemapTemplatePath, 'utf8'),
@@ -35,6 +36,7 @@ export const buildSitemap = async (
       pages,
       locales,
       baseUrl,
+      extraPages,
       now: new Date().toISOString(),
     },
     {
