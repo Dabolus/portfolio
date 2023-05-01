@@ -74,14 +74,14 @@ export const downloadROMs = async (to: string) => {
   const resolvedTo = path.resolve(basePath, to);
   await fs.mkdirp(resolvedTo);
   const res = await fetch(
-    'https://api.github.com/repos/Dabolus/portfolio-cartridge/releases/latest',
+    'https://api.github.com/repos/Dabolus/portfolio-cartridge/releases?per_page=1',
     {
       headers: {
         accept: 'application/vnd.github+json',
       },
     },
   );
-  const { assets }: { assets: GitHubAsset[] } = await res.json();
+  const [{ assets }]: [{ assets: GitHubAsset[] }] = await res.json();
   await Promise.all(
     assets.map(async ({ name, browser_download_url }) => {
       const assetRes = await fetch(browser_download_url);
