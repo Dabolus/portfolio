@@ -10,7 +10,7 @@
 
 .certification {
   background: var(--theme-card-background);
-  width: 18rem;
+  width: 25.5rem;
   margin: 1rem;
   color: var(--theme-color);
   will-change: transform;
@@ -23,22 +23,31 @@
   }
 
   img {
-    width: 18rem;
+    width: 25.5rem;
     height: 18rem;
     object-fit: cover;
+    background-size: cover;
+    display: block;
   }
 
   > h2 {
     text-align: center;
+    margin: 0 0.5rem;
+    font-size: 1em;
+  }
+
+  > h3 {
+    text-align: center;
     margin: 0 0.5rem 0.5rem;
-    font-size: 1.17em;
+    font-size: 0.7em;
+    font-weight: 400;
   }
 
   @media (min-width: 47.5rem) {
-    width: 12rem;
+    width: 17rem;
 
     img {
-      width: 12rem;
+      width: 17rem;
       height: 12rem;
     }
   }

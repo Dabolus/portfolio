@@ -1,7 +1,8 @@
-<% data.certifications.forEach(({ id, name, link, skills, picture }) => { %>
+<% data.certifications.forEach(({ id, title, subtitle, link, skills, picture }) => { %>
   <a class="certification" href="<%= link %>" target="<%= id %>">
     <%- picture %>
-    <h2><%= name %></h2>
+    <h2><%= title %></h2>
+    <h3><%= subtitle %></h3>
     <ul class="badges" tabindex="0">
       <% skills.forEach(skill => { %>
         <li><%= skill %></li>

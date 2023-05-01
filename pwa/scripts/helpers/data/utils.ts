@@ -34,7 +34,8 @@ export const generatePicture = (
   name: string,
   category: IconCategory,
   { formats, placeholder }: Icon,
-  size?: number,
+  width?: number,
+  height = width,
 ) => {
   const fallbackFormat = formats.at(-1);
 
@@ -58,7 +59,7 @@ export const generatePicture = (
       }style="background-image: url(&#34;${placeholder}&#34;);" src="../images/${category}/${id}.${
     iconFormatsExtensionsExceptions[fallbackFormat] || fallbackFormat
   }" alt="${name}" title="${name}" loading="lazy" lazyload${
-    size ? ` width="${size}" height="${size}"` : ''
+    width ? ` width="${width}" height="${height}"` : ''
   }>
     </picture>
   `;

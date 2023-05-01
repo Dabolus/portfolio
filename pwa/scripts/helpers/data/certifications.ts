@@ -7,9 +7,16 @@ export interface ParsedCertification extends Omit<Certification, 'icon'> {
 }
 
 export const getCertifications = async (): Promise<ParsedCertification[]> =>
-  Object.entries(certifications).map(([id, { name, icon, ...data }]) => ({
+  Object.entries(certifications).map(([id, { title, icon, ...data }]) => ({
     id,
-    name,
-    picture: generatePicture(id, name, IconCategory.CERTIFICATIONS, icon, 112),
+    title,
+    picture: generatePicture(
+      id,
+      title,
+      IconCategory.CERTIFICATIONS,
+      icon,
+      330,
+      255,
+    ),
     ...data,
   }));
