@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-typescript": "^7.21.4",
     "@csstools/postcss-sass": "^5.0.1",
-    "@dabolus/portfolio-data": "^0.14.0",
+    "@dabolus/portfolio-data": "^0.15.0",
     "@esbuild-plugins/node-resolve": "^0.2.2",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.1",
