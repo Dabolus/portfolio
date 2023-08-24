@@ -1,17 +1,12 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 import { render as renderTemplate } from 'ejs';
 import { minify as minifyTemplate } from 'html-minifier';
-import type { MinifyOutput } from 'terser';
-import syncRpc from 'sync-rpc';
+import esbuild from 'esbuild';
 import { PageData } from './models';
-import { computeDirname } from '../helpers/utils.js';
+import { computeDirname, computeTargets } from '../helpers/utils.js';
 
 const __dirname = computeDirname(import.meta.url);
-
-const minifyScript: (code: string) => MinifyOutput = syncRpc(
-  path.resolve(__dirname, '../helpers/minify.cjs'),
-);
 
 interface TemplateData {
   readonly path: string;
@@ -76,6 +71,7 @@ export const compileTemplate = async (
 
   const finalTemplate = production
     ? minifyTemplate(renderedTemplate, {
+        // TODO: maybe migrate CSS minification to esbuild too
         minifyCSS: {
           level: {
             2: {
@@ -84,7 +80,18 @@ export const compileTemplate = async (
             },
           },
         },
-        minifyJS: (input: string) => minifyScript(input).code,
+        minifyJS: (input: string) => {
+          const { code } = esbuild.transformSync(input, {
+            minify: true,
+            legalComments: 'none',
+            format: 'esm',
+            target: computeTargets(),
+            // Always consider import.meta as supported, as we are
+            // going to replace import.meta.env at build time
+            supported: { 'import-meta': true },
+          });
+          return code;
+        },
         collapseWhitespace: true,
         collapseBooleanAttributes: true,
         removeOptionalTags: true,

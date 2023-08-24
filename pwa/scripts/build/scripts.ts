@@ -1,15 +1,9 @@
 /// <reference types="../typings" />
-import { promises as fs } from 'fs';
-import path from 'path';
-import { OutputChunk, rollup } from 'rollup';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import { babel } from '@rollup/plugin-babel';
-import replace from '@rollup/plugin-replace';
-import { terser } from 'rollup-plugin-terser';
-import po from '../helpers/plugins/po.js';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import esbuild from 'esbuild';
 import { BuildStylesOutput } from './styles.js';
-import { computeDirname } from '../helpers/utils.js';
+import { computeDirname, computeTargets } from '../helpers/utils.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -47,16 +41,17 @@ const pathToPageMap: Record<string, keyof BuildScriptsOutput> = {
 
 const getDependencies = (
   fileName: string,
-  outputs: readonly OutputChunk[],
+  outputs: esbuild.Metafile['outputs'],
+  transformPath = (path: string) => path,
 ): readonly string[] => {
-  const output = outputs.find((output) => output.fileName === fileName);
+  const output = outputs[fileName];
 
   return Array.from(
     new Set([
-      ...output.imports,
-      ...output.dynamicImports,
-      ...output.imports.flatMap((imp) => getDependencies(imp, outputs)),
-      ...output.dynamicImports.flatMap((imp) => getDependencies(imp, outputs)),
+      ...output.imports.map((imp) => transformPath(imp.path)),
+      ...output.imports.flatMap((imp) =>
+        getDependencies(imp.path, outputs, transformPath),
+      ),
     ]),
   );
 };
@@ -65,111 +60,59 @@ const createBundle = async (
   outputPath: string,
   { production, stylesOutput }: Omit<BuildScriptsOptions, 'data'>,
 ): Promise<BuildScriptsOutput> => {
-  const rollupBuild = await rollup({
-    input: {
-      main: path.join(scriptsPath, 'main.ts'),
-      'pages/home': path.join(scriptsPath, 'pages/home.ts'),
-      'pages/about': path.join(scriptsPath, 'pages/about.ts'),
-      'pages/certifications': path.join(scriptsPath, 'pages/certifications.ts'),
-      'pages/contacts': path.join(scriptsPath, 'pages/contacts.ts'),
-      'pages/projects': path.join(scriptsPath, 'pages/projects.ts'),
-      'pages/skills': path.join(scriptsPath, 'pages/skills.ts'),
-    },
-    plugins: [
-      nodeResolve({
-        extensions: ['.ts', '.js', '.mjs', '.styl', '.hbs', '.po'],
-      }),
-      // TODO: delete comment
-      commonjs(), // { namedExports: { 'file-saver': ['saveAs'] } }),
-      po(),
-      babel({
-        exclude: /node_modules/,
-        extensions: ['.ts', '.js', '.mjs'],
-        babelHelpers: 'bundled',
-        presets: [
-          [
-            '@babel/env',
-            {
-              loose: true,
-              useBuiltIns: 'usage',
-              corejs: 3,
-              modules: false,
-              bugfixes: true,
-              targets: {
-                esmodules: true,
-              },
-            },
-          ],
-          '@babel/typescript',
-        ],
-      }),
-      replace({
-        exclude: /node_modules/,
-        delimiters: ['', ''],
-        preventAssignment: true,
-        'import.meta.env.BROWSER_ENV': `'${process.env.NODE_ENV}'`,
-        'import.meta.env.ENABLE_SERVICE_WORKER': `${!!(
-          production || process.env.ENABLE_SERVICE_WORKER
-        )}`,
-        'import.meta.env.API_URL':
-          JSON.stringify(process.env.API_URL) ||
-          (production ? "'/api'" : "'http://localhost:5000/api'"),
-      }),
-      ...(production
-        ? [
-            terser({
-              output: {
-                comments: false,
-              },
-              ecma: 2017,
-              compress: {
-                keep_fargs: false,
-                passes: 3,
-                booleans_as_integers: true,
-                drop_console: true,
-                unsafe: true,
-                unsafe_comps: true,
-                unsafe_Function: true,
-                unsafe_math: true,
-                unsafe_methods: true,
-                unsafe_proto: true,
-                unsafe_regexp: true,
-                unsafe_undefined: true,
-              },
-              toplevel: true,
-              module: true,
-              safari10: true,
-            }),
-          ]
-        : []),
+  const esresult = await esbuild.build({
+    entryPoints: [
+      path.join(scriptsPath, 'main.ts'),
+      path.join(scriptsPath, 'pages/home.ts'),
+      path.join(scriptsPath, 'pages/about.ts'),
+      path.join(scriptsPath, 'pages/certifications.ts'),
+      path.join(scriptsPath, 'pages/contacts.ts'),
+      path.join(scriptsPath, 'pages/projects.ts'),
+      path.join(scriptsPath, 'pages/skills.ts'),
     ],
-  });
-
-  const { output } = await rollupBuild.write({
-    esModule: true,
-    ...(production
-      ? {
-          entryFileNames: 'scripts/[name].[hash].js',
-          chunkFileNames: 'scripts/[name].[hash].js',
-        }
-      : {
-          entryFileNames: 'scripts/[name].js',
-          chunkFileNames: 'scripts/[name].js',
-        }),
+    bundle: true,
+    minify: production,
+    sourcemap: production,
+    treeShaking: true,
+    legalComments: 'none',
+    define: {
+      'import.meta.env.BROWSER_ENV': `'${process.env.NODE_ENV}'`,
+      'import.meta.env.ENABLE_SERVICE_WORKER': `${!!(
+        production || process.env.ENABLE_SERVICE_WORKER
+      )}`,
+      'import.meta.env.API_URL':
+        JSON.stringify(process.env.API_URL) ||
+        (production ? "'/api'" : "'http://localhost:5000/api'"),
+    },
+    outdir: path.join(outputPath, 'scripts'),
+    splitting: true,
+    metafile: true,
+    chunkNames: '[dir]/[name]-[hash]',
+    assetNames: '[dir]/[name]-[hash]',
+    entryNames: production ? '[dir]/[name]-[hash]' : '[dir]/[name]',
+    target: computeTargets(),
     format: 'esm',
-    dir: outputPath,
+    // Always consider import.meta as supported, as we are
+    // going to replace import.meta.env at build time
+    supported: { 'import-meta': true },
   });
-
   const result = Object.fromEntries(
-    (output as readonly OutputChunk[])
-      .filter(({ name }) => name in pathToPageMap)
-      .map(({ name, fileName }) => [
-        pathToPageMap[name] || name,
+    Object.entries(esresult.metafile.outputs)
+      .filter(
+        ([, { entryPoint }]) =>
+          entryPoint &&
+          Object.keys(pathToPageMap).some((page) =>
+            entryPoint.endsWith(`${page}.ts`),
+          ),
+      )
+      .map(([key, { entryPoint }]) => [
+        Object.entries(pathToPageMap).find(([page]) =>
+          entryPoint?.endsWith(`${page}.ts`),
+        )![1],
         {
-          fileName,
-          dependencies: getDependencies(
-            fileName,
-            output as readonly OutputChunk[],
+          fileName: path.relative('../dist', key),
+          dependencies: getDependencies(key, esresult.metafile.outputs, (p) =>
+            path.relative('../dist', p),
           ),
         },
       ]),
