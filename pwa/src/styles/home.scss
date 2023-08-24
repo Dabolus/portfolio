@@ -204,7 +204,6 @@
       bottom: 1rem;
       width: 3rem;
       height: 3rem;
-      will-change: transform;
       animation: 1s up-down infinite alternate ease-in-out;
     }
   }
@@ -256,13 +255,11 @@
           color: var(--theme-color);
           background: var(--theme-content-background);
           box-shadow: var(--theme-shadow);
-          will-change: box-shadow;
           transition: 0.3s box-shadow;
 
           > span {
             text-align: center;
             font-size: 1.4rem;
-            will-change: transform;
             transition: 0.3s transform;
             transition-delay: 0.9s;
 
@@ -283,7 +280,6 @@
             transform: translateX(-50%);
             fill: transparent;
             stroke-width: 0.3px;
-            will-change: stroke-dashoffset;
             transition: 1s stroke-dashoffset linear;
             transition-delay: 0s;
           }

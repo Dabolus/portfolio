@@ -4,7 +4,6 @@
 .content#contacts {
   #contact-form {
     position: relative;
-    will-change: transform;
     transition: 0.9s transform;
     transition-delay: 0.5s;
     font-family: 'Mansalva';
@@ -27,7 +26,6 @@
       width: 6rem;
       height: 6rem;
       z-index: -1;
-      will-change: transform, opacity;
       transition: 0.3s transform, 0.3s opacity;
       transition-delay: 1.4s;
       opacity: 0;
@@ -42,7 +40,6 @@
       width: 100%;
       max-width: 32rem;
       pointer-events: none;
-      will-change: transform, z-index;
       transform-origin: top center;
       transform: rotateX(-180deg);
       transition: 1s transform, 0.2s z-index step-end;
@@ -64,7 +61,6 @@
       border-top-left-radius: 4.5rem 0.9rem;
       border-top-right-radius: 0.4rem 7.3rem;
       font-size: 0.9rem;
-      will-change: transform;
       transform-origin: top center;
       transform: translateY(-12rem);
       transition: 1s transform;
@@ -145,7 +141,6 @@
         left: 50%;
         transform: translateX(-50%);
         cursor: pointer;
-        will-change: background-color, color;
         transition: 0.3s background-color, 0.3s color;
 
         &:hover,
@@ -204,7 +199,6 @@
             height: 2rem;
             border-radius: 50%;
             border: 0.05rem solid var(--theme-color);
-            will-change: transform;
             transition: 0.3s transform;
 
             &:hover,
