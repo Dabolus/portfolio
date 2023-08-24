@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { injectManifest } from 'workbox-build';
 import { computeDirname } from '../helpers/utils.js';
 

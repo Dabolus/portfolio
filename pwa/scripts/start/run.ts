@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import chokidar from 'chokidar';
 import { debounce } from 'lodash-es';
 import browserSync from 'browser-sync';
@@ -19,7 +19,11 @@ import { getProjects } from '../helpers/data/projects.js';
 import { getTimeline } from '../helpers/data/timeline.js';
 import { getSocials } from '../helpers/data/socials.js';
 import { getTimeMachineTravels } from '../helpers/data/timeMachine.js';
-import { computeDirname, resolveDependencyPath } from '../helpers/utils.js';
+import {
+  computeDirname,
+  logExecutionTime,
+  resolveDependencyPath,
+} from '../helpers/utils.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -136,128 +140,153 @@ const start = async () => {
     )
     .on(
       'all',
-      debounce(async (_, changedPath) => {
-        console.log(
-          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding templates...`,
-        );
+      debounce(
+        logExecutionTime(
+          async (_, changedPath) => {
+            const [config, data, i18nHelpersMap, datesHelpersMap] =
+              await Promise.all([
+                getConfig(),
+                getDataWithCache(),
+                setupI18nHelpersMap(),
+                setupDatesHelpersMap(),
+              ]);
 
-        const [config, data, i18nHelpersMap, datesHelpersMap] =
-          await Promise.all([
-            getConfig(),
-            getDataWithCache(),
-            setupI18nHelpersMap(),
-            setupDatesHelpersMap(),
-          ]);
-
-        await Promise.all([
-          compileTemplate(outputPath, {
-            partial: true,
-            fragment: 'landing',
-            outputPath: 'index.html',
-            pageData: {
-              page: {
-                id: 'landing',
-                description: 'Landing page',
-              },
-              config: {
-                ...config,
-                locale: config.defaultLocale,
-              },
-              data,
-              helpers: {
-                ...i18nHelpersMap[config.defaultLocale],
-                ...datesHelpersMap[config.defaultLocale],
-                generateStructuredData,
-              },
-              output,
-            },
-            production,
-          }),
-          ...availableLocales.map((locale) =>
-            buildTemplate(path.resolve(outputPath, locale), {
-              data: {
-                config: {
-                  ...config,
-                  locale,
+            await Promise.all([
+              compileTemplate(outputPath, {
+                partial: true,
+                fragment: 'landing',
+                outputPath: 'index.html',
+                pageData: {
+                  page: {
+                    id: 'landing',
+                    description: 'Landing page',
+                  },
+                  config: {
+                    ...config,
+                    locale: config.defaultLocale,
+                  },
+                  data,
+                  helpers: {
+                    ...i18nHelpersMap[config.defaultLocale],
+                    ...datesHelpersMap[config.defaultLocale],
+                    generateStructuredData,
+                  },
+                  output,
                 },
-                data,
-                helpers: {
-                  ...i18nHelpersMap[locale],
-                  ...datesHelpersMap[locale],
-                  generateStructuredData,
-                },
-                output,
-              },
-              production,
-            }),
-          ),
-        ]);
-      }, 50),
+                production,
+              }),
+              ...availableLocales.map((locale) =>
+                buildTemplate(path.resolve(outputPath, locale), {
+                  data: {
+                    config: {
+                      ...config,
+                      locale,
+                    },
+                    data,
+                    helpers: {
+                      ...i18nHelpersMap[locale],
+                      ...datesHelpersMap[locale],
+                      generateStructuredData,
+                    },
+                    output,
+                  },
+                  production,
+                }),
+              ),
+            ]);
+          },
+          (_, changedPath) =>
+            `\x1b[32m${changedPath}\x1b[0m changed, rebuilding templates...`,
+          (time) => `Templates rebuilt in ${time}`,
+        ),
+        50,
+      ),
     );
 
   chokidar.watch(['src/styles/**/*.scss', 'src/data/**/*.yml'], { cwd }).on(
     'all',
-    debounce(async (_, changedPath) => {
-      console.log(
-        `\x1b[32m${changedPath}\x1b[0m changed, rebuilding styles...`,
-      );
+    debounce(
+      logExecutionTime(
+        async (_, changedPath) => {
+          const data = await getDataWithCache();
 
-      const data = await getDataWithCache();
-
-      buildStyles(outputPath, { production, data });
-    }, 50),
+          await buildStyles(outputPath, { production, data });
+        },
+        (_, changedPath) =>
+          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding styles...`,
+        (time) => `Styles rebuilt in ${time}`,
+      ),
+      50,
+    ),
   );
 
   chokidar.watch(['src/typings.d.ts', 'src/scripts/**/*.ts'], { cwd }).on(
     'all',
-    debounce((_, changedPath) => {
-      console.log(
-        `\x1b[32m${changedPath}\x1b[0m changed, rebuilding scripts...`,
-      );
-
-      buildScripts(outputPath, {
-        production,
-        stylesOutput: output.styles,
-      });
-    }, 50),
+    debounce(
+      logExecutionTime(
+        async (_, changedPath) => {
+          await buildScripts(outputPath, {
+            production,
+            stylesOutput: output.styles,
+          });
+        },
+        (_, changedPath) =>
+          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding scripts...`,
+        (time) => `Scripts rebuilt in ${time}`,
+      ),
+      50,
+    ),
   );
 
   chokidar
     .watch(['src/assets/**/*', `${portfolioDataAssetsPath}/**/*`], { cwd })
     .on(
       'all',
-      debounce((_, changedPath) => {
-        console.log(`\x1b[32m${changedPath}\x1b[0m changed, copying assets...`);
-
-        copyAssets([
-          {
-            from: 'src/assets/*',
-            to: 'dist',
+      debounce(
+        logExecutionTime(
+          async (_, changedPath) => {
+            await Promise.all([
+              copyAssets([
+                {
+                  from: 'src/assets/*',
+                  to: 'dist',
+                },
+                {
+                  from: `${portfolioDataAssetsPath}/*`,
+                  to: 'dist',
+                },
+              ]),
+              downloadROMs('dist/cartridges/roms'),
+            ]);
           },
-          {
-            from: `${portfolioDataAssetsPath}/*`,
-            to: 'dist',
-          },
-        ]);
-        downloadROMs('dist/cartridges/roms');
-      }, 50),
+          (_, changedPath) =>
+            `\x1b[32m${changedPath}\x1b[0m changed, copying assets...`,
+          (time) => `Assets copied in ${time}`,
+        ),
+        50,
+      ),
     );
 
-  chokidar
-    .watch('dist/**/*', {
-      cwd,
-      ignored: ['**/sw.js*', '**/workbox*'],
-    })
-    .on(
-      'all',
-      debounce(() => {
-        if (process.env.ENABLE_SERVICE_WORKER) {
-          console.log('Rebuilding Service Worker...');
-
-          generateServiceWorker(outputPath, availableLocales);
-        }
-      }, 950),
-    );
+  if (process.env.ENABLE_SERVICE_WORKER) {
+    chokidar
+      .watch('dist/**/*', {
+        cwd,
+        ignored: ['**/sw.js*', '**/workbox*'],
+      })
+      .on(
+        'all',
+        debounce(
+          logExecutionTime(
+            async () => {
+              await generateServiceWorker(outputPath, availableLocales);
+            },
+            'Regenerating Service Worker...',
+            (time) => `Service Worker regenerated in ${time}`,
+          ),
+          950,
+        ),
+      );
+  }
 
   bs.init({
     server: {
@@ -285,4 +314,8 @@ const start = async () => {
   );
 };
 
-start();
+logExecutionTime(
+  start,
+  'Starting dev server...',
+  (time) => `Dev server started in ${time}`,
+)();

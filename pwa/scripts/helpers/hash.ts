@@ -1,4 +1,4 @@
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 
 const hashCache = new Map<string, string>();
 
@@ -10,5 +10,5 @@ export const hash = (content: string): string => {
     );
   }
 
-  return hashCache.get(content);
+  return hashCache.get(content)!;
 };

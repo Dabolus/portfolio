@@ -1,10 +1,10 @@
-import path from 'path';
-import { promises as fs } from 'fs';
+import path from 'node:path';
+import { promises as fs } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import childProcess from 'node:child_process';
 import esbuild from 'esbuild';
 import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve';
-import { fileURLToPath } from 'url';
 import { globby } from 'globby';
-import childProcess from 'child_process';
 
 export const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -49,10 +49,6 @@ const build = async () => {
   });
 
   await fs.mkdir(path.join(outdir, 'helpers'), { recursive: true });
-  await fs.copyFile(
-    path.join(__dirname, 'helpers', 'minify.cjs'),
-    path.join(outdir, 'helpers', 'minify.cjs'),
-  );
 
   await runScript(path.join(outdir, script, 'index.js'));
 };

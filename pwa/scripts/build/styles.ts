@@ -1,6 +1,6 @@
 /// <reference types="../typings" />
-import { promises as fs } from 'fs';
-import path from 'path';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 import postcss from 'postcss';
 import postcssSass from '@csstools/postcss-sass';
 import postcssPresetEnv from 'postcss-preset-env';

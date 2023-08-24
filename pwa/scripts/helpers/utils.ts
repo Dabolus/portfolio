@@ -12,6 +12,38 @@ const __dirname = computeDirname(import.meta.url);
 
 export const cachePath = resolve(__dirname, '../../node_modules/.cache/pwa');
 
+const numberFormat = new Intl.NumberFormat('en-US', {
+  maximumFractionDigits: 1,
+});
+
+export const logExecutionTime =
+  <T extends (...args: any[]) => Promise<any>>(
+    fn: T,
+    startLogTemplate: string | ((...args: Parameters<T>) => string),
+    endLogTemplate: string | ((time: string, ...args: Parameters<T>) => string),
+  ) =>
+  async (...args: Parameters<T>): Promise<Awaited<ReturnType<T>>> => {
+    console.log(
+      typeof startLogTemplate === 'string'
+        ? startLogTemplate
+        : startLogTemplate(...args),
+    );
+    const start = performance.now();
+    const result = await fn(...args);
+    const end = performance.now();
+    const diff = end - start;
+    const prettyTime =
+      diff < 1000
+        ? `${numberFormat.format(diff)}ms`
+        : `${numberFormat.format(diff / 1000)}s`;
+    console.log(
+      typeof endLogTemplate === 'string'
+        ? endLogTemplate
+        : endLogTemplate(prettyTime, ...args),
+    );
+    return result as Awaited<ReturnType<T>>;
+  };
+
 export const computeTargets = () => {
   // The idea here is to support ~3 years of old browsers.
   // If we don’t use the `target` option, esbuild will basically assume all the

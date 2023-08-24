@@ -1,9 +1,8 @@
-import path from 'path';
+import path from 'node:path';
 import {
   getGitHubCodeStats,
   skills,
   Skill,
-  GitHubData,
   LanguageSizeData,
 } from '@dabolus/portfolio-data';
 import { cachePath } from '../utils.js';
