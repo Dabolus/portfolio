@@ -10,17 +10,23 @@
     "browser": true,
     "node": true
   },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": "error",
+    "@typescript-eslint/explicit-function-return-type": "off"
+  },
   "overrides": [
     {
       "files": ["test/**/*.spec.ts"],
       "env": {
         "jest": true
       }
+    },
+    {
+      "files": ["scripts/**/*.ts"],
+      "rules": {
+        "no-console": "off"
+      }
     }
-  ],
-  "rules": {
-    "prettier/prettier": "error",
-    "no-console": "error",
-    "@typescript-eslint/explicit-function-return-type": "off"
-  }
+  ]
 }
