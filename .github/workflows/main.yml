@@ -20,20 +20,19 @@ jobs:
         with:
           node-version: 18
       - name: Install deps
-        run: yarn install --immutable
+        run: yarn install --immutable && yarn playwright install --with-deps
       - name: Run E2E tests
         run: yarn test:e2e
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-      - name: Upload videos and screenshots if E2E tests failed
+      - name: Upload E2E artifacts
         uses: actions/upload-artifact@v3
-        if: failure()
+        if: always()
         with:
-          name: cypress-report
-          path: |
-            cypress/screenshots
-            cypress/videos
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
       - name: Build
         run: yarn build
         env:

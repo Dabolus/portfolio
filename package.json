@@ -16,19 +16,16 @@
     "lint": "eslint '**/*.{ts,js}'",
     "format": "prettier --write '**/*.{ts,js,scss}'",
     "test:e2e": "is-ci test:e2e:run test:e2e:open",
-    "test:e2e:run": "start-server-and-test start:pwa http-get://localhost:3000 \"percy exec -- cypress run -C cypress/cypress.config.ts\"",
-    "test:e2e:open": "start-server-and-test start:pwa http-get://localhost:3000 \"cypress open -C cypress/cypress.config.ts\""
+    "test:e2e:run": "percy exec -- playwright test",
+    "test:e2e:open": "playwright test --ui"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.7.3",
     "@percy/cli": "^1.26.3",
-    "@percy/cypress": "^3.1.2",
-    "@testing-library/cypress": "^9.0.0",
-    "axe-core": "^4.7.2",
-    "cypress": "^12.17.4",
-    "cypress-axe": "^1.4.0",
+    "@percy/playwright": "^1.0.4",
+    "@playwright/test": "^1.37.1",
     "firebase-tools": "^12.5.2",
     "is-ci-cli": "^2.2.0",
-    "start-server-and-test": "^2.0.0",
     "typescript": "^5.2.2"
   },
   "workspaces": [

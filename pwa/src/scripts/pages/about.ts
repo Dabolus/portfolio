@@ -98,7 +98,7 @@ export const onPageLoad = async () => {
   await configurationPromise;
 
   // If running E2E tests, replace the age animation with a static string to simplify visual diff testing
-  if ('Cypress' in window) {
+  if (localStorage.getItem('isPlaywright')) {
     document.querySelector<HTMLSpanElement>('#age').textContent =
       (24.123456789).toLocaleString(getLocale(), {
         minimumFractionDigits: 9,
