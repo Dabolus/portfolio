@@ -50,6 +50,8 @@ jobs:
           sudo apt-get -y install libgbm1 fonts-roboto
           # Install required libraries
           sudo yarn add -D lighthouse@^11.0.0 puppeteer@^21.1.0 node-telegram-bot-api@^0.61.0 sharp@^0.32.5
+          # Install Puppeteer browsers
+          node node_modules/puppeteer/install.js
           # Run the postdeploy script
           node scripts/postdeploy.js
         env:
