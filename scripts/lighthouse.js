@@ -8,7 +8,7 @@ const {
 
 export default async () => {
   process.stdout.write('Starting Chrome...\n');
-  const chrome = await puppeteer.launch();
+  const chrome = await puppeteer.launch({ headless: 'new' });
   const { port } = new URL(chrome.wsEndpoint());
 
   const results = await pages.reduce(
