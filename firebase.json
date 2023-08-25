@@ -83,7 +83,7 @@
           },
           {
             "key": "Cache-Control",
-            "value": "public, no-cache, no-store, must-revalidate"
+            "value": "public, no-cache, must-revalidate"
           }
         ]
       },
@@ -105,7 +105,7 @@
           },
           {
             "key": "Cache-Control",
-            "value": "public, no-cache, no-store, must-revalidate"
+            "value": "public, no-cache, must-revalidate"
           }
         ]
       }
