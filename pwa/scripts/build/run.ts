@@ -38,8 +38,8 @@ const build = async () => {
         setupDatesHelpersMap(),
         resolveDependencyPath('@dabolus/portfolio-data/assets'),
       ]),
-    'Loading config and data...',
-    (time) => `Config and data loaded in ${time}`,
+    'Loading \x1b[35mconfig and data\x1b[0m...',
+    (time) => `\x1b[35mConfig and data\x1b[0m loaded in \x1b[36m${time}\x1b[0m`,
   )();
 
   const production = process.env.NODE_ENV === 'production';
@@ -47,13 +47,13 @@ const build = async () => {
   const [styles] = await Promise.all([
     logExecutionTime(
       buildStyles,
-      'Building styles...',
-      (time) => `Styles built in ${time}`,
+      'Building \x1b[35mstyles\x1b[0m...',
+      (time) => `\x1b[35mStyles\x1b[0m built in \x1b[36m${time}\x1b[0m`,
     )(outputPath, { production, data }),
     logExecutionTime(
       buildSitemap,
-      'Building sitemap...',
-      (time) => `Sitemap built in ${time}`,
+      'Building \x1b[35msitemap\x1b[0m...',
+      (time) => `\x1b[35mSitemap\x1b[0m built in \x1b[36m${time}\x1b[0m`,
     )(outputPath, {
       baseUrl: config.baseUrl,
       pages: [
@@ -69,8 +69,8 @@ const build = async () => {
     }),
     logExecutionTime(
       copyAssets,
-      'Copying assets...',
-      (time) => `Assets copied in ${time}`,
+      'Copying \x1b[35massets\x1b[0m...',
+      (time) => `\x1b[35mAssets\x1b[0m copied in \x1b[36m${time}\x1b[0m`,
     )([
       {
         from: 'src/assets/*',
@@ -83,15 +83,15 @@ const build = async () => {
     ]),
     logExecutionTime(
       downloadROMs,
-      'Downloading ROMs...',
-      (time) => `ROMs downloaded in ${time}`,
+      'Downloading \x1b[35mROMs\x1b[0m...',
+      (time) => `\x1b[35mROMs\x1b[0m downloaded in \x1b[36m${time}\x1b[0m`,
     )('dist/cartridges/roms'),
   ]);
 
   const scripts = await logExecutionTime(
     buildScripts,
-    'Building scripts...',
-    (time) => `Scripts built in ${time}`,
+    'Building \x1b[35mscripts\x1b[0m...',
+    (time) => `\x1b[35mScripts\x1b[0m built in \x1b[36m${time}\x1b[0m`,
   )(outputPath, {
     production,
     stylesOutput: styles,
@@ -142,19 +142,20 @@ const build = async () => {
           }),
         ),
       ]),
-    'Building templates...',
-    (time) => `Templates built in ${time}`,
+    'Building \x1b[35mtemplates\x1b[0m...',
+    (time) => `\x1b[35mTemplates\x1b[0m built in \x1b[36m${time}\x1b[0m`,
   )();
 
   await logExecutionTime(
     generateServiceWorker,
-    'Generating Service Worker...',
-    (time) => `Service Worker generated in ${time}`,
+    'Generating \x1b[35mService Worker\x1b[0m...',
+    (time) =>
+      `\x1b[35mService Worker\x1b[0m generated in \x1b[36m${time}\x1b[0m`,
   )(outputPath, availableLocales);
 };
 
 logExecutionTime(
   build,
-  'Building web app...',
-  (time) => `Web app built in ${time}`,
+  'Building \x1b[35mweb app\x1b[0m...',
+  (time) => `\x1b[35mWeb app\x1b[0m built in \x1b[36m${time}\x1b[0m`,
 )();

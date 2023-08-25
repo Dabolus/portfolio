@@ -196,8 +196,9 @@ const start = async () => {
             ]);
           },
           (_, changedPath) =>
-            `\x1b[32m${changedPath}\x1b[0m changed, rebuilding templates...`,
-          (time) => `Templates rebuilt in ${time}`,
+            `\x1b[32m${changedPath}\x1b[0m changed, rebuilding \x1b[35mtemplates\x1b[0m...`,
+          (time) =>
+            `\x1b[35mTemplates\x1b[0m rebuilt in \x1b[36m${time}\x1b[0m`,
         ),
         50,
       ),
@@ -213,8 +214,8 @@ const start = async () => {
           await buildStyles(outputPath, { production, data });
         },
         (_, changedPath) =>
-          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding styles...`,
-        (time) => `Styles rebuilt in ${time}`,
+          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding \x1b[35mstyles\x1b[0m...`,
+        (time) => `\x1b[35mStyles\x1b[0m rebuilt in \x1b[36m${time}\x1b[0m`,
       ),
       50,
     ),
@@ -231,8 +232,8 @@ const start = async () => {
           });
         },
         (_, changedPath) =>
-          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding scripts...`,
-        (time) => `Scripts rebuilt in ${time}`,
+          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding \x1b[35mscripts\x1b[0m...`,
+        (time) => `\x1b[35mScripts\x1b[0m rebuilt in \x1b[36m${time}\x1b[0m`,
       ),
       50,
     ),
@@ -260,8 +261,8 @@ const start = async () => {
             ]);
           },
           (_, changedPath) =>
-            `\x1b[32m${changedPath}\x1b[0m changed, copying assets...`,
-          (time) => `Assets copied in ${time}`,
+            `\x1b[32m${changedPath}\x1b[0m changed, copying \x1b[35massets\x1b[0m...`,
+          (time) => `\x1b[35mAssets\x1b[0m copied in \x1b[36m${time}\x1b[0m`,
         ),
         50,
       ),
@@ -280,8 +281,9 @@ const start = async () => {
             async () => {
               await generateServiceWorker(outputPath, availableLocales);
             },
-            'Regenerating Service Worker...',
-            (time) => `Service Worker regenerated in ${time}`,
+            'Regenerating \x1b[35mService Worker\x1b[0m...',
+            (time) =>
+              `\x1b[35mService Worker\x1b[0m regenerated in \x1b[36m${time}\x1b[0m`,
           ),
           950,
         ),
@@ -316,6 +318,6 @@ const start = async () => {
 
 logExecutionTime(
   start,
-  'Starting dev server...',
-  (time) => `Dev server started in ${time}`,
+  'Starting \x1b[35mdev server\x1b[0m...',
+  (time) => `\x1b[35mDev server\x1b[0m started in \x1b[36m${time}\x1b[0m`,
 )();
