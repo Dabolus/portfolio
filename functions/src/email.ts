@@ -1,5 +1,4 @@
 import functions from 'firebase-functions';
-import fetch from 'node-fetch';
 import nodemailer from 'nodemailer';
 import { stringify } from 'querystring';
 import { marked } from 'marked';

@@ -56,11 +56,13 @@ const getDependencies = (
   );
 };
 
+let esbuildCtx: esbuild.BuildContext;
+
 const createBundle = async (
   outputPath: string,
   { production, stylesOutput }: Omit<BuildScriptsOptions, 'data'>,
 ): Promise<BuildScriptsOutput> => {
-  const esresult = await esbuild.build({
+  const esbuildOptions: esbuild.BuildOptions = {
     entryPoints: [
       path.join(scriptsPath, 'main.ts'),
       path.join(scriptsPath, 'pages/home.ts'),
@@ -95,9 +97,15 @@ const createBundle = async (
     // Always consider import.meta as supported, as we are
     // going to replace import.meta.env at build time
     supported: { 'import-meta': true },
-  });
+  };
+  if (!production && !esbuildCtx) {
+    esbuildCtx = await esbuild.context(esbuildOptions);
+  }
+  const esbuildResult = production
+    ? await esbuild.build(esbuildOptions)
+    : await esbuildCtx.rebuild();
   const result = Object.fromEntries(
-    Object.entries(esresult.metafile.outputs)
+    Object.entries(esbuildResult.metafile.outputs)
       .filter(
         ([, { entryPoint }]) =>
           entryPoint &&
@@ -106,13 +114,15 @@ const createBundle = async (
           ),
       )
       .map(([key, { entryPoint }]) => [
-        Object.entries(pathToPageMap).find(([page]) =>
-          entryPoint?.endsWith(`${page}.ts`),
+        Object.entries(pathToPageMap).find(
+          ([page]) => entryPoint?.endsWith(`${page}.ts`),
         )![1],
         {
           fileName: path.relative('../dist', key),
-          dependencies: getDependencies(key, esresult.metafile.outputs, (p) =>
-            path.relative('../dist', p),
+          dependencies: getDependencies(
+            key,
+            esbuildResult.metafile.outputs,
+            (p) => path.relative('../dist', p),
           ),
         },
       ]),

@@ -6,11 +6,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "lerna run start --stream",
-    "build": "lerna run build --stream",
-    "start:pwa": "yarn workspace @portfolio/pwa start",
+    "start": "yarn workspaces foreach -pit run start",
+    "build": "yarn workspaces foreach -pit run build",
+    "start:pwa": "yarn workspace @portfolio/pwa run start",
     "build:pwa": "yarn workspace @portfolio/pwa run build",
-    "start:functions": "yarn workspace @portfolio/functions start",
+    "start:functions": "yarn workspace @portfolio/functions run start",
     "build:functions": "yarn workspace @portfolio/functions run build",
     "deploy": "firebase deploy",
     "lint": "eslint '**/*.{ts,js}'",
@@ -20,17 +20,16 @@
     "test:e2e:open": "start-server-and-test start:pwa http-get://localhost:3000 \"cypress open -C cypress/cypress.config.ts\""
   },
   "devDependencies": {
-    "@percy/cli": "^1.21.0",
+    "@percy/cli": "^1.26.3",
     "@percy/cypress": "^3.1.2",
     "@testing-library/cypress": "^9.0.0",
-    "axe-core": "^4.6.3",
-    "cypress": "^12.9.0",
+    "axe-core": "^4.7.2",
+    "cypress": "^12.17.4",
     "cypress-axe": "^1.4.0",
-    "firebase-tools": "^11.25.2",
+    "firebase-tools": "^12.5.2",
     "is-ci-cli": "^2.2.0",
-    "lerna": "^6.6.1",
     "start-server-and-test": "^2.0.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.2.2"
   },
   "workspaces": [
     "functions",
@@ -40,5 +39,5 @@
     "color": "3",
     "source-map": "0.8.0-beta.0"
   },
-  "packageManager": "yarn@3.2.4"
+  "packageManager": "yarn@3.6.3"
 }

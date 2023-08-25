@@ -1,10 +1,2 @@
-declare module '@rollup/plugin-babel';
-
-declare module '@csstools/postcss-sass' {
-  import { Options } from 'node-sass';
-  import { AcceptedPlugin } from 'postcss';
-
-  export default function (options?: Options): AcceptedPlugin;
-}
-
+declare module '@csstools/postcss-sass';
 declare module 'postcss-preset-env';

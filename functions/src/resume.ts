@@ -1,9 +1,7 @@
 import { App, initializeApp, getApp } from 'firebase-admin/app';
 import { getStorage, Storage } from 'firebase-admin/storage';
 import functions from 'firebase-functions';
-import fetch from 'node-fetch';
-import { stringify } from 'querystring';
-import type { Bucket } from '@google-cloud/storage';
+import { stringify } from 'node:querystring';
 
 enum ResumeError {
   INVALID_RESPONSE = 'INVALID_RESPONSE',
@@ -16,7 +14,7 @@ interface RetrieveResumeBody {
 
 let app: App;
 let storage: Storage;
-let bucket: Bucket;
+let bucket: ReturnType<Storage['bucket']>;
 
 const validateBody = ({ response }: RetrieveResumeBody) => {
   if (typeof response !== 'string' || !/^[\w-_]+$/.test(response)) {

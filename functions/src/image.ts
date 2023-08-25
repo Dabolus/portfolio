@@ -6,30 +6,23 @@ import sharp, { Sharp } from 'sharp';
 import primitive from 'primitive';
 import { optimize as svgOptimize } from 'svgo';
 import toSafeDataURI from 'mini-svg-data-uri';
-import type { Bucket } from '@google-cloud/storage';
-import type { CollectionReference } from '@google-cloud/firestore';
 
 const placeholderWidth = 256;
 const placeholderHeight = 256;
 
 let app: App;
 let storage: Storage;
+let bucket: ReturnType<Storage['bucket']>;
 let firestore: Firestore;
-let bucket: Bucket;
-let projectsCollection: CollectionReference;
-let certificationsCollection: CollectionReference;
+let projectsCollection: ReturnType<Firestore['collection']>;
+let certificationsCollection: ReturnType<Firestore['collection']>;
 
 const optimize = async (svg: string): Promise<string> => {
-  const result = svgOptimize(svg, {
+  const { data } = svgOptimize(svg, {
     multipass: true,
     floatPrecision: 1,
   });
-
-  if (result.modernError) {
-    throw result.modernError;
-  }
-
-  return result.data;
+  return data;
 };
 
 const patchSVGGroup = (svg: string): string => {
@@ -67,7 +60,7 @@ const generateWebp = async (
   sharpInstance: Sharp,
   entity: string,
   name: string,
-  bucket: Bucket,
+  bucket: ReturnType<Storage['bucket']>,
 ) => {
   process.stdout.write('Generating webp image...\n');
   const webpBuffer = await sharpInstance

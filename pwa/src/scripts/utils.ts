@@ -102,7 +102,12 @@ export const setupServiceWorker = async () => {
       .register(`${basePath}/sw.js`, {
         scope: `${basePath}/`,
       })
-      .catch(console.warn);
+      .catch((error) => {
+        if (import.meta.env.BROWSER_ENV !== 'production') {
+          // eslint-disable-next-line no-console
+          console.warn(error);
+        }
+      });
   }
 
   const trackInstallation = (sw: ServiceWorker) => {
@@ -219,7 +224,7 @@ const initializeAnalytics = async () => {
 const analyticsPromise = initializeAnalytics();
 
 type FirebaseLogEventParameters = Parameters<
-  typeof import('firebase/analytics')['logEvent']
+  (typeof import('firebase/analytics'))['logEvent']
 >;
 
 export const logEvent = async (
@@ -232,10 +237,12 @@ export const logEvent = async (
     import('firebase/analytics'),
   ]);
 
+  /* eslint-disable no-console */
   if (import.meta.env.BROWSER_ENV !== 'production') {
     console.groupCollapsed('Analytics event');
     console.info(`Name: ${eventName}`);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { offline, ...filteredParams } = eventParams as Record<
       string,
       unknown
@@ -247,9 +254,9 @@ export const logEvent = async (
     }
 
     console.groupEnd();
-
     return;
   }
+  /* eslint-enable no-console */
 
   return firebaseLogEvent(
     analytics,
