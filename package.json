@@ -6,8 +6,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "concurrently -k -n \"PWA,FUNCTIONS\" -c \"bgBlue.bold,bgMagenta.bold\" \"bun run start:pwa\" \"bun run start:functions\"",
-    "build": "concurrently -k -n \"PWA,FUNCTIONS\" -c \"bgBlue.bold,bgMagenta.bold\" \"bun run build:pwa\" \"bun run build:functions\"",
+    "start": "concurrently -n \"PWA,FUNCTIONS\" -c \"bgBlue.bold,bgMagenta.bold\" \"bun run start:pwa\" \"bun run start:functions\"",
+    "build": "concurrently -n \"PWA,FUNCTIONS\" -c \"bgBlue.bold,bgMagenta.bold\" \"bun run build:pwa\" \"bun run build:functions\"",
     "start:pwa": "cd pwa && bun run start",
     "build:pwa": "cd pwa && bun run build",
     "start:functions": "cd functions && bun run start",

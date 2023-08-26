@@ -6,7 +6,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "concurrently -k -n \"FIREBASE,SOURCE\" -c \"bgRed.bold,bgGreen.bold\" \"bun run start:firebase\" \"bun run start:functions\"",
+    "start": "concurrently -n \"FIREBASE,SOURCE\" -c \"bgRed.bold,bgGreen.bold\" \"bun run start:firebase\" \"bun run start:functions\"",
     "start:firebase": "cross-env NODE_ENV=development firebase emulators:start --only hosting,functions",
     "start:functions": "cross-env NODE_ENV=development bun run scripts/watch.ts",
     "build": "cross-env NODE_ENV=production bun run scripts/build.ts"
