@@ -19,4 +19,7 @@
 
   <%- await include('async-css-js') %>
   <%- await include('critical-css') %>
+  <% if (!config.production) { %>
+    <%- await include('hmr') %>
+  <% } %>
 </head>

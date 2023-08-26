@@ -1,0 +1,55 @@
+<script type="module">
+  const computeNewUrl = (url, updateTimestamp) =>
+    url.match(/v=\d+/)
+      ? url.replace(/v=\d+/, 'v=' + updateTimestamp)
+      : url + '?v=' + updateTimestamp;
+  const socket = new WebSocket(`ws://${window.location.host}/updates`);
+  socket.addEventListener('open', () => {
+    console.info('Connected to HMR server. Listening for updates...');
+  });
+  socket.addEventListener('message', event => {
+    const message = JSON.parse(event.data);
+    if (message.type !== 'update') {
+      return;
+    }
+    console.groupCollapsed('Files updated');
+    message.files.forEach(file => console.info(file));
+    console.groupEnd();
+    const updateTimestamp = Date.now();
+    if (message.files.some((file) => !file.endsWith('.js') && !file.endsWith('.css'))) {
+      window.location.reload();
+      return;
+    }
+    message.files.forEach(file => {
+      if (file.endsWith('.js')) {
+        const previousScript = document.querySelector(`script[src*='${file}']`);
+        // If we can't find the previous script, then it's most probably
+        // a dynamic import, so we reload the entire page to be safe
+        if (!previousScript) {
+          window.location.reload();
+          return;
+        }
+        const newScript = document.createElement('script');
+        newScript.type = previousScript.type;
+        newScript.async = previousScript.async;
+        newScript.defer = previousScript.defer;
+        newScript.src = computeNewUrl(previousScript.src, updateTimestamp);
+        previousScript.parentNode.insertBefore(newScript, previousScript.nextSibling);
+        previousScript.remove();
+        return;
+      }
+      if (file.endsWith('.css')) {
+        const previousLink = document.querySelector(`link[rel='stylesheet'][href*='${file}']`);
+        if (!previousLink) {
+          return;
+        }
+        const newLink = document.createElement('link');
+        newLink.rel = 'stylesheet';
+        newLink.type = 'text/css';
+        newLink.href = computeNewUrl(previousLink.href, updateTimestamp);
+        previousLink.parentNode.insertBefore(newLink, previousLink.nextSibling);
+        previousLink.remove();
+      }
+    });
+  });
+</script>

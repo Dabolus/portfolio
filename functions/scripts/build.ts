@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import esbuild from 'esbuild';
 import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve';
 import {

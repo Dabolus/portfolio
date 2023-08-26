@@ -1,9 +1,13 @@
-import { dirname, resolve } from 'node:path';
+import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { performance } from 'node:perf_hooks';
 
-export const resolveDependencyPath = async (dependency: string) =>
-  fileURLToPath(await import.meta.resolve!(dependency));
+export const resolveDependencyPath = async (dependency: string) => {
+  const packageJsonPath = await import.meta.resolve!(
+    join(dependency, 'package.json'),
+  );
+  return dirname(packageJsonPath);
+};
 
 export const computeDirname = (importMetaUrl: string) =>
   dirname(fileURLToPath(importMetaUrl));
@@ -17,7 +21,7 @@ const numberFormat = new Intl.NumberFormat('en-US', {
 });
 
 export const logExecutionTime =
-  <T extends (...args: any[]) => Promise<any>>(
+  <T extends (...args: any[]) => any>(
     fn: T,
     startLogTemplate: string | ((...args: Parameters<T>) => string),
     endLogTemplate: string | ((time: string, ...args: Parameters<T>) => string),

@@ -36,7 +36,9 @@ const build = async () => {
         getAvailableLocales(),
         setupI18nHelpersMap(),
         setupDatesHelpersMap(),
-        resolveDependencyPath('@dabolus/portfolio-data/assets'),
+        resolveDependencyPath('@dabolus/portfolio-data').then((packagePath) =>
+          path.resolve(packagePath, 'assets'),
+        ),
       ]),
     'Loading \x1b[35mconfig and data\x1b[0m...',
     (time) => `\x1b[35mConfig and data\x1b[0m loaded in \x1b[36m${time}\x1b[0m`,
@@ -112,6 +114,7 @@ const build = async () => {
             config: {
               ...config,
               locale: config.defaultLocale,
+              production,
             },
             data,
             helpers: {
@@ -129,6 +132,7 @@ const build = async () => {
               config: {
                 ...config,
                 locale,
+                production,
               },
               data,
               helpers: {

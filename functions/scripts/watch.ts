@@ -1,5 +1,5 @@
-import path from 'path';
-import chokidar from 'chokidar';
+import fs from 'node:fs';
+import path from 'node:path';
 import esbuild from 'esbuild';
 import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve';
 import {
@@ -9,12 +9,13 @@ import {
   __dirname,
   logExecutionTime,
 } from './utils.js';
+import { watch } from './watcher.js';
 
 process.chdir(path.join(__dirname, '..'));
 
-let context;
+let context: esbuild.BuildContext;
 
-const build = async (_, changedPath) => {
+const build: fs.WatchListener<string> = async (_, changedPath) => {
   try {
     if (!context) {
       context = await logExecutionTime(
@@ -66,12 +67,8 @@ const build = async (_, changedPath) => {
 
 logExecutionTime(
   async () => {
-    const watcher = chokidar.watch('src/**/*.ts', {
-      ignoreInitial: true,
-    });
-
-    watcher.on('all', build);
+    watch('src/**/*.ts', { ignoreInitial: true }, build);
   },
   'Starting \x1b[35mdev server\x1b[0m...',
   (time) => `\x1b[35mDev server\x1b[0m started in \x1b[36m${time}\x1b[0m`,
-)().then(() => build());
+)().then(() => build('rename', null));

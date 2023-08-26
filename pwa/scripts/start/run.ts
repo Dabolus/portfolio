@@ -1,7 +1,6 @@
+import fs from 'node:fs';
 import path from 'node:path';
-import chokidar from 'chokidar';
 import { debounce } from 'lodash-es';
-import browserSync from 'browser-sync';
 import { compileTemplate, buildTemplate } from '../build/templates.js';
 import { buildScripts } from '../build/scripts.js';
 import { buildStyles } from '../build/styles.js';
@@ -24,6 +23,8 @@ import {
   logExecutionTime,
   resolveDependencyPath,
 } from '../helpers/utils.js';
+import { createServer } from './server.js';
+import { watch } from './watcher.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -117,102 +118,123 @@ const getDataWithCache = async (): Promise<Data> => {
 
 const start = async () => {
   const cwd = path.resolve(__dirname, '../..');
-  const bs = browserSync.create();
 
   const production = process.env.NODE_ENV === 'production';
 
   const [availableLocales, portfolioDataAssetsPath] = await Promise.all([
     getAvailableLocales(),
-    resolveDependencyPath('@dabolus/portfolio-data/assets'),
+    resolveDependencyPath('@dabolus/portfolio-data').then((packagePath) =>
+      path.resolve(packagePath, 'assets'),
+    ),
   ]);
 
-  chokidar
-    .watch(
-      [
-        'src/index.ejs',
-        'src/fragments/**/*.ejs',
-        'src/data/**/*.yml',
-        'src/locales/**/*.po',
-      ],
-      {
-        cwd,
-      },
-    )
-    .on(
-      'all',
-      debounce(
-        logExecutionTime(
-          async (_, changedPath) => {
-            const [config, data, i18nHelpersMap, datesHelpersMap] =
-              await Promise.all([
-                getConfig(),
-                getDataWithCache(),
-                setupI18nHelpersMap(),
-                setupDatesHelpersMap(),
-              ]);
-
-            await Promise.all([
-              compileTemplate(outputPath, {
-                partial: true,
-                fragment: 'landing',
-                outputPath: 'index.html',
-                pageData: {
-                  page: {
-                    id: 'landing',
-                    description: 'Landing page',
-                  },
-                  config: {
-                    ...config,
-                    locale: config.defaultLocale,
-                  },
-                  data,
-                  helpers: {
-                    ...i18nHelpersMap[config.defaultLocale],
-                    ...datesHelpersMap[config.defaultLocale],
-                    generateStructuredData,
-                  },
-                  output,
-                },
-                production,
-              }),
-              ...availableLocales.map((locale) =>
-                buildTemplate(path.resolve(outputPath, locale), {
-                  data: {
-                    config: {
-                      ...config,
-                      locale,
-                    },
-                    data,
-                    helpers: {
-                      ...i18nHelpersMap[locale],
-                      ...datesHelpersMap[locale],
-                      generateStructuredData,
-                    },
-                    output,
-                  },
-                  production,
-                }),
-              ),
-            ]);
+  const buildDevTemplates = async () => {
+    const [config, data, i18nHelpersMap, datesHelpersMap] = await Promise.all([
+      getConfig(),
+      getDataWithCache(),
+      setupI18nHelpersMap(),
+      setupDatesHelpersMap(),
+    ]);
+    await Promise.all([
+      compileTemplate(outputPath, {
+        partial: true,
+        fragment: 'landing',
+        outputPath: 'index.html',
+        pageData: {
+          page: {
+            id: 'landing',
+            description: 'Landing page',
           },
-          (_, changedPath) =>
-            `\x1b[32m${changedPath}\x1b[0m changed, rebuilding \x1b[35mtemplates\x1b[0m...`,
-          (time) =>
-            `\x1b[35mTemplates\x1b[0m rebuilt in \x1b[36m${time}\x1b[0m`,
-        ),
-        50,
-      ),
-    );
-
-  chokidar.watch(['src/styles/**/*.scss', 'src/data/**/*.yml'], { cwd }).on(
-    'all',
-    debounce(
-      logExecutionTime(
-        async (_, changedPath) => {
-          const data = await getDataWithCache();
-
-          await buildStyles(outputPath, { production, data });
+          config: {
+            ...config,
+            locale: config.defaultLocale,
+            production,
+          },
+          data,
+          helpers: {
+            ...i18nHelpersMap[config.defaultLocale],
+            ...datesHelpersMap[config.defaultLocale],
+            generateStructuredData,
+          },
+          output,
         },
+        production,
+      }),
+      ...availableLocales.map((locale) =>
+        buildTemplate(path.resolve(outputPath, locale), {
+          data: {
+            config: {
+              ...config,
+              locale,
+              production,
+            },
+            data,
+            helpers: {
+              ...i18nHelpersMap[locale],
+              ...datesHelpersMap[locale],
+              generateStructuredData,
+            },
+            output,
+          },
+          production,
+        }),
+      ),
+    ]);
+  };
+  const buildDevStyles = async () => {
+    const data = await getDataWithCache();
+    await buildStyles(outputPath, { production, data });
+  };
+  const buildDevScripts = async () => {
+    await buildScripts(outputPath, {
+      production,
+      stylesOutput: output.styles,
+    });
+  };
+  const copyDevAssets = async () => {
+    await Promise.all([
+      copyAssets([
+        {
+          from: 'src/assets/*',
+          to: 'dist',
+        },
+        {
+          from: `${portfolioDataAssetsPath}/*`,
+          to: 'dist',
+        },
+      ]),
+      downloadROMs('dist/cartridges/roms'),
+    ]);
+  };
+  const generateDevServiceWorker = async () => {
+    await generateServiceWorker(outputPath, availableLocales);
+  };
+
+  watch(
+    [
+      'src/index.ejs',
+      'src/fragments/**/*.ejs',
+      'src/data/**/*.yml',
+      'src/locales/**/*.po',
+    ],
+    { cwd, ignoreInitial: true },
+    debounce(
+      logExecutionTime<fs.WatchListener<string>>(
+        buildDevTemplates,
+        (_, changedPath) =>
+          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding \x1b[35mtemplates\x1b[0m...`,
+        (time) => `\x1b[35mTemplates\x1b[0m rebuilt in \x1b[36m${time}\x1b[0m`,
+      ),
+      50,
+    ),
+  );
+
+  watch(
+    ['src/styles/**/*.scss', 'src/data/**/*.yml'],
+    { cwd, ignoreInitial: true },
+    debounce(
+      logExecutionTime<fs.WatchListener<string>>(
+        buildDevStyles,
         (_, changedPath) =>
           `\x1b[32m${changedPath}\x1b[0m changed, rebuilding \x1b[35mstyles\x1b[0m...`,
         (time) => `\x1b[35mStyles\x1b[0m rebuilt in \x1b[36m${time}\x1b[0m`,
@@ -221,16 +243,12 @@ const start = async () => {
     ),
   );
 
-  chokidar.watch(['src/typings.d.ts', 'src/scripts/**/*.ts'], { cwd }).on(
-    'all',
+  watch(
+    ['src/typings.d.ts', 'src/scripts/**/*.ts'],
+    { cwd, ignoreInitial: true },
     debounce(
-      logExecutionTime(
-        async (_, changedPath) => {
-          await buildScripts(outputPath, {
-            production,
-            stylesOutput: output.styles,
-          });
-        },
+      logExecutionTime<fs.WatchListener<string>>(
+        buildDevScripts,
         (_, changedPath) =>
           `\x1b[32m${changedPath}\x1b[0m changed, rebuilding \x1b[35mscripts\x1b[0m...`,
         (time) => `\x1b[35mScripts\x1b[0m rebuilt in \x1b[36m${time}\x1b[0m`,
@@ -239,81 +257,68 @@ const start = async () => {
     ),
   );
 
-  chokidar
-    .watch(['src/assets/**/*', `${portfolioDataAssetsPath}/**/*`], { cwd })
-    .on(
-      'all',
-      debounce(
-        logExecutionTime(
-          async (_, changedPath) => {
-            await Promise.all([
-              copyAssets([
-                {
-                  from: 'src/assets/*',
-                  to: 'dist',
-                },
-                {
-                  from: `${portfolioDataAssetsPath}/*`,
-                  to: 'dist',
-                },
-              ]),
-              downloadROMs('dist/cartridges/roms'),
-            ]);
-          },
-          (_, changedPath) =>
-            `\x1b[32m${changedPath}\x1b[0m changed, copying \x1b[35massets\x1b[0m...`,
-          (time) => `\x1b[35mAssets\x1b[0m copied in \x1b[36m${time}\x1b[0m`,
-        ),
-        50,
+  watch(
+    ['src/assets/**/*', `${portfolioDataAssetsPath}/**/*`],
+    { cwd, ignoreInitial: true },
+    debounce(
+      logExecutionTime<fs.WatchListener<string>>(
+        copyDevAssets,
+        (_, changedPath) =>
+          `\x1b[32m${changedPath}\x1b[0m changed, copying \x1b[35massets\x1b[0m...`,
+        (time) => `\x1b[35mAssets\x1b[0m copied in \x1b[36m${time}\x1b[0m`,
       ),
-    );
+      50,
+    ),
+  );
 
   if (process.env.ENABLE_SERVICE_WORKER) {
-    chokidar
-      .watch('dist/**/*', {
+    watch(
+      'dist/**/*',
+      {
         cwd,
+        ignoreInitial: true,
         ignored: ['**/sw.js*', '**/workbox*'],
-      })
-      .on(
-        'all',
-        debounce(
-          logExecutionTime(
-            async () => {
-              await generateServiceWorker(outputPath, availableLocales);
-            },
-            'Regenerating \x1b[35mService Worker\x1b[0m...',
-            (time) =>
-              `\x1b[35mService Worker\x1b[0m regenerated in \x1b[36m${time}\x1b[0m`,
-          ),
-          950,
+      },
+      debounce(
+        logExecutionTime<fs.WatchListener<string>>(
+          generateDevServiceWorker,
+          'Regenerating \x1b[35mService Worker\x1b[0m...',
+          (time) =>
+            `\x1b[35mService Worker\x1b[0m regenerated in \x1b[36m${time}\x1b[0m`,
         ),
-      );
+        950,
+      ),
+    );
   }
 
-  bs.init({
-    server: {
-      baseDir: path.resolve(cwd, 'dist'),
-      serveStaticOptions: { extensions: ['html'] },
-      middleware: [
-        (_, res, next) => {
-          res.setHeader('service-worker-allowed', '/');
-          next();
-        },
-      ],
+  await logExecutionTime(
+    () =>
+      Promise.all([
+        buildDevTemplates(),
+        buildDevStyles(),
+        buildDevScripts(),
+        copyDevAssets(),
+        ...(process.env.ENABLE_SERVICE_WORKER
+          ? [generateDevServiceWorker()]
+          : []),
+      ]),
+    'Creating \x1b[35minitial build\x1b[0m...',
+    (time) => `\x1b[35mInitial build\x1b[0m created in \x1b[36m${time}\x1b[0m`,
+  )();
+
+  await logExecutionTime(
+    createServer,
+    'Creating \x1b[35mHMR server\x1b[0m...',
+    (time) => `\x1b[35mHMR server\x1b[0m created in \x1b[36m${time}\x1b[0m`,
+  )({
+    baseDir: outputPath,
+    serveStaticOptions: {
+      headers: {
+        'service-worker-allowed': '/',
+      },
     },
-    open: false,
-    notify: false,
+    reloadDebounce: 50,
   });
-
-  chokidar.watch('dist/**/*.css', { cwd }).on(
-    'all',
-    debounce(() => bs.reload('*.css'), 50),
-  );
-
-  chokidar.watch('dist/**/*', { cwd, ignored: '**/*.css' }).on(
-    'all',
-    debounce(() => bs.reload(), 150),
-  );
 };
 
 logExecutionTime(

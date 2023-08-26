@@ -57,10 +57,10 @@ export const generatePicture = (
           ? 'class="pixelated" '
           : ''
       }style="background-image: url(&#34;${placeholder}&#34;);" src="../images/${category}/${id}.${
-    iconFormatsExtensionsExceptions[fallbackFormat] || fallbackFormat
-  }" alt="${name}" title="${name}" loading="lazy" lazyload${
-    width ? ` width="${width}" height="${height}"` : ''
-  }>
+        iconFormatsExtensionsExceptions[fallbackFormat] || fallbackFormat
+      }" alt="${name}" title="${name}" loading="lazy" lazyload${
+        width ? ` width="${width}" height="${height}"` : ''
+      }>
     </picture>
   `;
 };

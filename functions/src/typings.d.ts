@@ -3,7 +3,7 @@ declare module 'primitive' {
     toSVG(): string;
   }
 
-  export default function(opts: {
+  export default function (opts: {
     input: string;
     output?: string;
     numSteps?: number;
@@ -26,5 +26,5 @@ declare module 'primitive' {
 }
 
 declare module 'mini-svg-data-uri' {
-  export default function(svg: string): string;
+  export default function (svg: string): string;
 }

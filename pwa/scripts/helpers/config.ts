@@ -30,20 +30,23 @@ export interface ConfigData {
   readonly pages: Record<string, PageData>;
 }
 
-export interface ParsedConfigWithoutLocale extends Omit<ConfigData, 'pages'> {
+export interface ParsedConfigWithoutDynamicFields
+  extends Omit<ConfigData, 'pages'> {
   readonly pages: Record<string, ParsedPage>;
 }
-export interface ParsedConfig extends ParsedConfigWithoutLocale {
+export interface ParsedConfig extends ParsedConfigWithoutDynamicFields {
   readonly locale: string;
+  readonly production: boolean;
 }
 
-export const getConfig = async (): Promise<ParsedConfigWithoutLocale> => {
-  const { pages, ...config } = (await readConfigFile('config')) as ConfigData;
+export const getConfig =
+  async (): Promise<ParsedConfigWithoutDynamicFields> => {
+    const { pages, ...config } = (await readConfigFile('config')) as ConfigData;
 
-  return {
-    ...config,
-    pages: Object.fromEntries(
-      Object.entries(pages).map(([id, page]) => [id, { id, ...page }]),
-    ),
+    return {
+      ...config,
+      pages: Object.fromEntries(
+        Object.entries(pages).map(([id, page]) => [id, { id, ...page }]),
+      ),
+    };
   };
-};

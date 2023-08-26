@@ -10,7 +10,8 @@
     "checkJs": true,
     "esModuleInterop": true,
     "lib": ["dom", "dom.iterable", "es2020"],
-    "target": "es2020"
+    "target": "es2020",
+    "types": ["bun-types"]
   },
   "include": ["pwa/src/**/*.ts", "pwa/scripts/**/*.ts"]
 }

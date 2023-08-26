@@ -8,12 +8,6 @@ functions/.runtimeconfig.json
 *.log
 .scripts-compiled/
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
 /test-results/
 /playwright-report/
 /playwright/.cache/

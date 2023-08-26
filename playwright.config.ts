@@ -85,7 +85,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'yarn start:pwa',
+    command: 'bun run start:pwa',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },

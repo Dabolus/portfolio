@@ -1,7 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import childProcess from 'child_process';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs';
+import path from 'node:path';
+import childProcess from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 export const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -15,8 +15,8 @@ export const entryPoints = fs
 export const outDir = path.join(__dirname, '../lib');
 
 export const typeCheck = () =>
-  new Promise((resolve, reject) =>
-    childProcess.exec(`tsc -p tsconfig.json`, (error, stdout) =>
+  new Promise<void>((resolve, reject) =>
+    childProcess.exec(`bun run --bun tsc -p tsconfig.json`, (error, stdout) =>
       error ? reject(stdout) : resolve(),
     ),
   );
@@ -26,8 +26,12 @@ const numberFormat = new Intl.NumberFormat('en-US', {
 });
 
 export const logExecutionTime =
-  (fn, startLogTemplate, endLogTemplate) =>
-  async (...args) => {
+  <T extends (...args: any[]) => any>(
+    fn: T,
+    startLogTemplate: string | ((...args: Parameters<T>) => string),
+    endLogTemplate: string | ((time: string, ...args: Parameters<T>) => string),
+  ) =>
+  async (...args: Parameters<T>): Promise<Awaited<ReturnType<T>>> => {
     console.log(
       typeof startLogTemplate === 'string'
         ? startLogTemplate
@@ -46,5 +50,5 @@ export const logExecutionTime =
         ? endLogTemplate
         : endLogTemplate(prettyTime, ...args),
     );
-    return result;
+    return result as Awaited<ReturnType<T>>;
   };

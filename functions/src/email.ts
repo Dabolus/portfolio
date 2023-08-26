@@ -91,7 +91,7 @@ const sanitize = (str: string) =>
         "'": '&apos;',
         '<': '&lt;',
         '>': '&gt;',
-      }[char as '&' | '"' | "'" | '<' | '>']),
+      })[char as '&' | '"' | "'" | '<' | '>'],
   );
 
 export const sendEmail = functions.https.onRequest(
