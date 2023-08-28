@@ -31,5 +31,8 @@
     "esbuild": "^0.19.2",
     "globby": "^13.2.2",
     "typescript": "^5.2.2"
-  }
+  },
+  "trustedDependencies": [
+    "sharp"
+  ]
 }
