@@ -20,7 +20,7 @@ jobs:
         with:
           bun-version: 0.8.1
       - name: Install deps
-        run: bun install --frozen-lockfile && bun run playwright install --with-deps
+        run: bun install --frozen-lockfile && bun run playwright install --with-deps && cd node_modules/sharp && bun install
       - name: Run E2E tests
         run: bun run test:e2e
         env:
