@@ -18,28 +18,12 @@
     ],
     "rewrites": [
       {
-        "source": "/api/projects",
-        "function": "getProjects"
-      },
-      {
-        "source": "/api/certifications",
-        "function": "getCertifications"
-      },
-      {
-        "source": "/api/skills",
-        "function": "getSkills"
-      },
-      {
         "source": "/api/email",
         "function": "sendEmail"
       },
       {
         "source": "/api/resume",
         "function": "retrieveResume"
-      },
-      {
-        "source": "/",
-        "function": "redirect"
       }
     ],
     "redirects": [
