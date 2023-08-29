@@ -2,21 +2,19 @@ import purgeCache from './cloudflare.js';
 import audit from './lighthouse.js';
 import sendDocuments from './telegram.js';
 
-const postdeploy = async () => {
+const postdeploy = async (): Promise<void> => {
   try {
     await purgeCache();
 
     const report = await audit();
 
-    process.stdout.write('Sending report to Telegram...\n');
+    console.log('Sending report to Telegram...');
     await sendDocuments(report);
 
-    process.stdout.write('Report successfully sent to Telegram.\n');
+    console.log('Report successfully sent to Telegram.');
     process.exit(0);
-  } catch ({ message }) {
-    process.stderr.write(
-      `Error while generating Lighthouse report!\n\n${message}\n`,
-    );
+  } catch (error) {
+    console.error('Error while generating Lighthouse report!', error);
     process.exit(1);
   }
 };

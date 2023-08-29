@@ -13,5 +13,5 @@
     "target": "es2020",
     "types": ["bun-types"]
   },
-  "include": ["pwa/src/**/*.ts", "pwa/scripts/**/*.ts"]
+  "include": ["pwa/src/**/*.ts", "pwa/scripts/**/*.ts", "scripts/**/*.ts"]
 }

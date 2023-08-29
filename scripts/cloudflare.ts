@@ -8,8 +8,8 @@ const {
   },
 } = process;
 
-export default async () => {
-  process.stdout.write('Purging CloudFlare cache...\n');
+export default async (): Promise<void> => {
+  console.log('Purging CloudFlare cache...');
   const cloudflareRes = await fetch(
     `https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`,
     {
@@ -26,7 +26,7 @@ export default async () => {
   );
   await cloudflareRes.text();
 
-  process.stdout.write('Warming up new CloudFlare cache...\n');
+  console.log('Warming up new CloudFlare cache...');
   await Promise.all(
     pages.map(async ({ url }) => {
       const pageRes = await fetch(`${baseUrl}${url}`);
