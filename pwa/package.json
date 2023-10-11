@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-sass": "^5.0.1",
-    "@dabolus/portfolio-data": "^0.16.0",
+    "@dabolus/portfolio-data": "^0.17.0",
     "@esbuild-plugins/node-resolve": "^0.2.2",
     "@types/ejs": "^3.1.2",
     "@types/file-saver": "^2.0.5",
