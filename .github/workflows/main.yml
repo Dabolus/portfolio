@@ -34,7 +34,7 @@ jobs:
           path: playwright-report/
           retention-days: 30
       - name: Build
-        run: bun run build:pwa && bun run build:functions
+        run: bun run build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Deploy
