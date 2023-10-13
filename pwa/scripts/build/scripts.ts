@@ -118,11 +118,11 @@ const createBundle = async (
           ([page]) => entryPoint?.endsWith(`${page}.ts`),
         )![1],
         {
-          fileName: path.relative('../dist', key),
+          fileName: path.relative('dist', key),
           dependencies: getDependencies(
             key,
             esbuildResult.metafile.outputs,
-            (p) => path.relative('../dist', p),
+            (p) => path.relative('dist', p),
           ),
         },
       ]),
