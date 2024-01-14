@@ -49,7 +49,7 @@ jobs:
           # Install libgbm
           sudo apt-get -y install libgbm1 fonts-roboto
           # Install Puppeteer browsers
-          bun run node_modules/puppeteer/install.js
+          bun run node_modules/puppeteer/install.mjs
           # Run the postdeploy script
           bun run scripts/postdeploy.ts
         env:
