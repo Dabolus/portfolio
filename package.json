@@ -17,7 +17,8 @@
     "format": "bun run --bun prettier --write '**/*.{ts,js,scss}'",
     "test:e2e": "is-ci test:e2e:run test:e2e:open",
     "test:e2e:run": "percy exec -- playwright test",
-    "test:e2e:open": "playwright test --ui"
+    "test:e2e:open": "playwright test --ui",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.7.3",
@@ -31,6 +32,7 @@
     "is-ci-cli": "^2.2.0",
     "lighthouse": "^11.0.0",
     "node-telegram-bot-api": "^0.61.0",
+    "patch-package": "^8.0.0",
     "puppeteer": "^21.1.0",
     "sharp": "^0.32.5",
     "typescript": "^5.2.2"
