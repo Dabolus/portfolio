@@ -7,10 +7,6 @@
       <%# We consider the first locale in the array to be the default one %>
       <loc><%= `${baseUrl}/${locales[0]}/${slug}` %></loc>
       <xhtml:link rel="alternate" hreflang="x-default" href="<%= `${baseUrl}/${locales[0]}/${slug}` %>" />
-      <%# For the home page, we also add the root URL %>
-      <% if (page === 'home') { %>
-        <xhtml:link rel="alternate" hreflang="x-default" href="<%= baseUrl %>" />
-      <% } %>
       <% locales.forEach(locale => { %>
         <xhtml:link rel="alternate" hreflang="<%= locale %>" href="<%= `${baseUrl}/${locale}/${slug}` %>" />
       <% }) %>
