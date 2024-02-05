@@ -1,29 +1,12 @@
-import functions from 'firebase-functions';
+import { onRequest } from 'firebase-functions/v2/https';
+import { defineSecret } from 'firebase-functions/params';
 import nodemailer from 'nodemailer';
+import type SMTPTransport from 'nodemailer/lib/smtp-transport/index.js';
 import { stringify } from 'querystring';
 import { marked } from 'marked';
-import { RuntimeConfig } from './models.js';
 
-const {
-  to,
-  host,
-  port,
-  secure,
-  auth: { user, id: clientId, secret: clientSecret, token: refreshToken },
-} = (functions.config() as RuntimeConfig).mail;
-
-const mailTransport = nodemailer.createTransport({
-  host,
-  port,
-  secure,
-  auth: {
-    type: 'OAuth2',
-    user,
-    clientId,
-    clientSecret,
-    refreshToken,
-  },
-});
+const recaptchaSecret = defineSecret('RECAPTCHA_SECRET');
+const mailConfigJson = defineSecret('MAIL_CONFIG');
 
 enum EmailError {
   INVALID_NAME = 'INVALID_NAME',
@@ -94,7 +77,31 @@ const sanitize = (str: string) =>
       })[char as '&' | '"' | "'" | '<' | '>'],
   );
 
-export const sendEmail = functions.https.onRequest(
+let cachedMailTransport: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
+const setupMailTransport = (): {
+  from: string;
+  to: string;
+  transport: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
+} => {
+  const { from, to, host, port, username, password } = JSON.parse(
+    mailConfigJson.value(),
+  );
+
+  cachedMailTransport ||= nodemailer.createTransport({
+    host,
+    port,
+    secure: false,
+    auth: {
+      user: username,
+      pass: password,
+    },
+  });
+
+  return { from, to, transport: cachedMailTransport };
+};
+
+export const sendEmail = onRequest(
+  { cors: true, secrets: [recaptchaSecret, mailConfigJson] },
   async (
     {
       body: {
@@ -118,7 +125,7 @@ export const sendEmail = functions.https.onRequest(
     try {
       const recaptchaRes = await fetch(
         `https://www.google.com/recaptcha/api/siteverify?${stringify({
-          secret: functions.config().recaptcha.secret,
+          secret: recaptchaSecret.value(),
           response,
           ...(remoteip ? { remoteip } : {}),
         })}`,
@@ -130,8 +137,10 @@ export const sendEmail = functions.https.onRequest(
         return;
       }
 
+      const { from, to, transport: mailTransport } = setupMailTransport();
+
       await mailTransport.sendMail({
-        from: `${sanitize(name)} <${email}>`,
+        from: `${sanitize(name)} <${from}>`,
         to,
         replyTo: email,
         subject: sanitize(subject),
