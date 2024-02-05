@@ -18,6 +18,10 @@
     ],
     "rewrites": [
       {
+        "source": "/",
+        "function": "redirectToPreferredLocale"
+      },
+      {
         "source": "/api/email",
         "function": "sendEmail"
       },
