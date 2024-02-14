@@ -19,7 +19,45 @@
     "rewrites": [
       {
         "source": "/",
-        "function": "redirectToPreferredLocale"
+        "function": {
+          "functionId": "redirectToPreferredLocale",
+          "pinTag": true
+        }
+      },
+      {
+        "source": "/about",
+        "function": {
+          "functionId": "redirectToPreferredLocale",
+          "pinTag": true
+        }
+      },
+      {
+        "source": "/certifications",
+        "function": {
+          "functionId": "redirectToPreferredLocale",
+          "pinTag": true
+        }
+      },
+      {
+        "source": "/contacts",
+        "function": {
+          "functionId": "redirectToPreferredLocale",
+          "pinTag": true
+        }
+      },
+      {
+        "source": "/projects",
+        "function": {
+          "functionId": "redirectToPreferredLocale",
+          "pinTag": true
+        }
+      },
+      {
+        "source": "/skills",
+        "function": {
+          "functionId": "redirectToPreferredLocale",
+          "pinTag": true
+        }
       },
       {
         "source": "/api/email",
