@@ -101,32 +101,8 @@ const build = async () => {
 
   await logExecutionTime(
     () =>
-      Promise.all([
-        compileTemplate(outputPath, {
-          partial: true,
-          fragment: 'landing',
-          outputPath: 'index.html',
-          pageData: {
-            page: {
-              id: 'landing',
-              description: 'Landing page',
-            },
-            config: {
-              ...config,
-              locale: config.defaultLocale,
-              production,
-            },
-            data,
-            helpers: {
-              ...i18nHelpersMap[config.defaultLocale],
-              ...datesHelpersMap[config.defaultLocale],
-              generateStructuredData,
-            },
-            output: { scripts, styles },
-          },
-          production,
-        }),
-        ...availableLocales.map((locale) =>
+      Promise.all(
+        availableLocales.map((locale) =>
           buildTemplate(path.join(outputPath, locale), {
             data: {
               config: {
@@ -145,7 +121,7 @@ const build = async () => {
             production,
           }),
         ),
-      ]),
+      ),
     'Building \x1b[35mtemplates\x1b[0m...',
     (time) => `\x1b[35mTemplates\x1b[0m built in \x1b[36m${time}\x1b[0m`,
   )();

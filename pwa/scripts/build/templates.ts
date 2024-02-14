@@ -25,7 +25,6 @@ const getTemplateInfo = (relativePath: string): TemplateData => {
 };
 
 const templates = {
-  landing: getTemplateInfo('landing.ejs'),
   index: getTemplateInfo('index.ejs'),
   home: getTemplateInfo('fragments/body/home.ejs'),
   about: getTemplateInfo('fragments/body/pages/about.ejs'),

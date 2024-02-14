@@ -135,32 +135,8 @@ const start = async () => {
       setupI18nHelpersMap(),
       setupDatesHelpersMap(),
     ]);
-    await Promise.all([
-      compileTemplate(outputPath, {
-        partial: true,
-        fragment: 'landing',
-        outputPath: 'index.html',
-        pageData: {
-          page: {
-            id: 'landing',
-            description: 'Landing page',
-          },
-          config: {
-            ...config,
-            locale: config.defaultLocale,
-            production,
-          },
-          data,
-          helpers: {
-            ...i18nHelpersMap[config.defaultLocale],
-            ...datesHelpersMap[config.defaultLocale],
-            generateStructuredData,
-          },
-          output,
-        },
-        production,
-      }),
-      ...availableLocales.map((locale) =>
+    await Promise.all(
+      availableLocales.map((locale) =>
         buildTemplate(path.resolve(outputPath, locale), {
           data: {
             config: {
@@ -179,7 +155,7 @@ const start = async () => {
           production,
         }),
       ),
-    ]);
+    );
   };
   const buildDevStyles = async () => {
     const data = await getDataWithCache();
