@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { debounce } from 'lodash-es';
-import { compileTemplate, buildTemplate } from '../build/templates.js';
+import { buildTemplate } from '../build/templates.js';
 import { buildScripts } from '../build/scripts.js';
 import { buildStyles } from '../build/styles.js';
 import { generateServiceWorker } from '../build/sw.js';

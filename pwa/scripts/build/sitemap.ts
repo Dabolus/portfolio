@@ -4,6 +4,7 @@ import { render as renderTemplate } from 'ejs';
 import { minify as minifyTemplate } from 'html-minifier';
 import { getAvailableLocales } from '../helpers/i18n.js';
 import { computeDirname } from '../helpers/utils.js';
+import { Helpers } from './models.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -12,31 +13,31 @@ export interface BuildSitemapData {
   readonly pages: readonly string[];
   readonly extraPages?: readonly string[];
   readonly defaultLocale: string;
+  readonly helpers: Helpers;
 }
 
 const sitemapTemplatePath = path.join(__dirname, '../../src/sitemap.ejs');
 
 export const buildSitemap = async (
   outputDir: string,
-  { baseUrl, pages, extraPages, defaultLocale }: BuildSitemapData,
+  { baseUrl, pages, extraPages, defaultLocale, helpers }: BuildSitemapData,
 ): Promise<void> => {
   const [template, availableLocales] = await Promise.all([
     fs.readFile(sitemapTemplatePath, 'utf8'),
     getAvailableLocales(),
   ]);
 
-  // Make sure that the default locale is the first one in the array
-  const locales = Array.from(availableLocales).sort((locale) =>
-    locale === defaultLocale ? -1 : 0,
-  );
+  const locales = Array.from(availableLocales);
 
   const renderedTemplate = await renderTemplate(
     template,
     {
       pages,
       locales,
+      defaultLocale,
       baseUrl,
       extraPages,
+      helpers,
       now: new Date().toISOString(),
     },
     {

@@ -2,13 +2,16 @@
   <%# The pages should be sorted by priority %>
   <%# NOTE: we assume a maximum of 11 pages %>
   <% pages.forEach((page, index) => { %>
-    <% const slug = page === 'home' ? '' : page %>
+    <% const slugKey = page === 'home' ? '' : `${page}Slug` %>
+    <% const defaultSlug = slugKey ? helpers.translate(slugKey, defaultLocale) : '' %>
     <url>
-      <%# We consider the first locale in the array to be the default one %>
-      <loc><%= `${baseUrl}/${locales[0]}/${slug}` %></loc>
-      <xhtml:link rel="alternate" hreflang="x-default" href="<%= `${baseUrl}/${locales[0]}/${slug}` %>" />
+      <loc><%= `${baseUrl}/${defaultLocale}/${defaultSlug}` %></loc>
+      <xhtml:link rel="alternate" hreflang="x-default" href="<%= `${baseUrl}/${defaultLocale}/${defaultSlug}` %>" />
+      <xhtml:link rel="alternate" hreflang="<%= defaultLocale %>" href="<%= `${baseUrl}/${defaultLocale}/${defaultSlug}` %>" />
       <% locales.forEach(locale => { %>
-        <xhtml:link rel="alternate" hreflang="<%= locale %>" href="<%= `${baseUrl}/${locale}/${slug}` %>" />
+        <% if (locale === defaultLocale) return; %>
+        <% const localizedSlug = slugKey ? helpers.translate(slugKey, locale) : '' %>
+        <xhtml:link rel="alternate" hreflang="<%= locale %>" href="<%= `${baseUrl}/${locale}/${localizedSlug}` %>" />
       <% }) %>
 
       <changefreq>weekly</changefreq>

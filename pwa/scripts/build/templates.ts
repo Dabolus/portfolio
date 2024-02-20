@@ -45,6 +45,7 @@ export interface CompileTemplateOptions
   readonly pageData: PageData;
   readonly partial?: boolean;
   readonly outputPath?: string;
+  readonly slug?: string;
 }
 
 export const compileTemplate = async (
@@ -55,6 +56,7 @@ export const compileTemplate = async (
     production,
     partial,
     outputPath,
+    slug = 'index',
   }: CompileTemplateOptions,
 ) => {
   const { path: templatePath, contentPromise } =
@@ -105,7 +107,11 @@ export const compileTemplate = async (
 
   const finalOutputPath = outputPath
     ? path.join(outputDir, outputPath)
-    : path.join(outputDir, partial ? 'fragments' : '', `${fragment}.html`);
+    : path.join(
+        outputDir,
+        partial ? 'fragments' : '',
+        `${partial ? fragment : slug}.html`,
+      );
 
   await fs.mkdir(path.dirname(finalOutputPath), { recursive: true });
   await fs.writeFile(finalOutputPath, finalTemplate);
@@ -135,12 +141,14 @@ export async function buildTemplate(
           pageData,
           production,
           partial: false,
+          slug: pageData.helpers.translate(pageData.page.slug) as string,
         }),
         compileTemplate(outputDir, {
           fragment: pageData.page.id as keyof typeof templates,
           pageData,
           production,
           partial: true,
+          slug: pageData.helpers.translate(pageData.page.slug) as string,
         }),
       ];
     }),

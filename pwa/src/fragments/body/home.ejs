@@ -92,7 +92,7 @@
       <% if (!slug) { return; } %>
 
       <li>
-        <a href="<%= link || slug %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
+        <a href="<%= link || helpers.translate(slug) %>" <%- link ? 'rel="external" target="' + id + '-link"' : ''%> id="<%= id %>-link">
           <span>
             <%= helpers.translate(title) %>
             <% if (link) { %>

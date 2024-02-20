@@ -4,6 +4,7 @@ import path from 'node:path';
 import esbuild from 'esbuild';
 import { BuildStylesOutput } from './styles.js';
 import { computeDirname, computeTargets } from '../helpers/utils.js';
+import po from '../helpers/plugins/po.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -63,15 +64,9 @@ const createBundle = async (
   { production, stylesOutput }: Omit<BuildScriptsOptions, 'data'>,
 ): Promise<BuildScriptsOutput> => {
   const esbuildOptions: esbuild.BuildOptions = {
-    entryPoints: [
-      path.join(scriptsPath, 'main.ts'),
-      path.join(scriptsPath, 'pages/home.ts'),
-      path.join(scriptsPath, 'pages/about.ts'),
-      path.join(scriptsPath, 'pages/certifications.ts'),
-      path.join(scriptsPath, 'pages/contacts.ts'),
-      path.join(scriptsPath, 'pages/projects.ts'),
-      path.join(scriptsPath, 'pages/skills.ts'),
-    ],
+    entryPoints: Object.keys(pathToPageMap).map((page) =>
+      path.join(scriptsPath, `${page}.ts`),
+    ),
     bundle: true,
     minify: production,
     sourcemap: true,
@@ -97,6 +92,19 @@ const createBundle = async (
     // Always consider import.meta as supported, as we are
     // going to replace import.meta.env at build time
     supported: { 'import-meta': true },
+    plugins: [
+      // Expose pages slugs, titles and description at runtime
+      // to allow for dynamically updating the page metadata on need
+      po({
+        filter: (key) =>
+          Object.values(pathToPageMap).some(
+            (page) =>
+              key === `${page}Slug` ||
+              key === `${page}Title` ||
+              key === `${page}Description`,
+          ),
+      }),
+    ],
   };
   if (!production && !esbuildCtx) {
     esbuildCtx = await esbuild.context(esbuildOptions);
@@ -114,8 +122,8 @@ const createBundle = async (
           ),
       )
       .map(([key, { entryPoint }]) => [
-        Object.entries(pathToPageMap).find(
-          ([page]) => entryPoint?.endsWith(`${page}.ts`),
+        Object.entries(pathToPageMap).find(([page]) =>
+          entryPoint?.endsWith(`${page}.ts`),
         )![1],
         {
           fileName: path.relative('dist', key),

@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { compileTemplate, buildTemplate } from './templates.js';
+import { buildTemplate } from './templates.js';
 import { buildScripts } from './scripts.js';
 import { buildStyles } from './styles.js';
 import { generateServiceWorker } from './sw.js';
@@ -68,6 +68,11 @@ const build = async () => {
       ],
       extraPages: ['90s/', 'cartridges/', 'cartridges/gb/', 'cartridges/gbc/'],
       defaultLocale: config.defaultLocale,
+      helpers: {
+        ...i18nHelpersMap[config.defaultLocale],
+        ...datesHelpersMap[config.defaultLocale],
+        generateStructuredData,
+      },
     }),
     logExecutionTime(
       copyAssets,

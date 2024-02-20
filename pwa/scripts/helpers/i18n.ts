@@ -10,7 +10,10 @@ const availableLocalesPromise = fs
   .readdir(localesPath)
   .then((files) => files.map((file) => file.slice(0, -3)));
 
-export type TranslateFunction = (id: string) => string | string[];
+export type TranslateFunction = (
+  id: string,
+  locale?: string,
+) => string | string[];
 
 export const getAvailableLocales = (): Promise<readonly string[]> =>
   availableLocalesPromise;
@@ -49,17 +52,19 @@ export interface I18nHelpers {
 }
 
 export const setupI18nHelpers = async (
-  locale: string,
+  defaultLocale: string,
+  parsedLocaleFiles: Record<string, Record<string, string | string[]>>,
 ): Promise<I18nHelpers> => {
-  const localeFile = await fs.readFile(
-    path.join(localesPath, `${locale}.po`),
-    'utf8',
-  );
-  const parsedLocaleFile = parseLocaleFile(localeFile);
-
-  return {
-    translate: (id) => parsedLocaleFile[id],
+  const translate: TranslateFunction = (id, locale = defaultLocale) => {
+    const translation = parsedLocaleFiles[locale][id];
+    if (!translation) {
+      console.warn(`Missing translation for "${id}" in locale "${locale}"`);
+      return id;
+    }
+    return translation;
   };
+
+  return { translate };
 };
 
 export type I18nHelpersMap = Record<string, I18nHelpers>;
@@ -67,8 +72,22 @@ export type I18nHelpersMap = Record<string, I18nHelpers>;
 export const setupI18nHelpersMap = async (): Promise<I18nHelpersMap> => {
   const locales = await getAvailableLocales();
 
+  const parsedLocaleFilesArray = await Promise.all(
+    locales.map(async (locale) => {
+      const localeFile = await fs.readFile(
+        path.join(localesPath, `${locale}.po`),
+        'utf8',
+      );
+      return [locale, parseLocaleFile(localeFile)] as const;
+    }),
+  );
+  const parsedLocaleFiles = Object.fromEntries(parsedLocaleFilesArray);
+
   const i18nHelpersArray = await Promise.all(
-    locales.map(async (locale) => [locale, await setupI18nHelpers(locale)]),
+    locales.map(async (locale) => [
+      locale,
+      await setupI18nHelpers(locale, parsedLocaleFiles),
+    ]),
   );
 
   return Object.fromEntries(i18nHelpersArray);

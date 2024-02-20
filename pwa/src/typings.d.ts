@@ -20,5 +20,5 @@ interface ImportMeta {
 
 declare module '*.po' {
   const translations: Record<string, string>;
-  export default translations;
+  export = translations;
 }

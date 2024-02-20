@@ -2,6 +2,7 @@ import { installRouter, updateMetadata } from 'pwa-helpers';
 import { logEvent, scroll } from './utils.js';
 import { getBasePath } from './path.js';
 import { getLocale } from './i18n.js';
+import * as translations from './translations.js';
 
 const pageToPathMap: Record<string, string> = {
   home: import.meta.env.HOME_JS_OUTPUT,
@@ -25,6 +26,18 @@ export const configureRouting = () => {
     | 'contacts'
     | 'projects'
     | 'skills';
+
+  const slugToPageLocaleMap: Record<string, { locale: string; page: Page }> =
+    Object.fromEntries(
+      Object.entries(translations).flatMap(([locale, translations]) =>
+        Object.entries(translations)
+          .filter(([key]) => key.endsWith('Slug'))
+          .map(([key, val]) => [
+            val,
+            { locale, page: key.replace('Slug', '') as Page },
+          ]),
+      ),
+    );
 
   const pages: {
     [key in Page]: {
@@ -83,11 +96,21 @@ export const configureRouting = () => {
 
   // Configure routing
   installRouter(({ pathname }) => {
-    let path = (pathname.replace(`${getBasePath()}/${getLocale()}/`, '') ||
-      'home') as Page;
-    if (!Object.keys(pages).includes(path)) {
-      window.history.replaceState({}, '', `${getBasePath()}/${getLocale()}/`);
-      path = 'home';
+    const basePath = getBasePath();
+    const locale = getLocale();
+    const rawPath = pathname.replace(`${basePath}/${locale}/`, '') || 'home';
+    const pageLocaleConfig = slugToPageLocaleMap[rawPath];
+    const path = pageLocaleConfig?.page || 'home';
+    const pageLocale = pageLocaleConfig?.locale || locale;
+    if (!pageLocaleConfig) {
+      window.history.replaceState({}, '', `${basePath}/${locale}/`);
+    }
+    if (pageLocale !== locale) {
+      window.history.replaceState(
+        {},
+        '',
+        `${basePath}/${pageLocale}/${rawPath}`,
+      );
     }
     if (path === previousPath) {
       return;
@@ -107,7 +130,10 @@ export const configureRouting = () => {
       );
     }
 
-    const { title, description } = pages[path];
+    const localeTranslations =
+      translations[pageLocale as keyof typeof translations];
+    const title = localeTranslations[`${path}Title`];
+    const description = localeTranslations[`${path}Description`];
     updateMetadata({
       title: title ? `${title} - Giorgio Garasto` : 'Giorgio Garasto',
       description,

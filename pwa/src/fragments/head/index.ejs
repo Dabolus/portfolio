@@ -11,7 +11,7 @@
   <meta property="og:description" content="<%= helpers.translate(page.description) %>">
   <meta property="og:image" content="../images/propic-20220630.jpg">
   <meta property="og:image:alt" content="Giorgio Garasto">
-  <meta property="og:url" content="<%= `${config.baseUrl}/${config.locale}/${page.slug ? `${page.slug}` : ''}` %>">
+  <meta property="og:url" content="<%= `${config.baseUrl}/${config.locale}/${page.slug ? helpers.translate(page.slug) : ''}` %>">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="@Dabolus">
   <meta name="twitter:creator" content="@Dabolus">

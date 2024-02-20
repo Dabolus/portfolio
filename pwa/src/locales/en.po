@@ -60,7 +60,10 @@ msgstr ""
 "trying to make the web a better place&nbsp;"
 "<a id=\"since-2004-link\" rel=\"external\" href=\"https://translate.google.com/translate?js=n&sl=it&tl=en&u=https://web.archive.org/web/20101103024916/http://www.w3schools.it:80/\" target=\"since-2004\" rel=\"noopener\">since&nbsp;2004</a>."
 
-msgid "aboutMe"
+msgid "aboutSlug"
+msgstr "about"
+
+msgid "aboutTitle"
 msgstr "About me"
 
 msgid "aboutDescription"
@@ -90,13 +93,19 @@ msgstr ""
 msgid "myStory"
 msgstr "My story"
 
-msgid "certifications"
+msgid "certificationsSlug"
+msgstr "certifications"
+
+msgid "certificationsTitle"
 msgstr "Certifications"
 
 msgid "certificationsDescription"
 msgstr "Check out my certifications and awards."
 
-msgid "contacts"
+msgid "contactsSlug"
+msgstr "contacts"
+
+msgid "contactsTitle"
 msgstr "Contacts"
 
 msgid "contactsDescription"
@@ -132,13 +141,19 @@ msgstr "Submit"
 msgid "alsoFindMe"
 msgstr "P.S. you can also find me on"
 
-msgid "projects"
+msgid "projectsSlug"
+msgstr "projects"
+
+msgid "projectsTitle"
 msgstr "Projects"
 
 msgid "projectsDescription"
 msgstr "Check out the list of the projects I built and maintain."
 
-msgid "skills"
+msgid "skillsSlug"
+msgstr "skills"
+
+msgid "skillsTitle"
 msgstr "Skills"
 
 msgid "skillsDescription"
@@ -159,7 +174,10 @@ msgstr "Music"
 msgid "softSkills"
 msgstr "Soft skills"
 
-msgid "blog"
+msgid "blogSlug"
+msgstr "blog"
+
+msgid "blogTitle"
 msgstr "Blog"
 
 msgid "back"
