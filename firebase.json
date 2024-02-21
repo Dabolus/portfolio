@@ -68,6 +68,31 @@
         "type": 302
       },
       {
+        "source": "/it/about",
+        "destination": "/it/chi-sono",
+        "type": 301
+      },
+      {
+        "source": "/it/certifications",
+        "destination": "/it/certificazioni",
+        "type": 301
+      },
+      {
+        "source": "/it/contacts",
+        "destination": "/it/contatti",
+        "type": 301
+      },
+      {
+        "source": "/it/projects",
+        "destination": "/it/progetti",
+        "type": 301
+      },
+      {
+        "source": "/it/skills",
+        "destination": "/it/abilita",
+        "type": 301
+      },
+      {
         "source": "/cartridge/*",
         "destination": "/cartridges/gb/",
         "type": 301
