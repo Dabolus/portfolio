@@ -101,7 +101,8 @@ export const compileTemplate = async (
         sortAttributes: true,
         sortClassName: true,
         removeRedundantAttributes: true,
-        ignoreCustomFragments: [/url\(.+?\)/],
+        // Ignore URLs and meta tags
+        ignoreCustomFragments: [/url\(.+?\)/, /<meta .+?>/],
       })
     : renderedTemplate;
 
