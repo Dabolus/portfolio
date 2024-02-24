@@ -16,7 +16,7 @@
 
       <changefreq>weekly</changefreq>
       <priority><%= (1 - index / 10).toFixed(1) %></priority>
-      <lastmod><%= now %></lastmod>
+      <lastmod><%= buildDate.toISOString() %></lastmod>
     </url>
   <% }) %>
   <% (extraPages || []).forEach((page, index) => { %>
@@ -24,7 +24,7 @@
       <loc><%= `${baseUrl}/${page}` %></loc>
       <changefreq>weekly</changefreq>
       <priority><%= (1 - (pages.length + index) / 10).toFixed(1) %></priority>
-      <lastmod><%= now %></lastmod>
+      <lastmod><%= buildDate.toISOString() %></lastmod>
     </url>
   <% }) %>
 </urlset>

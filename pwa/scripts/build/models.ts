@@ -14,6 +14,7 @@ export interface PageData {
   readonly data: Data;
   readonly helpers: Helpers;
   readonly output: Output;
+  readonly buildDate: Date;
 }
 
 export interface Output {

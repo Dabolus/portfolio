@@ -117,6 +117,7 @@ const getDataWithCache = async (): Promise<Data> => {
 };
 
 const start = async () => {
+  const buildDate = new Date();
   const cwd = path.resolve(__dirname, '../..');
 
   const production = process.env.NODE_ENV === 'production';
@@ -150,6 +151,7 @@ const start = async () => {
               ...datesHelpersMap[locale],
               generateStructuredData,
             },
+            buildDate,
             output,
           },
           production,

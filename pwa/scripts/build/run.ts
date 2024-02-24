@@ -21,6 +21,7 @@ const __dirname = computeDirname(import.meta.url);
 const outputPath = path.resolve(__dirname, '../../dist');
 
 const build = async () => {
+  const buildDate = new Date();
   const [
     config,
     data,
@@ -73,6 +74,7 @@ const build = async () => {
         ...datesHelpersMap[config.defaultLocale],
         generateStructuredData,
       },
+      buildDate,
     }),
     logExecutionTime(
       copyAssets,
@@ -122,6 +124,7 @@ const build = async () => {
                 generateStructuredData,
               },
               output: { scripts, styles },
+              buildDate,
             },
             production,
           }),

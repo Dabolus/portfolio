@@ -7,6 +7,11 @@
   <title><%= page.title ? `${helpers.translate(page.title)} - ${config.baseTitle}` : config.baseTitle %></title>
   <meta name="description" content="<%= helpers.translate(page.description) %>">
 
+  <meta property="og:type" content="website">
+  <% Object.keys(config.availableLocales).forEach((languageId) => { %>
+    <meta property="<%= languageId === config.locale ? 'og:locale' : 'og:locale:alternate' %>" content="<%= languageId %>">
+  <% }) %>
+  <meta property="og:site_name" content="Giorgio Garasto">
   <meta property="og:title" content="<%= page.title ? `${helpers.translate(page.title)} - ${config.baseTitle}` : config.baseTitle %>">
   <meta property="og:description" content="<%= helpers.translate(page.description) %>">
   <meta property="og:image:width" content="642">
@@ -14,9 +19,18 @@
   <meta property="og:image" content="<%= `${config.baseUrl}/images/og-image-20220630.jpg` %>">
   <meta property="og:image:alt" content="Giorgio Garasto">
   <meta property="og:url" content="<%= `${config.baseUrl}/${config.locale}/${page.slug ? helpers.translate(page.slug) : ''}` %>">
+  <meta property="og:profile:first_name" content="Giorgio">
+  <meta property="og:profile:last_name" content="Garasto">
+  <meta property="og:profile:username" content="Dabolus">
+  <meta property="og:profile:gender" content="male">
+  <meta property="og:updated_time" content="<%= buildDate.toISOString() %>">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="@Dabolus">
   <meta name="twitter:creator" content="@Dabolus">
+  <meta name="twitter:title" content="<%= page.title ? `${helpers.translate(page.title)} - ${config.baseTitle}` : config.baseTitle %>">
+  <meta name="twitter:description" content="<%= helpers.translate(page.description) %>">
+  <meta name="twitter:image" content="<%= `${config.baseUrl}/images/og-image-20220630.jpg` %>">
+  <meta name="twitter:image:alt" content="Giorgio Garasto">
   <script type="application/ld+json"><%- helpers.generateStructuredData({ config, helpers }) %></script>
 
   <%- await include('async-css-js') %>

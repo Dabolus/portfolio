@@ -162,9 +162,8 @@ const createBundle = async (
   return result;
 };
 
-export async function buildScripts(
+export const buildScripts = async (
   outputPath: string,
   { production, stylesOutput }: BuildScriptsOptions,
-): Promise<BuildScriptsOutput> {
-  return createBundle(outputPath, { production, stylesOutput });
-}
+): Promise<BuildScriptsOutput> =>
+  createBundle(outputPath, { production, stylesOutput });

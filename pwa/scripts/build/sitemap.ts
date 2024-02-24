@@ -14,13 +14,21 @@ export interface BuildSitemapData {
   readonly extraPages?: readonly string[];
   readonly defaultLocale: string;
   readonly helpers: Helpers;
+  readonly buildDate: Date;
 }
 
 const sitemapTemplatePath = path.join(__dirname, '../../src/sitemap.ejs');
 
 export const buildSitemap = async (
   outputDir: string,
-  { baseUrl, pages, extraPages, defaultLocale, helpers }: BuildSitemapData,
+  {
+    baseUrl,
+    pages,
+    extraPages,
+    defaultLocale,
+    helpers,
+    buildDate,
+  }: BuildSitemapData,
 ): Promise<void> => {
   const [template, availableLocales] = await Promise.all([
     fs.readFile(sitemapTemplatePath, 'utf8'),
@@ -38,7 +46,7 @@ export const buildSitemap = async (
       baseUrl,
       extraPages,
       helpers,
-      now: new Date().toISOString(),
+      buildDate,
     },
     {
       filename: sitemapTemplatePath,
