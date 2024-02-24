@@ -1,7 +1,10 @@
+import { onRequest } from 'firebase-functions/v2/https';
+import { defineSecret } from 'firebase-functions/params';
 import { App, initializeApp, getApp } from 'firebase-admin/app';
 import { getStorage, Storage } from 'firebase-admin/storage';
-import functions from 'firebase-functions';
 import { stringify } from 'node:querystring';
+
+const recaptchaSecret = defineSecret('RECAPTCHA_SECRET');
 
 enum ResumeError {
   INVALID_RESPONSE = 'INVALID_RESPONSE',
@@ -22,7 +25,8 @@ const validateBody = ({ response }: RetrieveResumeBody) => {
   }
 };
 
-export const retrieveResume = functions.https.onRequest(
+export const retrieveResume = onRequest(
+  { cors: true, secrets: [recaptchaSecret] },
   async (
     {
       body: { ['g-recaptcha-response']: response },
@@ -40,7 +44,7 @@ export const retrieveResume = functions.https.onRequest(
     try {
       const recaptchaRes = await fetch(
         `https://www.google.com/recaptcha/api/siteverify?${stringify({
-          secret: functions.config().recaptcha.secret,
+          secret: recaptchaSecret.value(),
           response,
           ...(remoteip ? { remoteip } : {}),
         })}`,
@@ -54,7 +58,7 @@ export const retrieveResume = functions.https.onRequest(
 
       if (!app) {
         try {
-          app = initializeApp(functions.config().firebase);
+          app = initializeApp();
         } catch {
           app = getApp();
         }
