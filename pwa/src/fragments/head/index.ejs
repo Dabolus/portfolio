@@ -9,7 +9,9 @@
 
   <meta property="og:title" content="<%= page.title ? `${helpers.translate(page.title)} - ${config.baseTitle}` : config.baseTitle %>">
   <meta property="og:description" content="<%= helpers.translate(page.description) %>">
-  <meta property="og:image" content="../images/propic-20220630.jpg">
+  <meta property="og:image:width" content="642">
+  <meta property="og:image:height" content="963">
+  <meta property="og:image" content="<%= `${config.baseUrl}/images/og-image-20220630.jpg` %>">
   <meta property="og:image:alt" content="Giorgio Garasto">
   <meta property="og:url" content="<%= `${config.baseUrl}/${config.locale}/${page.slug ? helpers.translate(page.slug) : ''}` %>">
   <meta name="twitter:card" content="summary">
