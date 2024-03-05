@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "module": "es2020",
+    "module": "es2022",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -9,8 +9,8 @@
     "allowJs": true,
     "checkJs": true,
     "esModuleInterop": true,
-    "lib": ["dom", "dom.iterable", "es2020"],
-    "target": "es2020"
+    "lib": ["es2022"],
+    "target": "es2022"
   },
   "include": ["pwa/src/**/*.ts", "pwa/scripts/**/*.ts", "scripts/**/*.ts"]
 }

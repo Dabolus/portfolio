@@ -139,7 +139,7 @@ const build = async () => {
     'Generating \x1b[35mService Worker\x1b[0m...',
     (time) =>
       `\x1b[35mService Worker\x1b[0m generated in \x1b[36m${time}\x1b[0m`,
-  )(outputPath, availableLocales);
+  )(outputPath, { production, availableLocales });
 };
 
 logExecutionTime(

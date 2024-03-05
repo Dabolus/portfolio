@@ -15,7 +15,14 @@
     "core-js": "^3.36.0",
     "file-saver": "^2.0.5",
     "firebase": "^10.8.0",
-    "pwa-helpers": "^0.9.1"
+    "pwa-helpers": "^0.9.1",
+    "workbox-background-sync": "^7.0.0",
+    "workbox-cacheable-response": "^7.0.0",
+    "workbox-core": "^7.0.0",
+    "workbox-google-analytics": "^7.0.0",
+    "workbox-precaching": "^7.0.0",
+    "workbox-routing": "^7.0.0",
+    "workbox-strategies": "^7.0.0"
   },
   "devDependencies": {
     "@csstools/postcss-sass": "^5.1.1",

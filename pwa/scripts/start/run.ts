@@ -185,7 +185,7 @@ const start = async () => {
     ]);
   };
   const generateDevServiceWorker = async () => {
-    await generateServiceWorker(outputPath, availableLocales);
+    await generateServiceWorker(outputPath, { production, availableLocales });
   };
 
   watch(
