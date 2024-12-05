@@ -54,14 +54,15 @@ const toSassVariable = (val: unknown): string => {
 };
 
 const generateSassVariables = (data: Record<string, unknown>): string =>
-  Object.entries(data).reduce(
-    (variables, [key, value]) =>
-      `${variables}\n$${key}: ${toSassVariable(value)};\n`,
-    '',
-  );
+  Object.entries(data)
+    .map(([key, value]) => `'${key}': ${toSassVariable(value)}`)
+    .join(',');
 
 const injectData = (filePath: string, data: Record<string, unknown>): string =>
-  `${generateSassVariables(data)}\n@import '${filePath}';`;
+  [
+    '@use "sass:meta";',
+    `@include meta.load-css('${filePath}', $with: (${generateSassVariables(data)}));`,
+  ].join('');
 
 const styles = {
   main: 'main',
@@ -87,9 +88,15 @@ const compileStyles = async (
   { fragment = 'main', production, data }: CompileStylesOptions,
 ) => {
   const { css: postprocessedStyles } = await postcssInstance.process(
-    injectData(`./${styles[fragment]}.scss`, {
-      socials: data.socials,
-    }),
+    injectData(
+      `./${styles[fragment]}.scss`,
+      // FIXME: find a better way to handle this
+      styles[fragment] === 'pages/contacts'
+        ? {
+            socials: data.socials,
+          }
+        : {},
+    ),
     {
       // NOTE: this is actually a fake path, but we need to use it to
       // correctly resolve imports and generate the source map.

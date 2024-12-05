@@ -1,4 +1,5 @@
-@import './variables';
+@use 'sass:meta';
+@use './variables';
 
 html {
   --loading-size: 2rem;
@@ -252,4 +253,4 @@ select {
   image-rendering: pixelated;
 }
 
-@import './pages';
+@include meta.load-css('./pages');

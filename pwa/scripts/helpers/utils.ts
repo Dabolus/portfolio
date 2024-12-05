@@ -3,8 +3,8 @@ import { fileURLToPath } from 'node:url';
 import { performance } from 'node:perf_hooks';
 
 export const resolveDependencyPath = async (dependency: string) => {
-  const packageJsonPath = await import.meta.resolve!(
-    join(dependency, 'package.json'),
+  const packageJsonPath = fileURLToPath(
+    await import.meta.resolve!(join(dependency, 'package.json')),
   );
   return dirname(packageJsonPath);
 };

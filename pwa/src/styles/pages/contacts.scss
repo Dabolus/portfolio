@@ -1,5 +1,7 @@
 @use 'sass:map';
-@import '../variables';
+@use '../variables';
+
+$socials: () !default;
 
 .content#contacts {
   #contact-form {

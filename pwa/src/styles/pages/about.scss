@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables';
 
 .content#about {
   #age {
@@ -21,7 +21,7 @@
       transform-origin: center 0.4rem;
       transform: rotate(-1deg);
       animation: 3s propic-swing ease-in-out;
-      box-shadow: 0 0 0.05rem rgba($theme-black, 0.5);
+      box-shadow: 0 0 0.05rem rgba(variables.$theme-black, 0.5);
 
       img#me-vintage {
         position: absolute;

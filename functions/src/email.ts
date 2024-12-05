@@ -145,7 +145,7 @@ export const sendEmail = onRequest(
         replyTo: email,
         subject: sanitize(subject),
         text: sanitize(message),
-        html: marked(sanitize(message)),
+        html: await marked(sanitize(message)),
       });
     } catch (error) {
       console.error(error);
