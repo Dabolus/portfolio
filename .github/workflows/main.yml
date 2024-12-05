@@ -39,10 +39,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Deploy
         if: github.ref == 'refs/heads/main'
-        uses: Dabolus/deploy-firebase@v0.1.0
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT_BASE64" | base64 --decode > firebase-service-account.json
+          bun run firebase deploy --project $FIREBASE_PROJECT
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_BASE64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}
           FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
+          GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
       - name: Purge cache, audit, and report
         if: github.ref == 'refs/heads/main'
         run: |
