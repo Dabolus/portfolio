@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Use Bun 1.0.30
+      - name: Use Bun 1.1.38
         uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 1.0.30
+          bun-version: 1.1.38
       - name: Install deps
         run: bun install --frozen-lockfile && bun run playwright install --with-deps && cd node_modules/sharp && bun install
       - name: Run E2E tests
