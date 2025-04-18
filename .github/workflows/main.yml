@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Use Bun 1.1.38
-        uses: oven-sh/setup-bun@v1
+      - name: Use Bun 1.2.10
+        uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.1.38
+          bun-version: 1.2.10
       - name: Install deps
         run: bun install --frozen-lockfile && bun run playwright install --with-deps && cd node_modules/sharp && bun install
       - name: Run E2E tests
