@@ -28,6 +28,7 @@
         <input
           type="email"
           name="email"
+          autocomplete="email"
           placeholder="<%= helpers.translate(page.email).toLowerCase() %>"
           aria-label="<%= helpers.translate(page.email) %>"
           required
@@ -36,6 +37,7 @@
       <div id="sincerely"><%= helpers.translate(page.sincerely) %>,</div>
       <input
         name="name"
+        autocomplete="name"
         placeholder="<%= helpers.translate(page.name) %>"
         aria-label="<%= helpers.translate(page.name) %>"
         required
