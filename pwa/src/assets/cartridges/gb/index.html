@@ -58,7 +58,7 @@
         height: calc((100vmin / 1840) * 3020);
       }
 
-      #container > * {
+      #container > *:not(picture), #container > picture > img {
         position: absolute;
       }
 
@@ -148,7 +148,7 @@
         left: 29%;
       }
 
-      #container > img {
+      #container > picture > img {
         top: 0;
         left: 0;
         width: 100%;
@@ -174,7 +174,11 @@
       <img src="../img/future-gb.png" alt="Back to the future">
     </a>
     <div id="container">
-      <img src="./frame.jpg" alt="">
+      <picture>
+        <source srcset="./frame.avif" type="image/avif">
+        <source srcset="./frame.webp" type="image/webp">
+        <img src="./frame.jpg" alt="">
+      </picture>
       <canvas width="160" height="144"></canvas>
       <div id="power-led"></div>
       <div id="frame-shadow"></div>
