@@ -19,6 +19,7 @@ import { getTimeline } from '../helpers/data/timeline.js';
 import { getSocials } from '../helpers/data/socials.js';
 import { getTimeMachineTravels } from '../helpers/data/timeMachine.js';
 import {
+  cachePath,
   computeDirname,
   logExecutionTime,
   resolveDependencyPath,
@@ -116,6 +117,42 @@ const getDataWithCache = async (): Promise<Data> => {
   };
 };
 
+const downloadROMsWithCache = async (to: string) => {
+  let lastUpdate: Date | undefined;
+  const resolvedCachePath = path.resolve(cachePath, to);
+  try {
+    const rawContent = await fs.promises.readFile(
+      path.resolve(cachePath, 'metadata.json'),
+      'utf-8',
+    );
+    const metadata = JSON.parse(rawContent);
+    lastUpdate = new Date(metadata.lastUpdate);
+  } catch {}
+  // No cache or too old
+  if (!lastUpdate || Date.now() - lastUpdate.valueOf() > 24 * 60 * 60 * 1000) {
+    await fs.promises.mkdir(resolvedCachePath, { recursive: true });
+    await downloadROMs(resolvedCachePath);
+    await fs.promises.writeFile(
+      path.resolve(resolvedCachePath, 'metadata.json'),
+      JSON.stringify({ lastUpdate: new Date().toISOString() }),
+    );
+  }
+  await fs.promises.mkdir(to, { recursive: true });
+  const cacheDirContent = await fs.promises.readdir(resolvedCachePath, {
+    withFileTypes: true,
+  });
+  await Promise.all(
+    cacheDirContent
+      .filter((file) => file.isFile() && file.name !== 'metadata.json')
+      .map((file) =>
+        fs.promises.copyFile(
+          path.resolve(resolvedCachePath, file.name),
+          path.resolve(to, file.name),
+        ),
+      ),
+  );
+};
+
 const start = async () => {
   const buildDate = new Date();
   const cwd = path.resolve(__dirname, '../..');
@@ -181,7 +218,7 @@ const start = async () => {
           to: 'dist',
         },
       ]),
-      downloadROMs('dist/cartridges/roms'),
+      downloadROMsWithCache('dist/cartridges/roms'),
     ]);
   };
   const generateDevServiceWorker = async () => {
