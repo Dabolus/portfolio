@@ -26,6 +26,7 @@ import {
 } from '../helpers/utils.js';
 import { createServer } from './server.js';
 import { watch } from './watcher.js';
+import { buildCartridges } from '../build/cartridges.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -206,6 +207,11 @@ const start = async () => {
       stylesOutput: output.styles,
     });
   };
+  const buildDevCartridges = async () => {
+    await buildCartridges(path.resolve(outputPath, 'cartridges'), {
+      production,
+    });
+  };
   const copyDevAssets = async () => {
     await Promise.all([
       copyAssets([
@@ -218,7 +224,7 @@ const start = async () => {
           to: 'dist',
         },
       ]),
-      downloadROMsWithCache('dist/cartridges/roms'),
+      downloadROMsWithCache(path.resolve(outputPath, 'cartridges', 'roms')),
     ]);
   };
   const generateDevServiceWorker = async () => {
@@ -273,6 +279,20 @@ const start = async () => {
   );
 
   watch(
+    ['src/cartridges/**/*'],
+    { cwd, ignoreInitial: true },
+    debounce(
+      logExecutionTime<fs.WatchListener<string>>(
+        buildDevCartridges,
+        (_, changedPath) =>
+          `\x1b[32m${changedPath}\x1b[0m changed, rebuilding \x1b[35mcartridges\x1b[0m...`,
+        (time) => `\x1b[35mCartridges\x1b[0m rebuilt in \x1b[36m${time}\x1b[0m`,
+      ),
+      50,
+    ),
+  );
+
+  watch(
     ['src/assets/**/*', `${portfolioDataAssetsPath}/**/*`],
     { cwd, ignoreInitial: true },
     debounce(
@@ -312,6 +332,7 @@ const start = async () => {
         buildDevTemplates(),
         buildDevStyles(),
         buildDevScripts(),
+        buildDevCartridges(),
         copyDevAssets(),
         ...(process.env.ENABLE_SERVICE_WORKER
           ? [generateDevServiceWorker()]
@@ -339,5 +360,6 @@ const start = async () => {
 logExecutionTime(
   start,
   'Starting \x1b[35mdev server\x1b[0m...',
-  (time) => `\x1b[35mDev server\x1b[0m started in \x1b[36m${time}\x1b[0m`,
+  (time) =>
+    `\x1b[35mDev server\x1b[0m started in \x1b[36m${time}\x1b[0m\nOpen your browser at \x1b[36mhttp://localhost:3000/en/\x1b[0m`,
 )();

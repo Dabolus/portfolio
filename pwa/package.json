@@ -58,6 +58,8 @@
     "serve-static-bun": "^0.5.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
+    "vite": "^7.0.4",
+    "vite-plugin-html": "^3.2.2",
     "workbox-build": "^7.3.0"
   },
   "engines": {

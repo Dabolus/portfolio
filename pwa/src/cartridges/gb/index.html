@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Giorgio Garasto - Game Boy Color version</title>
-    <meta name="description" content="Hi! I'm Giorgio, and this is the Game Boy Color version of my Portfolio!">
+    <title>Giorgio Garasto - Game Boy version</title>
+    <base href="/cartridges/gb/">
+    <meta name="description" content="Hi! I'm Giorgio, and this is the Game Boy version of my Portfolio!">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -63,9 +64,9 @@
       }
 
       #power-led {
-        top: 19.9%;
-        left: 9.3%;
-        width: 2%;
+        top: 22.1%;
+        left: 13.55%;
+        width: 2.5%;
         aspect-ratio: 1;
         background-color: red;
         filter: blur(2px);
@@ -74,10 +75,10 @@
       }
 
       #frame-shadow {
-        top: 11%;
-        left: 21.5%;
-        width: 56.7%;
-        height: 31.1%;
+        top: 13.3%;
+        left: 24.3%;
+        width: 51.2%;
+        height: 28%;
         box-shadow: inset 0 0 24px #000;
         pointer-events: none;
       }
@@ -96,23 +97,23 @@
       }
 
       #dpad-up, #dpad-down {
-        left: 16%;
+        left: 15.5%;
       }
 
       #dpad-left, #dpad-right {
-        top: 66.9%;
+        top: 63%;
       }
 
       #dpad-up {
-        top: 60.9%;
+        top: 57%;
       }
 
       #dpad-down {
-        top: 72.4%;
+        top: 69.5%;
       }
 
       #dpad-left {
-        left: 6.5%;
+        left: 5.5%;
       }
 
       #dpad-right {
@@ -125,42 +126,42 @@
       }
 
       #btn-a {
-        top: 63%;
-        left: 77%;
+        top: 58.8%;
+        left: 78%;
       }
 
       #btn-b {
-        top: 66.4%;
-        left: 60%;
+        top: 63.2%;
+        left: 62%;
       }
 
       #btn-select, #btn-start {
-        top: 82.5%;
+        top: 77%;
         width: 16.5%;
         height: 10%;
       }
 
       #btn-start {
-        left: 50.3%;
+        left: 45.5%;
       }
 
       #btn-select {
-        left: 33.8%;
+        left: 29%;
       }
 
       #container > picture > img {
         top: 0;
         left: 0;
         width: 100%;
-        /* Little hack because the GBC image we use is a bit distorted */
-        height: 104.2%;
+        /* Little hack because the GB image we use is a bit distorted */
+        height: 98%;
       }
 
       #container > canvas {
-        top: 11%;
-        left: 21.5%;
-        width: 56.7%;
-        height: 31.1%;
+        top: 13.3%;
+        left: 24.3%;
+        width: 51.2%;
+        height: 28%;
         image-rendering: pixelated;
         image-rendering: crisp-edges;
       }
@@ -168,16 +169,16 @@
   </head>
   <body>
     <a id="carts" href="../" title="Back to carts">
-      <img src="../img/carts-gb.png" alt="Back to carts">
+      <img src="/images/carts-gb.png" alt="Back to carts">
     </a>
     <a id="future" href="../../" title="Back to the future">
-      <img src="../img/future-gb.png" alt="Back to the future">
+      <img src="/images/future-gb.png" alt="Back to the future">
     </a>
     <div id="container">
       <picture>
-        <source srcset="./frame.avif" type="image/avif">
-        <source srcset="./frame.webp" type="image/webp">
-        <img src="./frame.jpg" alt="">
+        <source srcset="../images/frames/gb.avif" type="image/avif">
+        <source srcset="../images/frames/gb.webp" type="image/webp">
+        <img src="../images/frames/gb.jpg" alt="">
       </picture>
       <canvas width="160" height="144"></canvas>
       <div id="power-led"></div>
@@ -194,6 +195,12 @@
     <script type="module">
       import { WasmBoy } from 'https://unpkg.com/wasmboy@0.7.1/dist/wasmboy.wasm.esm.js?module';
       const canvas = document.querySelector('canvas');
+      const colorsMap = [
+        [42, 69, 59],
+        [54, 93, 72],
+        [87, 124, 68],
+        [127, 134, 15],
+      ];
       await WasmBoy.config({
         audioBatchProcessing: true,
         timersBatchProcessing: true,
@@ -202,6 +209,16 @@
         graphicsDisableScanlineRendering: true,
         tileRendering: true,
         tileCaching: true,
+        updateGraphicsCallback: (imageDataArray) => {
+          for (let i = 0; i < imageDataArray.length; i += 4) {
+            const avg = (imageDataArray[i] + imageDataArray[i + 1] + imageDataArray[i + 2]) / 3;
+            const colorIndex = Math.floor(avg / 64);
+            const [r, g, b] = colorsMap[colorIndex];
+            imageDataArray[i] = r;
+            imageDataArray[i + 1] = g;
+            imageDataArray[i + 2] = b;
+          }
+        }
       }, canvas);
       [
         ['dpad-up', 'DPAD_UP'],
@@ -218,7 +235,7 @@
           WasmBoy.ResponsiveGamepad.RESPONSIVE_GAMEPAD_INPUTS[button],
         ),
       );
-      await WasmBoy.loadROM('../roms/portfolio.gbc');
+      await WasmBoy.loadROM('../roms/portfolio.gb');
       await WasmBoy.play();
 
       window.addEventListener('blur', () => WasmBoy.pause());

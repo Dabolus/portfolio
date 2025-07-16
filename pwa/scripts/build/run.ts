@@ -15,6 +15,7 @@ import {
   logExecutionTime,
   resolveDependencyPath,
 } from '../helpers/utils.js';
+import { buildCartridges } from './cartridges.js';
 
 const __dirname = computeDirname(import.meta.url);
 
@@ -94,7 +95,7 @@ const build = async () => {
       downloadROMs,
       'Downloading \x1b[35mROMs\x1b[0m...',
       (time) => `\x1b[35mROMs\x1b[0m downloaded in \x1b[36m${time}\x1b[0m`,
-    )('dist/cartridges/roms'),
+    )(path.resolve(outputPath, 'cartridges', 'roms')),
   ]);
 
   const scripts = await logExecutionTime(
@@ -105,6 +106,12 @@ const build = async () => {
     production,
     stylesOutput: styles,
   });
+
+  await logExecutionTime(
+    buildCartridges,
+    'Building \x1b[35mcartridges\x1b[0m...',
+    (time) => `\x1b[35mCartridges\x1b[0m built in \x1b[36m${time}\x1b[0m`,
+  )(path.resolve(outputPath, 'cartridges'), { production });
 
   await logExecutionTime(
     () =>
