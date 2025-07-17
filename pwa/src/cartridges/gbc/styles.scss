@@ -10,9 +10,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #ba8c63;
+  background-image: url(/images/wood-pattern.png);
 }
 
-@media (min-aspect-ratio: 1840 / 3020) {
+@media (min-aspect-ratio: 1118 / 1898) {
   body {
     align-items: flex-start;
   }
@@ -49,8 +51,8 @@ body {
 
 #container {
   position: relative;
-  width: 100vmin;
-  height: calc((100vmin / 1840) * 3020);
+  width: 99vmin;
+  aspect-ratio: 1118 / 1898;
 }
 
 #container > *:not(picture),
@@ -59,8 +61,8 @@ body {
 }
 
 #power-led {
-  top: 19.9%;
-  left: 9.3%;
+  top: 19.5%;
+  left: 9.7%;
   width: 2%;
   aspect-ratio: 1;
   background-color: red;
@@ -69,13 +71,23 @@ body {
   pointer-events: none;
 }
 
+#container > canvas,
 #frame-shadow {
   top: 11%;
-  left: 21.5%;
-  width: 56.7%;
-  height: 31.1%;
+  left: 21.6%;
+  width: 56%;
+  aspect-ratio: 160 / 144;
+  border-radius: 8px;
+}
+
+#frame-shadow {
   box-shadow: inset 0 0 24px #000;
   pointer-events: none;
+}
+
+#container > canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 button {
@@ -101,15 +113,15 @@ button {
 
 #dpad-left,
 #dpad-right {
-  top: 66.9%;
+  top: 63.5%;
 }
 
 #dpad-up {
-  top: 60.9%;
+  top: 57.5%;
 }
 
 #dpad-down {
-  top: 72.4%;
+  top: 69%;
 }
 
 #dpad-left {
@@ -127,18 +139,18 @@ button {
 }
 
 #btn-a {
-  top: 63%;
+  top: 60.3%;
   left: 77%;
 }
 
 #btn-b {
-  top: 66.4%;
+  top: 63.5%;
   left: 60%;
 }
 
 #btn-select,
 #btn-start {
-  top: 82.5%;
+  top: 78.5%;
   width: 16.5%;
   height: 10%;
 }
@@ -152,18 +164,9 @@ button {
 }
 
 #container > picture > img {
-  top: 0;
-  left: 0;
-  width: 100%;
-  /* Little hack because the GBC image we use is a bit distorted */
-  height: 104.2%;
-}
-
-#container > canvas {
-  top: 11%;
-  left: 21.5%;
-  width: 56.7%;
-  height: 31.1%;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  top: 1%;
+  left: 1%;
+  width: 97.5%;
+  // TODO: resize image instead of forcing its aspect ratio
+  aspect-ratio: 1090 / 1860;
 }

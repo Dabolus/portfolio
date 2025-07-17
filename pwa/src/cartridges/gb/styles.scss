@@ -10,9 +10,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #ba8c63;
+  background-image: url(/images/wood-pattern.png);
 }
 
-@media (min-aspect-ratio: 1840 / 3020) {
+@media (min-aspect-ratio: 1831 / 3039) {
   body {
     align-items: flex-start;
   }
@@ -49,8 +51,8 @@ body {
 
 #container {
   position: relative;
-  width: 100vmin;
-  height: calc((100vmin / 1840) * 3020);
+  width: 115vmin;
+  aspect-ratio: 1831 / 3039;
 }
 
 #container > *:not(picture),
@@ -59,23 +61,34 @@ body {
 }
 
 #power-led {
-  top: 22.1%;
-  left: 13.55%;
+  top: 22.8%;
+  left: 13.8%;
   width: 2.5%;
   aspect-ratio: 1;
   background-color: red;
-  filter: blur(2px);
+  filter: blur(4px);
   border-radius: 50%;
   pointer-events: none;
 }
 
+#container > canvas,
 #frame-shadow {
-  top: 13.3%;
-  left: 24.3%;
-  width: 51.2%;
-  height: 28%;
+  top: 14.1%;
+  left: 24.5%;
+  width: 51.5%;
+  aspect-ratio: 160 / 144;
+  border-radius: 4px;
+  transform: rotateZ(0.1deg);
+}
+
+#frame-shadow {
   box-shadow: inset 0 0 24px #000;
   pointer-events: none;
+}
+
+#container > canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 button {
@@ -96,16 +109,16 @@ button {
 
 #dpad-up,
 #dpad-down {
-  left: 15.5%;
+  left: 15.9%;
 }
 
 #dpad-left,
 #dpad-right {
-  top: 63%;
+  top: 63.8%;
 }
 
 #dpad-up {
-  top: 57%;
+  top: 58.2%;
 }
 
 #dpad-down {
@@ -113,11 +126,11 @@ button {
 }
 
 #dpad-left {
-  left: 5.5%;
+  left: 5.9%;
 }
 
 #dpad-right {
-  left: 25.5%;
+  left: 25.9%;
 }
 
 #btn-a,
@@ -127,13 +140,13 @@ button {
 }
 
 #btn-a {
-  top: 58.8%;
-  left: 78%;
+  top: 59.5%;
+  left: 78.4%;
 }
 
 #btn-b {
-  top: 63.2%;
-  left: 62%;
+  top: 64%;
+  left: 62.4%;
 }
 
 #btn-select,
@@ -144,26 +157,17 @@ button {
 }
 
 #btn-start {
-  left: 45.5%;
+  left: 45.9%;
 }
 
 #btn-select {
-  left: 29%;
+  left: 29.4%;
 }
 
 #container > picture > img {
-  top: 0;
-  left: 0;
-  width: 100%;
-  /* Little hack because the GB image we use is a bit distorted */
-  height: 98%;
-}
-
-#container > canvas {
-  top: 13.3%;
-  left: 24.3%;
-  width: 51.2%;
-  height: 28%;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  top: 1.5%;
+  left: 1%;
+  width: 98%;
+  // TODO: resize image instead of forcing its aspect ratio
+  aspect-ratio: 1795 / 2925;
 }
