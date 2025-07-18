@@ -1,6 +1,7 @@
 import { WasmBoy } from 'wasmboy/dist/wasmboy.wasm.esm.js';
 
-const canvas = document.querySelector('canvas');
+const container = document.querySelector<HTMLDivElement>('#container');
+const gameCanvas = container.querySelector<HTMLCanvasElement>('#game');
 
 const colorsMap = [
   [42, 69, 59],
@@ -18,6 +19,7 @@ await WasmBoy.config(
     graphicsDisableScanlineRendering: true,
     tileRendering: true,
     tileCaching: true,
+    isGbcEnabled: false,
     updateGraphicsCallback: (imageDataArray) => {
       for (let i = 0; i < imageDataArray.length; i += 4) {
         const avg =
@@ -31,7 +33,7 @@ await WasmBoy.config(
       }
     },
   },
-  canvas,
+  gameCanvas,
 );
 
 (
@@ -54,9 +56,26 @@ await WasmBoy.config(
     WasmBoy.ResponsiveGamepad.RESPONSIVE_GAMEPAD_INPUTS[button],
   ),
 );
+const romBytesPromise = fetch('../roms/portfolio.gb')
+  .then((res) => res.arrayBuffer())
+  .then((arrayBuffer) => new Uint8Array(arrayBuffer));
 
-await WasmBoy.loadROM('../roms/portfolio.gb');
-await WasmBoy.play();
+const switchOnOff = async () => {
+  if (WasmBoy.isPlaying()) {
+    await WasmBoy.reset();
+    container.classList.remove('on');
+  } else {
+    await WasmBoy.loadROM(await romBytesPromise, { fileName: 'portfolio.gb' });
+    await WasmBoy.play();
+    container.classList.add('on');
+  }
+};
 
-window.addEventListener('blur', () => WasmBoy.pause());
+document.querySelector('#on-off').addEventListener('click', switchOnOff);
+document.addEventListener(
+  'keydown',
+  (event) => event.key.toLowerCase() === 'p' && switchOnOff(),
+);
+
+window.addEventListener('blur', () => WasmBoy.isPlaying() && WasmBoy.pause());
 window.addEventListener('focus', () => WasmBoy.play());

@@ -83,6 +83,7 @@ declare module 'wasmboy/dist/wasmboy.wasm.esm.js' {
     graphicsDisableScanlineRendering?: boolean;
     tileRendering?: boolean;
     tileCaching?: boolean;
+    isGbcEnabled?: boolean;
     updateGraphicsCallback?: (imageDataArray: Uint8ClampedArray) => void;
   }
 

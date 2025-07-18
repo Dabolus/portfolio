@@ -1,6 +1,7 @@
 import { WasmBoy } from 'wasmboy/dist/wasmboy.wasm.esm.js';
 
-const canvas = document.querySelector('canvas');
+const container = document.querySelector<HTMLDivElement>('#container');
+const gameCanvas = container.querySelector<HTMLCanvasElement>('#game');
 
 await WasmBoy.config(
   {
@@ -11,8 +12,9 @@ await WasmBoy.config(
     graphicsDisableScanlineRendering: true,
     tileRendering: true,
     tileCaching: true,
+    isGbcEnabled: true,
   },
-  canvas,
+  gameCanvas,
 );
 
 (
@@ -36,8 +38,26 @@ await WasmBoy.config(
   ),
 );
 
-await WasmBoy.loadROM('../roms/portfolio.gbc');
-await WasmBoy.play();
+const romBytesPromise = fetch('../roms/portfolio.gbc')
+  .then((res) => res.arrayBuffer())
+  .then((arrayBuffer) => new Uint8Array(arrayBuffer));
 
-window.addEventListener('blur', () => WasmBoy.pause());
+const switchOnOff = async () => {
+  if (WasmBoy.isPlaying()) {
+    await WasmBoy.reset();
+    container.classList.remove('on');
+  } else {
+    await WasmBoy.loadROM(await romBytesPromise, { fileName: 'portfolio.gbc' });
+    await WasmBoy.play();
+    container.classList.add('on');
+  }
+};
+
+document.querySelector('#on-off').addEventListener('click', switchOnOff);
+document.addEventListener(
+  'keydown',
+  (event) => event.key.toLowerCase() === 'p' && switchOnOff(),
+);
+
+window.addEventListener('blur', () => WasmBoy.isPlaying() && WasmBoy.pause());
 window.addEventListener('focus', () => WasmBoy.play());

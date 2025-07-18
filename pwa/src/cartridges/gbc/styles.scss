@@ -66,26 +66,32 @@ body {
   width: 2%;
   aspect-ratio: 1;
   background-color: red;
-  filter: blur(2px);
+  filter: blur(0.25vmin);
   border-radius: 50%;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.1s linear;
 }
 
-#container > canvas,
+#container.on #power-led {
+  opacity: 1;
+}
+
+#game,
 #frame-shadow {
   top: 11%;
   left: 21.6%;
   width: 56%;
   aspect-ratio: 160 / 144;
-  border-radius: 8px;
+  border-radius: 1vmin;
 }
 
 #frame-shadow {
-  box-shadow: inset 0 0 24px #000;
+  box-shadow: inset 0 0 4vmin #000;
   pointer-events: none;
 }
 
-#container > canvas {
+#game {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
@@ -96,6 +102,29 @@ button {
   outline: none;
   background: transparent;
   cursor: pointer;
+}
+
+#on-off {
+  top: 22%;
+  left: 92%;
+  width: 10.4%;
+  height: 13%;
+}
+
+#on-off-switch {
+  position: absolute;
+  top: 29.5%;
+  left: 96.5%;
+  width: 2%;
+  height: 2%;
+  z-index: -1;
+  background: linear-gradient(to right, #3c3c3c, #5c5c5c);
+  box-shadow: inset 0 0 0.25vmin rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s ease-in-out;
+}
+
+#container.on #on-off-switch {
+  transform: translateY(-150%);
 }
 
 #dpad-up,
