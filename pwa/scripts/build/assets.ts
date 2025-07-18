@@ -70,7 +70,7 @@ interface GitHubAsset {
   browser_download_url: string;
 }
 
-export const downloadROMs = async (to: string) => {
+export const downloadROMs = async (to: string, githubToken?: string) => {
   const resolvedTo = path.resolve(basePath, to);
   await fs.mkdirp(resolvedTo);
   const res = await fetch(
@@ -78,6 +78,7 @@ export const downloadROMs = async (to: string) => {
     {
       headers: {
         accept: 'application/vnd.github+json',
+        ...(githubToken && { authorization: `Bearer ${githubToken}` }),
       },
     },
   );

@@ -132,7 +132,7 @@ const downloadROMsWithCache = async (to: string) => {
   // No cache or too old
   if (!lastUpdate || Date.now() - lastUpdate.valueOf() > 24 * 60 * 60 * 1000) {
     await fs.promises.mkdir(resolvedCachePath, { recursive: true });
-    await downloadROMs(resolvedCachePath);
+    await downloadROMs(resolvedCachePath, process.env.GH_TOKEN);
     await fs.promises.writeFile(
       path.resolve(resolvedCachePath, 'metadata.json'),
       JSON.stringify({ lastUpdate: new Date().toISOString() }),

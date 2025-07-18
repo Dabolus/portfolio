@@ -95,7 +95,7 @@ const build = async () => {
       downloadROMs,
       'Downloading \x1b[35mROMs\x1b[0m...',
       (time) => `\x1b[35mROMs\x1b[0m downloaded in \x1b[36m${time}\x1b[0m`,
-    )(path.resolve(outputPath, 'cartridges', 'roms')),
+    )(path.resolve(outputPath, 'cartridges', 'roms'), process.env.GH_TOKEN),
   ]);
 
   const scripts = await logExecutionTime(
